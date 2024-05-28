@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@neom-digital/ng-ui": ["libs/ng-ui/src/index.ts"],
+      "@neom-digital/nst-libs": ["libs/nst-libs/src/index.ts"],
+      "@neom-digital/rt-ui": ["libs/rt-ui/src/index.ts"],
+      "@neom-digital/utils": ["libs/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

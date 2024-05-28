@@ -1610,6 +1610,109 @@
         "implicitDependencies": []
       }
     },
+    "nst-libs": {
+      "name": "nst-libs",
+      "type": "lib",
+      "data": {
+        "root": "libs/nst-libs",
+        "name": "nst-libs",
+        "targets": {
+          "nx-release-publish": {
+            "dependsOn": [
+              "^nx-release-publish"
+            ],
+            "executor": "@nx/js:release-publish",
+            "options": {
+              "packageRoot": "dist/libs/nst-libs"
+            },
+            "configurations": {}
+          },
+          "lint": {
+            "cache": true,
+            "options": {
+              "cwd": "libs/nst-libs",
+              "command": "eslint ."
+            },
+            "inputs": [
+              "default",
+              "^default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{projectRoot}/.eslintrc.json",
+              "{workspaceRoot}/tools/eslint-rules/**/*",
+              {
+                "externalDependencies": [
+                  "eslint"
+                ]
+              }
+            ],
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "executor": "nx:run-commands",
+            "configurations": {}
+          },
+          "test": {
+            "executor": "@nx/jest:jest",
+            "cache": true,
+            "inputs": [
+              "default",
+              "^production",
+              "{workspaceRoot}/jest.preset.js"
+            ],
+            "outputs": [
+              "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+              "passWithNoTests": true,
+              "jestConfig": "libs/nst-libs/jest.config.ts"
+            },
+            "configurations": {
+              "ci": {
+                "ci": true,
+                "codeCoverage": true
+              }
+            }
+          },
+          "build": {
+            "executor": "@nx/js:tsc",
+            "cache": true,
+            "dependsOn": [
+              "^build"
+            ],
+            "inputs": [
+              "production",
+              "^production"
+            ],
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "options": {
+              "outputPath": "dist/libs/nst-libs",
+              "tsConfig": "libs/nst-libs/tsconfig.lib.json",
+              "packageJson": "libs/nst-libs/package.json",
+              "main": "libs/nst-libs/src/index.ts",
+              "assets": [
+                "libs/nst-libs/*.md"
+              ]
+            },
+            "configurations": {}
+          }
+        },
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "libs/nst-libs/src",
+        "projectType": "library",
+        "release": {
+          "version": {
+            "generatorOptions": {
+              "packageRoot": "dist/{projectRoot}",
+              "currentVersionResolver": "git-tag"
+            }
+          }
+        },
+        "tags": [],
+        "implicitDependencies": []
+      }
+    },
     "rt-super": {
       "name": "rt-super",
       "type": "app",
@@ -1970,6 +2073,204 @@
         "sourceRoot": "apps/rt-rai/src",
         "tags": [],
         "implicitDependencies": []
+      }
+    },
+    "ng-ui": {
+      "name": "ng-ui",
+      "type": "lib",
+      "data": {
+        "root": "libs/ng-ui",
+        "targets": {
+          "lint": {
+            "executor": "@nx/eslint:lint",
+            "cache": true,
+            "inputs": [
+              "default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{workspaceRoot}/.eslintignore",
+              "{workspaceRoot}/eslint.config.js"
+            ],
+            "options": {},
+            "configurations": {}
+          },
+          "test": {
+            "executor": "@nx/jest:jest",
+            "cache": true,
+            "inputs": [
+              "default",
+              "^production",
+              "{workspaceRoot}/jest.preset.js"
+            ],
+            "outputs": [
+              "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+              "passWithNoTests": true,
+              "jestConfig": "libs/ng-ui/jest.config.ts"
+            },
+            "configurations": {
+              "ci": {
+                "ci": true,
+                "codeCoverage": true
+              }
+            }
+          }
+        },
+        "name": "ng-ui",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "libs/ng-ui/src",
+        "prefix": "lib",
+        "projectType": "library",
+        "tags": [],
+        "implicitDependencies": []
+      }
+    },
+    "rt-ui": {
+      "name": "rt-ui",
+      "type": "lib",
+      "data": {
+        "root": "libs/rt-ui",
+        "targets": {
+          "lint": {
+            "cache": true,
+            "options": {
+              "cwd": "libs/rt-ui",
+              "command": "eslint ."
+            },
+            "inputs": [
+              "default",
+              "^default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{projectRoot}/.eslintrc.json",
+              "{workspaceRoot}/tools/eslint-rules/**/*",
+              {
+                "externalDependencies": [
+                  "eslint"
+                ]
+              }
+            ],
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "executor": "nx:run-commands",
+            "configurations": {}
+          }
+        },
+        "name": "rt-ui",
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "libs/rt-ui/src",
+        "projectType": "library",
+        "tags": [],
+        "implicitDependencies": []
+      }
+    },
+    "utils": {
+      "name": "utils",
+      "type": "lib",
+      "data": {
+        "root": "libs/utils",
+        "name": "utils",
+        "targets": {
+          "lint": {
+            "cache": true,
+            "options": {
+              "cwd": "libs/utils",
+              "command": "eslint ."
+            },
+            "inputs": [
+              "default",
+              "^default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{projectRoot}/.eslintrc.json",
+              "{workspaceRoot}/tools/eslint-rules/**/*",
+              {
+                "externalDependencies": [
+                  "eslint"
+                ]
+              }
+            ],
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "executor": "nx:run-commands",
+            "configurations": {}
+          },
+          "test": {
+            "executor": "@nx/jest:jest",
+            "cache": true,
+            "inputs": [
+              "default",
+              "^production",
+              "{workspaceRoot}/jest.preset.js"
+            ],
+            "outputs": [
+              "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+              "passWithNoTests": true,
+              "jestConfig": "libs/utils/jest.config.ts"
+            },
+            "configurations": {
+              "ci": {
+                "ci": true,
+                "codeCoverage": true
+              }
+            }
+          },
+          "build": {
+            "executor": "@nx/js:tsc",
+            "cache": true,
+            "dependsOn": [
+              "^build"
+            ],
+            "inputs": [
+              "production",
+              "^production"
+            ],
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "options": {
+              "outputPath": "dist/libs/utils",
+              "main": "libs/utils/src/index.ts",
+              "tsConfig": "libs/utils/tsconfig.lib.json",
+              "assets": [
+                "libs/utils/*.md"
+              ]
+            },
+            "configurations": {}
+          }
+        },
+        "$schema": "../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "libs/utils/src",
+        "projectType": "library",
+        "tags": [],
+        "implicitDependencies": []
+      }
+    },
+    "@neom-digital/source": {
+      "name": "@neom-digital/source",
+      "type": "lib",
+      "data": {
+        "root": ".",
+        "includedScripts": [],
+        "name": "@neom-digital/source",
+        "targets": {
+          "local-registry": {
+            "executor": "@nx/js:verdaccio",
+            "options": {
+              "port": 4873,
+              "config": ".verdaccio/config.yml",
+              "storage": "tmp/local-registry/storage"
+            },
+            "configurations": {}
+          }
+        },
+        "sourceRoot": ".",
+        "projectType": "library",
+        "$schema": "node_modules/nx/schemas/project-schema.json",
+        "implicitDependencies": [],
+        "tags": []
       }
     }
   },
@@ -16262,6 +16563,18 @@
         "type": "static"
       }
     ],
+    "nst-libs": [
+      {
+        "source": "nst-libs",
+        "target": "npm:tslib",
+        "type": "static"
+      },
+      {
+        "source": "nst-libs",
+        "target": "npm:@nestjs/common",
+        "type": "static"
+      }
+    ],
     "rt-super": [
       {
         "source": "rt-super",
@@ -16340,6 +16653,429 @@
       {
         "source": "rt-rai",
         "target": "npm:@nx/react",
+        "type": "static"
+      }
+    ],
+    "ng-ui": [
+      {
+        "source": "ng-ui",
+        "target": "npm:@angular/core",
+        "type": "static"
+      },
+      {
+        "source": "ng-ui",
+        "target": "npm:@angular/common",
+        "type": "static"
+      },
+      {
+        "source": "ng-ui",
+        "target": "npm:jest-preset-angular",
+        "type": "static"
+      }
+    ],
+    "rt-ui": [
+      {
+        "source": "rt-ui",
+        "target": "npm:@testing-library/react",
+        "type": "static"
+      }
+    ],
+    "utils": [
+      {
+        "source": "utils",
+        "target": "npm:tslib",
+        "type": "static"
+      }
+    ],
+    "@neom-digital/source": [
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/jest",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/animations",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/common",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/compiler",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/core",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/forms",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/platform-browser",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/platform-browser-dynamic",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/router",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nestjs/common",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nestjs/core",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nestjs/platform-express",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:axios",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:react",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:react-dom",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:reflect-metadata",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:rxjs",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:tslib",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:zone.js",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular-devkit/build-angular",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular-devkit/core",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular-devkit/schematics",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular-eslint/eslint-plugin",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular-eslint/eslint-plugin-template",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular-eslint/template-parser",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/cli",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/compiler-cli",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@angular/language-service",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@babel/core",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@babel/preset-react",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nestjs/schematics",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nestjs/testing",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/angular",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/devkit",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/eslint",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/eslint-plugin",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/js",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/nest",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/node",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/playwright",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/react",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/web",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/webpack",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/workspace",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@playwright/test",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@pmmmwh/react-refresh-webpack-plugin",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@schematics/angular",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@svgr/webpack",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@swc-node/register",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@swc/cli",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@swc/core",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@swc/helpers",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@testing-library/react",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@types/jest",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@types/node",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@types/react",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@types/react-dom",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@typescript-eslint/eslint-plugin",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@typescript-eslint/parser",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:babel-jest",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:eslint",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:eslint-config-prettier",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:eslint-plugin-import",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:eslint-plugin-jsx-a11y",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:eslint-plugin-playwright",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:eslint-plugin-react",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:eslint-plugin-react-hooks",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:jest",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:jest-environment-jsdom",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:jest-environment-node",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:jest-preset-angular",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:nx",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:prettier",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:react-refresh",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:ts-jest",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:ts-node",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:typescript",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:webpack-cli",
         "type": "static"
       }
     ],
