@@ -1,0 +1,144 @@
+import {
+  FindAllVm,
+  FindByIdVm,
+  FindOneVm,
+} from '@api-models/shared/shared-vm.models';
+import {<%= className %>, <%= className %>CreateVm, <%= className %>Vm, PS<%= constantName %>} from '@models';
+import {Controller, Logger, UseInterceptors} from '@nestjs/common';
+import {MessagePattern, RpcException} from '@nestjs/microservices';
+import { LoggingInterceptor } from '@api-gateway/shared/interceptors/logging.interceptors';
+import {MongooseUpdateQuery} from 'mongoose';
+import {<%= className %>DomainService} from './<%= fileName %>-domain.service';
+
+@Controller('<%= fileName %>-domain')
+@UseInterceptors(LoggingInterceptor)
+export class <%= className %>DomainController {
+  logger: Logger = new Logger();
+  constructor(private readonly _<%= propertyName %>DomainService: <%= className %>DomainService) {}
+
+  // Subscriber for Message Pattern PS<%= constantName %>.FINDALL
+  @MessagePattern(PS<%= constantName %>.FINDALL)
+  async findAll(filterConfig: FindAllVm): Promise<<%= className %>Vm[]> {
+    try {
+      const vmInstance = await this._<%= propertyName %>DomainService.findAll(filterConfig);
+      if (!vmInstance) return;
+      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm[]>(
+        vmInstance.map((v) => v.toJSON())
+      );
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }
+
+  // Subscriber for Message Pattern PS<%= constantName %>.FINDID
+  @MessagePattern(PS<%= constantName %>.FINDID)
+  async findById(findByIdVm: FindByIdVm): Promise<<%= className %>Vm> {
+    try {
+      const vmInstance = await this._<%= propertyName %>DomainService.findById(findByIdVm);
+      if (!vmInstance) return;
+      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
+        vmInstance.toJSON()
+      );
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }
+
+  // Subscriber for Message Pattern PS<%= constantName %>.FINDONE
+  @MessagePattern(PS<%= constantName %>.FINDONE)
+  async findOne(findOneVm: FindOneVm): Promise<<%= className %>Vm> {
+    try {
+      const vmInstance = await this._<%= propertyName %>DomainService.findOne(findOneVm);
+      if (!vmInstance) return;
+      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
+        vmInstance.toJSON()
+      );
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }
+
+  // Subscriber for Message Pattern PS<%= constantName %>.UPDATE
+  @MessagePattern(PS<%= constantName %>.UPDATE)
+  async update({
+    id,
+    modifier,
+  }: {
+    id: string;
+    modifier: MongooseUpdateQuery<any>;
+  }): Promise<<%= className %>Vm> {
+    try {
+      const vmInstance = await this._<%= propertyName %>DomainService.update(id, modifier);
+      if (!vmInstance) return;
+      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
+        vmInstance.toJSON()
+      );
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }
+  // Subscriber for Message Pattern PS<%= constantName %>.UPDATEDEEP
+  @MessagePattern(PS<%= constantName %>.UPDATEDEEP)
+  async updateDeep({
+    selector,
+    modifier,
+  }: {
+    selector: any;
+    modifier: MongooseUpdateQuery<any>;
+  }): Promise<<%= className %>Vm> {
+    try {
+      const vmInstance = await this._<%= propertyName %>DomainService.updateDeep(selector, modifier);
+      if (!vmInstance) return;
+      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
+        vmInstance.toJSON()
+      );
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }
+
+  // Subscriber for Message Pattern PS<%= constantName %>.DELETE
+  @MessagePattern(PS<%= constantName %>.DELETE)
+  async delete(id: string): Promise<<%= className %>Vm> {
+    try {
+      const vmInstance = await this._<%= propertyName %>DomainService.delete(id);
+      if (!vmInstance) return;
+      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
+        vmInstance.toJSON()
+      );
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }
+
+  // Subscriber for Message Pattern PS<%= constantName %>.CREATE
+  @MessagePattern(PS<%= constantName %>.CREATE)
+  async create(_item: <%= className %>CreateVm) {
+    const item = await this._<%= propertyName %>DomainService.map<<%= className %>>(
+      _item,
+      false,
+      '<%= className %>Vm',
+      '<%= className %>'
+    );
+    try {
+      const vmInstance = await this._<%= propertyName %>DomainService.create(item);
+      if (!vmInstance) throw new RpcException('No <%= className %> Instance Created');
+      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
+        vmInstance.toJSON()
+      );
+    } catch (e) {
+      this.logger.error(e);
+      throw new RpcException("Coudn't Create <%= className %>");
+    }
+  }
+
+  // Subscriber for Message Pattern PS<%= constantName %>.DOCCOUNT
+  @MessagePattern(PS<%= constantName %>.DOCCOUNT)
+  async getDocumentCount(filter: any): Promise<number> {
+    try {
+      return await this._<%= propertyName %>DomainService.getDocumentCount(filter);
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }
+}

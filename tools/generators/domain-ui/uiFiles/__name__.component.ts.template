@@ -1,0 +1,73 @@
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import { <%= className %>Status, TemplateOptionsVmFlex } from '@ecommerce/ui-services/client-api';
+
+import {Subject} from 'rxjs';
+import { FormlyFieldConfig } from '@ngx-formly/core';
+import { EnumToArray } from '@ecommerce/utils/erum-to-array';
+
+
+
+@Component({
+  selector: 'comp-<%= fileName %>',
+  templateUrl: './<%= fileName %>.component.html',
+  styleUrls: ['./<%= fileName %>.component.scss'],
+})
+export class <%= className %>Component implements OnInit, OnDestroy {
+  pageLabel = '<%= className %>';
+  filter = {};
+  unSubAll: Subject<any> = new Subject();
+
+ public controls: any[] = [
+    {
+      label: 'Name',
+      value: 'name',
+      transform: (v: string) =>
+        !!v ? {name: {$regex: v, $options: 'i'}} : {name: undefined},
+    },
+    {
+      label: 'Status',
+      value: 'status',
+      transform: (v: string) => (!!v ? {status: v} : {status: undefined}),
+    },
+  ];
+  public fields: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row row-wrap',
+      fieldGroup: [
+        {
+          type: 'input',
+          key: 'name',
+          className: TemplateOptionsVmFlex.Flex25,
+          templateOptions: {
+            type: 'text',
+            label: 'Name',
+          },
+        },
+        {
+          type: 'select',
+          key: 'status',
+          className: TemplateOptionsVmFlex.Flex25,
+          templateOptions: {
+            type: 'text',
+            label: 'Status',
+            options: EnumToArray(<%= className %>Status).map(v => ({label: v, value: v}))
+          },
+        },
+      ],
+    },
+  ];
+
+  constructor() {}
+
+  ngOnInit(): void {
+    // Add Init Logic here...
+  }
+  onFilterChange(filter: any = {}) {
+    this.filter = {...filter};
+  }
+  onExport() {}
+  ngOnDestroy() {
+    this.unSubAll.next();
+    this.unSubAll.complete();
+  }
+}

@@ -1,0 +1,18 @@
+<div class="page-layout simple fullwidth with-table">
+  <!-- HEADER -->
+  <div class="header accent p-24" fxLayout="row" fxLayoutAlign="start center">
+    <app-filter-toolbar 
+    [title]="pageLabel" 
+    [controls]= "controls"
+    [staticControls]="true"
+    [fields]="fields"
+    (onFilterChange)="onFilterChange($event)"
+    (exportCsv)="onExport()"
+      >
+    </app-filter-toolbar>
+  </div>
+  <!-- / HEADER -->
+  <div class="content p-24">
+    <comp-<%= fileName %>-list [filter]="filter"></comp-<%= fileName %>-list>
+  </div>
+</div>

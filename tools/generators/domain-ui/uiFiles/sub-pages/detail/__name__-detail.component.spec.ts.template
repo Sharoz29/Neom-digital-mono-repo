@@ -1,0 +1,25 @@
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+
+import { <%= className %>DetailComponent } from './<%= fileName %>-detail.component';
+
+describe('<%= className %>DetailComponent', () => {
+  let component: <%= className %>DetailComponent;
+  let fixture: ComponentFixture<<%= className %>DetailComponent>;
+
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [ <%= className %>DetailComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(<%= className %>DetailComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

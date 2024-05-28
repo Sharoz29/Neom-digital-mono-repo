@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { <%= className %>RoutingModule } from './<%= fileName %>-routing.module';
+import { <%= className %>Component } from './<%= fileName %>.component';
+import { <%= className %>ListModule } from './components/list/<%= fileName %>-list.module';
+import { ConfirmDialogModule } from '@ecommerce/ui-components/components/modals/confirm-dialog/confirm-dialog.module';
+import { FilterToolbarModule } from '@ecommerce/ui-components/components/filter-toolbar/filter-toolbar.module';
+
+
+@NgModule({
+  declarations: [<%= className %>Component],
+  imports: [
+    CommonModule,
+    <%= className %>RoutingModule,
+    <%= className %>ListModule,
+    ConfirmDialogModule,
+    FilterToolbarModule,
+  ],
+})
+export class <%= className %>Module {}

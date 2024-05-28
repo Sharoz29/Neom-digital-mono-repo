@@ -1,0 +1,57 @@
+{
+  "cli": "nx",
+  "id": "domain",
+  "type": "object",
+  "properties": {
+     "name": {
+      "description": "The name of the module.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?"
+    },
+    "skipFormat": {
+      "description": "Skip formatting files.",
+      "type": "boolean",
+      "default": false
+    },
+    "createDomainFiles": {
+      "description": "Create domain",
+      "type": "boolean",
+      "default": true
+    },
+    "createModelFiles": {
+      "description": "Create models",
+      "type": "boolean",
+      "default": true
+    },
+    "createEndpoints": {
+      "description": "Create Endpoint Files",
+      "type": "boolean",
+      "default": false
+    },
+    "importInClientApi": {
+      "description": "Import Endpoints in Client API Module",
+      "type": "boolean",
+      "default": false
+    },
+    "importInDBWorker": {
+      "description": "Import Domain Module in ApiRootDomainModule",
+      "type": "boolean",
+      "default": false
+    },
+    "createUiFeature": {
+      "description": "Create UI Feature Module Files",
+      "type": "boolean",
+      "default": false
+    },
+    "createUiRouteInCms": {
+      "description": "Create Route for UI Feature in CMS Frontend",
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": ["name"]
+}

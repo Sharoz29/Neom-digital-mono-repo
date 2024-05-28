@@ -1,0 +1,14 @@
+:host {
+  .status{
+    display: block;
+    margin: 0rem;
+    width: 7.2rem;
+    max-width: 7.2rem;
+    min-width: 7.2rem;
+  }
+  .fab {
+    position: absolute;
+    right: 8rem;
+    top: 5rem;
+  }
+}

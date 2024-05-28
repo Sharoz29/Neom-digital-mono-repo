@@ -1,0 +1,128 @@
+<div class="mat-elevation-z8 full-width">
+  <table mat-table class="full-width" matSort aria-label="Elements">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef class="w-10-p">
+        <mat-checkbox
+          (change)="$event ? onMasterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected"
+          [indeterminate]="selection.hasValue() && !isAllSelected"
+        >
+      </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row" class="w-10-p">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td style="cursor: pointer;" mat-cell *matCellDef="let row">
+        <a class="grey-900-fg" [routerLink]="['detail', row?.id]"  [state]="{ selected:row}">
+          {{ row.name }}
+        </a>
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let row">
+        <span 
+        [class]="'status text-boxed text-center text-uppercase grey-50-fg ' + getStatusColorClass(row)">{{getStatus(row)}}</span>
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>
+        Actions
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          *ngIf="isAdmin"
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Edit Page Options"
+          (click)="onStopPropogation($event)"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button> 
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onGoTo(row)">
+            <mat-icon>search</mat-icon>
+            <span>View</span>
+          </button>
+          <button #editBtn mat-menu-item (click)="onEdit($event, editBtn, row)">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button #deleteBtn mat-menu-item (click)="onDelete($event, deleteBtn, row)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+
+        <!-- <button
+          *ngIf="isAdmin"
+          mat-stroked-button
+          color="accent"
+          (click)="onGoTo(row)"
+        >
+          View
+        </button>
+        <button
+          #editBtn
+          mat-stroked-button
+          *ngIf="isAdmin"
+          (click)="onEdit($event, editBtn, row)"
+          color="primary"
+        >
+          Edit
+        </button>
+        <button
+          #deleteBtn
+          mat-stroked-button
+          *ngIf="isAdmin"
+          color="warn"
+          (click)="onDelete($event, deleteBtn, row)"
+        >
+          Delete
+        </button> -->
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    #paginator
+    [length]="docCount"
+    [pageIndex]="pageIndex"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10]"
+  >
+  </mat-paginator>
+</div>
+
+<button
+  #submitBtn
+  mat-fab
+  class="fab"
+  color="warn"
+  aria-label="Pay Now"
+  (click)="onCreate($event, submitBtn)"
+>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-icon>add</mat-icon>
+  </div>
+</button>

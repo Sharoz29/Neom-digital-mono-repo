@@ -1,3 +1,4 @@
+import { UserModule } from './user/user.module';
 import { Module } from '@nestjs/common';
 import { redisStore } from 'cache-manager-redis-store';
 import { CacheModule, CacheStore } from '@nestjs/cache-manager';
@@ -5,12 +6,13 @@ import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { environment } from "@neom/shared/lib/environments/dev";
+import { environment } from '@neom/shared/lib/environments/dev';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 
 @Module({
   imports: [
+    UserModule,
 
     CacheModule.registerAsync({
       // imports: [ConfigModule],
@@ -21,7 +23,7 @@ import { RMQQueues } from '@neom/shared';
             port: environment.redis.port,
           },
         });
-    
+
         return {
           store: store as unknown as CacheStore,
           ttl: 60 * 60 * 24 * 7,
@@ -37,15 +39,13 @@ import { RMQQueues } from '@neom/shared';
           urls: [environment.rabbitmq.url],
           queue: RMQQueues.PY_WORKER_QUEUE,
           queueOptions: {
-            durable: false
+            durable: false,
           },
         },
       },
     ]),
   ],
   controllers: [AppController],
-  providers: [AppService,
-    
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

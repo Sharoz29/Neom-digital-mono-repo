@@ -1,0 +1,24 @@
+<div id="<%= fileName %>" class="modern page-layout blank" fxLayout="row">
+  <div class="<%= fileName %>-container">
+    <!-- <%= className %> -->
+    <div class="card">
+      <div class="header" fxLayout="row" fxLayoutAlign="space-between start">
+        <div class="text">Something as header</div>
+      </div>
+
+      <div class="content">
+        <div class="text">
+          <span>Name:</span>
+          <div class="span">{{<%= propertyName %>?.name}}</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="text">footer comes here...</div>
+      </div>
+
+     
+    </div>
+    <!-- / <%= className %> -->
+  </div>
+</div>

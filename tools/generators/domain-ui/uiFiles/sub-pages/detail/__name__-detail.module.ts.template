@@ -1,0 +1,24 @@
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+
+import {<%= className %>DetailRoutingModule} from './<%= fileName %>-detail-routing.module';
+import {<%= className %>DetailComponent} from './<%= fileName %>-detail.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDividerModule} from '@angular/material/divider';
+
+@NgModule({
+  declarations: [<%= className %>DetailComponent],
+  imports: [
+    CommonModule,
+    <%= className %>DetailRoutingModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    FlexLayoutModule,
+    MatDividerModule,
+  ],
+})
+export class <%= className %>DetailModule {}

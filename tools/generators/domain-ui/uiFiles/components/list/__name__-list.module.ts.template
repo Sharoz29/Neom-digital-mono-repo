@@ -1,0 +1,35 @@
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {<%= className %>ListComponent} from './<%= fileName %>-list.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatIconModule} from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { RouterModule } from '@angular/router';
+import { GenericFormlyModalModule } from '@ecommerce/ui-components/components/modals/generic-formly-modal';
+
+
+@NgModule({
+  declarations: [<%= className %>ListComponent],
+  exports: [<%= className %>ListComponent],
+  imports: [
+    CommonModule,
+    FlexLayoutModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatSnackBarModule,
+    MatIconModule,
+    RouterModule,
+    GenericFormlyModalModule,
+  ],
+})
+export class <%= className %>ListModule {}

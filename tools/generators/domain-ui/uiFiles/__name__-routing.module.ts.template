@@ -1,0 +1,30 @@
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+
+import {<%= className %>Component} from './<%= fileName %>.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '0',
+    pathMatch: 'full',
+  },
+  {
+    path: ':page',
+    component: <%= className %>Component,
+    pathMatch: 'full',
+  },
+  {
+    path: ':page/detail',
+    loadChildren: () =>
+      import('./sub-pages/detail/<%= fileName %>-detail.module').then(
+        (m) => m.<%= className %>DetailModule
+      ),
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class <%= className %>RoutingModule {}

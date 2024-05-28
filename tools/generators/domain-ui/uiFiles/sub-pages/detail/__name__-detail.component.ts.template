@@ -1,0 +1,61 @@
+import {Component, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
+import {
+  <%= className %>Vm,
+  <%= className %>ApiControllerClient,
+} from '@ecommerce/ui-services/client-api';
+import {Subject} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FuseProgressBarService} from '@ecommerce/ui-services/fuse';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {takeUntil, tap, switchMap, map} from 'rxjs/operators';
+
+@Component({
+  selector: 'comp-<%= fileName %>-detail',
+  templateUrl: './<%= fileName %>-detail.component.html',
+  styleUrls: ['./<%= fileName %>-detail.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+})
+export class <%= className %>DetailComponent implements OnInit, OnDestroy {
+  <%= propertyName %>: <%= className %>Vm
+  unSubAll: Subject<any> = new Subject();
+  constructor(
+    private readonly _route: ActivatedRoute,
+    private readonly _router: Router,
+    private readonly _loadingService: FuseProgressBarService,
+    private readonly _<%= propertyName %>Service: <%= className %>ApiControllerClient,
+    private readonly _snackBar: MatSnackBar
+  ) {
+
+    this._route.paramMap.pipe(
+      map(() => window.history.state),
+      tap((v: {selected: <%= className %>Vm}) => (this.<%= propertyName %> = v.selected))
+    ).subscribe();
+  }
+
+  ngOnInit(): void {
+    this._route.paramMap
+      .pipe(
+        takeUntil(this.unSubAll),
+        tap(() => this._loadingService.show()),
+        switchMap((param) =>
+          this._<%= propertyName %>Service.findById(
+            param.get('id')
+          )
+        ),
+        tap((val) => (this.<%= propertyName %> = val)),
+        tap(() => this._loadingService.hide())
+      )
+      .subscribe(null, this._handleError);
+  }
+  onGoBack() {
+    this._router.navigate(['../..'], {relativeTo: this._route});
+  }
+  private _handleError = (e) => {
+    this._snackBar.open(e.message, 'Ok', {verticalPosition: 'top'});
+    this._loadingService.hide();
+  };
+  ngOnDestroy() {
+    this.unSubAll.next();
+    this.unSubAll.complete();
+  }
+}

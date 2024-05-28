@@ -1,0 +1,84 @@
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnChanges,
+  OnDestroy,
+  ViewChild,
+  Input,
+} from '@angular/core';
+// Remove above imports errors by running "npm run nswag:client"
+
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTable} from '@angular/material/table';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {FuseProgressBarService} from '@ecommerce/ui-services/fuse';
+import {AuthService} from '@ecommerce/ui-services/auth/auth.service';
+
+// tslint:disable-next-line: import-blacklist
+import { BaseListComponent } from '@ecommerce/ui-features/data-sources/base-list.component';
+import {
+  <%= className %>Vm,
+  <%= className %>ApiControllerClient,
+  <%= className %>Status,
+} from '@ecommerce/ui-services/client-api';
+// Remove above imports errors by running "npm run nswag:client"
+
+
+@Component({
+  selector: 'comp-<%= fileName %>-list',
+  templateUrl: './<%= fileName %>-list.component.html',
+  styleUrls: ['./<%= fileName %>-list.component.scss'],
+})
+export class <%= className %>ListComponent
+  extends BaseListComponent<<%= className %>Vm>
+  implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<<%= className %>Vm>;
+
+  @Input() filter: any;
+  constructor(
+    protected readonly <%= propertyName %>Service: <%= className %>ApiControllerClient,
+    protected readonly authService: AuthService,
+    protected readonly router: Router,
+    protected readonly route: ActivatedRoute,
+    protected readonly snackBar: MatSnackBar,
+    protected readonly dialog: MatDialog,
+    protected readonly loadingService: FuseProgressBarService
+  ) {
+    super(
+      <%= propertyName %>Service,
+      authService,
+      router,
+      route,
+      snackBar,
+      dialog,
+      loadingService
+    );
+  }
+  /*********************Overrides of Base Class Functions **********************/
+
+  /*****************Custom Methods********************/
+  getStatusColorClass(<%= propertyName %>: <%= className %>Vm) {
+    switch (true) {
+      case <%= className %>Status.Done === <%= propertyName %>.status:
+        return 'green-700-bg';
+      case <%= className %>Status.Pending === <%= propertyName %>.status:
+        return 'grey-700-bg';
+      case <%= className %>Status.Doing === <%= propertyName %>.status:
+        return 'red-700-bg';
+      case <%= className %>Status.Archived === <%= propertyName %>.status:
+        return 'orange-700-bg';
+
+      default:
+        return 'grey-700-bg';
+    }
+  }
+  getStatus(<%= propertyName %>: <%= className %>Vm): <%= className %>Status {
+    return <%= propertyName %>.status;
+  }
+}

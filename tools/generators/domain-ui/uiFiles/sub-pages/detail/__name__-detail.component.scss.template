@@ -1,0 +1,74 @@
+@import 'libs/fuse/src/lib/scss/fuse';
+
+comp-<%= fileName %>-detail {
+  #<%= fileName %> {
+    &.modern {
+      padding: 0;
+
+      .<%= fileName %>-container {
+        padding: 64px;
+        margin: 0 auto;
+
+        .card {
+          width: 1020px;
+          min-width: 1020px;
+          max-width: 1020px;
+          padding: 88px;
+          overflow: hidden;
+          background: #ffffff;
+          @include mat-elevation(7);
+
+          .header {
+            .text {
+              font-size: 18px;
+            }
+            
+          }
+
+          .content {
+            .text{
+              font-size: 14px;
+            }
+          }
+
+          .footer {
+            .text{
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* PRINT STYLES */
+  @media print {
+    /* Invoice Specific Styles */
+    #<%= fileName %> {
+      &.modern {
+        background: white;
+
+        .<%= fileName %>-container {
+          padding: 0;
+
+          .card {
+            width: 100%;
+            min-width: 0;
+            background: none;
+            padding: 0;
+            box-shadow: none;
+
+            .header {
+            }
+
+            .content {
+            }
+
+            .footer {
+            }
+          }
+        }
+      }
+    }
+  }
+}

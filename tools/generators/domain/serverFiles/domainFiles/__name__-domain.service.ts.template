@@ -1,0 +1,22 @@
+import { BaseDomainService } from '@api-models/shared/base-domain.service';
+import { MapperService } from '@api-models/shared/mapper/mapper.service';
+import { <%= className %> } from '@models';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { ModelType } from 'typegoose';
+
+// Extending from BaseDomainService to get Basic Functionality for CRUD
+@Injectable()
+export class <%= className %>DomainService extends BaseDomainService<<%= className %>> {
+  constructor(
+    @InjectModel(<%= className %>.modelName)
+    private readonly _<%= propertyName %>Model: ModelType<<%= className %>>,     private readonly _mapperService: MapperService,
+)
+  {
+    super(_<%= propertyName %>Model, _mapperService.mapper);
+  }
+
+  /**
+   * Specialized Methods Come below:
+   */
+}

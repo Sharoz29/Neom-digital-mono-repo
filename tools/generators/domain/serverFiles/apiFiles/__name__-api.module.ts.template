@@ -1,0 +1,34 @@
+import {Module, CacheModule} from '@nestjs/common';
+import * as redisStore from 'cache-manager-redis-store';
+import {<%= className %>ApiController} from './<%= fileName %>-api.controller';
+import {<%= className %>ApiService} from './<%= fileName %>-api.service';
+
+import { ClientsModule } from '@nestjs/microservices';
+import {ParseObjectPipe} from '@api-gateway/shared/pipes/jsonToObject';
+import {FetchCountPipe} from '@api-gateway/shared/pipes/fetchCount';
+import { environment } from '@ecommerce/environments/environment';
+
+@Module({
+  imports: [
+     ClientsModule.register([
+      {
+        name: CLIENT_PROXY,
+        ...environment.redisTransportOptions,
+      },
+    ]),
+    // Use Cache Module to enable API/Endpoint Caching
+    CacheModule.register({
+      store: redisStore,
+      ttl: 30,
+      host: environment.redisHost,
+      port: parseInt(environment.redisPort, 10),
+    }),
+  ],
+  controllers: [<%= className %>ApiController],
+  providers: [
+    <%= className %>ApiService,
+    ParseObjectPipe,
+    FetchCountPipe,
+  ],
+})
+export class <%= className %>ApiModule {}

@@ -6140,6 +6140,15 @@
         "hash": "sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA=="
       }
     },
+    "npm:@microsoft/tsdoc": {
+      "type": "npm",
+      "name": "npm:@microsoft/tsdoc",
+      "data": {
+        "version": "0.14.2",
+        "packageName": "@microsoft/tsdoc",
+        "hash": "sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug=="
+      }
+    },
     "npm:@mole-inc/bin-wrapper": {
       "type": "npm",
       "name": "npm:@mole-inc/bin-wrapper",
@@ -6246,6 +6255,15 @@
         "version": "0.1.7",
         "packageName": "path-to-regexp",
         "hash": "sha512-5DFkuoqlv1uYQKxy8omFBeJPQcdoE07Kv2sferDCrAq1ohOU+MSDswDIbnx3YAM60qIOnYa53wBhXW0EbMonrQ=="
+      }
+    },
+    "npm:@nestjs/mapped-types": {
+      "type": "npm",
+      "name": "npm:@nestjs/mapped-types",
+      "data": {
+        "version": "2.0.5",
+        "packageName": "@nestjs/mapped-types",
+        "hash": "sha512-bSJv4pd6EY99NX9CjBIyn4TVDoSit82DUZlL4I3bqNfy5Gt+gXTa86i3I/i0iIV9P4hntcGM5GyO+FhZAhxtyg=="
       }
     },
     "npm:@nestjs/microservices": {
@@ -6408,6 +6426,15 @@
         "version": "0.30.10",
         "packageName": "magic-string",
         "hash": "sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ=="
+      }
+    },
+    "npm:@nestjs/swagger": {
+      "type": "npm",
+      "name": "npm:@nestjs/swagger",
+      "data": {
+        "version": "7.3.1",
+        "packageName": "@nestjs/swagger",
+        "hash": "sha512-LUC4mr+5oAleEC/a2j8pNRh1S5xhKXJ1Gal5ZdRjt9XebQgbngXCdW7JTA9WOEcwGtFZN9EnKYdquzH971LZfw=="
       }
     },
     "npm:@nestjs/testing": {
@@ -17534,6 +17561,15 @@
         "hash": "sha512-OoohrmuUlBs8B8o6MB2Aevn+pRIH9zDALSR+6hhqVfa6fRwG/Qw9VUMSMW9VNg2CFc/MTIfabtdOVl9ODIJjpw=="
       }
     },
+    "npm:swagger-ui-dist": {
+      "type": "npm",
+      "name": "npm:swagger-ui-dist",
+      "data": {
+        "version": "5.11.2",
+        "packageName": "swagger-ui-dist",
+        "hash": "sha512-jQG0cRgJNMZ7aCoiFofnoojeSaa/+KgWaDlfgs8QN+BXoGMpxeMVY5OEnjq4OlNvF3yjftO8c9GRAgcHlO+u7A=="
+      }
+    },
     "npm:symbol-observable": {
       "type": "npm",
       "name": "npm:symbol-observable",
@@ -18725,6 +18761,11 @@
       },
       {
         "source": "api-gateway",
+        "target": "npm:@nestjs/swagger",
+        "type": "static"
+      },
+      {
+        "source": "api-gateway",
         "target": "npm:cache-manager-redis-store",
         "type": "static"
       },
@@ -18741,6 +18782,11 @@
       {
         "source": "api-gateway",
         "target": "npm:rxjs",
+        "type": "static"
+      },
+      {
+        "source": "api-gateway",
+        "target": "nst-libs",
         "type": "static"
       },
       {
@@ -19066,6 +19112,11 @@
       {
         "source": "@neom-digital/source",
         "target": "npm:@nestjs/platform-express",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nestjs/swagger",
         "type": "static"
       },
       {
@@ -19436,6 +19487,21 @@
       {
         "source": "@neom-digital/source",
         "target": "npm:webpack-cli",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nrwl/devkit",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@phenomnomnominal/tsquery",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nrwl/angular",
         "type": "static"
       }
     ],
@@ -25514,6 +25580,18 @@
         "type": "static"
       }
     ],
+    "npm:@nestjs/mapped-types": [
+      {
+        "source": "npm:@nestjs/mapped-types",
+        "target": "npm:@nestjs/common",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/mapped-types",
+        "target": "npm:reflect-metadata",
+        "type": "static"
+      }
+    ],
     "npm:@nestjs/microservices": [
       {
         "source": "npm:@nestjs/microservices",
@@ -25891,6 +25969,53 @@
       {
         "source": "npm:magic-string@0.30.5",
         "target": "npm:@jridgewell/sourcemap-codec",
+        "type": "static"
+      }
+    ],
+    "npm:@nestjs/swagger": [
+      {
+        "source": "npm:@nestjs/swagger",
+        "target": "npm:@nestjs/common",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/swagger",
+        "target": "npm:@nestjs/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/swagger",
+        "target": "npm:reflect-metadata",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/swagger",
+        "target": "npm:@microsoft/tsdoc",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/swagger",
+        "target": "npm:@nestjs/mapped-types",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/swagger",
+        "target": "npm:js-yaml@4.1.0",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/swagger",
+        "target": "npm:lodash",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/swagger",
+        "target": "npm:path-to-regexp@3.2.0",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nestjs/swagger",
+        "target": "npm:swagger-ui-dist",
         "type": "static"
       }
     ],
