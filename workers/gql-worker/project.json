@@ -1,0 +1,31 @@
+{
+  "name": "gql-worker",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "workers/gql-worker/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "gql-worker:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "gql-worker:build:development"
+        },
+        "production": {
+          "buildTarget": "gql-worker:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "workers/gql-worker/jest.config.ts"
+      }
+    }
+  }
+}

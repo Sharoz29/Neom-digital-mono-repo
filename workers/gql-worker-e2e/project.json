@@ -1,0 +1,17 @@
+{
+  "name": "gql-worker-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "implicitDependencies": ["gql-worker"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
+      "options": {
+        "jestConfig": "workers/gql-worker-e2e/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "dependsOn": ["gql-worker:build"]
+    }
+  }
+}

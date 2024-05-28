@@ -1,0 +1,16 @@
+{
+  "name": "rt-rai",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/rt-rai/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/rt-rai/jest.config.ts"
+      }
+    }
+  }
+}

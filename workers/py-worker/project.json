@@ -1,0 +1,31 @@
+{
+  "name": "py-worker",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "workers/py-worker/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "py-worker:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "py-worker:build:development"
+        },
+        "production": {
+          "buildTarget": "py-worker:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "workers/py-worker/jest.config.ts"
+      }
+    }
+  }
+}
