@@ -7,21 +7,22 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
+      "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/ng-rai",
         "index": "apps/ng-rai/src/index.html",
-        "browser": "apps/ng-rai/src/main.ts",
+        "main": "apps/ng-rai/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/ng-rai/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
             "input": "apps/ng-rai/public"
           }
         ],
-        "styles": ["apps/ng-rai/src/styles.css"],
+        "styles": ["apps/ng-rai/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -41,9 +42,12 @@
           "outputHashing": "all"
         },
         "development": {
+          "buildOptimizer": false,
           "optimization": false,
+          "vendorChunk": true,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "namedChunks": true
         }
       },
       "defaultConfiguration": "production"
@@ -58,7 +62,10 @@
           "buildTarget": "ng-rai:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "options": {
+        "proxyConfig": "apps/ng-rai/proxy.conf.json"
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

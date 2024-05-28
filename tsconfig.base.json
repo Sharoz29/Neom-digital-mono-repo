@@ -15,10 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@neom-digital/ng-ui": ["libs/ng-ui/src/index.ts"],
-      "@neom-digital/nst-libs": ["libs/nst-libs/src/index.ts"],
-      "@neom-digital/rt-ui": ["libs/rt-ui/src/index.ts"],
-      "@neom-digital/utils": ["libs/utils/src/index.ts"]
+      "@neom/ng-ui": ["libs/ng-ui/src/index.ts"],
+      "@neom/nst-libs": ["libs/nst-libs/src/index.ts"],
+      "@neom/nst-libs/*": ["libs/nst-libs/src/*"],
+      "@neom/rt-ui": ["libs/rt-ui/src/index.ts"],
+      "@neom/shared": ["libs/shared/src/index.ts"],
+      "@neom/shared/*": ["libs/shared/src/*"],
+      "@neom/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
