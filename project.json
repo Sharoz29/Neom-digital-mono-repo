@@ -1,5 +1,5 @@
 {
-  "name": "@neom-digital/source",
+  "name": "@neom/source",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "targets": {
     "local-registry": {

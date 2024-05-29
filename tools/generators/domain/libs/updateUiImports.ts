@@ -108,7 +108,7 @@ export function updateNavigation(
             `;
 
         const arrLiteral = declaration.initializer as ArrayLiteralExpression;
-
+        
         if (
           arrLiteral.elements.length > 0 &&
           !newContents.includes(`apps.${pageNames.propertyName}`)

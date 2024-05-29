@@ -17,13 +17,13 @@ export function updateApiImports(
   filePath: string
 ) {
   const fileEntry = tree.read(filePath);
-  const contents = fileEntry.toString();
+  const contents = fileEntry?.toString();
 
   const toInsertModuleStatement = ` ${names(options.name).className}ApiModule,
   `;
 
   const moduleUpdatedContent = tsquery.replace(
-    contents,
+    contents ?? "",
     'PropertyAssignment',
     (node) => {
       let modifiedNode = node.getFullText();

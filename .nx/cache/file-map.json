@@ -18,6 +18,7 @@
     "@nestjs/microservices": "^10.3.8",
     "@nestjs/platform-express": "^10.0.2",
     "@nestjs/swagger": "^7.3.1",
+    "@phenomnomnominal/tsquery": "^6.1.3",
     "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.4",
     "axios": "^1.6.0",
@@ -96,8 +97,11 @@
     "webpack-cli": "^5.1.4"
   },
   "pathMappings": {
-    "@neom/nx-plugins": [
-      "tools/plugins/nx-plugins/src/index.ts"
+    "@neom/api-libs": [
+      "libs/api-libs/src/index.ts"
+    ],
+    "@neom/domain-libs": [
+      "libs/domain-libs/src/index.ts"
     ],
     "@neom/ng-ui": [
       "libs/ng-ui/src/index.ts"
@@ -107,6 +111,9 @@
     ],
     "@neom/nst-libs/*": [
       "libs/nst-libs/src/*"
+    ],
+    "@neom/nx-plugins": [
+      "tools/plugins/nx-plugins/src/index.ts"
     ],
     "@neom/rt-ui": [
       "libs/rt-ui/src/index.ts"
@@ -146,960 +153,6 @@
   "fileMap": {
     "nonProjectFiles": [],
     "projectFileMap": {
-      "rt-super": [
-        {
-          "file": "apps/rt-super/.babelrc",
-          "hash": "13020124393823981135"
-        },
-        {
-          "file": "apps/rt-super/.eslintrc.json",
-          "hash": "11012487992710232822"
-        },
-        {
-          "file": "apps/rt-super/jest.config.ts",
-          "hash": "243120606843697312"
-        },
-        {
-          "file": "apps/rt-super/project.json",
-          "hash": "670610773895415321"
-        },
-        {
-          "file": "apps/rt-super/src/app/app.module.css",
-          "hash": "8887387885984320532"
-        },
-        {
-          "file": "apps/rt-super/src/app/app.spec.tsx",
-          "hash": "7852269818708665042",
-          "deps": [
-            "npm:@testing-library/react"
-          ]
-        },
-        {
-          "file": "apps/rt-super/src/app/app.tsx",
-          "hash": "2051510221768527689"
-        },
-        {
-          "file": "apps/rt-super/src/app/nx-welcome.tsx",
-          "hash": "729168762476089670"
-        },
-        {
-          "file": "apps/rt-super/src/assets/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/rt-super/src/favicon.ico",
-          "hash": "9303420814833116677"
-        },
-        {
-          "file": "apps/rt-super/src/index.html",
-          "hash": "8383608997507682271"
-        },
-        {
-          "file": "apps/rt-super/src/main.tsx",
-          "hash": "4731961929376199421",
-          "deps": [
-            "npm:react",
-            "npm:react-dom"
-          ]
-        },
-        {
-          "file": "apps/rt-super/src/styles.css",
-          "hash": "5195668842064076916"
-        },
-        {
-          "file": "apps/rt-super/tsconfig.app.json",
-          "hash": "15147195313780277677"
-        },
-        {
-          "file": "apps/rt-super/tsconfig.json",
-          "hash": "9850153468027031608"
-        },
-        {
-          "file": "apps/rt-super/tsconfig.spec.json",
-          "hash": "11378287594513225419"
-        },
-        {
-          "file": "apps/rt-super/webpack.config.js",
-          "hash": "5116403521972145269",
-          "deps": [
-            "npm:@nx/webpack",
-            "npm:@nx/react",
-            "npm:path"
-          ]
-        }
-      ],
-      "api-gateway": [
-        {
-          "file": "apps/api-gateway/.eslintrc.json",
-          "hash": "13800677001662881425"
-        },
-        {
-          "file": "apps/api-gateway/jest.config.ts",
-          "hash": "4060546042059009657"
-        },
-        {
-          "file": "apps/api-gateway/project.json",
-          "hash": "9264138769495681460"
-        },
-        {
-          "file": "apps/api-gateway/src/app/app.controller.spec.ts",
-          "hash": "9499997688052526633",
-          "deps": [
-            "npm:@nestjs/testing"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/src/app/app.controller.ts",
-          "hash": "14457219914312217037",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/cache-manager",
-            "npm:@nestjs/swagger"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/src/app/app.module.ts",
-          "hash": "7555893972882752085",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:cache-manager-redis-store",
-            "npm:@nestjs/cache-manager",
-            "shared",
-            "npm:@nestjs/microservices"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/src/app/app.service.spec.ts",
-          "hash": "8587461140686713758",
-          "deps": [
-            "npm:@nestjs/testing"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/src/app/app.service.ts",
-          "hash": "12883102655737081513",
-          "deps": [
-            "shared",
-            "npm:@nestjs/common",
-            "npm:@nestjs/microservices",
-            "npm:rxjs"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/src/app/user/user.controller.ts",
-          "hash": "10551855434028625105",
-          "deps": [
-            "nst-libs",
-            "npm:@nestjs/common",
-            "npm:@nestjs/swagger"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/src/app/user/user.module.ts",
-          "hash": "5031794543851297990",
-          "deps": [
-            "nst-libs",
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/src/app/user/user.service.ts",
-          "hash": "14979655036461966544",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/src/assets/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/api-gateway/src/main.ts",
-          "hash": "5260146121928983321",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/core",
-            "npm:@nestjs/swagger"
-          ]
-        },
-        {
-          "file": "apps/api-gateway/tsconfig.app.json",
-          "hash": "3171572500325445971"
-        },
-        {
-          "file": "apps/api-gateway/tsconfig.json",
-          "hash": "3490524966360018312"
-        },
-        {
-          "file": "apps/api-gateway/tsconfig.spec.json",
-          "hash": "11550347367511341917"
-        },
-        {
-          "file": "apps/api-gateway/webpack.config.js",
-          "hash": "12521784449564697993",
-          "deps": [
-            "npm:@nx/webpack",
-            "npm:path"
-          ]
-        }
-      ],
-      "@neom-digital/source": [
-        {
-          "file": ".eslintignore",
-          "hash": "7663861978715868291"
-        },
-        {
-          "file": ".eslintrc.json",
-          "hash": "746227632153557778"
-        },
-        {
-          "file": ".gitignore",
-          "hash": "8922222514851162188"
-        },
-        {
-          "file": ".prettierignore",
-          "hash": "3395189204293871444"
-        },
-        {
-          "file": ".prettierrc",
-          "hash": "16267754514737964994"
-        },
-        {
-          "file": ".verdaccio/config.yml",
-          "hash": "14993594506392938393"
-        },
-        {
-          "file": ".vscode/extensions.json",
-          "hash": "17425123947026961272"
-        },
-        {
-          "file": ".vscode/settings.json",
-          "hash": "10736989266964588500"
-        },
-        {
-          "file": "jest.config.ts",
-          "hash": "3494843969422251966",
-          "deps": [
-            "npm:@nx/jest"
-          ]
-        },
-        {
-          "file": "jest.preset.js",
-          "hash": "9430166341120122740",
-          "deps": [
-            "npm:@nx/jest"
-          ]
-        },
-        {
-          "file": "nx.json",
-          "hash": "8994299671059685604"
-        },
-        {
-          "file": "package-lock.json",
-          "hash": "15606968159325766500"
-        },
-        {
-          "file": "package.json",
-          "hash": "12002729831875612173",
-          "deps": [
-            "npm:@angular/animations",
-            "npm:@angular/common",
-            "npm:@angular/compiler",
-            "npm:@angular/core",
-            "npm:@angular/forms",
-            "npm:@angular/platform-browser",
-            "npm:@angular/platform-browser-dynamic",
-            "npm:@angular/platform-server",
-            "npm:@angular/router",
-            "npm:@angular/ssr",
-            "npm:@nestjs/cache-manager",
-            "npm:@nestjs/common",
-            "npm:@nestjs/core",
-            "npm:@nestjs/microservices",
-            "npm:@nestjs/platform-express",
-            "npm:@nestjs/swagger",
-            "npm:amqp-connection-manager",
-            "npm:amqplib",
-            "npm:axios",
-            "npm:cache-manager",
-            "npm:cache-manager-redis-store",
-            "npm:express",
-            "npm:react",
-            "npm:react-dom",
-            "npm:reflect-metadata",
-            "npm:rxjs",
-            "npm:tslib",
-            "npm:zone.js",
-            "npm:@angular-devkit/build-angular",
-            "npm:@angular-devkit/core",
-            "npm:@angular-devkit/schematics",
-            "npm:@angular-eslint/eslint-plugin",
-            "npm:@angular-eslint/eslint-plugin-template",
-            "npm:@angular-eslint/template-parser",
-            "npm:@angular/cli",
-            "npm:@angular/compiler-cli",
-            "npm:@angular/language-service",
-            "npm:@babel/core",
-            "npm:@babel/preset-react",
-            "npm:@nestjs/schematics",
-            "npm:@nestjs/testing",
-            "npm:@nx/angular",
-            "npm:@nx/devkit",
-            "npm:@nx/eslint",
-            "npm:@nx/eslint-plugin",
-            "npm:@nx/jest",
-            "npm:@nx/js",
-            "npm:@nx/nest",
-            "npm:@nx/node",
-            "npm:@nx/playwright",
-            "npm:@nx/plugin",
-            "npm:@nx/react",
-            "npm:@nx/web",
-            "npm:@nx/webpack",
-            "npm:@nx/workspace",
-            "npm:@playwright/test",
-            "npm:@pmmmwh/react-refresh-webpack-plugin",
-            "npm:@schematics/angular",
-            "npm:@svgr/webpack",
-            "npm:@swc-node/register",
-            "npm:@swc/cli",
-            "npm:@swc/core",
-            "npm:@swc/helpers",
-            "npm:@testing-library/react",
-            "npm:@types/express",
-            "npm:@types/jest",
-            "npm:@types/node",
-            "npm:@types/react",
-            "npm:@types/react-dom",
-            "npm:@typescript-eslint/eslint-plugin",
-            "npm:@typescript-eslint/parser",
-            "npm:babel-jest",
-            "npm:browser-sync",
-            "npm:eslint",
-            "npm:eslint-config-prettier",
-            "npm:eslint-plugin-import",
-            "npm:eslint-plugin-jsx-a11y",
-            "npm:eslint-plugin-playwright",
-            "npm:eslint-plugin-react",
-            "npm:eslint-plugin-react-hooks",
-            "npm:jest",
-            "npm:jest-environment-jsdom",
-            "npm:jest-environment-node",
-            "npm:jest-preset-angular",
-            "npm:nx",
-            "npm:prettier",
-            "npm:react-refresh",
-            "npm:ts-jest",
-            "npm:ts-node",
-            "npm:typescript",
-            "npm:verdaccio",
-            "npm:webpack-cli"
-          ]
-        },
-        {
-          "file": "project.json",
-          "hash": "1657043811386720820"
-        },
-        {
-          "file": "tools/generators/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "tools/generators/domain-ui/index.ts",
-          "hash": "5495776614953761703",
-          "deps": [
-            "npm:@nrwl/devkit",
-            "npm:path"
-          ]
-        },
-        {
-          "file": "tools/generators/domain-ui/libs/updateUiImports.ts",
-          "hash": "9684445295815960528",
-          "deps": [
-            "npm:@nrwl/devkit",
-            "npm:@phenomnomnominal/tsquery",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "tools/generators/domain-ui/libs/utils.ts",
-          "hash": "9304009362356063441"
-        },
-        {
-          "file": "tools/generators/domain-ui/schema.json",
-          "hash": "4430683723690674472"
-        },
-        {
-          "file": "tools/generators/domain-ui/schema.ts",
-          "hash": "7413302915604684598"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/__name__-routing.module.ts.template",
-          "hash": "6562948310441723117"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/__name__.component.html.template",
-          "hash": "9502222834462627710"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/__name__.component.scss.template",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/__name__.component.spec.ts.template",
-          "hash": "3952961118423273323"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/__name__.component.ts.template",
-          "hash": "3059155637349585451"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/__name__.module.ts.template",
-          "hash": "13691850181236620137"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.component.html.template",
-          "hash": "12142802048046549599"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.component.scss.template",
-          "hash": "6740298508712631489"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.component.spec.ts.template",
-          "hash": "11690392535366895204"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.component.ts.template",
-          "hash": "10070975983485026570"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.module.ts.template",
-          "hash": "665422951425433199"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail-routing.module.ts.template",
-          "hash": "7618778769536152062"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.component.html.template",
-          "hash": "8659585628579205271"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.component.scss.template",
-          "hash": "12101141737552678125"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.component.spec.ts.template",
-          "hash": "15649737556237779153"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.component.ts.template",
-          "hash": "1395766794103578361"
-        },
-        {
-          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.module.ts.template",
-          "hash": "5630521076271210905"
-        },
-        {
-          "file": "tools/generators/domain/index.ts",
-          "hash": "15255894930956388737",
-          "deps": [
-            "npm:@nrwl/devkit",
-            "npm:@nrwl/angular",
-            "npm:@angular-devkit/schematics",
-            "npm:path"
-          ]
-        },
-        {
-          "file": "tools/generators/domain/libs/updateApiImports.ts",
-          "hash": "17933976821661298012",
-          "deps": [
-            "npm:@nrwl/devkit",
-            "npm:@phenomnomnominal/tsquery",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "tools/generators/domain/libs/updateDomainImports.ts",
-          "hash": "7915387883368042166",
-          "deps": [
-            "npm:@nrwl/devkit",
-            "npm:@phenomnomnominal/tsquery",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "tools/generators/domain/libs/updateMapperService.ts",
-          "hash": "1598966561503695601",
-          "deps": [
-            "npm:@nrwl/devkit",
-            "npm:@phenomnomnominal/tsquery",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "tools/generators/domain/libs/updateModelImports.ts",
-          "hash": "5003408983383016827",
-          "deps": [
-            "npm:@nrwl/devkit",
-            "npm:@phenomnomnominal/tsquery",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "tools/generators/domain/libs/updateUiImports.ts",
-          "hash": "4203474228370880004",
-          "deps": [
-            "npm:@nrwl/devkit",
-            "npm:@phenomnomnominal/tsquery",
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "tools/generators/domain/libs/utils.ts",
-          "hash": "9304009362356063441"
-        },
-        {
-          "file": "tools/generators/domain/schema.json",
-          "hash": "2913951267403040385"
-        },
-        {
-          "file": "tools/generators/domain/schema.ts",
-          "hash": "7407306289184377514"
-        },
-        {
-          "file": "tools/generators/domain/serverFiles/apiFiles/__name__-api.controller.ts.template",
-          "hash": "7600429949370898091"
-        },
-        {
-          "file": "tools/generators/domain/serverFiles/apiFiles/__name__-api.module.ts.template",
-          "hash": "17271335709408783018"
-        },
-        {
-          "file": "tools/generators/domain/serverFiles/apiFiles/__name__-api.service.ts.template",
-          "hash": "12175401343978394311"
-        },
-        {
-          "file": "tools/generators/domain/serverFiles/domainFiles/__name__-domain.controller.ts.template",
-          "hash": "879735772243659116"
-        },
-        {
-          "file": "tools/generators/domain/serverFiles/domainFiles/__name__-domain.module.ts.template",
-          "hash": "8983587820079566376"
-        },
-        {
-          "file": "tools/generators/domain/serverFiles/domainFiles/__name__-domain.service.ts.template",
-          "hash": "9530316299598715369"
-        },
-        {
-          "file": "tsconfig.base.json",
-          "hash": "4636527466892456385"
-        }
-      ],
-      "py-worker": [
-        {
-          "file": "workers/py-worker/.eslintrc.json",
-          "hash": "13800677001662881425"
-        },
-        {
-          "file": "workers/py-worker/jest.config.ts",
-          "hash": "8886075891645523526"
-        },
-        {
-          "file": "workers/py-worker/project.json",
-          "hash": "17345247195838425193"
-        },
-        {
-          "file": "workers/py-worker/src/app/app.controller.spec.ts",
-          "hash": "9499997688052526633",
-          "deps": [
-            "npm:@nestjs/testing"
-          ]
-        },
-        {
-          "file": "workers/py-worker/src/app/app.controller.ts",
-          "hash": "17660078591136265956",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/microservices",
-            "shared"
-          ]
-        },
-        {
-          "file": "workers/py-worker/src/app/app.module.ts",
-          "hash": "5320659636171747217",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "workers/py-worker/src/app/app.service.spec.ts",
-          "hash": "8587461140686713758",
-          "deps": [
-            "npm:@nestjs/testing"
-          ]
-        },
-        {
-          "file": "workers/py-worker/src/app/app.service.ts",
-          "hash": "1130451642599024734",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "workers/py-worker/src/assets/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "workers/py-worker/src/main.ts",
-          "hash": "8545534198048689307",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/core",
-            "npm:@nestjs/microservices",
-            "shared"
-          ]
-        },
-        {
-          "file": "workers/py-worker/tsconfig.app.json",
-          "hash": "3171572500325445971"
-        },
-        {
-          "file": "workers/py-worker/tsconfig.json",
-          "hash": "3490524966360018312"
-        },
-        {
-          "file": "workers/py-worker/tsconfig.spec.json",
-          "hash": "11550347367511341917"
-        },
-        {
-          "file": "workers/py-worker/webpack.config.js",
-          "hash": "10363804586959621512",
-          "deps": [
-            "npm:@nx/webpack",
-            "npm:path"
-          ]
-        }
-      ],
-      "py-worker-e2e": [
-        {
-          "file": "workers/py-worker-e2e/.eslintrc.json",
-          "hash": "13800677001662881425"
-        },
-        {
-          "file": "workers/py-worker-e2e/jest.config.ts",
-          "hash": "13481555051636298373"
-        },
-        {
-          "file": "workers/py-worker-e2e/project.json",
-          "hash": "4299531615336741851"
-        },
-        {
-          "file": "workers/py-worker-e2e/src/py-worker/py-worker.spec.ts",
-          "hash": "110394728024017389",
-          "deps": [
-            "npm:axios"
-          ]
-        },
-        {
-          "file": "workers/py-worker-e2e/src/support/global-setup.ts",
-          "hash": "2568409276037275290"
-        },
-        {
-          "file": "workers/py-worker-e2e/src/support/global-teardown.ts",
-          "hash": "5275447082211835490"
-        },
-        {
-          "file": "workers/py-worker-e2e/src/support/test-setup.ts",
-          "hash": "10984585515912236441",
-          "deps": [
-            "npm:axios"
-          ]
-        },
-        {
-          "file": "workers/py-worker-e2e/tsconfig.json",
-          "hash": "15443990093475294480"
-        },
-        {
-          "file": "workers/py-worker-e2e/tsconfig.spec.json",
-          "hash": "14954872453723519891"
-        }
-      ],
-      "ng-super-e2e": [
-        {
-          "file": "apps/ng-super-e2e/.eslintrc.json",
-          "hash": "632147010597293032"
-        },
-        {
-          "file": "apps/ng-super-e2e/playwright.config.ts",
-          "hash": "11466091568862194324",
-          "deps": [
-            "npm:@playwright/test",
-            "npm:@nx/playwright",
-            "npm:@nx/devkit"
-          ]
-        },
-        {
-          "file": "apps/ng-super-e2e/project.json",
-          "hash": "11148805446045372587"
-        },
-        {
-          "file": "apps/ng-super-e2e/src/example.spec.ts",
-          "hash": "16019101014373124625",
-          "deps": [
-            "npm:@playwright/test"
-          ]
-        },
-        {
-          "file": "apps/ng-super-e2e/tsconfig.json",
-          "hash": "2800721902587063983"
-        }
-      ],
-      "ng-rai-e2e": [
-        {
-          "file": "apps/ng-rai-e2e/.eslintrc.json",
-          "hash": "632147010597293032"
-        },
-        {
-          "file": "apps/ng-rai-e2e/playwright.config.ts",
-          "hash": "3058689991792591425",
-          "deps": [
-            "npm:@playwright/test",
-            "npm:@nx/playwright",
-            "npm:@nx/devkit"
-          ]
-        },
-        {
-          "file": "apps/ng-rai-e2e/project.json",
-          "hash": "2815682502428599127"
-        },
-        {
-          "file": "apps/ng-rai-e2e/src/example.spec.ts",
-          "hash": "16019101014373124625",
-          "deps": [
-            "npm:@playwright/test"
-          ]
-        },
-        {
-          "file": "apps/ng-rai-e2e/tsconfig.json",
-          "hash": "2800721902587063983"
-        }
-      ],
-      "iot-worker": [
-        {
-          "file": "workers/iot-worker/.eslintrc.json",
-          "hash": "13800677001662881425"
-        },
-        {
-          "file": "workers/iot-worker/jest.config.ts",
-          "hash": "11875185592843847124"
-        },
-        {
-          "file": "workers/iot-worker/project.json",
-          "hash": "12670887008284304490"
-        },
-        {
-          "file": "workers/iot-worker/src/app/app.controller.spec.ts",
-          "hash": "9499997688052526633",
-          "deps": [
-            "npm:@nestjs/testing"
-          ]
-        },
-        {
-          "file": "workers/iot-worker/src/app/app.controller.ts",
-          "hash": "9005150069945785676",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "workers/iot-worker/src/app/app.module.ts",
-          "hash": "3163250445227373966",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "workers/iot-worker/src/app/app.service.spec.ts",
-          "hash": "8587461140686713758",
-          "deps": [
-            "npm:@nestjs/testing"
-          ]
-        },
-        {
-          "file": "workers/iot-worker/src/app/app.service.ts",
-          "hash": "9967902337593410053",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "workers/iot-worker/src/assets/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "workers/iot-worker/src/main.ts",
-          "hash": "11205222914964382693",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/core"
-          ]
-        },
-        {
-          "file": "workers/iot-worker/tsconfig.app.json",
-          "hash": "3171572500325445971"
-        },
-        {
-          "file": "workers/iot-worker/tsconfig.json",
-          "hash": "3490524966360018312"
-        },
-        {
-          "file": "workers/iot-worker/tsconfig.spec.json",
-          "hash": "11550347367511341917"
-        },
-        {
-          "file": "workers/iot-worker/webpack.config.js",
-          "hash": "10634260526888904840",
-          "deps": [
-            "npm:@nx/webpack",
-            "npm:path"
-          ]
-        }
-      ],
-      "rt-rai-e2e": [
-        {
-          "file": "apps/rt-rai-e2e/.eslintrc.json",
-          "hash": "632147010597293032"
-        },
-        {
-          "file": "apps/rt-rai-e2e/playwright.config.ts",
-          "hash": "16908704819624642542",
-          "deps": [
-            "npm:@playwright/test",
-            "npm:@nx/playwright",
-            "npm:@nx/devkit"
-          ]
-        },
-        {
-          "file": "apps/rt-rai-e2e/project.json",
-          "hash": "10101727745726531143"
-        },
-        {
-          "file": "apps/rt-rai-e2e/src/example.spec.ts",
-          "hash": "16019101014373124625",
-          "deps": [
-            "npm:@playwright/test"
-          ]
-        },
-        {
-          "file": "apps/rt-rai-e2e/tsconfig.json",
-          "hash": "13413400511057489941"
-        }
-      ],
-      "ng-admin": [
-        {
-          "file": "apps/ng-admin/.eslintrc.json",
-          "hash": "3322449398258820698"
-        },
-        {
-          "file": "apps/ng-admin/jest.config.ts",
-          "hash": "5415346356616612519"
-        },
-        {
-          "file": "apps/ng-admin/project.json",
-          "hash": "12617881869451678219"
-        },
-        {
-          "file": "apps/ng-admin/public/favicon.ico",
-          "hash": "9303420814833116677"
-        },
-        {
-          "file": "apps/ng-admin/src/app/app.component.css",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/ng-admin/src/app/app.component.html",
-          "hash": "5654460193981998828"
-        },
-        {
-          "file": "apps/ng-admin/src/app/app.component.spec.ts",
-          "hash": "9007292610629208844",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/ng-admin/src/app/app.component.ts",
-          "hash": "10660640138045528743",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/ng-admin/src/app/app.config.ts",
-          "hash": "6137170128205633588",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/ng-admin/src/app/app.routes.ts",
-          "hash": "6185150965714414910",
-          "deps": [
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/ng-admin/src/app/nx-welcome.component.ts",
-          "hash": "10742219332088818181",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common"
-          ]
-        },
-        {
-          "file": "apps/ng-admin/src/index.html",
-          "hash": "16015095496209659845"
-        },
-        {
-          "file": "apps/ng-admin/src/main.ts",
-          "hash": "16635586463787978962",
-          "deps": [
-            "npm:@angular/platform-browser"
-          ]
-        },
-        {
-          "file": "apps/ng-admin/src/styles.css",
-          "hash": "5195668842064076916"
-        },
-        {
-          "file": "apps/ng-admin/src/test-setup.ts",
-          "hash": "12935735732682149507",
-          "deps": [
-            "npm:jest-preset-angular"
-          ]
-        },
-        {
-          "file": "apps/ng-admin/tsconfig.app.json",
-          "hash": "8365644956319658761"
-        },
-        {
-          "file": "apps/ng-admin/tsconfig.editor.json",
-          "hash": "1055794200401717100"
-        },
-        {
-          "file": "apps/ng-admin/tsconfig.json",
-          "hash": "10165753922017812673"
-        },
-        {
-          "file": "apps/ng-admin/tsconfig.spec.json",
-          "hash": "2927375835638640771"
-        }
-      ],
       "rt-super-e2e": [
         {
           "file": "apps/rt-super-e2e/.eslintrc.json",
@@ -1128,199 +181,6 @@
         {
           "file": "apps/rt-super-e2e/tsconfig.json",
           "hash": "13413400511057489941"
-        }
-      ],
-      "gql-worker": [
-        {
-          "file": "workers/gql-worker/.eslintrc.json",
-          "hash": "13800677001662881425"
-        },
-        {
-          "file": "workers/gql-worker/jest.config.ts",
-          "hash": "5311891215048802521"
-        },
-        {
-          "file": "workers/gql-worker/project.json",
-          "hash": "14921533143187120971"
-        },
-        {
-          "file": "workers/gql-worker/src/app/app.controller.spec.ts",
-          "hash": "9499997688052526633",
-          "deps": [
-            "npm:@nestjs/testing"
-          ]
-        },
-        {
-          "file": "workers/gql-worker/src/app/app.controller.ts",
-          "hash": "9005150069945785676",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "workers/gql-worker/src/app/app.module.ts",
-          "hash": "3163250445227373966",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "workers/gql-worker/src/app/app.service.spec.ts",
-          "hash": "8587461140686713758",
-          "deps": [
-            "npm:@nestjs/testing"
-          ]
-        },
-        {
-          "file": "workers/gql-worker/src/app/app.service.ts",
-          "hash": "9967902337593410053",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "workers/gql-worker/src/assets/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "workers/gql-worker/src/main.ts",
-          "hash": "11205222914964382693",
-          "deps": [
-            "npm:@nestjs/common",
-            "npm:@nestjs/core"
-          ]
-        },
-        {
-          "file": "workers/gql-worker/tsconfig.app.json",
-          "hash": "3171572500325445971"
-        },
-        {
-          "file": "workers/gql-worker/tsconfig.json",
-          "hash": "3490524966360018312"
-        },
-        {
-          "file": "workers/gql-worker/tsconfig.spec.json",
-          "hash": "11550347367511341917"
-        },
-        {
-          "file": "workers/gql-worker/webpack.config.js",
-          "hash": "10812937244090711812",
-          "deps": [
-            "npm:@nx/webpack",
-            "npm:path"
-          ]
-        }
-      ],
-      "rt-ui": [
-        {
-          "file": "libs/rt-ui/.babelrc",
-          "hash": "2946678488919325452"
-        },
-        {
-          "file": "libs/rt-ui/.eslintrc.json",
-          "hash": "11012487992710232822"
-        },
-        {
-          "file": "libs/rt-ui/README.md",
-          "hash": "3700086488559661298"
-        },
-        {
-          "file": "libs/rt-ui/project.json",
-          "hash": "16376278080951173900"
-        },
-        {
-          "file": "libs/rt-ui/src/index.ts",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "libs/rt-ui/tsconfig.json",
-          "hash": "14088618039610991405"
-        },
-        {
-          "file": "libs/rt-ui/tsconfig.lib.json",
-          "hash": "15147195313780277677"
-        }
-      ],
-      "rt-rai": [
-        {
-          "file": "apps/rt-rai/.babelrc",
-          "hash": "13020124393823981135"
-        },
-        {
-          "file": "apps/rt-rai/.eslintrc.json",
-          "hash": "11012487992710232822"
-        },
-        {
-          "file": "apps/rt-rai/jest.config.ts",
-          "hash": "10188843347494716593"
-        },
-        {
-          "file": "apps/rt-rai/project.json",
-          "hash": "6131375311075147861"
-        },
-        {
-          "file": "apps/rt-rai/src/app/app.module.css",
-          "hash": "8887387885984320532"
-        },
-        {
-          "file": "apps/rt-rai/src/app/app.spec.tsx",
-          "hash": "4698782119941756298",
-          "deps": [
-            "npm:@testing-library/react"
-          ]
-        },
-        {
-          "file": "apps/rt-rai/src/app/app.tsx",
-          "hash": "14562718831956633640"
-        },
-        {
-          "file": "apps/rt-rai/src/app/nx-welcome.tsx",
-          "hash": "729168762476089670"
-        },
-        {
-          "file": "apps/rt-rai/src/assets/.gitkeep",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/rt-rai/src/favicon.ico",
-          "hash": "9303420814833116677"
-        },
-        {
-          "file": "apps/rt-rai/src/index.html",
-          "hash": "2811745297267498693"
-        },
-        {
-          "file": "apps/rt-rai/src/main.tsx",
-          "hash": "4731961929376199421",
-          "deps": [
-            "npm:react",
-            "npm:react-dom"
-          ]
-        },
-        {
-          "file": "apps/rt-rai/src/styles.css",
-          "hash": "5195668842064076916"
-        },
-        {
-          "file": "apps/rt-rai/tsconfig.app.json",
-          "hash": "15147195313780277677"
-        },
-        {
-          "file": "apps/rt-rai/tsconfig.json",
-          "hash": "9850153468027031608"
-        },
-        {
-          "file": "apps/rt-rai/tsconfig.spec.json",
-          "hash": "11378287594513225419"
-        },
-        {
-          "file": "apps/rt-rai/webpack.config.js",
-          "hash": "4871402576828717222",
-          "deps": [
-            "npm:@nx/webpack",
-            "npm:@nx/react",
-            "npm:path"
-          ]
         }
       ],
       "ng-rai": [
@@ -1422,57 +282,177 @@
           "hash": "2927375835638640771"
         }
       ],
-      "shared": [
+      "iot-worker": [
         {
-          "file": "libs/shared/.eslintrc.json",
+          "file": "workers/iot-worker/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "workers/iot-worker/jest.config.ts",
+          "hash": "11875185592843847124"
+        },
+        {
+          "file": "workers/iot-worker/project.json",
+          "hash": "12670887008284304490"
+        },
+        {
+          "file": "workers/iot-worker/src/app/app.controller.spec.ts",
+          "hash": "9499997688052526633",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "workers/iot-worker/src/app/app.controller.ts",
+          "hash": "9005150069945785676",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "workers/iot-worker/src/app/app.module.ts",
+          "hash": "3163250445227373966",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "workers/iot-worker/src/app/app.service.spec.ts",
+          "hash": "8587461140686713758",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "workers/iot-worker/src/app/app.service.ts",
+          "hash": "9967902337593410053",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "workers/iot-worker/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "workers/iot-worker/src/main.ts",
+          "hash": "11205222914964382693",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/core"
+          ]
+        },
+        {
+          "file": "workers/iot-worker/tsconfig.app.json",
+          "hash": "3171572500325445971"
+        },
+        {
+          "file": "workers/iot-worker/tsconfig.json",
+          "hash": "3490524966360018312"
+        },
+        {
+          "file": "workers/iot-worker/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        },
+        {
+          "file": "workers/iot-worker/webpack.config.js",
+          "hash": "10634260526888904840",
+          "deps": [
+            "npm:@nx/webpack",
+            "npm:path"
+          ]
+        }
+      ],
+      "domain-libs": [
+        {
+          "file": "libs/domain-libs/.eslintrc.json",
           "hash": "16896711999632553762"
         },
         {
-          "file": "libs/shared/README.md",
-          "hash": "4013336366747760891"
+          "file": "libs/domain-libs/README.md",
+          "hash": "17119125016885421216"
         },
         {
-          "file": "libs/shared/jest.config.ts",
-          "hash": "4739188552431792008"
+          "file": "libs/domain-libs/jest.config.ts",
+          "hash": "8496351835364562369"
         },
         {
-          "file": "libs/shared/package.json",
-          "hash": "14518387103206979723",
+          "file": "libs/domain-libs/package.json",
+          "hash": "13423379625953661956",
           "deps": [
             "npm:tslib"
           ]
         },
         {
-          "file": "libs/shared/project.json",
-          "hash": "10936697193704018704"
+          "file": "libs/domain-libs/project.json",
+          "hash": "7906706850135189507"
         },
         {
-          "file": "libs/shared/src/index.ts",
-          "hash": "10383896679397325106"
+          "file": "libs/domain-libs/src/index.ts",
+          "hash": "18148380387905451453"
         },
         {
-          "file": "libs/shared/src/lib/constants/shared.ts",
-          "hash": "9794051316846204713"
+          "file": "libs/domain-libs/src/lib/domain-libs.module.ts",
+          "hash": "12895601821264288443",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
         },
         {
-          "file": "libs/shared/src/lib/environments/dev.ts",
-          "hash": "11271812766161756367"
-        },
-        {
-          "file": "libs/shared/src/lib/environments/prod.ts",
-          "hash": "12828552081791609689"
-        },
-        {
-          "file": "libs/shared/tsconfig.json",
+          "file": "libs/domain-libs/tsconfig.json",
           "hash": "5840880287502376438"
         },
         {
-          "file": "libs/shared/tsconfig.lib.json",
-          "hash": "3632393694954060084"
+          "file": "libs/domain-libs/tsconfig.lib.json",
+          "hash": "3550173832616418300"
         },
         {
-          "file": "libs/shared/tsconfig.spec.json",
+          "file": "libs/domain-libs/tsconfig.spec.json",
           "hash": "11550347367511341917"
+        }
+      ],
+      "iot-worker-e2e": [
+        {
+          "file": "workers/iot-worker-e2e/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "workers/iot-worker-e2e/jest.config.ts",
+          "hash": "13605041024608934375"
+        },
+        {
+          "file": "workers/iot-worker-e2e/project.json",
+          "hash": "12007656036900134574"
+        },
+        {
+          "file": "workers/iot-worker-e2e/src/iot-worker/iot-worker.spec.ts",
+          "hash": "110394728024017389",
+          "deps": [
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "workers/iot-worker-e2e/src/support/global-setup.ts",
+          "hash": "2568409276037275290"
+        },
+        {
+          "file": "workers/iot-worker-e2e/src/support/global-teardown.ts",
+          "hash": "5275447082211835490"
+        },
+        {
+          "file": "workers/iot-worker-e2e/src/support/test-setup.ts",
+          "hash": "10984585515912236441",
+          "deps": [
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "workers/iot-worker-e2e/tsconfig.json",
+          "hash": "15443990093475294480"
+        },
+        {
+          "file": "workers/iot-worker-e2e/tsconfig.spec.json",
+          "hash": "14954872453723519891"
         }
       ],
       "utils": [
@@ -1516,230 +496,86 @@
           "hash": "11550347367511341917"
         }
       ],
-      "nx-plugins": [
+      "rt-rai": [
         {
-          "file": "tools/plugins/nx-plugins/.eslintrc.json",
-          "hash": "5404008591446983796"
+          "file": "apps/rt-rai/.babelrc",
+          "hash": "13020124393823981135"
         },
         {
-          "file": "tools/plugins/nx-plugins/README.md",
-          "hash": "14933427663594924296"
+          "file": "apps/rt-rai/.eslintrc.json",
+          "hash": "11012487992710232822"
         },
         {
-          "file": "tools/plugins/nx-plugins/generators.json",
-          "hash": "13374896172189560479"
+          "file": "apps/rt-rai/jest.config.ts",
+          "hash": "10188843347494716593"
         },
         {
-          "file": "tools/plugins/nx-plugins/jest.config.ts",
-          "hash": "5451288029480322129"
+          "file": "apps/rt-rai/project.json",
+          "hash": "6131375311075147861"
         },
         {
-          "file": "tools/plugins/nx-plugins/package.json",
-          "hash": "6156876983904488701",
+          "file": "apps/rt-rai/src/app/app.module.css",
+          "hash": "8887387885984320532"
+        },
+        {
+          "file": "apps/rt-rai/src/app/app.spec.tsx",
+          "hash": "4698782119941756298",
           "deps": [
-            "npm:@nx/devkit",
-            "npm:tslib"
+            "npm:@testing-library/react"
           ]
         },
         {
-          "file": "tools/plugins/nx-plugins/project.json",
-          "hash": "14678041634412646468"
+          "file": "apps/rt-rai/src/app/app.tsx",
+          "hash": "14562718831956633640"
         },
         {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/files/src/index.ts.template",
-          "hash": "8516815386028856332"
+          "file": "apps/rt-rai/src/app/nx-welcome.tsx",
+          "hash": "729168762476089670"
         },
         {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/generator.spec.ts",
-          "hash": "9725478715134786368",
-          "deps": [
-            "npm:@nx/devkit"
-          ]
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/generator.ts",
-          "hash": "5643404567057387840",
-          "deps": [
-            "npm:@nx/devkit",
-            "npm:path"
-          ]
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/schema.d.ts",
-          "hash": "2235270895038211361"
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/schema.json",
-          "hash": "9521332480207838001"
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/index.ts",
+          "file": "apps/rt-rai/src/assets/.gitkeep",
           "hash": "3244421341483603138"
         },
         {
-          "file": "tools/plugins/nx-plugins/tsconfig.json",
-          "hash": "6693614989438379715"
+          "file": "apps/rt-rai/src/favicon.ico",
+          "hash": "9303420814833116677"
         },
         {
-          "file": "tools/plugins/nx-plugins/tsconfig.lib.json",
-          "hash": "5554291030212586824"
+          "file": "apps/rt-rai/src/index.html",
+          "hash": "2811745297267498693"
         },
         {
-          "file": "tools/plugins/nx-plugins/tsconfig.spec.json",
-          "hash": "9110660443763673899"
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/api_files/__name__-api.module.ts.template",
-          "hash": "17271335709408783018"
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/api_files/__name__-api.controller.ts.template",
-          "hash": "7600429949370898091"
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/api_files/__name__-api.service.ts.template",
-          "hash": "12175401343978394311"
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/domain_files/__name__-domain.module.ts.template",
-          "hash": "8983587820079566376"
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/domain_files/__name__-domain.controller.ts.template",
-          "hash": "879735772243659116"
-        },
-        {
-          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/domain_files/__name__-domain.service.ts.template",
-          "hash": "9530316299598715369"
-        }
-      ],
-      "nst-libs": [
-        {
-          "file": "libs/nst-libs/.eslintrc.json",
-          "hash": "16896711999632553762"
-        },
-        {
-          "file": "libs/nst-libs/README.md",
-          "hash": "13780848178641365603"
-        },
-        {
-          "file": "libs/nst-libs/jest.config.ts",
-          "hash": "14005726161322210366"
-        },
-        {
-          "file": "libs/nst-libs/package.json",
-          "hash": "4593170223745198687",
+          "file": "apps/rt-rai/src/main.tsx",
+          "hash": "4731961929376199421",
           "deps": [
-            "npm:tslib"
+            "npm:react",
+            "npm:react-dom"
           ]
         },
         {
-          "file": "libs/nst-libs/project.json",
-          "hash": "469694894391449327"
+          "file": "apps/rt-rai/src/styles.css",
+          "hash": "5195668842064076916"
         },
         {
-          "file": "libs/nst-libs/src/index.ts",
-          "hash": "16090294366264506970"
+          "file": "apps/rt-rai/tsconfig.app.json",
+          "hash": "15147195313780277677"
         },
         {
-          "file": "libs/nst-libs/src/lib/nst-libs.module.ts",
-          "hash": "16248316956053685529",
+          "file": "apps/rt-rai/tsconfig.json",
+          "hash": "9850153468027031608"
+        },
+        {
+          "file": "apps/rt-rai/tsconfig.spec.json",
+          "hash": "11378287594513225419"
+        },
+        {
+          "file": "apps/rt-rai/webpack.config.js",
+          "hash": "4871402576828717222",
           "deps": [
-            "npm:@nestjs/common"
+            "npm:@nx/webpack",
+            "npm:@nx/react",
+            "npm:path"
           ]
-        },
-        {
-          "file": "libs/nst-libs/src/lib/pipes/parseobject.pipe.ts",
-          "hash": "1223621742436428731",
-          "deps": [
-            "npm:@nestjs/common"
-          ]
-        },
-        {
-          "file": "libs/nst-libs/tsconfig.json",
-          "hash": "5840880287502376438"
-        },
-        {
-          "file": "libs/nst-libs/tsconfig.lib.json",
-          "hash": "3550173832616418300"
-        },
-        {
-          "file": "libs/nst-libs/tsconfig.spec.json",
-          "hash": "11550347367511341917"
-        }
-      ],
-      "ng-admin-e2e": [
-        {
-          "file": "apps/ng-admin-e2e/.eslintrc.json",
-          "hash": "632147010597293032"
-        },
-        {
-          "file": "apps/ng-admin-e2e/playwright.config.ts",
-          "hash": "16285578810318513548",
-          "deps": [
-            "npm:@playwright/test",
-            "npm:@nx/playwright",
-            "npm:@nx/devkit"
-          ]
-        },
-        {
-          "file": "apps/ng-admin-e2e/project.json",
-          "hash": "9658173699316938505"
-        },
-        {
-          "file": "apps/ng-admin-e2e/src/example.spec.ts",
-          "hash": "16019101014373124625",
-          "deps": [
-            "npm:@playwright/test"
-          ]
-        },
-        {
-          "file": "apps/ng-admin-e2e/tsconfig.json",
-          "hash": "2800721902587063983"
-        }
-      ],
-      "gql-worker-e2e": [
-        {
-          "file": "workers/gql-worker-e2e/.eslintrc.json",
-          "hash": "13800677001662881425"
-        },
-        {
-          "file": "workers/gql-worker-e2e/jest.config.ts",
-          "hash": "11365210427298321812"
-        },
-        {
-          "file": "workers/gql-worker-e2e/project.json",
-          "hash": "5331501331007643340"
-        },
-        {
-          "file": "workers/gql-worker-e2e/src/gql-worker/gql-worker.spec.ts",
-          "hash": "110394728024017389",
-          "deps": [
-            "npm:axios"
-          ]
-        },
-        {
-          "file": "workers/gql-worker-e2e/src/support/global-setup.ts",
-          "hash": "2568409276037275290"
-        },
-        {
-          "file": "workers/gql-worker-e2e/src/support/global-teardown.ts",
-          "hash": "5275447082211835490"
-        },
-        {
-          "file": "workers/gql-worker-e2e/src/support/test-setup.ts",
-          "hash": "10984585515912236441",
-          "deps": [
-            "npm:axios"
-          ]
-        },
-        {
-          "file": "workers/gql-worker-e2e/tsconfig.json",
-          "hash": "15443990093475294480"
-        },
-        {
-          "file": "workers/gql-worker-e2e/tsconfig.spec.json",
-          "hash": "14954872453723519891"
         }
       ],
       "ng-super": [
@@ -1881,89 +717,694 @@
           "hash": "2927375835638640771"
         }
       ],
-      "iot-worker-e2e": [
+      "nx-plugins": [
         {
-          "file": "workers/iot-worker-e2e/.eslintrc.json",
+          "file": "tools/plugins/nx-plugins/.eslintrc.json",
+          "hash": "5404008591446983796"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/README.md",
+          "hash": "14933427663594924296"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/generators.json",
+          "hash": "13374896172189560479"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/jest.config.ts",
+          "hash": "5451288029480322129"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/package.json",
+          "hash": "6156876983904488701",
+          "deps": [
+            "npm:@nx/devkit",
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "tools/plugins/nx-plugins/project.json",
+          "hash": "14678041634412646468"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/api_files/__name__-api.controller.ts.template",
+          "hash": "7600429949370898091"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/api_files/__name__-api.module.ts.template",
+          "hash": "17271335709408783018"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/api_files/__name__-api.service.ts.template",
+          "hash": "12175401343978394311"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/domain_files/__name__-domain.controller.ts.template",
+          "hash": "879735772243659116"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/domain_files/__name__-domain.module.ts.template",
+          "hash": "8983587820079566376"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/domain_files/__name__-domain.service.ts.template",
+          "hash": "9530316299598715369"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/generator.spec.ts",
+          "hash": "9725478715134786368",
+          "deps": [
+            "npm:@nx/devkit"
+          ]
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/generator.ts",
+          "hash": "11404672146725584263",
+          "deps": [
+            "npm:@nx/devkit",
+            "npm:path"
+          ]
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/schema.d.ts",
+          "hash": "2235270895038211361"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/generators/nest-api-domain/schema.json",
+          "hash": "9521332480207838001"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/tsconfig.json",
+          "hash": "6693614989438379715"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/tsconfig.lib.json",
+          "hash": "5554291030212586824"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/tsconfig.spec.json",
+          "hash": "9110660443763673899"
+        },
+        {
+          "file": "tools/plugins/nx-plugins/src/utils/moduleImports.ts",
+          "hash": "17703026352637668056",
+          "deps": [
+            "npm:@nrwl/devkit",
+            "npm:@phenomnomnominal/tsquery",
+            "npm:typescript"
+          ]
+        }
+      ],
+      "gql-worker": [
+        {
+          "file": "workers/gql-worker/.eslintrc.json",
           "hash": "13800677001662881425"
         },
         {
-          "file": "workers/iot-worker-e2e/jest.config.ts",
-          "hash": "13605041024608934375"
+          "file": "workers/gql-worker/jest.config.ts",
+          "hash": "5311891215048802521"
         },
         {
-          "file": "workers/iot-worker-e2e/project.json",
-          "hash": "12007656036900134574"
+          "file": "workers/gql-worker/project.json",
+          "hash": "14921533143187120971"
         },
         {
-          "file": "workers/iot-worker-e2e/src/iot-worker/iot-worker.spec.ts",
+          "file": "workers/gql-worker/src/app/app.controller.spec.ts",
+          "hash": "9499997688052526633",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "workers/gql-worker/src/app/app.controller.ts",
+          "hash": "9005150069945785676",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "workers/gql-worker/src/app/app.module.ts",
+          "hash": "3163250445227373966",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "workers/gql-worker/src/app/app.service.spec.ts",
+          "hash": "8587461140686713758",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "workers/gql-worker/src/app/app.service.ts",
+          "hash": "9967902337593410053",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "workers/gql-worker/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "workers/gql-worker/src/main.ts",
+          "hash": "11205222914964382693",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/core"
+          ]
+        },
+        {
+          "file": "workers/gql-worker/tsconfig.app.json",
+          "hash": "3171572500325445971"
+        },
+        {
+          "file": "workers/gql-worker/tsconfig.json",
+          "hash": "3490524966360018312"
+        },
+        {
+          "file": "workers/gql-worker/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        },
+        {
+          "file": "workers/gql-worker/webpack.config.js",
+          "hash": "10812937244090711812",
+          "deps": [
+            "npm:@nx/webpack",
+            "npm:path"
+          ]
+        }
+      ],
+      "rt-rai-e2e": [
+        {
+          "file": "apps/rt-rai-e2e/.eslintrc.json",
+          "hash": "632147010597293032"
+        },
+        {
+          "file": "apps/rt-rai-e2e/playwright.config.ts",
+          "hash": "16908704819624642542",
+          "deps": [
+            "npm:@playwright/test",
+            "npm:@nx/playwright",
+            "npm:@nx/devkit"
+          ]
+        },
+        {
+          "file": "apps/rt-rai-e2e/project.json",
+          "hash": "10101727745726531143"
+        },
+        {
+          "file": "apps/rt-rai-e2e/src/example.spec.ts",
+          "hash": "16019101014373124625",
+          "deps": [
+            "npm:@playwright/test"
+          ]
+        },
+        {
+          "file": "apps/rt-rai-e2e/tsconfig.json",
+          "hash": "13413400511057489941"
+        }
+      ],
+      "api-libs": [
+        {
+          "file": "libs/api-libs/.eslintrc.json",
+          "hash": "16896711999632553762"
+        },
+        {
+          "file": "libs/api-libs/README.md",
+          "hash": "12361895114514017704"
+        },
+        {
+          "file": "libs/api-libs/jest.config.ts",
+          "hash": "16946603540006345815"
+        },
+        {
+          "file": "libs/api-libs/package.json",
+          "hash": "18446574150360374192",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "libs/api-libs/project.json",
+          "hash": "7491976594211444228"
+        },
+        {
+          "file": "libs/api-libs/src/index.ts",
+          "hash": "14209851780748999718"
+        },
+        {
+          "file": "libs/api-libs/src/lib/api-libs.module.ts",
+          "hash": "12580478145125511145",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "libs/api-libs/tsconfig.json",
+          "hash": "5840880287502376438"
+        },
+        {
+          "file": "libs/api-libs/tsconfig.lib.json",
+          "hash": "3550173832616418300"
+        },
+        {
+          "file": "libs/api-libs/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        }
+      ],
+      "gql-worker-e2e": [
+        {
+          "file": "workers/gql-worker-e2e/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "workers/gql-worker-e2e/jest.config.ts",
+          "hash": "11365210427298321812"
+        },
+        {
+          "file": "workers/gql-worker-e2e/project.json",
+          "hash": "5331501331007643340"
+        },
+        {
+          "file": "workers/gql-worker-e2e/src/gql-worker/gql-worker.spec.ts",
           "hash": "110394728024017389",
           "deps": [
             "npm:axios"
           ]
         },
         {
-          "file": "workers/iot-worker-e2e/src/support/global-setup.ts",
+          "file": "workers/gql-worker-e2e/src/support/global-setup.ts",
           "hash": "2568409276037275290"
         },
         {
-          "file": "workers/iot-worker-e2e/src/support/global-teardown.ts",
+          "file": "workers/gql-worker-e2e/src/support/global-teardown.ts",
           "hash": "5275447082211835490"
         },
         {
-          "file": "workers/iot-worker-e2e/src/support/test-setup.ts",
+          "file": "workers/gql-worker-e2e/src/support/test-setup.ts",
           "hash": "10984585515912236441",
           "deps": [
             "npm:axios"
           ]
         },
         {
-          "file": "workers/iot-worker-e2e/tsconfig.json",
+          "file": "workers/gql-worker-e2e/tsconfig.json",
           "hash": "15443990093475294480"
         },
         {
-          "file": "workers/iot-worker-e2e/tsconfig.spec.json",
+          "file": "workers/gql-worker-e2e/tsconfig.spec.json",
           "hash": "14954872453723519891"
         }
       ],
-      "ng-ui": [
+      "@neom/source": [
         {
-          "file": "libs/ng-ui/.eslintrc.json",
-          "hash": "9628345067573567197"
+          "file": ".eslintignore",
+          "hash": "7663861978715868291"
         },
         {
-          "file": "libs/ng-ui/README.md",
-          "hash": "6761846686851354015"
+          "file": ".eslintrc.json",
+          "hash": "746227632153557778"
         },
         {
-          "file": "libs/ng-ui/jest.config.ts",
-          "hash": "3291098639260758432"
+          "file": ".gitignore",
+          "hash": "8922222514851162188"
         },
         {
-          "file": "libs/ng-ui/project.json",
-          "hash": "8195059002505023293"
+          "file": ".prettierignore",
+          "hash": "3395189204293871444"
         },
         {
-          "file": "libs/ng-ui/src/index.ts",
-          "hash": "3244421341483603138"
+          "file": ".prettierrc",
+          "hash": "16267754514737964994"
         },
         {
-          "file": "libs/ng-ui/src/test-setup.ts",
-          "hash": "12935735732682149507",
+          "file": ".verdaccio/config.yml",
+          "hash": "14993594506392938393"
+        },
+        {
+          "file": ".vscode/extensions.json",
+          "hash": "17425123947026961272"
+        },
+        {
+          "file": ".vscode/settings.json",
+          "hash": "10736989266964588500"
+        },
+        {
+          "file": "jest.config.ts",
+          "hash": "3494843969422251966",
           "deps": [
-            "npm:jest-preset-angular"
+            "npm:@nx/jest"
           ]
         },
         {
-          "file": "libs/ng-ui/tsconfig.json",
-          "hash": "15487755565970508470"
+          "file": "jest.preset.js",
+          "hash": "9430166341120122740",
+          "deps": [
+            "npm:@nx/jest"
+          ]
         },
         {
-          "file": "libs/ng-ui/tsconfig.lib.json",
-          "hash": "5796668385415907511"
+          "file": "nx.json",
+          "hash": "8994299671059685604"
         },
         {
-          "file": "libs/ng-ui/tsconfig.spec.json",
-          "hash": "2927375835638640771"
+          "file": "package-lock.json",
+          "hash": "3759471496966908828"
+        },
+        {
+          "file": "package.json",
+          "hash": "6285854082315547030",
+          "deps": [
+            "npm:@angular/animations",
+            "npm:@angular/common",
+            "npm:@angular/compiler",
+            "npm:@angular/core",
+            "npm:@angular/forms",
+            "npm:@angular/platform-browser",
+            "npm:@angular/platform-browser-dynamic",
+            "npm:@angular/platform-server",
+            "npm:@angular/router",
+            "npm:@angular/ssr",
+            "npm:@nestjs/cache-manager",
+            "npm:@nestjs/common",
+            "npm:@nestjs/core",
+            "npm:@nestjs/microservices",
+            "npm:@nestjs/platform-express",
+            "npm:@nestjs/swagger",
+            "npm:@phenomnomnominal/tsquery",
+            "npm:amqp-connection-manager",
+            "npm:amqplib",
+            "npm:axios",
+            "npm:cache-manager",
+            "npm:cache-manager-redis-store",
+            "npm:express",
+            "npm:react",
+            "npm:react-dom",
+            "npm:reflect-metadata",
+            "npm:rxjs",
+            "npm:tslib",
+            "npm:zone.js",
+            "npm:@angular-devkit/build-angular",
+            "npm:@angular-devkit/core",
+            "npm:@angular-devkit/schematics",
+            "npm:@angular-eslint/eslint-plugin",
+            "npm:@angular-eslint/eslint-plugin-template",
+            "npm:@angular-eslint/template-parser",
+            "npm:@angular/cli",
+            "npm:@angular/compiler-cli",
+            "npm:@angular/language-service",
+            "npm:@babel/core",
+            "npm:@babel/preset-react",
+            "npm:@nestjs/schematics",
+            "npm:@nestjs/testing",
+            "npm:@nx/angular",
+            "npm:@nx/devkit",
+            "npm:@nx/eslint",
+            "npm:@nx/eslint-plugin",
+            "npm:@nx/jest",
+            "npm:@nx/js",
+            "npm:@nx/nest",
+            "npm:@nx/node",
+            "npm:@nx/playwright",
+            "npm:@nx/plugin",
+            "npm:@nx/react",
+            "npm:@nx/web",
+            "npm:@nx/webpack",
+            "npm:@nx/workspace",
+            "npm:@playwright/test",
+            "npm:@pmmmwh/react-refresh-webpack-plugin",
+            "npm:@schematics/angular",
+            "npm:@svgr/webpack",
+            "npm:@swc-node/register",
+            "npm:@swc/cli",
+            "npm:@swc/core",
+            "npm:@swc/helpers",
+            "npm:@testing-library/react",
+            "npm:@types/express",
+            "npm:@types/jest",
+            "npm:@types/node",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:babel-jest",
+            "npm:browser-sync",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:eslint-plugin-import",
+            "npm:eslint-plugin-jsx-a11y",
+            "npm:eslint-plugin-playwright",
+            "npm:eslint-plugin-react",
+            "npm:eslint-plugin-react-hooks",
+            "npm:jest",
+            "npm:jest-environment-jsdom",
+            "npm:jest-environment-node",
+            "npm:jest-preset-angular",
+            "npm:nx",
+            "npm:prettier",
+            "npm:react-refresh",
+            "npm:ts-jest",
+            "npm:ts-node",
+            "npm:typescript",
+            "npm:verdaccio",
+            "npm:webpack-cli"
+          ]
+        },
+        {
+          "file": "project.json",
+          "hash": "7812476031714461059"
+        },
+        {
+          "file": "tools/generators/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "tools/generators/domain-ui/index.ts",
+          "hash": "5495776614953761703",
+          "deps": [
+            "npm:@nrwl/devkit",
+            "npm:path"
+          ]
+        },
+        {
+          "file": "tools/generators/domain-ui/libs/updateUiImports.ts",
+          "hash": "9684445295815960528",
+          "deps": [
+            "npm:@nrwl/devkit",
+            "npm:@phenomnomnominal/tsquery",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "tools/generators/domain-ui/libs/utils.ts",
+          "hash": "9304009362356063441"
+        },
+        {
+          "file": "tools/generators/domain-ui/schema.json",
+          "hash": "4430683723690674472"
+        },
+        {
+          "file": "tools/generators/domain-ui/schema.ts",
+          "hash": "7413302915604684598"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/__name__-routing.module.ts.template",
+          "hash": "6562948310441723117"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/__name__.component.html.template",
+          "hash": "9502222834462627710"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/__name__.component.scss.template",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/__name__.component.spec.ts.template",
+          "hash": "3952961118423273323"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/__name__.component.ts.template",
+          "hash": "3059155637349585451"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/__name__.module.ts.template",
+          "hash": "13691850181236620137"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.component.html.template",
+          "hash": "12142802048046549599"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.component.scss.template",
+          "hash": "6740298508712631489"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.component.spec.ts.template",
+          "hash": "11690392535366895204"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.component.ts.template",
+          "hash": "10070975983485026570"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/components/list/__name__-list.module.ts.template",
+          "hash": "665422951425433199"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail-routing.module.ts.template",
+          "hash": "7618778769536152062"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.component.html.template",
+          "hash": "8659585628579205271"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.component.scss.template",
+          "hash": "12101141737552678125"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.component.spec.ts.template",
+          "hash": "15649737556237779153"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.component.ts.template",
+          "hash": "1395766794103578361"
+        },
+        {
+          "file": "tools/generators/domain-ui/uiFiles/sub-pages/detail/__name__-detail.module.ts.template",
+          "hash": "5630521076271210905"
+        },
+        {
+          "file": "tools/generators/domain/index.ts",
+          "hash": "15255894930956388737",
+          "deps": [
+            "npm:@nrwl/devkit",
+            "npm:@nrwl/angular",
+            "npm:@angular-devkit/schematics",
+            "npm:path"
+          ]
+        },
+        {
+          "file": "tools/generators/domain/libs/updateApiImports.ts",
+          "hash": "7872550527156802231",
+          "deps": [
+            "npm:@nrwl/devkit",
+            "npm:@phenomnomnominal/tsquery",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "tools/generators/domain/libs/updateDomainImports.ts",
+          "hash": "7915387883368042166",
+          "deps": [
+            "npm:@nrwl/devkit",
+            "npm:@phenomnomnominal/tsquery",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "tools/generators/domain/libs/updateMapperService.ts",
+          "hash": "1598966561503695601",
+          "deps": [
+            "npm:@nrwl/devkit",
+            "npm:@phenomnomnominal/tsquery",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "tools/generators/domain/libs/updateModelImports.ts",
+          "hash": "5003408983383016827",
+          "deps": [
+            "npm:@nrwl/devkit",
+            "npm:@phenomnomnominal/tsquery",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "tools/generators/domain/libs/updateUiImports.ts",
+          "hash": "3171034301738908613",
+          "deps": [
+            "npm:@nrwl/devkit",
+            "npm:@phenomnomnominal/tsquery",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "tools/generators/domain/libs/utils.ts",
+          "hash": "9304009362356063441"
+        },
+        {
+          "file": "tools/generators/domain/schema.json",
+          "hash": "2913951267403040385"
+        },
+        {
+          "file": "tools/generators/domain/schema.ts",
+          "hash": "7407306289184377514"
+        },
+        {
+          "file": "tools/generators/domain/serverFiles/apiFiles/__name__-api.controller.ts.template",
+          "hash": "7600429949370898091"
+        },
+        {
+          "file": "tools/generators/domain/serverFiles/apiFiles/__name__-api.module.ts.template",
+          "hash": "17271335709408783018"
+        },
+        {
+          "file": "tools/generators/domain/serverFiles/apiFiles/__name__-api.service.ts.template",
+          "hash": "12175401343978394311"
+        },
+        {
+          "file": "tools/generators/domain/serverFiles/domainFiles/__name__-domain.controller.ts.template",
+          "hash": "879735772243659116"
+        },
+        {
+          "file": "tools/generators/domain/serverFiles/domainFiles/__name__-domain.module.ts.template",
+          "hash": "8983587820079566376"
+        },
+        {
+          "file": "tools/generators/domain/serverFiles/domainFiles/__name__-domain.service.ts.template",
+          "hash": "9530316299598715369"
+        },
+        {
+          "file": "tsconfig.base.json",
+          "hash": "3898587154211974576"
+        }
+      ],
+      "rt-ui": [
+        {
+          "file": "libs/rt-ui/.babelrc",
+          "hash": "2946678488919325452"
+        },
+        {
+          "file": "libs/rt-ui/.eslintrc.json",
+          "hash": "11012487992710232822"
+        },
+        {
+          "file": "libs/rt-ui/README.md",
+          "hash": "3700086488559661298"
+        },
+        {
+          "file": "libs/rt-ui/project.json",
+          "hash": "16376278080951173900"
+        },
+        {
+          "file": "libs/rt-ui/src/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "libs/rt-ui/tsconfig.json",
+          "hash": "14088618039610991405"
+        },
+        {
+          "file": "libs/rt-ui/tsconfig.lib.json",
+          "hash": "15147195313780277677"
         }
       ],
       "api-gateway-e2e": [
@@ -2008,6 +1449,674 @@
         {
           "file": "apps/api-gateway-e2e/tsconfig.spec.json",
           "hash": "14954872453723519891"
+        }
+      ],
+      "ng-rai-e2e": [
+        {
+          "file": "apps/ng-rai-e2e/.eslintrc.json",
+          "hash": "632147010597293032"
+        },
+        {
+          "file": "apps/ng-rai-e2e/playwright.config.ts",
+          "hash": "3058689991792591425",
+          "deps": [
+            "npm:@playwright/test",
+            "npm:@nx/playwright",
+            "npm:@nx/devkit"
+          ]
+        },
+        {
+          "file": "apps/ng-rai-e2e/project.json",
+          "hash": "2815682502428599127"
+        },
+        {
+          "file": "apps/ng-rai-e2e/src/example.spec.ts",
+          "hash": "16019101014373124625",
+          "deps": [
+            "npm:@playwright/test"
+          ]
+        },
+        {
+          "file": "apps/ng-rai-e2e/tsconfig.json",
+          "hash": "2800721902587063983"
+        }
+      ],
+      "api-gateway": [
+        {
+          "file": "apps/api-gateway/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "apps/api-gateway/jest.config.ts",
+          "hash": "4060546042059009657"
+        },
+        {
+          "file": "apps/api-gateway/project.json",
+          "hash": "9264138769495681460"
+        },
+        {
+          "file": "apps/api-gateway/src/app/app.controller.spec.ts",
+          "hash": "9499997688052526633",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/src/app/app.controller.ts",
+          "hash": "14457219914312217037",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/cache-manager",
+            "npm:@nestjs/swagger"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/src/app/app.module.ts",
+          "hash": "7555893972882752085",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:cache-manager-redis-store",
+            "npm:@nestjs/cache-manager",
+            "shared",
+            "npm:@nestjs/microservices"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/src/app/app.service.spec.ts",
+          "hash": "8587461140686713758",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/src/app/app.service.ts",
+          "hash": "12883102655737081513",
+          "deps": [
+            "shared",
+            "npm:@nestjs/common",
+            "npm:@nestjs/microservices",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/src/app/user/user.controller.ts",
+          "hash": "10551855434028625105",
+          "deps": [
+            "nst-libs",
+            "npm:@nestjs/common",
+            "npm:@nestjs/swagger"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/src/app/user/user.module.ts",
+          "hash": "5031794543851297990",
+          "deps": [
+            "nst-libs",
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/src/app/user/user.service.ts",
+          "hash": "14979655036461966544",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/api-gateway/src/main.ts",
+          "hash": "5260146121928983321",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/core",
+            "npm:@nestjs/swagger"
+          ]
+        },
+        {
+          "file": "apps/api-gateway/tsconfig.app.json",
+          "hash": "3171572500325445971"
+        },
+        {
+          "file": "apps/api-gateway/tsconfig.json",
+          "hash": "3490524966360018312"
+        },
+        {
+          "file": "apps/api-gateway/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        },
+        {
+          "file": "apps/api-gateway/webpack.config.js",
+          "hash": "12521784449564697993",
+          "deps": [
+            "npm:@nx/webpack",
+            "npm:path"
+          ]
+        }
+      ],
+      "py-worker": [
+        {
+          "file": "workers/py-worker/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "workers/py-worker/jest.config.ts",
+          "hash": "8886075891645523526"
+        },
+        {
+          "file": "workers/py-worker/project.json",
+          "hash": "17345247195838425193"
+        },
+        {
+          "file": "workers/py-worker/src/app/app.controller.spec.ts",
+          "hash": "9499997688052526633",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "workers/py-worker/src/app/app.controller.ts",
+          "hash": "17660078591136265956",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/microservices",
+            "shared"
+          ]
+        },
+        {
+          "file": "workers/py-worker/src/app/app.module.ts",
+          "hash": "5320659636171747217",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "workers/py-worker/src/app/app.service.spec.ts",
+          "hash": "8587461140686713758",
+          "deps": [
+            "npm:@nestjs/testing"
+          ]
+        },
+        {
+          "file": "workers/py-worker/src/app/app.service.ts",
+          "hash": "1130451642599024734",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "workers/py-worker/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "workers/py-worker/src/main.ts",
+          "hash": "8545534198048689307",
+          "deps": [
+            "npm:@nestjs/common",
+            "npm:@nestjs/core",
+            "npm:@nestjs/microservices",
+            "shared"
+          ]
+        },
+        {
+          "file": "workers/py-worker/tsconfig.app.json",
+          "hash": "3171572500325445971"
+        },
+        {
+          "file": "workers/py-worker/tsconfig.json",
+          "hash": "3490524966360018312"
+        },
+        {
+          "file": "workers/py-worker/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        },
+        {
+          "file": "workers/py-worker/webpack.config.js",
+          "hash": "10363804586959621512",
+          "deps": [
+            "npm:@nx/webpack",
+            "npm:path"
+          ]
+        }
+      ],
+      "nst-libs": [
+        {
+          "file": "libs/nst-libs/.eslintrc.json",
+          "hash": "16896711999632553762"
+        },
+        {
+          "file": "libs/nst-libs/README.md",
+          "hash": "13780848178641365603"
+        },
+        {
+          "file": "libs/nst-libs/jest.config.ts",
+          "hash": "14005726161322210366"
+        },
+        {
+          "file": "libs/nst-libs/package.json",
+          "hash": "4593170223745198687",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "libs/nst-libs/project.json",
+          "hash": "469694894391449327"
+        },
+        {
+          "file": "libs/nst-libs/src/index.ts",
+          "hash": "16090294366264506970"
+        },
+        {
+          "file": "libs/nst-libs/src/lib/nst-libs.module.ts",
+          "hash": "16248316956053685529",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "libs/nst-libs/src/lib/pipes/parseobject.pipe.ts",
+          "hash": "1223621742436428731",
+          "deps": [
+            "npm:@nestjs/common"
+          ]
+        },
+        {
+          "file": "libs/nst-libs/tsconfig.json",
+          "hash": "5840880287502376438"
+        },
+        {
+          "file": "libs/nst-libs/tsconfig.lib.json",
+          "hash": "3550173832616418300"
+        },
+        {
+          "file": "libs/nst-libs/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        }
+      ],
+      "py-worker-e2e": [
+        {
+          "file": "workers/py-worker-e2e/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "workers/py-worker-e2e/jest.config.ts",
+          "hash": "13481555051636298373"
+        },
+        {
+          "file": "workers/py-worker-e2e/project.json",
+          "hash": "4299531615336741851"
+        },
+        {
+          "file": "workers/py-worker-e2e/src/py-worker/py-worker.spec.ts",
+          "hash": "110394728024017389",
+          "deps": [
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "workers/py-worker-e2e/src/support/global-setup.ts",
+          "hash": "2568409276037275290"
+        },
+        {
+          "file": "workers/py-worker-e2e/src/support/global-teardown.ts",
+          "hash": "5275447082211835490"
+        },
+        {
+          "file": "workers/py-worker-e2e/src/support/test-setup.ts",
+          "hash": "10984585515912236441",
+          "deps": [
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "workers/py-worker-e2e/tsconfig.json",
+          "hash": "15443990093475294480"
+        },
+        {
+          "file": "workers/py-worker-e2e/tsconfig.spec.json",
+          "hash": "14954872453723519891"
+        }
+      ],
+      "ng-admin-e2e": [
+        {
+          "file": "apps/ng-admin-e2e/.eslintrc.json",
+          "hash": "632147010597293032"
+        },
+        {
+          "file": "apps/ng-admin-e2e/playwright.config.ts",
+          "hash": "16285578810318513548",
+          "deps": [
+            "npm:@playwright/test",
+            "npm:@nx/playwright",
+            "npm:@nx/devkit"
+          ]
+        },
+        {
+          "file": "apps/ng-admin-e2e/project.json",
+          "hash": "9658173699316938505"
+        },
+        {
+          "file": "apps/ng-admin-e2e/src/example.spec.ts",
+          "hash": "16019101014373124625",
+          "deps": [
+            "npm:@playwright/test"
+          ]
+        },
+        {
+          "file": "apps/ng-admin-e2e/tsconfig.json",
+          "hash": "2800721902587063983"
+        }
+      ],
+      "ng-ui": [
+        {
+          "file": "libs/ng-ui/.eslintrc.json",
+          "hash": "9628345067573567197"
+        },
+        {
+          "file": "libs/ng-ui/README.md",
+          "hash": "6761846686851354015"
+        },
+        {
+          "file": "libs/ng-ui/jest.config.ts",
+          "hash": "3291098639260758432"
+        },
+        {
+          "file": "libs/ng-ui/project.json",
+          "hash": "8195059002505023293"
+        },
+        {
+          "file": "libs/ng-ui/src/index.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "libs/ng-ui/src/test-setup.ts",
+          "hash": "12935735732682149507",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "libs/ng-ui/tsconfig.json",
+          "hash": "15487755565970508470"
+        },
+        {
+          "file": "libs/ng-ui/tsconfig.lib.json",
+          "hash": "5796668385415907511"
+        },
+        {
+          "file": "libs/ng-ui/tsconfig.spec.json",
+          "hash": "2927375835638640771"
+        }
+      ],
+      "rt-super": [
+        {
+          "file": "apps/rt-super/.babelrc",
+          "hash": "13020124393823981135"
+        },
+        {
+          "file": "apps/rt-super/.eslintrc.json",
+          "hash": "11012487992710232822"
+        },
+        {
+          "file": "apps/rt-super/jest.config.ts",
+          "hash": "243120606843697312"
+        },
+        {
+          "file": "apps/rt-super/project.json",
+          "hash": "670610773895415321"
+        },
+        {
+          "file": "apps/rt-super/src/app/app.module.css",
+          "hash": "8887387885984320532"
+        },
+        {
+          "file": "apps/rt-super/src/app/app.spec.tsx",
+          "hash": "7852269818708665042",
+          "deps": [
+            "npm:@testing-library/react"
+          ]
+        },
+        {
+          "file": "apps/rt-super/src/app/app.tsx",
+          "hash": "2051510221768527689"
+        },
+        {
+          "file": "apps/rt-super/src/app/nx-welcome.tsx",
+          "hash": "729168762476089670"
+        },
+        {
+          "file": "apps/rt-super/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/rt-super/src/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/rt-super/src/index.html",
+          "hash": "8383608997507682271"
+        },
+        {
+          "file": "apps/rt-super/src/main.tsx",
+          "hash": "4731961929376199421",
+          "deps": [
+            "npm:react",
+            "npm:react-dom"
+          ]
+        },
+        {
+          "file": "apps/rt-super/src/styles.css",
+          "hash": "5195668842064076916"
+        },
+        {
+          "file": "apps/rt-super/tsconfig.app.json",
+          "hash": "15147195313780277677"
+        },
+        {
+          "file": "apps/rt-super/tsconfig.json",
+          "hash": "9850153468027031608"
+        },
+        {
+          "file": "apps/rt-super/tsconfig.spec.json",
+          "hash": "11378287594513225419"
+        },
+        {
+          "file": "apps/rt-super/webpack.config.js",
+          "hash": "5116403521972145269",
+          "deps": [
+            "npm:@nx/webpack",
+            "npm:@nx/react",
+            "npm:path"
+          ]
+        }
+      ],
+      "shared": [
+        {
+          "file": "libs/shared/.eslintrc.json",
+          "hash": "16896711999632553762"
+        },
+        {
+          "file": "libs/shared/README.md",
+          "hash": "4013336366747760891"
+        },
+        {
+          "file": "libs/shared/jest.config.ts",
+          "hash": "4739188552431792008"
+        },
+        {
+          "file": "libs/shared/package.json",
+          "hash": "14518387103206979723",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "libs/shared/project.json",
+          "hash": "10936697193704018704"
+        },
+        {
+          "file": "libs/shared/src/index.ts",
+          "hash": "10383896679397325106"
+        },
+        {
+          "file": "libs/shared/src/lib/constants/shared.ts",
+          "hash": "9794051316846204713"
+        },
+        {
+          "file": "libs/shared/src/lib/environments/dev.ts",
+          "hash": "11271812766161756367"
+        },
+        {
+          "file": "libs/shared/src/lib/environments/prod.ts",
+          "hash": "12828552081791609689"
+        },
+        {
+          "file": "libs/shared/tsconfig.json",
+          "hash": "5840880287502376438"
+        },
+        {
+          "file": "libs/shared/tsconfig.lib.json",
+          "hash": "3632393694954060084"
+        },
+        {
+          "file": "libs/shared/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        }
+      ],
+      "ng-admin": [
+        {
+          "file": "apps/ng-admin/.eslintrc.json",
+          "hash": "3322449398258820698"
+        },
+        {
+          "file": "apps/ng-admin/jest.config.ts",
+          "hash": "5415346356616612519"
+        },
+        {
+          "file": "apps/ng-admin/project.json",
+          "hash": "12617881869451678219"
+        },
+        {
+          "file": "apps/ng-admin/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/ng-admin/src/app/app.component.css",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/ng-admin/src/app/app.component.html",
+          "hash": "5654460193981998828"
+        },
+        {
+          "file": "apps/ng-admin/src/app/app.component.spec.ts",
+          "hash": "9007292610629208844",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-admin/src/app/app.component.ts",
+          "hash": "10660640138045528743",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-admin/src/app/app.config.ts",
+          "hash": "6137170128205633588",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-admin/src/app/app.routes.ts",
+          "hash": "6185150965714414910",
+          "deps": [
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/ng-admin/src/app/nx-welcome.component.ts",
+          "hash": "10742219332088818181",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "apps/ng-admin/src/index.html",
+          "hash": "16015095496209659845"
+        },
+        {
+          "file": "apps/ng-admin/src/main.ts",
+          "hash": "16635586463787978962",
+          "deps": [
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "apps/ng-admin/src/styles.css",
+          "hash": "5195668842064076916"
+        },
+        {
+          "file": "apps/ng-admin/src/test-setup.ts",
+          "hash": "12935735732682149507",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "apps/ng-admin/tsconfig.app.json",
+          "hash": "8365644956319658761"
+        },
+        {
+          "file": "apps/ng-admin/tsconfig.editor.json",
+          "hash": "1055794200401717100"
+        },
+        {
+          "file": "apps/ng-admin/tsconfig.json",
+          "hash": "10165753922017812673"
+        },
+        {
+          "file": "apps/ng-admin/tsconfig.spec.json",
+          "hash": "2927375835638640771"
+        }
+      ],
+      "ng-super-e2e": [
+        {
+          "file": "apps/ng-super-e2e/.eslintrc.json",
+          "hash": "632147010597293032"
+        },
+        {
+          "file": "apps/ng-super-e2e/playwright.config.ts",
+          "hash": "11466091568862194324",
+          "deps": [
+            "npm:@playwright/test",
+            "npm:@nx/playwright",
+            "npm:@nx/devkit"
+          ]
+        },
+        {
+          "file": "apps/ng-super-e2e/project.json",
+          "hash": "11148805446045372587"
+        },
+        {
+          "file": "apps/ng-super-e2e/src/example.spec.ts",
+          "hash": "16019101014373124625",
+          "deps": [
+            "npm:@playwright/test"
+          ]
+        },
+        {
+          "file": "apps/ng-super-e2e/tsconfig.json",
+          "hash": "2800721902587063983"
         }
       ]
     }

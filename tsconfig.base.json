@@ -15,10 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@neom/nx-plugins": ["tools/plugins/nx-plugins/src/index.ts"],
+      "@neom/api-libs": ["libs/api-libs/src/index.ts"],
+      "@neom/domain-libs": ["libs/domain-libs/src/index.ts"],
       "@neom/ng-ui": ["libs/ng-ui/src/index.ts"],
       "@neom/nst-libs": ["libs/nst-libs/src/index.ts"],
       "@neom/nst-libs/*": ["libs/nst-libs/src/*"],
+      "@neom/nx-plugins": ["tools/plugins/nx-plugins/src/index.ts"],
       "@neom/rt-ui": ["libs/rt-ui/src/index.ts"],
       "@neom/shared": ["libs/shared/src/index.ts"],
       "@neom/shared/*": ["libs/shared/src/*"],
