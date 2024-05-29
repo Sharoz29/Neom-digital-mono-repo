@@ -1,0 +1,21 @@
+import { Injectable, Inject, CACHE_MANAGER } from '@nestjs/common';
+import { <%= className %>Vm } from '@models';
+import {BaseApiService} from '@api-gateway/shared/base-api.service';
+import {CLIENT_PROXY} from '@api-models/shared/injectors/client.proxy';
+import { ClientProxy } from '@nestjs/microservices';
+
+// Extending from BaseApiService to implement Basic Api's for CRUD Functionalities
+@Injectable()
+export class <%= className %>ApiService extends BaseApiService<<%= className %>Vm> {
+  constructor(
+    @Inject(CACHE_MANAGER) cacheManagerRef,
+    @Inject(CLIENT_PROXY) _client: ClientProxy
+)
+  {
+    super(_client, '<%= propertyName %>', cacheManagerRef);
+  }
+
+  /**
+   * Specialized Methods Come below:
+   */  
+}

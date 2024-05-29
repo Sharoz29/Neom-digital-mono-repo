@@ -1,5 +1,109 @@
 {
   "nodes": {
+    "nx-plugins": {
+      "name": "nx-plugins",
+      "type": "lib",
+      "data": {
+        "root": "tools/plugins/nx-plugins",
+        "name": "nx-plugins",
+        "targets": {
+          "lint": {
+            "cache": true,
+            "options": {
+              "cwd": "tools/plugins/nx-plugins",
+              "command": "eslint ."
+            },
+            "inputs": [
+              "default",
+              "^default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{projectRoot}/.eslintrc.json",
+              "{workspaceRoot}/tools/eslint-rules/**/*",
+              {
+                "externalDependencies": [
+                  "eslint"
+                ]
+              }
+            ],
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "executor": "nx:run-commands",
+            "configurations": {}
+          },
+          "test": {
+            "executor": "@nx/jest:jest",
+            "cache": true,
+            "inputs": [
+              "default",
+              "^production",
+              "{workspaceRoot}/jest.preset.js"
+            ],
+            "outputs": [
+              "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+              "passWithNoTests": true,
+              "jestConfig": "tools/plugins/nx-plugins/jest.config.ts"
+            },
+            "configurations": {
+              "ci": {
+                "ci": true,
+                "codeCoverage": true
+              }
+            }
+          },
+          "build": {
+            "executor": "@nx/js:tsc",
+            "cache": true,
+            "dependsOn": [
+              "^build"
+            ],
+            "inputs": [
+              "production",
+              "^production"
+            ],
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "options": {
+              "outputPath": "dist/tools/plugins/nx-plugins",
+              "main": "tools/plugins/nx-plugins/src/index.ts",
+              "tsConfig": "tools/plugins/nx-plugins/tsconfig.lib.json",
+              "assets": [
+                "tools/plugins/nx-plugins/*.md",
+                {
+                  "input": "./tools/plugins/nx-plugins/src",
+                  "glob": "**/!(*.ts)",
+                  "output": "./src"
+                },
+                {
+                  "input": "./tools/plugins/nx-plugins/src",
+                  "glob": "**/*.d.ts",
+                  "output": "./src"
+                },
+                {
+                  "input": "./tools/plugins/nx-plugins",
+                  "glob": "generators.json",
+                  "output": "."
+                },
+                {
+                  "input": "./tools/plugins/nx-plugins",
+                  "glob": "executors.json",
+                  "output": "."
+                }
+              ]
+            },
+            "configurations": {}
+          }
+        },
+        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "tools/plugins/nx-plugins/src",
+        "projectType": "library",
+        "tags": [],
+        "implicitDependencies": []
+      }
+    },
     "gql-worker-e2e": {
       "name": "gql-worker-e2e",
       "type": "e2e",
@@ -6779,6 +6883,15 @@
         "hash": "sha512-5OtiR7t+9VaY+wBuEMy0fMTC/a2tQEKBbnOKbxgcVKBg7rabLDu0yxUTdpbHRcfJC1YWTQzj4tnXANnmXe7bwQ=="
       }
     },
+    "npm:@nrwl/nx-plugin": {
+      "type": "npm",
+      "name": "npm:@nrwl/nx-plugin",
+      "data": {
+        "version": "19.1.0",
+        "packageName": "@nrwl/nx-plugin",
+        "hash": "sha512-Z20AFAGau60x8QGXabdQbNYG1KkiuyaozazZ2XappEkyThkURC0DvImp7Hxh8Kn9Jr7m3diNSE8vqFrOmhDuQA=="
+      }
+    },
     "npm:@nrwl/react": {
       "type": "npm",
       "name": "npm:@nrwl/react",
@@ -7020,6 +7133,15 @@
         "version": "19.1.0",
         "packageName": "@nx/playwright",
         "hash": "sha512-On447YrInillSC1rPS79ltBnvSy9FpR3VpKkPfow7KiQwqtEm3dWj69pzujjd77/S4gVRO2+JQLD/E4yj5FKvQ=="
+      }
+    },
+    "npm:@nx/plugin": {
+      "type": "npm",
+      "name": "npm:@nx/plugin",
+      "data": {
+        "version": "19.1.0",
+        "packageName": "@nx/plugin",
+        "hash": "sha512-nsPEPsAAa6vg4zzhN1RFLe1ndS+lgtAexk0x3bgIscm8JBIu2vfqXhJeboYgNHisKt6FJWSWYLNbOTGgS9Gxxg=="
       }
     },
     "npm:@nx/react": {
@@ -18553,6 +18675,18 @@
     }
   },
   "dependencies": {
+    "nx-plugins": [
+      {
+        "source": "nx-plugins",
+        "target": "npm:@nx/devkit",
+        "type": "static"
+      },
+      {
+        "source": "nx-plugins",
+        "target": "npm:tslib",
+        "type": "static"
+      }
+    ],
     "gql-worker-e2e": [
       {
         "source": "gql-worker-e2e",
@@ -19282,6 +19416,11 @@
       {
         "source": "@neom-digital/source",
         "target": "npm:@nx/playwright",
+        "type": "static"
+      },
+      {
+        "source": "@neom-digital/source",
+        "target": "npm:@nx/plugin",
         "type": "static"
       },
       {
@@ -26358,6 +26497,13 @@
         "type": "static"
       }
     ],
+    "npm:@nrwl/nx-plugin": [
+      {
+        "source": "npm:@nrwl/nx-plugin",
+        "target": "npm:@nx/plugin",
+        "type": "static"
+      }
+    ],
     "npm:@nrwl/react": [
       {
         "source": "npm:@nrwl/react",
@@ -27178,6 +27324,43 @@
       },
       {
         "source": "npm:@nx/playwright",
+        "target": "npm:tslib",
+        "type": "static"
+      }
+    ],
+    "npm:@nx/plugin": [
+      {
+        "source": "npm:@nx/plugin",
+        "target": "npm:@nrwl/nx-plugin",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nx/plugin",
+        "target": "npm:@nx/devkit",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nx/plugin",
+        "target": "npm:@nx/eslint",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nx/plugin",
+        "target": "npm:@nx/jest",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nx/plugin",
+        "target": "npm:@nx/js",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nx/plugin",
+        "target": "npm:fs-extra",
+        "type": "static"
+      },
+      {
+        "source": "npm:@nx/plugin",
         "target": "npm:tslib",
         "type": "static"
       }

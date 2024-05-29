@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "NestApiDomain",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?"
+    },
+    "api": {
+      "type": "boolean",
+      "description": "Create API Endpoints?",
+      "default": true,
+      "x-prompt": "Do you want to create API Endpoint Libraries?"
+    },
+    "apiProject": {
+      "type": "string",
+      "description": "Select Gateway Project to add these libraries into",
+      "enum": ["api-gateway"]
+    },
+    "domain": {
+      "type": "boolean",
+      "description": "Create Domain Subscribers?",
+      "default": true,
+      "x-prompt": "Do you want to create Domain Subscribers Library?"
+    },
+    "domainProject": {
+      "type": "string",
+      "description": "Select Domain Project to add these libraries into",
+      "enum": ["py-worker", "gql-worker", "iot-worker"]
+    }
+  },
+  "required": ["name"]
+}

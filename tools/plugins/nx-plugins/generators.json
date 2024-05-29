@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "nest-api-domain": {
+      "factory": "./src/generators/nest-api-domain/generator",
+      "schema": "./src/generators/nest-api-domain/schema.json",
+      "description": "This will generate both API Endpoints and Domain Subscribers in Libs, it will also update the module files of the applications."
+    }
+  }
+}

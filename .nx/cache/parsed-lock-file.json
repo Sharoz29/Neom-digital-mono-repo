@@ -4347,6 +4347,15 @@
         "hash": "sha512-5OtiR7t+9VaY+wBuEMy0fMTC/a2tQEKBbnOKbxgcVKBg7rabLDu0yxUTdpbHRcfJC1YWTQzj4tnXANnmXe7bwQ=="
       }
     },
+    "npm:@nrwl/nx-plugin": {
+      "type": "npm",
+      "name": "npm:@nrwl/nx-plugin",
+      "data": {
+        "version": "19.1.0",
+        "packageName": "@nrwl/nx-plugin",
+        "hash": "sha512-Z20AFAGau60x8QGXabdQbNYG1KkiuyaozazZ2XappEkyThkURC0DvImp7Hxh8Kn9Jr7m3diNSE8vqFrOmhDuQA=="
+      }
+    },
     "npm:@nrwl/react": {
       "type": "npm",
       "name": "npm:@nrwl/react",
@@ -4588,6 +4597,15 @@
         "version": "19.1.0",
         "packageName": "@nx/playwright",
         "hash": "sha512-On447YrInillSC1rPS79ltBnvSy9FpR3VpKkPfow7KiQwqtEm3dWj69pzujjd77/S4gVRO2+JQLD/E4yj5FKvQ=="
+      }
+    },
+    "npm:@nx/plugin": {
+      "type": "npm",
+      "name": "npm:@nx/plugin",
+      "data": {
+        "version": "19.1.0",
+        "packageName": "@nx/plugin",
+        "hash": "sha512-nsPEPsAAa6vg4zzhN1RFLe1ndS+lgtAexk0x3bgIscm8JBIu2vfqXhJeboYgNHisKt6FJWSWYLNbOTGgS9Gxxg=="
       }
     },
     "npm:@nx/react": {
@@ -23112,6 +23130,11 @@
       "type": "static"
     },
     {
+      "source": "npm:@nrwl/nx-plugin",
+      "target": "npm:@nx/plugin",
+      "type": "static"
+    },
+    {
       "source": "npm:@nrwl/react",
       "target": "npm:@nx/react",
       "type": "static"
@@ -23953,6 +23976,41 @@
     },
     {
       "source": "npm:@nx/playwright",
+      "target": "npm:tslib",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/plugin",
+      "target": "npm:@nrwl/nx-plugin",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/plugin",
+      "target": "npm:@nx/devkit",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/plugin",
+      "target": "npm:@nx/eslint",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/plugin",
+      "target": "npm:@nx/jest",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/plugin",
+      "target": "npm:@nx/js",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/plugin",
+      "target": "npm:fs-extra",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/plugin",
       "target": "npm:tslib",
       "type": "static"
     },

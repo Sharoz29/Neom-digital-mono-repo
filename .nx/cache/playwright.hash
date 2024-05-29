@@ -1,7 +1,1992 @@
 {
   "targetsCache": {
     "targetsCache": {
-      "3508626986837796619": {
+      "targetsCache": {
+        "targetsCache": {
+          "targetsCache": {
+            "targetsCache": {
+              "targetsCache": {
+                "5396969665353611151": {
+                  "targets": {
+                    "e2e": {
+                      "command": "playwright test",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci--src/example.spec.ts": {
+                      "command": "playwright test src/example.spec.ts",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci": {
+                      "executor": "nx:noop",
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                      ],
+                      "dependsOn": [
+                        {
+                          "target": "e2e-ci--src/example.spec.ts",
+                          "projects": "self",
+                          "params": "forward"
+                        }
+                      ],
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in CI"
+                      }
+                    }
+                  },
+                  "metadata": {
+                    "targetGroups": {
+                      "E2E (CI)": [
+                        "e2e-ci--src/example.spec.ts",
+                        "e2e-ci"
+                      ]
+                    }
+                  }
+                },
+                "660287473517943658": {
+                  "targets": {
+                    "e2e": {
+                      "command": "playwright test",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci--src/example.spec.ts": {
+                      "command": "playwright test src/example.spec.ts",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci": {
+                      "executor": "nx:noop",
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                      ],
+                      "dependsOn": [
+                        {
+                          "target": "e2e-ci--src/example.spec.ts",
+                          "projects": "self",
+                          "params": "forward"
+                        }
+                      ],
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in CI"
+                      }
+                    }
+                  },
+                  "metadata": {
+                    "targetGroups": {
+                      "E2E (CI)": [
+                        "e2e-ci--src/example.spec.ts",
+                        "e2e-ci"
+                      ]
+                    }
+                  }
+                },
+                "10407676120206349845": {
+                  "targets": {
+                    "e2e": {
+                      "command": "playwright test",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci--src/example.spec.ts": {
+                      "command": "playwright test src/example.spec.ts",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci": {
+                      "executor": "nx:noop",
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                      ],
+                      "dependsOn": [
+                        {
+                          "target": "e2e-ci--src/example.spec.ts",
+                          "projects": "self",
+                          "params": "forward"
+                        }
+                      ],
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in CI"
+                      }
+                    }
+                  },
+                  "metadata": {
+                    "targetGroups": {
+                      "E2E (CI)": [
+                        "e2e-ci--src/example.spec.ts",
+                        "e2e-ci"
+                      ]
+                    }
+                  }
+                },
+                "9045156052971248344": {
+                  "targets": {
+                    "e2e": {
+                      "command": "playwright test",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci--src/example.spec.ts": {
+                      "command": "playwright test src/example.spec.ts",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci": {
+                      "executor": "nx:noop",
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                      ],
+                      "dependsOn": [
+                        {
+                          "target": "e2e-ci--src/example.spec.ts",
+                          "projects": "self",
+                          "params": "forward"
+                        }
+                      ],
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in CI"
+                      }
+                    }
+                  },
+                  "metadata": {
+                    "targetGroups": {
+                      "E2E (CI)": [
+                        "e2e-ci--src/example.spec.ts",
+                        "e2e-ci"
+                      ]
+                    }
+                  }
+                },
+                "2740269653028592000": {
+                  "targets": {
+                    "e2e": {
+                      "command": "playwright test",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci--src/example.spec.ts": {
+                      "command": "playwright test src/example.spec.ts",
+                      "options": {
+                        "cwd": "{projectRoot}"
+                      },
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                      },
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                      ]
+                    },
+                    "e2e-ci": {
+                      "executor": "nx:noop",
+                      "cache": true,
+                      "inputs": [
+                        "default",
+                        "^production"
+                      ],
+                      "outputs": [
+                        "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                        "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                      ],
+                      "dependsOn": [
+                        {
+                          "target": "e2e-ci--src/example.spec.ts",
+                          "projects": "self",
+                          "params": "forward"
+                        }
+                      ],
+                      "metadata": {
+                        "technologies": [
+                          "playwright"
+                        ],
+                        "description": "Runs Playwright Tests in CI"
+                      }
+                    }
+                  },
+                  "metadata": {
+                    "targetGroups": {
+                      "E2E (CI)": [
+                        "e2e-ci--src/example.spec.ts",
+                        "e2e-ci"
+                      ]
+                    }
+                  }
+                }
+              },
+              "5396969665353611151": {
+                "targets": {
+                  "e2e": {
+                    "command": "playwright test",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci--src/example.spec.ts": {
+                    "command": "playwright test src/example.spec.ts",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci": {
+                    "executor": "nx:noop",
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                    ],
+                    "dependsOn": [
+                      {
+                        "target": "e2e-ci--src/example.spec.ts",
+                        "projects": "self",
+                        "params": "forward"
+                      }
+                    ],
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in CI"
+                    }
+                  }
+                },
+                "metadata": {
+                  "targetGroups": {
+                    "E2E (CI)": [
+                      "e2e-ci--src/example.spec.ts",
+                      "e2e-ci"
+                    ]
+                  }
+                }
+              },
+              "660287473517943658": {
+                "targets": {
+                  "e2e": {
+                    "command": "playwright test",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci--src/example.spec.ts": {
+                    "command": "playwright test src/example.spec.ts",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci": {
+                    "executor": "nx:noop",
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                    ],
+                    "dependsOn": [
+                      {
+                        "target": "e2e-ci--src/example.spec.ts",
+                        "projects": "self",
+                        "params": "forward"
+                      }
+                    ],
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in CI"
+                    }
+                  }
+                },
+                "metadata": {
+                  "targetGroups": {
+                    "E2E (CI)": [
+                      "e2e-ci--src/example.spec.ts",
+                      "e2e-ci"
+                    ]
+                  }
+                }
+              },
+              "10407676120206349845": {
+                "targets": {
+                  "e2e": {
+                    "command": "playwright test",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci--src/example.spec.ts": {
+                    "command": "playwright test src/example.spec.ts",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci": {
+                    "executor": "nx:noop",
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                    ],
+                    "dependsOn": [
+                      {
+                        "target": "e2e-ci--src/example.spec.ts",
+                        "projects": "self",
+                        "params": "forward"
+                      }
+                    ],
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in CI"
+                    }
+                  }
+                },
+                "metadata": {
+                  "targetGroups": {
+                    "E2E (CI)": [
+                      "e2e-ci--src/example.spec.ts",
+                      "e2e-ci"
+                    ]
+                  }
+                }
+              },
+              "9045156052971248344": {
+                "targets": {
+                  "e2e": {
+                    "command": "playwright test",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci--src/example.spec.ts": {
+                    "command": "playwright test src/example.spec.ts",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci": {
+                    "executor": "nx:noop",
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                    ],
+                    "dependsOn": [
+                      {
+                        "target": "e2e-ci--src/example.spec.ts",
+                        "projects": "self",
+                        "params": "forward"
+                      }
+                    ],
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in CI"
+                    }
+                  }
+                },
+                "metadata": {
+                  "targetGroups": {
+                    "E2E (CI)": [
+                      "e2e-ci--src/example.spec.ts",
+                      "e2e-ci"
+                    ]
+                  }
+                }
+              },
+              "2740269653028592000": {
+                "targets": {
+                  "e2e": {
+                    "command": "playwright test",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci--src/example.spec.ts": {
+                    "command": "playwright test src/example.spec.ts",
+                    "options": {
+                      "cwd": "{projectRoot}"
+                    },
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                    },
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                    ]
+                  },
+                  "e2e-ci": {
+                    "executor": "nx:noop",
+                    "cache": true,
+                    "inputs": [
+                      "default",
+                      "^production"
+                    ],
+                    "outputs": [
+                      "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                      "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                    ],
+                    "dependsOn": [
+                      {
+                        "target": "e2e-ci--src/example.spec.ts",
+                        "projects": "self",
+                        "params": "forward"
+                      }
+                    ],
+                    "metadata": {
+                      "technologies": [
+                        "playwright"
+                      ],
+                      "description": "Runs Playwright Tests in CI"
+                    }
+                  }
+                },
+                "metadata": {
+                  "targetGroups": {
+                    "E2E (CI)": [
+                      "e2e-ci--src/example.spec.ts",
+                      "e2e-ci"
+                    ]
+                  }
+                }
+              }
+            },
+            "5396969665353611151": {
+              "targets": {
+                "e2e": {
+                  "command": "playwright test",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                  ]
+                },
+                "e2e-ci--src/example.spec.ts": {
+                  "command": "playwright test src/example.spec.ts",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                  ]
+                },
+                "e2e-ci": {
+                  "executor": "nx:noop",
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                  ],
+                  "dependsOn": [
+                    {
+                      "target": "e2e-ci--src/example.spec.ts",
+                      "projects": "self",
+                      "params": "forward"
+                    }
+                  ],
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in CI"
+                  }
+                }
+              },
+              "metadata": {
+                "targetGroups": {
+                  "E2E (CI)": [
+                    "e2e-ci--src/example.spec.ts",
+                    "e2e-ci"
+                  ]
+                }
+              }
+            },
+            "660287473517943658": {
+              "targets": {
+                "e2e": {
+                  "command": "playwright test",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                  ]
+                },
+                "e2e-ci--src/example.spec.ts": {
+                  "command": "playwright test src/example.spec.ts",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                  ]
+                },
+                "e2e-ci": {
+                  "executor": "nx:noop",
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                  ],
+                  "dependsOn": [
+                    {
+                      "target": "e2e-ci--src/example.spec.ts",
+                      "projects": "self",
+                      "params": "forward"
+                    }
+                  ],
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in CI"
+                  }
+                }
+              },
+              "metadata": {
+                "targetGroups": {
+                  "E2E (CI)": [
+                    "e2e-ci--src/example.spec.ts",
+                    "e2e-ci"
+                  ]
+                }
+              }
+            },
+            "10407676120206349845": {
+              "targets": {
+                "e2e": {
+                  "command": "playwright test",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                  ]
+                },
+                "e2e-ci--src/example.spec.ts": {
+                  "command": "playwright test src/example.spec.ts",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                  ]
+                },
+                "e2e-ci": {
+                  "executor": "nx:noop",
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                  ],
+                  "dependsOn": [
+                    {
+                      "target": "e2e-ci--src/example.spec.ts",
+                      "projects": "self",
+                      "params": "forward"
+                    }
+                  ],
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in CI"
+                  }
+                }
+              },
+              "metadata": {
+                "targetGroups": {
+                  "E2E (CI)": [
+                    "e2e-ci--src/example.spec.ts",
+                    "e2e-ci"
+                  ]
+                }
+              }
+            },
+            "9045156052971248344": {
+              "targets": {
+                "e2e": {
+                  "command": "playwright test",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                  ]
+                },
+                "e2e-ci--src/example.spec.ts": {
+                  "command": "playwright test src/example.spec.ts",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                  ]
+                },
+                "e2e-ci": {
+                  "executor": "nx:noop",
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                  ],
+                  "dependsOn": [
+                    {
+                      "target": "e2e-ci--src/example.spec.ts",
+                      "projects": "self",
+                      "params": "forward"
+                    }
+                  ],
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in CI"
+                  }
+                }
+              },
+              "metadata": {
+                "targetGroups": {
+                  "E2E (CI)": [
+                    "e2e-ci--src/example.spec.ts",
+                    "e2e-ci"
+                  ]
+                }
+              }
+            },
+            "2740269653028592000": {
+              "targets": {
+                "e2e": {
+                  "command": "playwright test",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                  ]
+                },
+                "e2e-ci--src/example.spec.ts": {
+                  "command": "playwright test src/example.spec.ts",
+                  "options": {
+                    "cwd": "{projectRoot}"
+                  },
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                  },
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                  ]
+                },
+                "e2e-ci": {
+                  "executor": "nx:noop",
+                  "cache": true,
+                  "inputs": [
+                    "default",
+                    "^production"
+                  ],
+                  "outputs": [
+                    "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                    "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                  ],
+                  "dependsOn": [
+                    {
+                      "target": "e2e-ci--src/example.spec.ts",
+                      "projects": "self",
+                      "params": "forward"
+                    }
+                  ],
+                  "metadata": {
+                    "technologies": [
+                      "playwright"
+                    ],
+                    "description": "Runs Playwright Tests in CI"
+                  }
+                }
+              },
+              "metadata": {
+                "targetGroups": {
+                  "E2E (CI)": [
+                    "e2e-ci--src/example.spec.ts",
+                    "e2e-ci"
+                  ]
+                }
+              }
+            }
+          },
+          "5396969665353611151": {
+            "targets": {
+              "e2e": {
+                "command": "playwright test",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                ]
+              },
+              "e2e-ci--src/example.spec.ts": {
+                "command": "playwright test src/example.spec.ts",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                ]
+              },
+              "e2e-ci": {
+                "executor": "nx:noop",
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+                ],
+                "dependsOn": [
+                  {
+                    "target": "e2e-ci--src/example.spec.ts",
+                    "projects": "self",
+                    "params": "forward"
+                  }
+                ],
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in CI"
+                }
+              }
+            },
+            "metadata": {
+              "targetGroups": {
+                "E2E (CI)": [
+                  "e2e-ci--src/example.spec.ts",
+                  "e2e-ci"
+                ]
+              }
+            }
+          },
+          "660287473517943658": {
+            "targets": {
+              "e2e": {
+                "command": "playwright test",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                ]
+              },
+              "e2e-ci--src/example.spec.ts": {
+                "command": "playwright test src/example.spec.ts",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                ]
+              },
+              "e2e-ci": {
+                "executor": "nx:noop",
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+                ],
+                "dependsOn": [
+                  {
+                    "target": "e2e-ci--src/example.spec.ts",
+                    "projects": "self",
+                    "params": "forward"
+                  }
+                ],
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in CI"
+                }
+              }
+            },
+            "metadata": {
+              "targetGroups": {
+                "E2E (CI)": [
+                  "e2e-ci--src/example.spec.ts",
+                  "e2e-ci"
+                ]
+              }
+            }
+          },
+          "10407676120206349845": {
+            "targets": {
+              "e2e": {
+                "command": "playwright test",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                ]
+              },
+              "e2e-ci--src/example.spec.ts": {
+                "command": "playwright test src/example.spec.ts",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                ]
+              },
+              "e2e-ci": {
+                "executor": "nx:noop",
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+                ],
+                "dependsOn": [
+                  {
+                    "target": "e2e-ci--src/example.spec.ts",
+                    "projects": "self",
+                    "params": "forward"
+                  }
+                ],
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in CI"
+                }
+              }
+            },
+            "metadata": {
+              "targetGroups": {
+                "E2E (CI)": [
+                  "e2e-ci--src/example.spec.ts",
+                  "e2e-ci"
+                ]
+              }
+            }
+          },
+          "9045156052971248344": {
+            "targets": {
+              "e2e": {
+                "command": "playwright test",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                ]
+              },
+              "e2e-ci--src/example.spec.ts": {
+                "command": "playwright test src/example.spec.ts",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                ]
+              },
+              "e2e-ci": {
+                "executor": "nx:noop",
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+                ],
+                "dependsOn": [
+                  {
+                    "target": "e2e-ci--src/example.spec.ts",
+                    "projects": "self",
+                    "params": "forward"
+                  }
+                ],
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in CI"
+                }
+              }
+            },
+            "metadata": {
+              "targetGroups": {
+                "E2E (CI)": [
+                  "e2e-ci--src/example.spec.ts",
+                  "e2e-ci"
+                ]
+              }
+            }
+          },
+          "2740269653028592000": {
+            "targets": {
+              "e2e": {
+                "command": "playwright test",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                ]
+              },
+              "e2e-ci--src/example.spec.ts": {
+                "command": "playwright test src/example.spec.ts",
+                "options": {
+                  "cwd": "{projectRoot}"
+                },
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+                },
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                ]
+              },
+              "e2e-ci": {
+                "executor": "nx:noop",
+                "cache": true,
+                "inputs": [
+                  "default",
+                  "^production"
+                ],
+                "outputs": [
+                  "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                  "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+                ],
+                "dependsOn": [
+                  {
+                    "target": "e2e-ci--src/example.spec.ts",
+                    "projects": "self",
+                    "params": "forward"
+                  }
+                ],
+                "metadata": {
+                  "technologies": [
+                    "playwright"
+                  ],
+                  "description": "Runs Playwright Tests in CI"
+                }
+              }
+            },
+            "metadata": {
+              "targetGroups": {
+                "E2E (CI)": [
+                  "e2e-ci--src/example.spec.ts",
+                  "e2e-ci"
+                ]
+              }
+            }
+          }
+        },
+        "5396969665353611151": {
+          "targets": {
+            "e2e": {
+              "command": "playwright test",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+              ]
+            },
+            "e2e-ci--src/example.spec.ts": {
+              "command": "playwright test src/example.spec.ts",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+              ]
+            },
+            "e2e-ci": {
+              "executor": "nx:noop",
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/ng-admin-e2e/test-output"
+              ],
+              "dependsOn": [
+                {
+                  "target": "e2e-ci--src/example.spec.ts",
+                  "projects": "self",
+                  "params": "forward"
+                }
+              ],
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in CI"
+              }
+            }
+          },
+          "metadata": {
+            "targetGroups": {
+              "E2E (CI)": [
+                "e2e-ci--src/example.spec.ts",
+                "e2e-ci"
+              ]
+            }
+          }
+        },
+        "660287473517943658": {
+          "targets": {
+            "e2e": {
+              "command": "playwright test",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+              ]
+            },
+            "e2e-ci--src/example.spec.ts": {
+              "command": "playwright test src/example.spec.ts",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+              ]
+            },
+            "e2e-ci": {
+              "executor": "nx:noop",
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/ng-rai-e2e/test-output"
+              ],
+              "dependsOn": [
+                {
+                  "target": "e2e-ci--src/example.spec.ts",
+                  "projects": "self",
+                  "params": "forward"
+                }
+              ],
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in CI"
+              }
+            }
+          },
+          "metadata": {
+            "targetGroups": {
+              "E2E (CI)": [
+                "e2e-ci--src/example.spec.ts",
+                "e2e-ci"
+              ]
+            }
+          }
+        },
+        "10407676120206349845": {
+          "targets": {
+            "e2e": {
+              "command": "playwright test",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+              ]
+            },
+            "e2e-ci--src/example.spec.ts": {
+              "command": "playwright test src/example.spec.ts",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+              ]
+            },
+            "e2e-ci": {
+              "executor": "nx:noop",
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/ng-super-e2e/test-output"
+              ],
+              "dependsOn": [
+                {
+                  "target": "e2e-ci--src/example.spec.ts",
+                  "projects": "self",
+                  "params": "forward"
+                }
+              ],
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in CI"
+              }
+            }
+          },
+          "metadata": {
+            "targetGroups": {
+              "E2E (CI)": [
+                "e2e-ci--src/example.spec.ts",
+                "e2e-ci"
+              ]
+            }
+          }
+        },
+        "9045156052971248344": {
+          "targets": {
+            "e2e": {
+              "command": "playwright test",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+              ]
+            },
+            "e2e-ci--src/example.spec.ts": {
+              "command": "playwright test src/example.spec.ts",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+              ]
+            },
+            "e2e-ci": {
+              "executor": "nx:noop",
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/rt-rai-e2e/test-output"
+              ],
+              "dependsOn": [
+                {
+                  "target": "e2e-ci--src/example.spec.ts",
+                  "projects": "self",
+                  "params": "forward"
+                }
+              ],
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in CI"
+              }
+            }
+          },
+          "metadata": {
+            "targetGroups": {
+              "E2E (CI)": [
+                "e2e-ci--src/example.spec.ts",
+                "e2e-ci"
+              ]
+            }
+          }
+        },
+        "2740269653028592000": {
+          "targets": {
+            "e2e": {
+              "command": "playwright test",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+              ]
+            },
+            "e2e-ci--src/example.spec.ts": {
+              "command": "playwright test src/example.spec.ts",
+              "options": {
+                "cwd": "{projectRoot}"
+              },
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in src/example.spec.ts in CI"
+              },
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+              ]
+            },
+            "e2e-ci": {
+              "executor": "nx:noop",
+              "cache": true,
+              "inputs": [
+                "default",
+                "^production"
+              ],
+              "outputs": [
+                "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/playwright-report",
+                "{workspaceRoot}/dist/.playwright/apps/rt-super-e2e/test-output"
+              ],
+              "dependsOn": [
+                {
+                  "target": "e2e-ci--src/example.spec.ts",
+                  "projects": "self",
+                  "params": "forward"
+                }
+              ],
+              "metadata": {
+                "technologies": [
+                  "playwright"
+                ],
+                "description": "Runs Playwright Tests in CI"
+              }
+            }
+          },
+          "metadata": {
+            "targetGroups": {
+              "E2E (CI)": [
+                "e2e-ci--src/example.spec.ts",
+                "e2e-ci"
+              ]
+            }
+          }
+        }
+      },
+      "5396969665353611151": {
         "targets": {
           "e2e": {
             "command": "playwright test",
@@ -80,7 +2065,7 @@
           }
         }
       },
-      "9605766605544200031": {
+      "660287473517943658": {
         "targets": {
           "e2e": {
             "command": "playwright test",
@@ -159,7 +2144,7 @@
           }
         }
       },
-      "9316900017738108944": {
+      "10407676120206349845": {
         "targets": {
           "e2e": {
             "command": "playwright test",
@@ -238,7 +2223,7 @@
           }
         }
       },
-      "12379863828275321376": {
+      "9045156052971248344": {
         "targets": {
           "e2e": {
             "command": "playwright test",
@@ -317,7 +2302,7 @@
           }
         }
       },
-      "14499109604134530155": {
+      "2740269653028592000": {
         "targets": {
           "e2e": {
             "command": "playwright test",
@@ -397,7 +2382,7 @@
         }
       }
     },
-    "3508626986837796619": {
+    "5396969665353611151": {
       "targets": {
         "e2e": {
           "command": "playwright test",
@@ -476,7 +2461,7 @@
         }
       }
     },
-    "9605766605544200031": {
+    "660287473517943658": {
       "targets": {
         "e2e": {
           "command": "playwright test",
@@ -555,7 +2540,7 @@
         }
       }
     },
-    "9316900017738108944": {
+    "10407676120206349845": {
       "targets": {
         "e2e": {
           "command": "playwright test",
@@ -634,7 +2619,7 @@
         }
       }
     },
-    "12379863828275321376": {
+    "9045156052971248344": {
       "targets": {
         "e2e": {
           "command": "playwright test",
@@ -713,7 +2698,7 @@
         }
       }
     },
-    "14499109604134530155": {
+    "2740269653028592000": {
       "targets": {
         "e2e": {
           "command": "playwright test",

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@neom/nx-plugins": ["tools/plugins/nx-plugins/src/index.ts"],
       "@neom/ng-ui": ["libs/ng-ui/src/index.ts"],
       "@neom/nst-libs": ["libs/nst-libs/src/index.ts"],
       "@neom/nst-libs/*": ["libs/nst-libs/src/*"],

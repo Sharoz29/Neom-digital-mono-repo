@@ -1,0 +1,36 @@
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ClientsModule } from '@nestjs/microservices';
+
+import { environment } from '@ecommerce/environments/environment';
+
+import { <%= className %> } from '@models';
+import { <%= className %>DomainController } from './<%= fileName %>-domain.controller';
+import { <%= className %>DomainService } from './<%= fileName %>-domain.service';
+import {<%= className %>FixturesService} from './fixtures/<%= fileName %>-fixtures.service';
+
+@Module({
+  imports: [
+    // Connect to DB with Model Name and Schema
+     MongooseModule.forFeature( [
+       { name: <%= className %>.modelName, schema: <%= className %>.model.schema },
+    ] ),
+    // Implementing Client Module to enable Pub and EventSourcing if required.
+    // With this you can use this.client object to Send/Broadcast Message from service.
+     ClientsModule.register([
+      {
+        name: CLIENT_PROXY,
+        ...environment.redisTransportOptions,
+      },
+    ]),
+  ],
+  controllers: [
+    <%= className %>DomainController
+  ],
+  providers: [
+    <%= className %>DomainService,
+    // Injecting Fixtures Service to Insert Sample Data in the Collection.
+    <%= className %>FixturesService
+  ]
+})
+export class <%= className %>DomainModule {}
