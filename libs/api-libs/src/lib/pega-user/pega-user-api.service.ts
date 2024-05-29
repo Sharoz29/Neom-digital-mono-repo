@@ -8,12 +8,12 @@ import { BaseApiService } from '../services/baseapi.service';
 
 // Extending from BaseApiService to implement Basic Api's for CRUD Functionalities
 @Injectable()
-export class <%= className %>ApiService extends BaseApiService {
+export class PegaUserApiService extends BaseApiService {
   constructor(
     @Inject(CACHE_MANAGER) cacheManagerRef: Cache,
     @Inject(RMQQueues.PY_WORKER_QUEUE) _client: ClientProxy
   ) {
-    super(_client, '<%= propertyName %>', cacheManagerRef);
+    super(_client, 'pegaUser', cacheManagerRef);
   }
 
   /**

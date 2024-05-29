@@ -1,10 +1,6 @@
-import { DynamicModule, Module } from '@nestjs/common';
-
-
-
-const generatedModules: DynamicModule[] = [
-];
-
+import { PegaUserApiModule } from './pega-user/pega-user-api.module';
+import { Module } from '@nestjs/common';
+const generatedModules = [PegaUserApiModule];
 @Module({
   controllers: [],
   providers: [],

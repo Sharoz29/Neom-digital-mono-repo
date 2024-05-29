@@ -19239,6 +19239,46 @@
         "source": "api-libs",
         "target": "npm:@nestjs/common",
         "type": "static"
+      },
+      {
+        "source": "api-libs",
+        "target": "npm:@nestjs/swagger",
+        "type": "static"
+      },
+      {
+        "source": "api-libs",
+        "target": "npm:rxjs",
+        "type": "static"
+      },
+      {
+        "source": "api-libs",
+        "target": "npm:cache-manager",
+        "type": "static"
+      },
+      {
+        "source": "api-libs",
+        "target": "npm:@nestjs/microservices",
+        "type": "static"
+      },
+      {
+        "source": "api-libs",
+        "target": "shared",
+        "type": "static"
+      },
+      {
+        "source": "api-libs",
+        "target": "npm:cache-manager-redis-store",
+        "type": "static"
+      },
+      {
+        "source": "api-libs",
+        "target": "npm:@nestjs/cache-manager",
+        "type": "static"
+      },
+      {
+        "source": "api-libs",
+        "target": "nst-libs",
+        "type": "static"
       }
     ],
     "ng-admin": [

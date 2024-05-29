@@ -7,10 +7,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { NstLibsModule } from '@neom/nst-libs';
 
-
-import {<%= className %>ApiController} from './<%= fileName %>-api.controller';
-import {<%= className %>ApiService} from './<%= fileName %>-api.service';
-
+import { PegaUserApiController } from './pega-user-api.controller';
+import { PegaUserApiService } from './pega-user-api.service';
 
 @Module({
   imports: [
@@ -46,7 +44,7 @@ import {<%= className %>ApiService} from './<%= fileName %>-api.service';
       },
     ]),
   ],
-  controllers: [<%= className %>ApiController],
-  providers: [<%= className %>ApiService],
+  controllers: [PegaUserApiController],
+  providers: [PegaUserApiService],
 })
-export class <%= className %>ApiModule {}
+export class PegaUserApiModule {}

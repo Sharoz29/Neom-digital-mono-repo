@@ -1,11 +1,11 @@
 import { UserModule } from './user/user.module';
 import { Module } from '@nestjs/common';
-import { redisStore } from 'cache-manager-redis-store';
-import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import { redisStore } from 'cache-manager-redis-store';
+import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { environment } from '@neom/shared/lib/environments/dev';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
