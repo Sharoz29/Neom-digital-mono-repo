@@ -6,9 +6,6 @@
 # Node artifact files
 node_modules/
 dist/
-.nx/
-.nx/cache/
-
 
 # Compiled Java class files
 *.class
@@ -53,3 +50,4 @@ Thumbs.db
 
 
 .angular
+.nx/
