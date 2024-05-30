@@ -9,11 +9,12 @@ import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { environment } from '@neom/shared/lib/environments/dev';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
+import { ApiLibsModule } from '@neom/api-libs';
 
 @Module({
   imports: [
     UserModule,
-
+    ApiLibsModule,
     CacheModule.registerAsync({
       // imports: [ConfigModule],
       useFactory: async () => {

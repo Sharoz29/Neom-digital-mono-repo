@@ -1,10 +1,6 @@
 import {
   Controller,
   Get,
-  Request,
-  UseGuards,
-  Query,
-  ParseIntPipe,
   Param,
   Post,
   Body,
@@ -12,185 +8,119 @@ import {
   HttpStatus,
   Put,
   Delete,
-  UseInterceptors,
 } from '@nestjs/common';
 import {
-  ApiOkResponse,
-  ApiBadRequestResponse,
-  ApiBadGatewayResponse,
-  ApiNotFoundResponse,
-  ApiOperation,
-  ApiQuery,
   ApiParam,
-  ApiCreatedResponse,
   ApiBody,
   ApiTags,
+  ApiResponse,
+  ApiOperation,
 } from '@nestjs/swagger';
+
 import { Observable } from 'rxjs';
-import { AuthGuard } from '@nestjs/passport';
+
 import { PegaUserApiService } from './pega-user-api.service';
-import { PegaUser, PegaUserVm, PegaUserCreateVm, UserRole } from '@models';
-import { Roles } from '@api-gateway/shared/decorators/user-roles.decorators';
-import { GetOperationId } from '@api-gateway/shared/utilities/get-operation-id';
-import { ParseObjectPipe } from '@api-gateway/shared/pipes/jsonToObject';
-import { FetchCountPipe } from '@api-gateway/shared/pipes/fetchCount';
-import { UpdateGenericVm } from '@api-models/shared/shared-vm.models';
-import { RolesGuard } from '@api-gateway/shared/guards/roles.guard';
-import { ApiException } from '@models/api-exception.model';
-import { CustomizeLogInterceptor } from '@api-gateway/shared/interceptors/reflector.meta';
 
 @Controller('pega-user')
-@ApiTags(PegaUser.modelName)
-@CustomizeLogInterceptor({ module: 'PegaUser' })
+@ApiTags('pega-user')
+// @CustomizeLogInterceptor({module: 'PegaUser'})
 export class PegaUserApiController {
-  constructor(private readonly _pegaUserApiService: PegaUserApiService) {
-  }
+  constructor(private readonly _pegaUserApiService: PegaUserApiService) {}
 
-  @Get()
-  // Change Roles based on your requirement
-  @Roles(UserRole.Admin, UserRole.Csr)
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOkResponse({ type: PegaUserVm, isArray: true })
-  @ApiBadRequestResponse({ type: ApiException })
-  @ApiBadGatewayResponse({ type: ApiException })
-  @ApiNotFoundResponse({ type: ApiException })
-  @ApiOperation(
-    GetOperationId(
-      PegaUser.modelName,
-      'GetAll',
-      'Get all documents based on a filter, skip limit and sort'
-    )
-  )
-  @ApiQuery({ name: 'filter', required: true })
-  @ApiQuery({ name: 'skip', required: true, type: 'number' })
-  @ApiQuery({ name: 'limit', required: true, type: Number })
-  @ApiQuery({ name: 'sort', required: true })
-  @ApiQuery({ name: 'fields', required: false })
-  @ApiQuery({
-    name: 'populators',
-    required: false,
+  @Get('pega-user')
+  @ApiResponse({
+    status: 200,
+    description:
+      'Successfully retrieved the record for the specified Pega user.',
   })
-  findAll(
-    @Query('filter', new ParseObjectPipe()) filter,
-    @Query('skip', new ParseIntPipe()) skip: number,
-    @Query('limit', new ParseIntPipe(), FetchCountPipe)
-    limit: number,
-    @Query('sort', new ParseObjectPipe()) sort,
-    @Query('populators', new ParseObjectPipe()) populators,
-    @Query('fields', new ParseObjectPipe()) fields
-  ): Observable<PegaUserVm[]> {
-    return this._pegaUserApiService.findAll({
-      filter,
-      skip,
-      limit,
-      sort: sort || { createdAt: -1 },
-      populators,
-      fields,
-    });
-  }
-
-  @Get('count')
-  // Change Roles based on your requirement
-  @Roles(UserRole.Admin, UserRole.User)
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOkResponse({ type: Number })
-  @ApiBadRequestResponse({ type: ApiException })
-  @ApiOperation(
-    GetOperationId(
-      PegaUser.modelName,
-      'GetCount',
-      'Get the total document count based on a particular filter'
-    )
-  )
-  @ApiQuery({ name: 'filter', required: true })
-  getDocCount(
-    @Query('filter', new ParseObjectPipe()) filter
-  ): Observable<number> {
-    console.log(filter);
-    return this._pegaUserApiService.getDocumentCount(filter);
-  }
-
-  // !NO Get Requets after this!!
-  @Get(':id')
-  // You can uncomment below two lines to enable caching.
-  // @UseInterceptors(CacheInterceptor)
-  // @CacheTTL(60 * 60 * 24 * 30) // Cache for 30 Days
-  @ApiOkResponse({ type: PegaUserVm })
-  @ApiBadRequestResponse({ type: ApiException })
-  @ApiBadGatewayResponse({ type: ApiException })
-  @ApiNotFoundResponse({ type: ApiException })
-  @ApiOperation(
-    GetOperationId(PegaUser.modelName, 'FindById', 'Find a record by its ID')
-  )
-  @ApiParam({ name: 'id', required: true, type: String })
-  @ApiQuery({ name: 'fields', required: false })
-  @ApiQuery({
-    name: 'populators',
-    required: false,
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
   })
-  findById(
-    @Param('id') id: string,
-    @Query('populators', new ParseObjectPipe()) populators,
-    @Query('fields', new ParseObjectPipe()) fields
-  ): Observable<PegaUserVm> {
-    console.log(id);
-    return this._pegaUserApiService.findById({ id, populators, fields });
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: The requested resource could not be found.',
+  })
+  @ApiOperation({ summary: 'Get method for pega-user' })
+  get(): Observable<any> {
+    const handler = () => {};
+    return this._pegaUserApiService.get('PegaUser-get', handler);
   }
 
-  @Post()
-  @ApiCreatedResponse({
-    type: PegaUserVm,
-    description: 'PegaUser created successfully',
+  @Post('pega-user')
+  @ApiResponse({
+    status: 201,
+    description: 'Created: The resource has been successfully created.',
   })
-  @ApiBadRequestResponse({ type: ApiException })
-  @ApiBadGatewayResponse({ type: ApiException })
-  @ApiOperation(
-    GetOperationId(PegaUser.modelName, 'Create', 'Creates a new record')
-  )
-  @ApiBody({ type: () => PegaUserCreateVm })
-  create(@Body() pegaUserVm: PegaUserCreateVm): Observable<PegaUserVm> {
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiOperation({ summary: 'Post method for pega-user' })
+  // @ApiBody({ type: () => {} })
+  create(@Body() {}): Observable<any> {
+    const handler = () => {};
     try {
-      return this._pegaUserApiService.create(pegaUserVm);
-    } catch (e) {
+      return this._pegaUserApiService.post('PegaUser-post', handler);
+    } catch (e: any) {
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @Put()
-  // @Roles(UserRole.Admin, UserRole.User)
-  // @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOkResponse({ type: PegaUserVm })
-  @ApiBadRequestResponse({ type: ApiException })
-  @ApiBadGatewayResponse({ type: ApiException })
-  @ApiOperation(
-    GetOperationId(
-      PegaUser.modelName,
-      'Update',
-      'Updates a record using its id and modifier'
-    )
-  )
-  @ApiBody({ type: () => UpdateGenericVm })
-  update(
-    @Body() pegaUserUpdateVm: UpdateGenericVm<PegaUserVm>,
-    @Request() req
-  ): Observable<PegaUserVm> {
-    return this._pegaUserApiService.update(
-      pegaUserUpdateVm.id,
-      pegaUserUpdateVm.modifier
-    );
+  @Put('pega-user/:id')
+  @ApiResponse({
+    status: 201,
+    description: 'Updated: The resource has been successfully updated.',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiOperation({ summary: 'Put method for pega-user' })
+  // @ApiBody({ type: () => {} })
+  @ApiParam({ name: 'id', required: true })
+  update(@Param() { id }: { id: string }, @Body() {}) {
+    const handler = () => {};
+    try {
+      return this._pegaUserApiService.put('PegaUser-put', handler);
+    } catch (error: any) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  @Delete(':id')
-  // @Roles(UserRole.Admin)
-  // @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOkResponse({ type: PegaUserVm, description: 'Deleted Record' })
-  @ApiBadRequestResponse({ type: ApiException })
-  @ApiBadGatewayResponse({ type: ApiException })
-  @ApiOperation(
-    GetOperationId(PegaUser.modelName, 'Delete', 'Deletes a record by its ID')
-  )
+  @Delete('pega-user/:id')
+  @ApiResponse({
+    status: 201,
+    description: 'Deleted: The resource has been successfully deleted.',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiOperation({ summary: 'Delete method for pega-user' })
   @ApiParam({ name: 'id', required: true })
-  delete(@Param() { id }: { id: string }): Observable<PegaUserVm> {
-    return this._pegaUserApiService.delete(id);
+  delete(@Param() { id }: { id: string }) {
+    const handler = () => {};
+    return this._pegaUserApiService.delete('PegaUser-delete', handler);
   }
 }

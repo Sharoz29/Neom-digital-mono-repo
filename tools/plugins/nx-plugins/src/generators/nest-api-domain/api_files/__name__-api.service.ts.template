@@ -1,5 +1,6 @@
-import { Injectable, Inject, CACHE_MANAGER } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Cache } from 'cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 import { ClientProxy } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';

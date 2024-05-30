@@ -1,10 +1,6 @@
 import {
   Controller,
   Get,
-  Request,
-  UseGuards,
-  Query,
-  ParseIntPipe,
   Param,
   Post,
   Body,
@@ -12,163 +8,116 @@ import {
   HttpStatus,
   Put,
   Delete,
-  UseInterceptors,
 } from '@nestjs/common';
-import {
-  ApiOkResponse,
-  ApiBadRequestResponse,
-  ApiBadGatewayResponse,
-  ApiNotFoundResponse,
-  ApiOperation,
-  ApiQuery,
-  ApiParam,
-  ApiCreatedResponse,
-  ApiBody,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiParam, ApiBody, ApiTags, ApiResponse } from '@nestjs/swagger';
+
 import {Observable} from 'rxjs';
-import {AuthGuard} from '@nestjs/passport';
+
 import {<%= className %>ApiService} from './<%= fileName %>-api.service';
-import {<%= className %>, <%= className %>Vm, <%= className %>CreateVm, UserRole} from '@models';
-import {Roles} from '@api-gateway/shared/decorators/user-roles.decorators';
-import {GetOperationId} from '@api-gateway/shared/utilities/get-operation-id';
-import {ParseObjectPipe} from '@api-gateway/shared/pipes/jsonToObject';
-import {FetchCountPipe} from '@api-gateway/shared/pipes/fetchCount';
-import {UpdateGenericVm} from '@api-models/shared/shared-vm.models';
-import {RolesGuard} from '@api-gateway/shared/guards/roles.guard';
-import {ApiException} from '@models/api-exception.model';
-import { CustomizeLogInterceptor } from '@api-gateway/shared/interceptors/reflector.meta';
 
 
 @Controller('<%= fileName %>')
-@ApiTags(<%= className %>.modelName)
-@CustomizeLogInterceptor({module: '<%= className %>'})
+@ApiTags('<%= fileName %>')
+// @CustomizeLogInterceptor({module: '<%= className %>'})
 export class <%= className %>ApiController {
   constructor(private readonly _<%= propertyName %>ApiService: <%= className %>ApiService) {}
 
-  @Get()
-  // Change Roles based on your requirement
-  @Roles(UserRole.Admin, UserRole.Csr)
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOkResponse({type: <%= className %>Vm, isArray: true})
-  @ApiBadRequestResponse({type: ApiException})
-  @ApiBadGatewayResponse({type: ApiException})
-  @ApiNotFoundResponse({type: ApiException})
-  @ApiOperation(GetOperationId(<%= className %>.modelName, 'GetAll', 'Get all documents based on a filter, skip limit and sort'))
-  @ApiQuery({name: 'filter', required: true})
-  @ApiQuery({name: 'skip', required: true, type: 'number'})
-  @ApiQuery({name: 'limit', required: true, type: Number})
-  @ApiQuery({name: 'sort', required: true})
-  @ApiQuery({name: 'fields', required: false})
-  @ApiQuery({
-    name: 'populators',
-    required: false,
+  @Get('<%= fileName %>')
+  @ApiResponse({
+    status: 200,
+    description:
+      'Successfully retrieved the record for the specified Pega user.',
   })
-  findAll(
-    @Query('filter', new ParseObjectPipe()) filter,
-    @Query('skip', new ParseIntPipe()) skip: number,
-    @Query('limit', new ParseIntPipe(), FetchCountPipe)
-    limit: number,
-    @Query('sort', new ParseObjectPipe()) sort,
-    @Query('populators', new ParseObjectPipe()) populators,
-    @Query('fields', new ParseObjectPipe()) fields
-  ): Observable<<%= className %>Vm[]> {
-    return this._<%= propertyName %>ApiService.findAll({
-      filter,
-      skip,
-      limit,
-      sort: sort || {createdAt: -1},
-      populators,
-      fields,
-    });
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: The requested resource could not be found.',
+  })
+   @ApiOperation({ summary: 'Get method for <%= fileName %>'})
+  get(): Observable<any> {
+    const handler = () => {};
+    return this._<%= propertyName %>ApiService.get('<%= className %>-get', handler);
   }
 
-  @Get('count')
-  // Change Roles based on your requirement
-  @Roles(UserRole.Admin, UserRole.User)
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOkResponse({type: Number})
-  @ApiBadRequestResponse({type: ApiException})
-  @ApiOperation(GetOperationId(<%= className %>.modelName, 'GetCount', 'Get the total document count based on a particular filter'))
-  @ApiQuery({name: 'filter', required: true})
-  getDocCount(
-    @Query('filter', new ParseObjectPipe()) filter
-  ): Observable<number> {
-    console.log(filter);
-    return this._<%= propertyName %>ApiService.getDocumentCount(filter);
-  }
-
-  // !NO Get Requets after this!!
-  @Get(':id')
-  // You can uncomment below two lines to enable caching.
-  // @UseInterceptors(CacheInterceptor)
-  // @CacheTTL(60 * 60 * 24 * 30) // Cache for 30 Days
-  @ApiOkResponse({type: <%= className %>Vm})
-  @ApiBadRequestResponse({type: ApiException})
-  @ApiBadGatewayResponse({type: ApiException})
-  @ApiNotFoundResponse({type: ApiException})
-  @ApiOperation(GetOperationId(<%= className %>.modelName, 'FindById', 'Find a record by its ID'))
-  @ApiParam({name: 'id', required: true, type: String})
-  @ApiQuery({name: 'fields', required: false})
-  @ApiQuery({
-    name: 'populators',
-    required: false,
+  @Post('<%= fileName %>')
+  @ApiResponse({
+    status: 201,
+    description: 'Created: The resource has been successfully created.',
   })
-  findById(
-    @Param('id') id: string,
-    @Query('populators', new ParseObjectPipe()) populators,
-    @Query('fields', new ParseObjectPipe()) fields
-  ): Observable<<%= className %>Vm> {
-    console.log(id);
-    return this._<%= propertyName %>ApiService.findById({id, populators, fields});
-  }
-
-  @Post()
-  @ApiCreatedResponse({
-    type: <%= className %>Vm,
-    description: '<%= className %> created successfully',
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
   })
-  @ApiBadRequestResponse({type: ApiException})
-  @ApiBadGatewayResponse({type: ApiException})
-  @ApiOperation(GetOperationId(<%= className %>.modelName, 'Create', 'Creates a new record'))
-  @ApiBody({type: () => <%= className %>CreateVm})
-  create(@Body() <%= propertyName %>Vm: <%= className %>CreateVm): Observable<<%= className %>Vm> {
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiOperation({ summary: 'Post method for <%= fileName %>'})
+  // @ApiBody({ type: () => {} })
+  create(@Body() {}): Observable<any> {
+    const handler = () => {};
     try {
-      return this._<%= propertyName %>ApiService.create(<%= propertyName %>Vm);
-    } catch (e) {
+      return this._<%= propertyName %>ApiService.post('<%= className %>-post', handler);
+    } catch (e: any) {
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
 
 
-  @Put()
-  // @Roles(UserRole.Admin, UserRole.User)
-  // @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOkResponse({type: <%= className %>Vm})
-  @ApiBadRequestResponse({type: ApiException})
-  @ApiBadGatewayResponse({type: ApiException})
-  @ApiOperation(GetOperationId(<%= className %>.modelName, 'Update', 'Updates a record using its id and modifier'))
-  @ApiBody({type: () => UpdateGenericVm})
-  update(
-    @Body() <%= propertyName %>UpdateVm: UpdateGenericVm<<%= className %>Vm>,
-    @Request() req
-  ): Observable<<%= className %>Vm> {
-    return this._<%= propertyName %>ApiService.update(
-      <%= propertyName %>UpdateVm.id,
-      <%= propertyName %>UpdateVm.modifier
-    );
+  @Put('<%= fileName %>/:id')
+  @ApiResponse({
+    status: 201,
+    description: 'Updated: The resource has been successfully updated.',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiOperation({ summary: 'Put method for <%= fileName %>'})
+  // @ApiBody({ type: () => {} })
+  @ApiParam({ name: 'id', required: true })
+  update(@Param() { id }: { id: string }, @Body() {}) {
+    const handler = () => {};
+    try {
+      return this._<%= propertyName %>ApiService.put('<%= className %>-put', handler);
+    } catch (error: any) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  @Delete(':id')
-  // @Roles(UserRole.Admin)
-  // @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @ApiOkResponse({type: <%= className %>Vm, description: 'Deleted Record'})
-  @ApiBadRequestResponse({type: ApiException})
-  @ApiBadGatewayResponse({type: ApiException})
-  @ApiOperation(GetOperationId(<%= className %>.modelName, 'Delete', 'Deletes a record by its ID'))
-  @ApiParam({name: 'id', required: true})
-  delete(@Param() {id}: {id: string}): Observable<<%= className %>Vm> {
-    return this._<%= propertyName %>ApiService.delete(id);
+  @Delete('<%= fileName %>/:id')
+  @ApiResponse({
+    status: 201,
+    description: 'Deleted: The resource has been successfully deleted.',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiOperation({ summary: 'Delete method for <%= fileName %>'})
+  @ApiParam({ name: 'id', required: true })
+  delete(@Param() { id }: { id: string }) {
+    const handler = () => {};
+    return this._<%= propertyName %>ApiService.delete('<%= className %>-delete', handler);
   }
 }

@@ -9,19 +9,21 @@ import { Cache } from 'cache-manager';
 
 @Injectable()
 export class BaseApiService {
-  constructor(private readonly client: ClientProxy, pattern: string, cacheManagerRef: Cache) {
-    
+  constructor(
+    private readonly client: ClientProxy,
+    pattern: string,
+    cacheManagerRef: Cache
+  ) {}
+  get(pattern: string, handler: RequestHandler) {
+    return this.client.send(pattern, handler);
   }
-  get(handler: RequestHandler){
-    return this.client.send(`${}`, handler);
+  post(pattern: string, handler: RequestHandler) {
+    return this.client.send(pattern, handler);
   }
-  post(handler: RequestHandler){
-    return this.client.send(handler, handler);
+  put(pattern: string, handler: RequestHandler) {
+    this.client.send(pattern, handler);
   }
-  put(handler: RequestHandler){
-    this.client.send(handler, handler);
-  }
-  delete(handler: RequestHandler){
-    this.client.send(handler, handler);
+  delete(pattern: string, handler: RequestHandler) {
+    this.client.send(pattern, handler);
   }
 }
