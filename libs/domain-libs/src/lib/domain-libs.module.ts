@@ -1,8 +1,6 @@
+import { PegaUserDomainModule } from './pega-user/pega-user-domain.module';
 import { DynamicModule, Module } from '@nestjs/common';
-
-const generatedModules = [
-];
-
+const generatedModules = [PegaUserDomainModule];
 @Module({
   controllers: [],
   providers: [],

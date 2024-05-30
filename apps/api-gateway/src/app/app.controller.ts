@@ -8,10 +8,4 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags("Neom API")
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  @Get("data")
-  // @UseInterceptors(CacheInterceptor)
-  getData() {
-    return this.appService.getData();
-  }
 }

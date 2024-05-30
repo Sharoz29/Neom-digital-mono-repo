@@ -1,4 +1,5 @@
 export const environment = {
+  timeout: 5000,
   redis: {
     host: "localhost",
     port: 6379

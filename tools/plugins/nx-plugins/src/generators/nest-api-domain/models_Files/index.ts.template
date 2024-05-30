@@ -1,2 +1,2 @@
-export * from './models/<%= fileName %>-ps.enums';
-export * from './vm-models/<%= fileName %>-vm.models';
+export * from './<%= fileName %>-ps.enums';
+export * from './<%= fileName %>-vm.models';

@@ -17,6 +17,7 @@ export async function nestApiDomainGenerator(
 ) {
   const apiRoot = `libs/api-libs/src/lib/${names(options.name).fileName}`;
   const domainRoot = `libs/domain-libs/src/lib/${names(options.name).fileName}`;
+  const modelRoot = `libs/models/src/lib/${names(options.name).fileName}`;
 
   if(options.api) {
     generateFiles(tree, path.join(__dirname, 'api_files'), apiRoot, {
@@ -34,7 +35,7 @@ export async function nestApiDomainGenerator(
   }
 
   if(options.models) {
-    generateFiles(tree, path.join(__dirname, 'models_files'), domainRoot, {
+    generateFiles(tree, path.join(__dirname, 'models_files'), modelRoot, {
       ...options,
       ...names(options.name),
       name: names(options.name).fileName,

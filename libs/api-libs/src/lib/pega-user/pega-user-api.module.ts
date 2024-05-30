@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
 import { redisStore } from 'cache-manager-redis-store';
 import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { environment } from '@neom/shared/lib/environments/dev';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
-import { ApiLibsModule } from '@neom/api-libs';
+import { NstLibsModule } from '@neom/nst-libs';
+
+import { PegaUserApiController } from './pega-user-api.controller';
+import { PegaUserApiService } from './pega-user-api.service';
 
 @Module({
   imports: [
-    ApiLibsModule,
+    NstLibsModule,
     CacheModule.registerAsync({
       // imports: [ConfigModule],
       useFactory: async () => {
@@ -44,7 +44,7 @@ import { ApiLibsModule } from '@neom/api-libs';
       },
     ]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [PegaUserApiController],
+  providers: [PegaUserApiService],
 })
-export class AppModule {}
+export class PegaUserApiModule {}

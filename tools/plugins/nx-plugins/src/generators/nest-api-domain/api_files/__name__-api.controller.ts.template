@@ -13,6 +13,7 @@ import { ApiParam, ApiBody, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 import {Observable} from 'rxjs';
 
+import { <%= className %>Vm, PS<%= constantName %> } from '@neom/models';
 import {<%= className %>ApiService} from './<%= fileName %>-api.service';
 
 
@@ -63,10 +64,10 @@ export class <%= className %>ApiController {
   })
   @ApiOperation({ summary: 'Post method for <%= fileName %>'})
   // @ApiBody({ type: () => {} })
-  create(@Body() {}): Observable<any> {
+  create(@Body() body: <%= className %>Vm): Observable<any> {
     const handler = () => {};
     try {
-      return this._<%= propertyName %>ApiService.post('<%= className %>-post', handler);
+      return this._<%= propertyName %>ApiService.post(PS<%= constantName %>.CREATE, handler);
     } catch (e: any) {
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }

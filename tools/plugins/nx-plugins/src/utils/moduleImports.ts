@@ -101,11 +101,11 @@ export function updateIndexImports(tree: Tree, options: any, indexTsFilePath: st
   const fileEntry = tree.read(indexTsFilePath);
   const contents = fileEntry?.toString();
 
-  const toInsertModuleStatement = `export * from './${names(options.name).fileName}';
+  const toInsertModuleStatement = `export * from './lib/${names(options.name).fileName}';
   `;
 
   const moduleUpdatedContent = contents.concat(`\n${toInsertModuleStatement}`);
-
+  console.log(moduleUpdatedContent);
   if (moduleUpdatedContent !== contents) {
     tree.write(indexTsFilePath, moduleUpdatedContent);
   }

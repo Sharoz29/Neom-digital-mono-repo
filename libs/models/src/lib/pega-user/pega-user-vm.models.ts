@@ -1,22 +1,18 @@
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
+import { BaseModelVm } from '../base.modelvm';
 
-import {ApiProperty, ApiPropertyOptional, OmitType} from '@nestjs/swagger';
-import {BaseModelVm} from '../base.modelvm';
-
-export class <%= className %>Vm extends BaseModelVm{
+export class PegaUserVm extends BaseModelVm {
   @ApiProperty()
-  name: string;
-  
+  name?: string;
 
   // Create and add more VmModel Properties below:
   // !Note that if you want to map a different name of property in Vm from the Model
   // !Then use the mapper service to implement the custom mapping.
 
-
-  
   // Model Getters and Setters
 }
 
-export class <%= className %>CreateVm extends OmitType(<%= className %>Vm, [
+export class PegaUserCreateVm extends OmitType(PegaUserVm, [
   'createdAt',
   'updatedAt',
   'id',
