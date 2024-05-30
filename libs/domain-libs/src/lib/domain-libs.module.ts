@@ -1,6 +1,6 @@
 import { DynamicModule, Module } from '@nestjs/common';
 
-const generatedModules: DynamicModule[] = [
+const generatedModules = [
 ];
 
 @Module({

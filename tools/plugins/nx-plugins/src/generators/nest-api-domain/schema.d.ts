@@ -4,4 +4,5 @@ export interface NestApiDomainGeneratorSchema {
   domain: boolean;
   apiProject: string;
   domainProject: string;
+  models: boolean;
 }

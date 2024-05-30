@@ -34,6 +34,12 @@
       "type": "string",
       "description": "Select Domain Project to add these libraries into",
       "enum": ["py-worker", "gql-worker", "iot-worker"]
+    },
+    "models": {
+      "type": "boolean",
+      "description": "Create Models?",
+      "default": true,
+      "x-prompt": "Do you want to create Models Library?"
     }
   },
   "required": ["name"]

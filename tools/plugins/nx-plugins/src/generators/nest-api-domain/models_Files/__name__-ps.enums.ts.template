@@ -1,0 +1,20 @@
+/**
+ * User PubSub Message Patterns
+ */
+
+export enum PS<%= constantName %> {
+  // CUSTOM
+  
+
+  
+  // CRUD
+  // Do not change the pattern below this line
+  GET = '<%= propertyName %>:get',
+  GETONE = '<%= propertyName %>:getOne',
+  POST = '<%= propertyName %>:post',
+  PUT = '<%= propertyName %>:put',
+  CREATE = '<%= propertyName %>:create',
+  DELETE = '<%= propertyName %>:delete'
+  
+
+}

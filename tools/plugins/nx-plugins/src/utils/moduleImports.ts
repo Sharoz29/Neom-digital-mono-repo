@@ -11,7 +11,7 @@ import  {
 } from 'typescript';
 import * as ts from 'typescript';
 
-export function updateImports(tree: Tree, options: any, flag: string, filePath: string) {
+export function updateModuleImports(tree: Tree, options: any, flag: string, filePath: string) {
   const fileEntry = tree.read(filePath);
   const contents = fileEntry?.toString();
 
@@ -91,9 +91,22 @@ export function updateImports(tree: Tree, options: any, flag: string, filePath: 
     }
   );
 
-  console.log(importsUpdatedContent);
   // only write the file if something has changed
   if (importsUpdatedContent !== contents) {
     tree.write(filePath, importsUpdatedContent);
+  }
+}
+
+export function updateIndexImports(tree: Tree, options: any, indexTsFilePath: string) {
+  const fileEntry = tree.read(indexTsFilePath);
+  const contents = fileEntry?.toString();
+
+  const toInsertModuleStatement = `export * from './${names(options.name).fileName}';
+  `;
+
+  const moduleUpdatedContent = contents.concat(`\n${toInsertModuleStatement}`);
+
+  if (moduleUpdatedContent !== contents) {
+    tree.write(indexTsFilePath, moduleUpdatedContent);
   }
 }

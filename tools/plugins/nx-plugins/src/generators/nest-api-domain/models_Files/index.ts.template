@@ -1,0 +1,2 @@
+export * from './models/<%= fileName %>-ps.enums';
+export * from './vm-models/<%= fileName %>-vm.models';

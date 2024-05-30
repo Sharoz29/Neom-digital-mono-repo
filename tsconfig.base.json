@@ -17,6 +17,7 @@
     "paths": {
       "@neom/api-libs": ["libs/api-libs/src/index.ts"],
       "@neom/domain-libs": ["libs/domain-libs/src/index.ts"],
+      "@neom/models": ["libs/models/src/index.ts"],
       "@neom/ng-ui": ["libs/ng-ui/src/index.ts"],
       "@neom/nst-libs": ["libs/nst-libs/src/index.ts"],
       "@neom/nst-libs/*": ["libs/nst-libs/src/*"],

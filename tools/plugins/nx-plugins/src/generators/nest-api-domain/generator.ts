@@ -9,7 +9,7 @@ import {
 } from '@nx/devkit';
 import * as path from 'path';
 import { NestApiDomainGeneratorSchema } from './schema';
-import { updateImports } from '../../utils/moduleImports';
+import { updateIndexImports, updateModuleImports } from '../../utils/moduleImports';
 
 export async function nestApiDomainGenerator(
   tree: Tree,
@@ -25,20 +25,31 @@ export async function nestApiDomainGenerator(
       name: names(options.name).fileName,
     });
   
-    updateImports(
+    updateModuleImports(
       tree,
       options,
       'Api',
       'libs/api-libs/src/lib/api-libs.module.ts'
     );
   }
+
+  if(options.models) {
+    generateFiles(tree, path.join(__dirname, 'models_files'), domainRoot, {
+      ...options,
+      ...names(options.name),
+      name: names(options.name).fileName,
+    });
+    updateIndexImports(tree, options, 'libs/models/src/index.ts');
+  }
+
+
   if(options.domain) {
     generateFiles(tree, path.join(__dirname, 'domain_files'), domainRoot, {
       ...options,
       ...names(options.name),
       name: names(options.name).fileName,
     });
-    updateImports(
+    updateModuleImports(
       tree,
       options,
       'Domain',

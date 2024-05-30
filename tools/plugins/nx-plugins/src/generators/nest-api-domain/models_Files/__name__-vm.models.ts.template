@@ -1,0 +1,22 @@
+
+import {ApiProperty, ApiPropertyOptional, OmitType} from '@nestjs/swagger';
+
+export class <%= className %>Vm {
+  @ApiProperty()
+  name: string;
+  
+
+  // Create and add more VmModel Properties below:
+  // !Note that if you want to map a different name of property in Vm from the Model
+  // !Then use the mapper service to implement the custom mapping.
+
+
+  
+  // Model Getters and Setters
+}
+
+export class <%= className %>CreateVm extends OmitType(<%= className %>Vm, [
+  'createdAt',
+  'updatedAt',
+  'id',
+]) {}

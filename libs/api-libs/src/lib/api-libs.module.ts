@@ -1,6 +1,7 @@
-import { PegaUserApiModule } from './pega-user/pega-user-api.module';
 import { Module } from '@nestjs/common';
-const generatedModules = [PegaUserApiModule];
+const generatedModules = [
+  
+];
 @Module({
   controllers: [],
   providers: [],
