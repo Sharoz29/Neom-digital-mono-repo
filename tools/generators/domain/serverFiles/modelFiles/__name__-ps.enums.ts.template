@@ -15,5 +15,6 @@ export enum PS<%= constantName %> {
   PUT = '<%= propertyName %>:put',
   CREATE = '<%= propertyName %>:create',
   DELETE = '<%= propertyName %>:delete'
+  
 
 }
