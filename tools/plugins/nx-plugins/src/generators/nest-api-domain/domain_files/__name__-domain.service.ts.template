@@ -1,19 +1,21 @@
-import { BaseDomainService } from '@api-models/shared/base-domain.service';
-import { MapperService } from '@api-models/shared/mapper/mapper.service';
-import { <%= className %> } from '@models';
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { ModelType } from 'typegoose';
+import { Cache } from 'cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { RMQQueues } from '@neom/shared';
+import { ClientProxy } from '@nestjs/microservices';
+
+
+import { Injectable , Inject} from '@nestjs/common';
+import { BaseDomainService } from '../services/domain.service';
+
 
 // Extending from BaseDomainService to get Basic Functionality for CRUD
 @Injectable()
-export class <%= className %>DomainService extends BaseDomainService<<%= className %>> {
+export class <%= className %>DomainService extends BaseDomainService {
   constructor(
-    @InjectModel(<%= className %>.modelName)
-    private readonly _<%= propertyName %>Model: ModelType<<%= className %>>,     private readonly _mapperService: MapperService,
-)
+    @Inject(RMQQueues.PY_WORKER_QUEUE) _client: ClientProxy,      @Inject(CACHE_MANAGER) cacheManagerRef: Cache,
+  )
   {
-    super(_<%= propertyName %>Model, _mapperService.mapper);
+    super(_client,cacheManagerRef, '<%= propertyName %>');
   }
 
   /**
