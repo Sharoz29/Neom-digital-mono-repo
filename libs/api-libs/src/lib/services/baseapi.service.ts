@@ -13,7 +13,7 @@ import { environment } from '@neom/shared/lib/environments/dev';
 export class BaseApiService<X, Y, Z> {
   public logger: Logger;
   constructor(
-    private readonly client: ClientProxy,
+    public readonly client: ClientProxy,
     private pattern: string,
     private cacheManagerRef: Cache
   ) {
