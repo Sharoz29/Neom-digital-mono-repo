@@ -1,18 +1,20 @@
 import { Module } from '@nestjs/common';
 
-import { redisStore } from 'cache-manager-redis-store';
-import { CacheModule, CacheStore } from '@nestjs/cache-manager';
+
 import { environment } from '@neom/shared/lib/environments/dev';
+import { PegaUserVm } from '@neom/models';
+import { redisStore } from 'cache-manager-redis-store';
+import { NstLibsModule } from '@neom/nst-libs';
+import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
-import { NstLibsModule } from '@neom/nst-libs';
 
-import { <%= className %>DomainController } from './<%= fileName %>-domain.controller';
-import { <%= className %>DomainService } from './<%= fileName %>-domain.service';
-
+import { PegaUserDomainController } from './pega-user-domain.controller';
+import { BaseDomainService } from '../services/domain.service';
 
 @Module({
   imports: [
+
     NstLibsModule,
     CacheModule.registerAsync({
       // imports: [ConfigModule],
@@ -38,11 +40,9 @@ import { <%= className %>DomainService } from './<%= fileName %>-domain.service'
       },
     ]),
   ],
-  controllers: [
-    <%= className %>DomainController
-  ],
+  controllers: [PegaUserDomainController],
   providers: [
-    <%= className %>DomainService,
-  ]
+    BaseDomainService,
+  ],
 })
-export class <%= className %>DomainModule {}
+export class PegaUserDomainModule {}

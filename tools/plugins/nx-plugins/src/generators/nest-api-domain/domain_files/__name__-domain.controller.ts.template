@@ -1,144 +1,125 @@
 import {
-  FindAllVm,
-  FindByIdVm,
-  FindOneVm,
-} from '@api-models/shared/shared-vm.models';
-import {<%= className %>, <%= className %>CreateVm, <%= className %>Vm, PS<%= constantName %>} from '@models';
-import {Controller, Logger, UseInterceptors} from '@nestjs/common';
-import {MessagePattern, RpcException} from '@nestjs/microservices';
-import { LoggingInterceptor } from '@api-gateway/shared/interceptors/logging.interceptors';
-import {MongooseUpdateQuery} from 'mongoose';
-import {<%= className %>DomainService} from './<%= fileName %>-domain.service';
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+  Put,
+  Delete,
+} from '@nestjs/common';
+import { ApiParam, ApiBody, ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 
-@Controller('<%= fileName %>-domain')
-@UseInterceptors(LoggingInterceptor)
+import {Observable} from 'rxjs';
+
+import { <%= className %>Vm, PS<%= constantName %> } from '@neom/models';
+import { <%= className %>DomainService } from './<%= fileName %>-domain.service';
+
+@Controller('<%= fileName %>')
+@ApiTags('<%= fileName %>')
+// @CustomizeLogInterceptor({module: '<%= className %>'})
+
 export class <%= className %>DomainController {
-  logger: Logger = new Logger();
   constructor(private readonly _<%= propertyName %>DomainService: <%= className %>DomainService) {}
 
-  // Subscriber for Message Pattern PS<%= constantName %>.FINDALL
-  @MessagePattern(PS<%= constantName %>.FINDALL)
-  async findAll(filterConfig: FindAllVm): Promise<<%= className %>Vm[]> {
+  @Get('<%= fileName %>')
+  @ApiResponse({
+    status: 200,
+    description:
+      'Successfully retrieved the record for the specified Pega user.',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: The requested resource could not be found.',
+  })
+   @ApiOperation({ summary: 'Get method for <%= fileName %>'})
+  get(): Observable<any> {
+    const handler = () => {};
+    return this._<%= propertyName %>DomainService.get('<%= className %>-get', handler);
+  }
+
+  @Post('<%= fileName %>')
+  @ApiResponse({
+    status: 201,
+    description: 'Created: The resource has been successfully created.',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiOperation({ summary: 'Post method for <%= fileName %>'})
+  // @ApiBody({ type: () => {} })
+  create(@Body() body: <%= className %>Vm): Observable<any> {
+    const handler = () => {};
     try {
-      const vmInstance = await this._<%= propertyName %>DomainService.findAll(filterConfig);
-      if (!vmInstance) return;
-      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm[]>(
-        vmInstance.map((v) => v.toJSON())
-      );
-    } catch (e) {
-      throw new RpcException(e);
+      return this._<%= propertyName %>DomainService.post(PS<%= constantName %>.CREATE, handler);
+    } catch (e: any) {
+      throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  // Subscriber for Message Pattern PS<%= constantName %>.FINDID
-  @MessagePattern(PS<%= constantName %>.FINDID)
-  async findById(findByIdVm: FindByIdVm): Promise<<%= className %>Vm> {
+
+
+  @Put('<%= fileName %>/:id')
+  @ApiResponse({
+    status: 201,
+    description: 'Updated: The resource has been successfully updated.',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiOperation({ summary: 'Put method for <%= fileName %>'})
+  // @ApiBody({ type: () => {} })
+  @ApiParam({ name: 'id', required: true })
+  update(@Param() { id }: { id: string }, @Body() {}) {
+    const handler = () => {};
     try {
-      const vmInstance = await this._<%= propertyName %>DomainService.findById(findByIdVm);
-      if (!vmInstance) return;
-      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
-        vmInstance.toJSON()
-      );
-    } catch (e) {
-      throw new RpcException(e);
+      return this._<%= propertyName %>DomainService.put('<%= className %>-put', handler);
+    } catch (error: any) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  // Subscriber for Message Pattern PS<%= constantName %>.FINDONE
-  @MessagePattern(PS<%= constantName %>.FINDONE)
-  async findOne(findOneVm: FindOneVm): Promise<<%= className %>Vm> {
-    try {
-      const vmInstance = await this._<%= propertyName %>DomainService.findOne(findOneVm);
-      if (!vmInstance) return;
-      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
-        vmInstance.toJSON()
-      );
-    } catch (e) {
-      throw new RpcException(e);
-    }
+  @Delete('<%= fileName %>/:id')
+  @ApiResponse({
+    status: 201,
+    description: 'Deleted: The resource has been successfully deleted.',
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiOperation({ summary: 'Delete method for <%= fileName %>'})
+  @ApiParam({ name: 'id', required: true })
+  delete(@Param() { id }: { id: string }) {
+    const handler = () => {};
+    return this._<%= propertyName %>DomainService.delete('<%= className %>-delete', handler);
   }
 
-  // Subscriber for Message Pattern PS<%= constantName %>.UPDATE
-  @MessagePattern(PS<%= constantName %>.UPDATE)
-  async update({
-    id,
-    modifier,
-  }: {
-    id: string;
-    modifier: MongooseUpdateQuery<any>;
-  }): Promise<<%= className %>Vm> {
-    try {
-      const vmInstance = await this._<%= propertyName %>DomainService.update(id, modifier);
-      if (!vmInstance) return;
-      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
-        vmInstance.toJSON()
-      );
-    } catch (e) {
-      throw new RpcException(e);
-    }
-  }
-  // Subscriber for Message Pattern PS<%= constantName %>.UPDATEDEEP
-  @MessagePattern(PS<%= constantName %>.UPDATEDEEP)
-  async updateDeep({
-    selector,
-    modifier,
-  }: {
-    selector: any;
-    modifier: MongooseUpdateQuery<any>;
-  }): Promise<<%= className %>Vm> {
-    try {
-      const vmInstance = await this._<%= propertyName %>DomainService.updateDeep(selector, modifier);
-      if (!vmInstance) return;
-      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
-        vmInstance.toJSON()
-      );
-    } catch (e) {
-      throw new RpcException(e);
-    }
-  }
-
-  // Subscriber for Message Pattern PS<%= constantName %>.DELETE
-  @MessagePattern(PS<%= constantName %>.DELETE)
-  async delete(id: string): Promise<<%= className %>Vm> {
-    try {
-      const vmInstance = await this._<%= propertyName %>DomainService.delete(id);
-      if (!vmInstance) return;
-      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
-        vmInstance.toJSON()
-      );
-    } catch (e) {
-      throw new RpcException(e);
-    }
-  }
-
-  // Subscriber for Message Pattern PS<%= constantName %>.CREATE
-  @MessagePattern(PS<%= constantName %>.CREATE)
-  async create(_item: <%= className %>CreateVm) {
-    const item = await this._<%= propertyName %>DomainService.map<<%= className %>>(
-      _item,
-      false,
-      '<%= className %>Vm',
-      '<%= className %>'
-    );
-    try {
-      const vmInstance = await this._<%= propertyName %>DomainService.create(item);
-      if (!vmInstance) throw new RpcException('No <%= className %> Instance Created');
-      return await this._<%= propertyName %>DomainService.map<<%= className %>Vm>(
-        vmInstance.toJSON()
-      );
-    } catch (e) {
-      this.logger.error(e);
-      throw new RpcException("Coudn't Create <%= className %>");
-    }
-  }
-
-  // Subscriber for Message Pattern PS<%= constantName %>.DOCCOUNT
-  @MessagePattern(PS<%= constantName %>.DOCCOUNT)
-  async getDocumentCount(filter: any): Promise<number> {
-    try {
-      return await this._<%= propertyName %>DomainService.getDocumentCount(filter);
-    } catch (e) {
-      throw new RpcException(e);
-    }
-  }
 }

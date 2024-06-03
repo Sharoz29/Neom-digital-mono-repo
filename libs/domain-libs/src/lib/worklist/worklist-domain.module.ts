@@ -7,9 +7,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { NstLibsModule } from '@neom/nst-libs';
 
-import { <%= className %>DomainController } from './<%= fileName %>-domain.controller';
-import { <%= className %>DomainService } from './<%= fileName %>-domain.service';
-
+import { WorklistDomainController } from './worklist-domain.controller';
+import { WorklistDomainService } from './worklist-domain.service';
 
 @Module({
   imports: [
@@ -38,11 +37,7 @@ import { <%= className %>DomainService } from './<%= fileName %>-domain.service'
       },
     ]),
   ],
-  controllers: [
-    <%= className %>DomainController
-  ],
-  providers: [
-    <%= className %>DomainService,
-  ]
+  controllers: [WorklistDomainController],
+  providers: [WorklistDomainService],
 })
-export class <%= className %>DomainModule {}
+export class WorklistDomainModule {}

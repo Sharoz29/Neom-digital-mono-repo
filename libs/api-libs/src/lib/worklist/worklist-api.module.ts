@@ -7,9 +7,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { NstLibsModule } from '@neom/nst-libs';
 
-import { <%= className %>DomainController } from './<%= fileName %>-domain.controller';
-import { <%= className %>DomainService } from './<%= fileName %>-domain.service';
-
+import { WorklistApiController } from './worklist-api.controller';
+import { WorklistApiService } from './worklist-api.service';
 
 @Module({
   imports: [
@@ -34,15 +33,18 @@ import { <%= className %>DomainService } from './<%= fileName %>-domain.service'
     ClientsModule.register([
       {
         name: RMQQueues.PY_WORKER_QUEUE,
-        transport: Transport.TCP,
+        transport: Transport.RMQ,
+        options: {
+          urls: [environment.rabbitmq.url],
+          queue: RMQQueues.PY_WORKER_QUEUE,
+          queueOptions: {
+            durable: false,
+          },
+        },
       },
     ]),
   ],
-  controllers: [
-    <%= className %>DomainController
-  ],
-  providers: [
-    <%= className %>DomainService,
-  ]
+  controllers: [WorklistApiController],
+  providers: [WorklistApiService],
 })
-export class <%= className %>DomainModule {}
+export class WorklistApiModule {}
