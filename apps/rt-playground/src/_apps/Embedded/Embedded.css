@@ -1,0 +1,193 @@
+
+:root {
+
+    --app-primary-color: #007bff; /* was #673ab7; */
+    --app-primary-dark-color: #0048cc; /* was #4527A0; */
+    --app-primary-light-color: #33aeff; /* was #B499FC; */
+    --app-secondary-color: #FFC400;
+    --app-neutral-color: grey;
+    --app-neutral-light-color: lightgrey;
+    --app-neutral-dark-color: #262626;
+    --app-error-color: #f44336;
+    --app-error-light-color: #e57373;
+    --app-error-dark-color: #d32f2f;
+    --app-warning-color: #ff9800;
+    --app-warning-color-light: #ffb74d;
+    --app-warning-color-dark: #f57c00;
+    
+    --app-background-color: whitesmoke;
+    --app-form-color: white;
+    
+    /* svg filter colors that match above, go here to generate https://codepen.io/sosuke/pen/Pjoqqp */
+    /* replaced 3 filters when the primary, primary-dark, and primary-light were updated above
+    --app-primary-color-filter: invert(23%) sepia(23%) saturate(6785%) hue-rotate(250deg) brightness(93%) contrast(88%);
+    --app-primary-dark-color-filter: invert(19%) sepia(20%) saturate(6809%) hue-rotate(242deg) brightness(100%) contrast(106%);
+    --app-secondary-color-filter: invert(83%) sepia(31%) saturate(4626%) hue-rotate(360deg) brightness(103%) contrast(104%);
+    */
+    --app-primary-color-filter: invert(37%) sepia(58%) saturate(6604%) hue-rotate(201deg) brightness(106%) contrast(103%);
+    --app-primary-dark-color-filter: invert(17%) sepia(54%) saturate(6351%) hue-rotate(208deg) brightness(87%) contrast(119%);
+    --app-secondary-color-filter: invert(64%) sepia(14%) saturate(7498%) hue-rotate(177deg) brightness(99%) contrast(105%);
+  
+    --app-neutral-color-filter: invert(55%) sepia(25%) saturate(0%) hue-rotate(269deg) brightness(87%) contrast(91%);
+    --app-neutral-light-color-filter: invert(69%) sepia(74%) saturate(0%) hue-rotate(205deg) brightness(102%) contrast(103%);
+    --app-white-color-filter: invert(100%) sepia(99%) saturate(0%) hue-rotate(144deg) brightness(109%) contrast(101%);
+    
+    
+    /* App Navigation */
+    --app-nav-bg: #262626;  /*!default*/
+    --app-nav-color: #d9d9d9; /* invert( var(--app-nav-bg)) !default */
+    --app-nav-width: 13rem; /*!default*/
+    /* $app-nav-width: 15.625rem !default; */
+    --app-nav-width-expanded: 13rem /*!default*/;
+  
+    /* Things related to movement - migrated from NavBar */
+    --transition-slow: 0.5s; /*!default */
+    --transition-medium: 0.3s; /*!default */
+    --transition-fast: 0.1s;  /*!default */
+    --natural-ease: cubic-bezier(0.4, 0.6, 0.1, 1); /*!default */
+  
+    /* Some standard values for typography */
+    --font-weight-bold: 700;
+    --font-weight-semibold: 600;
+    --font-weight-normal: 400;
+  
+  }
+  
+.cc-toolbar {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    padding: 0px 20px;
+    width: 100%;
+    z-index: 5;
+    color: white;
+    background-color: var(--app-primary-color);
+}
+
+.cc-toolbar-row {
+      height: 100px;
+}
+
+.cc-main {
+    display: flex; 
+    height: calc(100% - 100px);
+    top: 100px;
+    position: relative;
+}
+
+.cc-icon {
+    width: 40px;
+    margin-bottom: 10px;
+    filter: var(--app-white-color-filter);
+}
+
+.cc-banner {
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.cc-main-screen {
+    display: flex; 
+    flex-direction: column;
+    height: calc(100% - 100px);
+    position: relative;
+    width: 100%;
+}
+
+.cc-main-div {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;  
+}
+
+.cc-work-button {
+    font-size: 22px;
+    color: var(--app-primary-color);
+    text-decoration: underline;
+    padding-top: 10px;
+}
+
+.cc-work-ready {
+    font-size: 22px;
+    padding: 20px 20px 0px 40px;
+}
+
+.cc-info {
+    display:flex; 
+    flex-direction: row;
+}
+
+.cc-info-pega {
+    width: 50%; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.cc-info-banner {
+    width: 50%; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+.cc-info-banner-text {
+    font-size: 30px; 
+    line-height: 40px; 
+    padding: 20px 20px; 
+    color: darkslategray;
+}
+
+.cc-info-image {
+    width: 700px; 
+    margin: 20px; 
+    border-radius: 10px;
+}
+
+.cc-resolution {
+    display: flex;
+    flex-direction: row;
+}
+
+.cc-card {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    width: 50%;
+}
+
+.cc-header {
+    background-color: var(--app-primary-color);
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px;
+    padding: 30px;
+    color: white; 
+    font-weight: bold; 
+    font-size: 60px
+}
+
+.cc-body {
+    font-size: 24px;
+    border: 1px solid var(--app-primary-color);
+    padding: 30px;
+    line-height: unset;
+}
+
+.cc-chat-image {
+    width: 700px;
+    border-radius: 10px;
+    margin: 30px;
+}
+
+.cc-chat-button {
+    color: white;
+    background-color: var(--app-secondary-color);
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 25px;
+    border: 0px;
+    margin: 20px;
+    padding: 10px 30px;
+}

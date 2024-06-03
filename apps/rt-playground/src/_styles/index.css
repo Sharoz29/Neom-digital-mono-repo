@@ -1,0 +1,168 @@
+body {
+  margin: 0;
+  /* padding: 0; */
+  font-family: sans-serif;
+  padding-top: 0.1px;
+}
+
+html > body {
+  padding-top: 0.1px;
+}
+
+.ui.container.main {
+  /* margin-top: 3.5em; */
+}
+
+.workarea {
+  /* margin-top: 47px; */
+  /* height: 100%; */
+}
+
+.pushable.main {
+  margin-top: 47px;
+  height: 100%;
+}
+
+div#root {
+  height: calc(100% - 47px);
+}
+
+div#router-root {
+  height: 100%;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-flow: wrap;
+  padding: 10px;
+}
+
+.disabled.field {
+  opacity: 0.65 !important;
+}
+
+.layout-warning {
+  background-color: #fd6000 !important;
+}
+
+.layout-error {
+  background-color: #d91c29 !important;
+}
+
+.ui.modal:not(.compact) {
+  position: fixed !important;
+}
+
+.readonlytext {
+  padding: 5px;
+  white-space: pre-wrap;
+}
+
+.readonlytext-label {
+  display: block;
+  margin: 0 0 0.28571429rem 0;
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 700;
+  font-size: 0.92857143em;
+}
+
+.readonlytext-alignright {
+  text-align: right;
+}
+
+.pr-grid-headercell {
+  margin: 1em;
+  padding: 0.3em 0.7em !important;
+}
+
+th.pr-grid-headercell > div.readonlytext > label.readonlytext-label {
+  margin: 0px;
+}
+
+.results-padleft {
+  padding-left: 5em;
+}
+
+/* Entires with pr-rbvert are needed to resolve issue with vertical radio button groups and options
+ *  jumping when selected and label being clipped
+ */
+.ui.form .grouped.fields.pr-rgvert .field {
+  clear: unset;
+  margin: inherit;
+  padding: inherit;
+}
+.ui.form .grouped.fields.pr-rgvert .field .radio label.field {
+  padding-left: 1.85714em;
+}
+
+/* Entries with pr-auto are needed to resolve issue with autocomplete not taking full width and
+ *  and not offering a scroll bar within results area
+ */
+.ui.form .field.pr-auto .ui.fluid.search {
+  width: 100%;
+}
+.ui.form .field.pr-auto .ui.fluid.search > .results {
+  overflow-y: auto;
+  max-height: 20em;
+}
+
+/* Entries for datepicker */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+.react-datepicker__input-container input {
+  width: 100% !important;
+}
+
+/* Needed to resolve issues with left label checkboxes */
+.ui.form .field > label.pr-leftcb-label {
+  display: inline-block;
+  padding-right: 0.5em;
+  user-select: none;
+  font-size: unset;
+  font-weight: unset;
+  cursor: pointer;
+}
+.field.pr-leftcb {
+  display: inline-block;
+}
+
+/* Special styles for various control types
+ * "pr-field-" + field.control.type value with any leading "px" removed
+ */
+ .pr-field-TextInput, .pr-field-URL  {
+  width: 100%;
+}
+
+/* Can specify "width:auto !important" to have dropdowns not take full screen width (like Pega web experience).
+ * For starter packs we are purposefully deviating from that experience by default
+ */
+.pr-field-Dropdown {
+  margin-bottom: 14px;
+}
+
+.pr-field-AttachContent {
+  border: 1px solid lightgray;
+  width: 100%;
+  padding: 0.5rem;
+  text-align: center;
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+/* Special styles for various groupFormat values
+ * "pr-layout-" + groupLayout value with spaces replaced by "-"
+ */
+.pr-layout-Inline-middle{
+  display: flex;
+  flex-direction: row;
+}
+
+.pr-layout-Inline {
+  display: inline-flex;
+}
+
+/* Override default min-width of 14em for dropdown present in a 2 column grid */
+.pr-layout-Inline-grid-double .ui.selection.dropdown{
+  min-width: 10em !important;
+}

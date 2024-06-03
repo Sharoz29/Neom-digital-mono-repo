@@ -25,13 +25,13 @@
     "@nestjs/testing": "^10.0.2",
     "@nx/angular": "^19.1.0",
     "@nx/devkit": "19.1.0",
-    "@nx/eslint": "19.1.0",
+    "@nx/eslint": "19.1.1",
     "@nx/eslint-plugin": "19.1.0",
-    "@nx/jest": "19.1.0",
+    "@nx/jest": "19.1.1",
     "@nx/js": "19.1.0",
     "@nx/nest": "^19.1.0",
     "@nx/node": "19.1.0",
-    "@nx/playwright": "19.1.0",
+    "@nx/playwright": "19.1.1",
     "@nx/plugin": "^19.1.0",
     "@nx/react": "^19.1.0",
     "@nx/web": "19.1.0",
@@ -67,7 +67,7 @@
     "jest-environment-node": "^29.4.1",
     "jest-preset-angular": "~14.1.0",
     "nswag": "^14.0.7",
-    "nx": "19.1.0",
+    "nx": "19.1.1",
     "prettier": "^2.6.2",
     "react-refresh": "^0.10.0",
     "ts-jest": "^29.1.0",
@@ -108,7 +108,5 @@
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },
-  "nx": {
-    "includedScripts": []
-  }
+  "nx": {}
 }

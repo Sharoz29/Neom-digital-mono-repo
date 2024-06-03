@@ -1,0 +1,19 @@
+.ui.form .field {
+    margin: 0;
+}
+
+.ui.search>.results {
+    margin-top: 0;
+}
+
+.ui.search>.results .result .content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.ui.search>.results .result .content span {
+    padding: 0;
+    flex-grow: 1;
+    flex-basis: 200px;
+}
