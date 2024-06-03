@@ -8,6 +8,7 @@
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
+      "cache": true,
       "options": {
         "buildTarget": "api-gateway:build"
       },

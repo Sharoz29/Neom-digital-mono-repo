@@ -1,5 +1,10 @@
 export const environment = {
-  timeout: 5000,
+  timeout: {
+    get: 5000,
+    post: 10000,
+    delete: 5000,
+    put: 10000,
+  },
   redis: {
     host: "localhost",
     port: 6379

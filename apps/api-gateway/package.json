@@ -1,0 +1,10 @@
+{
+  "name": "api-gateway",
+  "version": "0.0.1",
+  "scripts": {
+    "hmr": "nest build --webpack --webpackPath webpack-hmr.config.js --watch"
+  },
+  "nx": {
+    "includedScripts": ["hmr"]
+  }
+}
