@@ -17,7 +17,7 @@ export class BaseDomainService<X, Y, Z> {
 
   get(req: Request, pattern: string, obj: Z): Observable<X[]> {
     return this.client.send(pattern, obj).pipe(
-      timeout(environment.timeout),
+      timeout(environment.timeout.get),
       catchError((error) => {
         this.logger.error({ ...error, url: req.url });
         if (error instanceof TimeoutError) {

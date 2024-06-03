@@ -13,16 +13,16 @@ import { environment } from '@neom/shared/lib/environments/dev';
 export class BaseApiService<X, Y, Z> {
   public logger: Logger;
   constructor(
-    private readonly client: ClientProxy,
+    protected readonly client: ClientProxy,
     private pattern: string,
     private cacheManagerRef: Cache
   ) {
-    this.logger = new Logger(`${pattern.toUpperCase()}`)
+    this.logger = new Logger(`${pattern.toUpperCase()}`);
   }
-  
-  private __handleError = (req: Request) =>{ 
+
+  private __handleError = (req: Request) => {
     return (error: any, caught: Observable<any>): Observable<any> => {
-      this.logger.error({...error, url: req.url});
+      this.logger.error({ ...error, url: req.url });
       if (error instanceof TimeoutError) {
         throw new HttpException(
           { ...error, message: 'Request Timeout' },
@@ -39,33 +39,39 @@ export class BaseApiService<X, Y, Z> {
         default:
           throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
       }
-    }
-  
-
-  }
+    };
+  };
 
   get(req: Request, pattern: string, obj: Z): Observable<X[]> {
-    return this.client.send(pattern, obj).pipe(
-      timeout(environment.timeout.get),
-      catchError(this.__handleError(req)),
-    );
+    return this.client
+      .send(pattern, obj)
+      .pipe(
+        timeout(environment.timeout.get),
+        catchError(this.__handleError(req))
+      );
   }
   post(req: Request, pattern: string, body: Y): Observable<X> {
-    return this.client.send(pattern, body).pipe(
-      timeout(environment.timeout.post),
-      catchError(this.__handleError(req)),
-    );
+    return this.client
+      .send(pattern, body)
+      .pipe(
+        timeout(environment.timeout.post),
+        catchError(this.__handleError(req))
+      );
   }
   put(req: Request, pattern: string, handler: RequestHandler) {
-    return this.client.send(pattern, handler).pipe(
-      timeout(environment.timeout.put),
-      catchError(this.__handleError(req)),
-    );
+    return this.client
+      .send(pattern, handler)
+      .pipe(
+        timeout(environment.timeout.put),
+        catchError(this.__handleError(req))
+      );
   }
   delete(req: Request, pattern: string, handler: RequestHandler) {
-    this.client.send(pattern, handler).pipe(
-      timeout(environment.timeout.delete),
-      catchError(this.__handleError(req)),
-    );
+    this.client
+      .send(pattern, handler)
+      .pipe(
+        timeout(environment.timeout.delete),
+        catchError(this.__handleError(req))
+      );
   }
 }
