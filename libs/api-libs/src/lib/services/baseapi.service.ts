@@ -13,18 +13,17 @@ import { environment } from '@neom/shared/lib/environments/dev';
 export class BaseApiService<X, Y, Z> {
   public logger: Logger;
   constructor(
-    private readonly client: ClientProxy,
+    protected readonly client: ClientProxy,
     pattern: string,
     cacheManagerRef: Cache
   ) {
-
-    this.logger = new Logger(`${pattern.toUpperCase()}`)
+    this.logger = new Logger(`${pattern.toUpperCase()}`);
   }
   get(req: Request, pattern: string, obj: Z): Observable<X[]> {
     return this.client.send(pattern, obj).pipe(
       timeout(environment.timeout),
       catchError((error) => {
-        this.logger.error({...error, url: req.url});
+        this.logger.error({ ...error, url: req.url });
         if (error instanceof TimeoutError) {
           throw new HttpException(
             { ...error, message: 'Request Timeout' },
@@ -41,7 +40,7 @@ export class BaseApiService<X, Y, Z> {
           default:
             throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-      }),
+      })
     );
   }
   post(pattern: string, body: Y): Observable<X> {

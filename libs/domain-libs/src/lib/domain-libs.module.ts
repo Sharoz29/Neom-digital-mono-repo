@@ -1,6 +1,12 @@
-import { PegaUserDomainModule } from './pega-user/pega-user-domain.module';
+import { CaseTypesDomainModule } from './case-types/case-types-domain.module';
+import { WorklistDomainModule } from './worklist/worklist-domain.module';
+import { OperatorIdDomainModule } from './operator-id/operator-id-domain.module';
 import { DynamicModule, Module } from '@nestjs/common';
-const generatedModules = [PegaUserDomainModule];
+const generatedModules = [
+  CaseTypesDomainModule,
+  WorklistDomainModule,
+  OperatorIdDomainModule,
+];
 @Module({
   controllers: [],
   providers: [],

@@ -5,22 +5,21 @@ import { Cache } from 'cache-manager';
 import { Observable, TimeoutError, catchError, timeout } from 'rxjs';
 import { environment } from '@neom/shared/lib/environments/dev';
 
-export class BaseDomainService <X,Y,Z> {
-    public logger: Logger;
+export class BaseDomainService<X, Y, Z> {
+  public logger: Logger;
   constructor(
-    private readonly client: ClientProxy,
+    protected readonly client: ClientProxy,
     cacheManagerRef: Cache,
-    pattern: string,
+    pattern: string
   ) {
-
-    this.logger = new Logger(`${pattern.toUpperCase()}`)
+    this.logger = new Logger(`${pattern.toUpperCase()}`);
   }
 
   get(req: Request, pattern: string, obj: Z): Observable<X[]> {
     return this.client.send(pattern, obj).pipe(
       timeout(environment.timeout),
       catchError((error) => {
-        this.logger.error({...error, url: req.url});
+        this.logger.error({ ...error, url: req.url });
         if (error instanceof TimeoutError) {
           throw new HttpException(
             { ...error, message: 'Request Timeout' },
@@ -37,7 +36,7 @@ export class BaseDomainService <X,Y,Z> {
           default:
             throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-      }),
+      })
     );
   }
   post(pattern: string, body: Y): Observable<X> {
@@ -49,5 +48,4 @@ export class BaseDomainService <X,Y,Z> {
   delete(pattern: string, handler: RequestHandler) {
     this.client.send(pattern, handler);
   }
-
 }
