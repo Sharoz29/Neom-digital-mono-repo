@@ -22,13 +22,12 @@ export class WorklistApiService extends BaseApiService<
     super(_client, 'worklist', cacheManagerRef);
   }
 
-  async getWorklist(req: Request) {
+  async getWorklist(params: string, req: Request) {
     try {
-      const response = this.client.send(PSWORKLIST.GET, {
+      return this.client.send(PSWORKLIST.GET, {
         headers: req.headers,
+        params
       });
-      const worklist = await response.toPromise();
-      return worklist;
     } catch (error: any) {
       console.error('Error sending message to microservice:', error);
       throw error;

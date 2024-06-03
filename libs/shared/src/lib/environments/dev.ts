@@ -16,7 +16,7 @@ export const environment = {
   },
   pega: {
     baseUrl: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/application/v2`,
-    basev1Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/v1/data`,
+    basev1Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/v1`,
   },
   production: false,
   apiUrl: 'http://localhost:3000/api',

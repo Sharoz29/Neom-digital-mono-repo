@@ -27,15 +27,15 @@ import { Observable } from 'rxjs';
 
 import { WorklistVm, PSWORKLIST } from '@neom/models';
 import { WorklistApiService } from './worklist-api.service';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
-@Controller('data/D_Worklist')
-@ApiTags('D_Worklist')
+@Controller('data')
+@ApiTags('Data Controller')
 // @CustomizeLogInterceptor({module: 'Worklist'})
 export class WorklistApiController {
   constructor(private readonly _worklistApiService: WorklistApiService) {}
 
-  @Get()
+  @Get("/:id")
   @ApiOkResponse({
     description:
       'Successfully retrieved the record for the specified worklist.',
@@ -54,7 +54,9 @@ export class WorklistApiController {
     description: 'You are not authorized to view these resources.',
   })
   @UseInterceptors(CacheInterceptor)
-  async getWorklist(@Request() req: Request) {
-    return this._worklistApiService.getWorklist(req);
+  @CacheTTL(60 * 60 * 24)
+  async getWorklist(@Param("id") param: string, @Request() req: Request) {
+        return this._worklistApiService.getWorklist(param, req);
+
   }
 }

@@ -30,7 +30,7 @@ export class WorklistDomainController {
   constructor(private readonly _worklistDomainService: WorklistDomainService) {}
 
   @MessagePattern(PSWORKLIST.GET)
-  async getCaseTypes({ headers }: any) {
-    return this._worklistDomainService.getWorklist(headers);
+  async getCaseTypes(payload: any) {
+    return this._worklistDomainService.getWorklist(payload);
   }
 }

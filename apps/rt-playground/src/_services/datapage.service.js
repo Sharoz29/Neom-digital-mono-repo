@@ -22,17 +22,4 @@ function getDataPage(id, params) {
     .catch(function (error) {
       return Promise.reject(getError(error));
     });
-  return (
-    axios
-      // .get(endpoints.BASEV2URL + endpoints.CASETYPES)
-      .get(`http://localhost:5001/api/v1` + endpoints.DATA + id, {
-        params: params,
-      })
-      .then(function (response) {
-        return response.data;
-      })
-      .catch(function (error) {
-        return Promise.reject(getError(error));
-      })
-  );
 }

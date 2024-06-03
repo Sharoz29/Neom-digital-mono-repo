@@ -68,5 +68,7 @@
       "last 1 safari version"
     ]
   },
-  "nx": {}
+  "nx": {
+    "includeScripts": ["start", "build"]
+  }
 }

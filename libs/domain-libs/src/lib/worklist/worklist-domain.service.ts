@@ -23,10 +23,12 @@ export class WorklistDomainService extends BaseDomainService<
     super(_client, cacheManagerRef, 'worklist');
   }
 
-  async getWorklist({ authorization }: any) {
+  async getWorklist({ headers, params }: any) {
+    // console.log(environment.pega.basev1Url + `/data/${params}`);
+
     return axios
-      .get(environment.pega.basev1Url + environment.WORKLIST, {
-        headers: { Authorization: authorization },
+      .get(environment.pega.basev1Url + `/data/${params}`, {
+        headers: { Authorization: headers.authorization },
       })
       .then(function (response) {
         return response.data;
