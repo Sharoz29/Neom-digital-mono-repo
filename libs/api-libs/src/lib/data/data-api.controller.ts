@@ -21,24 +21,25 @@ import {
   ApiBadGatewayResponse,
   ApiNotFoundResponse,
   ApiUnauthorizedResponse,
+  ApiOperation,
 } from '@nestjs/swagger';
 
 import { Observable } from 'rxjs';
 
-import { OperatorIdVm, PSOPERATOR_ID } from '@neom/models';
-import { OperatorIdApiService } from './operator-id-api.service';
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { DataVm, PSDATA } from '@neom/models';
+import { DataApiService } from './data-api.service';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
-@Controller('data/D_OperatorID')
-@ApiTags('operator-id')
-// @CustomizeLogInterceptor({module: 'OperatorId'})
-export class OperatorIdApiController {
-  constructor(private readonly _operatorIdApiService: OperatorIdApiService) {}
+@Controller('data')
+@ApiTags('data')
+export class DataApiController {
+  constructor(private readonly _dataApiService: DataApiService) {}
 
-  @Get()
+  // Gets the data by the provided id
+  @Get('/:id')
   @ApiOkResponse({
     description:
-      'Successfully retrieved the record for the specified worklist.',
+      'Successfully retrieved the specified data dynamically using the id.',
   })
   @ApiBadRequestResponse({
     description:
@@ -53,8 +54,12 @@ export class OperatorIdApiController {
   @ApiUnauthorizedResponse({
     description: 'You are not authorized to view these resources.',
   })
+  @ApiOperation({
+    summary: 'Gets the data by the provided id',
+  })
   @UseInterceptors(CacheInterceptor)
-  async getWorklist(@Request() req: Request) {
-    return this._operatorIdApiService.getOperatorID(req);
+  @CacheTTL(60 * 60 * 24)
+  async getData(@Param('id') param: string, @Request() req: Request) {
+    return this._dataApiService.getData(param, req);
   }
 }

@@ -5,29 +5,27 @@ import { ClientProxy } from '@nestjs/microservices';
 
 import { Injectable, Inject } from '@nestjs/common';
 import { BaseDomainService } from '../services/domain.service';
-import { WorklistVm } from '@neom/models';
+import { DataVm } from '@neom/models';
 import axios from 'axios';
 import { environment } from '@neom/shared/lib/environments/dev';
 
 // Extending from BaseDomainService to get Basic Functionality for CRUD
 @Injectable()
-export class WorklistDomainService extends BaseDomainService<
-  WorklistVm,
-  WorklistVm,
-  WorklistVm
+export class DataDomainService extends BaseDomainService<
+  DataVm,
+  DataVm,
+  DataVm
 > {
   constructor(
     @Inject(RMQQueues.PY_WORKER_QUEUE) _client: ClientProxy,
     @Inject(CACHE_MANAGER) cacheManagerRef: Cache
   ) {
-    super(_client, cacheManagerRef, 'worklist');
+    super(_client, cacheManagerRef, 'data');
   }
 
-  async getWorklist({ headers, params }: any) {
-    // console.log(environment.pega.basev1Url + `/data/${params}`);
-
+  async getData({ headers, params }: any) {
     return axios
-      .get(environment.pega.basev1Url + `/data/${params}`, {
+      .get(environment.pega.basev1Url + `/${environment.DATA}/${params}`, {
         headers: { Authorization: headers.authorization },
       })
       .then(function (response) {

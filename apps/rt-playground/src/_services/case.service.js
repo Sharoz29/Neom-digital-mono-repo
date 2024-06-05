@@ -1,6 +1,5 @@
-import { axios, getError, ReferenceHelper } from "../_helpers";
-import { endpoints } from "./endpoints";
-
+import { axios, getError, ReferenceHelper } from '../_helpers';
+import { endpoints } from './endpoints';
 /**
  * Functions used to issue AJAX requests and manage responses.
  * All of the included methods use the Axios library for Promise-based requests.
@@ -24,17 +23,14 @@ export const caseService = {
 };
 
 function getCaseTypes() {
-  return (
-    axios
-      // .get(endpoints.BASEV2URL + endpoints.CASETYPES)
-      .get(`http://localhost:5001/api/v1` + endpoints.CASETYPES)
-      .then(function (response) {
-        return response.data.caseTypes;
-      })
-      .catch(function (error) {
-        return Promise.reject(getError(error));
-      })
-  );
+  return axios
+    .get(endpoints.API_URL + endpoints.CASETYPES)
+    .then(function (response) {
+      return response.data.caseTypes;
+    })
+    .catch(function (error) {
+      return Promise.reject(getError(error));
+    });
 }
 
 function getFieldsForCase(caseInfo, actionId) {
@@ -42,19 +38,26 @@ function getFieldsForCase(caseInfo, actionId) {
     if (caseInfo.actions && caseInfo.actions.length > 0) {
       actionId = assignment.actions[0].ID;
     } else {
-      return Promise.reject("No valid actions found.");
+      return Promise.reject('No valid actions found.');
     }
   }
 
   return axios
     .get(
       encodeURI(
-        endpoints.BASEV2URL +
+        // endpoints.BASEV2URL +
+        //   endpoints.CASES +
+        //   '/' +
+        //   caseInfo.ID +
+        //   endpoints.ACTIONS +
+        //   '/' +
+        //   actionId
+        endpoints.API_URL +
           endpoints.CASES +
-          "/" +
+          '/' +
           caseInfo.ID +
           endpoints.ACTIONS +
-          "/" +
+          '/' +
           actionId
       )
     )
@@ -67,14 +70,17 @@ function getFieldsForCase(caseInfo, actionId) {
 }
 
 function getCaseCreationPage(id) {
-  return axios
-    .get(endpoints.BASEV2URL + endpoints.CASETYPES + "/" + id)
-    .then(function (response) {
-      return response.data;
-    })
-    .catch(function (error) {
-      return Promise.reject(getError(error));
-    });
+  return (
+    axios
+      // .get(endpoints.BASEV2URL + endpoints.CASETYPES + '/' + id)
+      .get(endpoints.API_URL + endpoints.CASETYPES + '/' + id)
+      .then(function (response) {
+        return response.data;
+      })
+      .catch(function (error) {
+        return Promise.reject(getError(error));
+      })
+  );
 }
 
 function createCase(id, processID, content) {
@@ -99,16 +105,16 @@ function createCase(id, processID, content) {
       return Promise.reject(error);
     });
 }
-
+//
 function getCase(id) {
   return axios
-    .get(encodeURI(endpoints.BASEV2URL + endpoints.CASES + "/" + id), {
+    .get(encodeURI(endpoints.API_URL + endpoints.CASES + '/' + id), {
       headers: {
-        "Access-Control-Expose-Headers": "etag",
+        'Access-Control-Expose-Headers': 'etag',
       },
     })
     .then(function (response) {
-      response.data["etag"] = response.headers.etag;
+      response.data['etag'] = response.headers.etag;
       return response.data;
     })
     .catch(function (error) {
@@ -121,7 +127,7 @@ function updateCase(id, body, etag, action, pageInstr) {
 
   return axios
     .put(
-      encodeURI(endpoints.BASEV2URL + endpoints.CASES + "/" + id),
+      encodeURI(endpoints.BASEV2URL + endpoints.CASES + '/' + id),
       pageInstr.postSettings.bUseEmbedPI || pageInstr.postSettings.bUseRepeatPI
         ? {
             content: ReferenceHelper.getPostContent(
@@ -139,7 +145,7 @@ function updateCase(id, body, etag, action, pageInstr) {
       {
         params: actionParam,
         headers: {
-          "If-Match": etag,
+          'If-Match': etag,
         },
       }
     )
@@ -157,7 +163,7 @@ function refreshCase(myCase, body) {
       encodeURI(
         endpoints.BASEV2URL +
           endpoints.CASES +
-          "/" +
+          '/' +
           myCase.ID +
           endpoints.REFRESH
       ),
@@ -166,7 +172,7 @@ function refreshCase(myCase, body) {
       },
       {
         headers: {
-          "Access-Control-Expose-Headers": myCase.etag,
+          'Access-Control-Expose-Headers': myCase.etag,
         },
       }
     )
@@ -182,12 +188,13 @@ function getPage(caseID, pageID) {
   return axios
     .get(
       encodeURI(
-        endpoints.BASEV2URL +
+        // endpoints.BASEV2URL +
+        endpoints.API_URL +
           endpoints.CASES +
-          "/" +
+          '/' +
           caseID +
           endpoints.PAGES +
-          "/" +
+          '/' +
           pageID
       )
     )
@@ -203,12 +210,13 @@ function getView(caseID, viewID) {
   return axios
     .get(
       encodeURI(
-        endpoints.BASEV2URL +
+        // endpoints.BASEV2URL +
+        endpoints.API_URL +
           endpoints.CASES +
-          "/" +
+          '/' +
           caseID +
           endpoints.VIEWS +
-          "/" +
+          '/' +
           viewID
       )
     )
@@ -221,55 +229,60 @@ function getView(caseID, viewID) {
 }
 
 function cases() {
-  return axios
-    .get(endpoints.BASEV2URL + endpoints.CASES)
-    .then(function (response) {
-      return response.data.cases;
-    })
-    .catch(function (error) {
-      return Promise.reject(getError(error));
-    });
+  return (
+    axios
+      // .get(endpoints.BASEV2URL + endpoints.CASES)
+      .get(endpoints.API_URL + endpoints.CASES)
+      .then(function (response) {
+        return response.data.cases;
+      })
+      .catch(function (error) {
+        return Promise.reject(getError(error));
+      })
+  );
 }
 
 function getAttachments(caseID) {
+  endpoints;
   return axios({
-    method: "get",
-    url: endpoints.BASEV2URL + `/cases/${caseID}/attachments`,
+    method: 'get',
+    url: endpoints.API_URL + `/cases/${caseID}/attachments`,
+    // url: endpoints.BASEV2URL + `/cases/${caseID}/attachments`,
   })
     .then((attachments) => {
       return attachments.data;
     })
     .catch((error) => {
-      console.log("The error is: ", error);
+      console.log('The error is: ', error);
     });
 }
 
 function uploadAttachments(files) {
   const formData = new FormData();
-  formData.append("appendUniqueIdToFileName", true);
+  formData.append('appendUniqueIdToFileName', true);
   files.forEach((file) => {
-    formData.append("arrayOfFiles", file);
+    formData.append('arrayOfFiles', file);
   });
   return axios({
-    method: "post",
-    url: endpoints.BASEV2URL + "/attachments/upload",
-    headers: { "Content-Type": "multipart/form-data" },
+    method: 'post',
+    url: endpoints.BASEV2URL + '/attachments/upload',
+    headers: { 'Content-Type': 'multipart/form-data' },
     data: formData,
   })
     .then((response) => ({
-      type: "File",
-      category: "File",
+      type: 'File',
+      category: 'File',
       ID: response.data.ID,
     }))
     .catch((error) => {
-      console.log("The error is: ", error);
+      console.log('The error is: ', error);
     });
 }
 
 function saveAttachments(data, caseID) {
   const attachmentData = { attachments: data };
   return axios({
-    method: "post",
+    method: 'post',
     url: endpoints.BASEV2URL + `/cases/${caseID}/attachments`,
     data: attachmentData,
   })
@@ -277,20 +290,20 @@ function saveAttachments(data, caseID) {
       return response;
     })
     .catch((error) => {
-      console.log("The error is: ", error);
+      console.log('The error is: ', error);
     });
 }
 
 function deleteAttachment(file) {
   return axios({
-    method: "delete",
+    method: 'delete',
     url: endpoints.BASEV2URL + `/attachments/${file.ID}`,
   }).then(() => {});
 }
 
 function downloadAttachment(file) {
   return axios({
-    method: "get",
+    method: 'get',
     url: endpoints.BASEV2URL + `/attachments/${file.ID}`,
   }).then((response) => {
     return response;

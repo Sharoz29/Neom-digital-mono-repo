@@ -7,8 +7,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { NstLibsModule } from '@neom/nst-libs';
 
-import { OperatorIdApiController } from './operator-id-api.controller';
-import { OperatorIdApiService } from './operator-id-api.service';
+import { DataDomainController } from './data-domain.controller';
+import { DataDomainService } from './data-domain.service';
 
 @Module({
   imports: [
@@ -33,18 +33,11 @@ import { OperatorIdApiService } from './operator-id-api.service';
     ClientsModule.register([
       {
         name: RMQQueues.PY_WORKER_QUEUE,
-        transport: Transport.RMQ,
-        options: {
-          urls: [environment.rabbitmq.url],
-          queue: RMQQueues.PY_WORKER_QUEUE,
-          queueOptions: {
-            durable: false,
-          },
-        },
+        transport: Transport.TCP,
       },
     ]),
   ],
-  controllers: [OperatorIdApiController],
-  providers: [OperatorIdApiService],
+  controllers: [DataDomainController],
+  providers: [DataDomainService],
 })
-export class OperatorIdApiModule {}
+export class DataDomainModule {}

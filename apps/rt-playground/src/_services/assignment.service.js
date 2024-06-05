@@ -1,5 +1,5 @@
-import { axios, getError, ReferenceHelper } from "../_helpers";
-import { endpoints } from "./endpoints";
+import { axios, getError, ReferenceHelper } from '../_helpers';
+import { endpoints } from './endpoints';
 
 /**
  * Functions used to issue AJAX requests and manage responses.
@@ -17,7 +17,7 @@ export const assignmentService = {
 
 function getAssignment(id) {
   return axios
-    .get(encodeURI(endpoints.BASEV2URL + endpoints.ASSIGNMENTS + "/" + id))
+    .get(encodeURI(endpoints.API_URL + endpoints.ASSIGNMENTS + '/' + id))
     .then(function (response) {
       return response.data;
     })
@@ -28,26 +28,26 @@ function getAssignment(id) {
 
 function getFieldsForAssignment(assignment, actionId) {
   if (!actionId && assignment) {
-    console.log(assignment.availableActions, "checking", assignment);
+    console.log(assignment.availableActions, 'checking', assignment);
     const allActions = [
-      ...assignment.caseInfo.availableActions,
+      ...assignment.availableActions,
       ...assignment.assignments[0].actions,
     ];
     if (allActions && allActions.length > 0) {
       actionId = assignment.assignments[0].actions[0].ID;
     } else {
-      return Promise.reject("No valid actions found.");
+      return Promise.reject('No valid actions found.');
     }
   }
   return axios
     .get(
       encodeURI(
-        endpoints.BASEV2URL +
+        endpoints.API_URL +
           endpoints.ASSIGNMENTS +
-          "/" +
+          '/' +
           assignment.assignments[0].ID +
           endpoints.ACTIONS +
-          "/" +
+          '/' +
           actionId
       )
     )
@@ -61,7 +61,7 @@ function getFieldsForAssignment(assignment, actionId) {
 
 // body has already been passed thru ReferenceHelper.getPostContent
 function performRefreshOnAssignment(assignmentID, actionID, body, pageInstr) {
-  let refreshFor = "";
+  let refreshFor = '';
   if (body && body.refreshFor) {
     refreshFor = `?refreshFor=${body.refreshFor}`;
     delete body.refreshFor;
@@ -72,10 +72,10 @@ function performRefreshOnAssignment(assignmentID, actionID, body, pageInstr) {
       encodeURI(
         endpoints.BASEV2URL +
           endpoints.ASSIGNMENTS +
-          "/" +
+          '/' +
           assignmentID +
           endpoints.ACTIONS +
-          "/" +
+          '/' +
           actionID +
           endpoints.REFRESH +
           refreshFor
@@ -101,7 +101,7 @@ function performActionOnAssignment(assignmentID, actionID, body, pageInstr) {
   return axios
     .post(
       encodeURI(
-        endpoints.BASEV2URL + endpoints.ASSIGNMENTS + "/" + assignmentID
+        endpoints.BASEV2URL + endpoints.ASSIGNMENTS + '/' + assignmentID
       ),
       pageInstr.postSettings.bUseEmbedPI || pageInstr.postSettings.bUseRepeatPI
         ? {
@@ -136,7 +136,7 @@ function saveAssignment(assignmentID, actionID, body, pageInstr) {
   return axios
     .post(
       encodeURI(
-        endpoints.BASEV2URL + endpoints.ASSIGNMENTS + "/" + assignmentID
+        endpoints.BASEV2URL + endpoints.ASSIGNMENTS + '/' + assignmentID
       ),
       pageInstr.postSettings.bUseEmbedPI || pageInstr.postSettings.bUseRepeatPI
         ? {
@@ -155,7 +155,7 @@ function saveAssignment(assignmentID, actionID, body, pageInstr) {
       {
         params: {
           actionID: actionID,
-          saveOnly: "true",
+          saveOnly: 'true',
         },
       }
     )
@@ -167,11 +167,9 @@ function saveAssignment(assignmentID, actionID, body, pageInstr) {
     });
 }
 
-//First to do
-
 function assignments() {
   return axios
-    .get(endpoints.BASEV2URL + endpoints.ASSIGNMENTS)
+    .get(endpoints.API_URL + endpoints.ASSIGNMENTS)
     .then(function (response) {
       return response.data.assignments;
     })
@@ -186,17 +184,17 @@ function navigationSteps(assignmentID, step, etag) {
       encodeURI(
         endpoints.BASEV2URL +
           endpoints.ASSIGNMENTS +
-          "/" +
+          '/' +
           assignmentID +
           endpoints.NAVIGATION_STEPS +
-          "/" +
+          '/' +
           step
       ),
       { content: {} },
       {
-        params: { viewType: "none" },
+        params: { viewType: 'none' },
         headers: {
-          "if-match": etag,
+          'if-match': etag,
         },
       }
     )

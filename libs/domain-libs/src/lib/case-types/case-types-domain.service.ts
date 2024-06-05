@@ -35,4 +35,16 @@ export class CaseTypesDomainService extends BaseDomainService<
         return Promise.reject(error);
       });
   }
+  async getCaseCreationPage({ headers, params }: any) {
+    return axios
+      .get(environment.pega.baseUrl + environment.CASETYPES + `/${params}`, {
+        headers: { Authorization: headers.authorization },
+      })
+      .then(function (response) {
+        return response.data;
+      })
+      .catch(function (error) {
+        return Promise.reject(error);
+      });
+  }
 }

@@ -1,11 +1,13 @@
 import { CaseTypesDomainModule } from './case-types/case-types-domain.module';
-import { WorklistDomainModule } from './worklist/worklist-domain.module';
-import { OperatorIdDomainModule } from './operator-id/operator-id-domain.module';
+import { DataDomainModule } from './data/data-domain.module';
+import { AssignmentDomainModule } from './assignment/assignment-domain.module';
+import { CaseDomainModule } from './case/case-domain.module';
 import { DynamicModule, Module } from '@nestjs/common';
 const generatedModules = [
   CaseTypesDomainModule,
-  WorklistDomainModule,
-  OperatorIdDomainModule,
+  DataDomainModule,
+  AssignmentDomainModule,
+  CaseDomainModule,
 ];
 @Module({
   controllers: [],
