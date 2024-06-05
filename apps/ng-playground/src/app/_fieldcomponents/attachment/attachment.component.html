@@ -1,0 +1,7 @@
+<div class="pega-attachment-container">
+    <label class="pega-label" for="file">Upload File</label>
+    <input style="display: none" type="file" id="file" single (change)="handleFileInput($event)">
+    <div class="pega-attachment-loader" *ngIf="showLoadingIndicator">
+        <mat-spinner class="progress-spinner"></mat-spinner>
+    </div>
+</div>

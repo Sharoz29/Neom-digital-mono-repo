@@ -1,0 +1,20 @@
+<div>
+    <div class="pega-header">
+        <mat-icon class="pega-attach-icon">attach_file</mat-icon>
+        <div class="pega-header-text">Attachments</div>
+        <div class="pega-attachment-count" id="attachment-count">{{attachmentList.length === 0}}</div>
+    </div>
+    <div class="pega-attachment-loader" *ngIf="showLoadingIndicator">
+        <mat-spinner class="progress-spinner"></mat-spinner>
+    </div>
+    <div style="padding: 1em;">
+        <div *ngIf="(attachmentList?.length ?? 0) > 0; else showMsg">
+            <div *ngFor = "let item of attachmentList">
+                <app-attachment-item [file]="item" (onDelete)="deleteAttachment($event)" (onDownload)="downloadAttachment($event)"></app-attachment-item>
+            </div>
+        </div>
+        <ng-template #showMsg>
+            <div>No attachments exist for this Case!</div>
+        </ng-template>
+    </div>
+</div>

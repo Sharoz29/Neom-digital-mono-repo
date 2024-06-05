@@ -1,0 +1,26 @@
+.pega-attachment-container {
+    border: 1px solid lightgray;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+    margin-top: 0.5rem;
+}
+
+.pega-label {
+    background-color: #673ab7;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pega-attachment-loader {
+    opacity: 1;
+    background-color: rgba(255,255,255,.85);
+    z-index: 1000;
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 100%;
+}

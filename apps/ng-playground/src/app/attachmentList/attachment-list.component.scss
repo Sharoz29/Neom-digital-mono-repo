@@ -1,0 +1,35 @@
+.pega-attach-icon {
+    transform: rotate(40deg);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.pega-attachment-count {
+    background: #673ab7;
+    color: white;
+    line-height: 1.25rem;
+    border-radius: calc(1.125 * 0.5rem);
+    font-size: 0.75rem;
+    font-weight: bold;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+.pega-header {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid lightgray;
+}
+
+.pega-header-text {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0px 8px;
+}
+
+.pega-attachment-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}

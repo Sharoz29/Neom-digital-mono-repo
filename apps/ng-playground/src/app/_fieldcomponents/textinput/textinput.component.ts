@@ -1,0 +1,132 @@
+import { Component, OnInit, Input } from "@angular/core";
+import { GetChangesService } from "../../_messages/getchanges.service";
+import { FormControl, Validators, FormGroup } from "@angular/forms";
+import { interval } from "rxjs/internal/observable/interval";
+import { HandleActions } from "../../_actions/handleactions";
+import { GetActionsService } from "../../_messages/getactions.service";
+import { ReferenceHelper } from "../../_helpers/reference-helper";
+
+@Component({
+  selector: "app-textinput",
+  templateUrl: "./textinput.component.html",
+  styleUrls: ["./textinput.component.scss"],
+})
+export class TextinputComponent implements OnInit {
+  @Input() fieldComp: any;
+  @Input() formGroup!: FormGroup;
+  @Input() noLabel!: boolean;
+  @Input() CaseID!: string;
+  @Input() RefType$!: string;
+
+  reference!: string;
+  selectedValue!: string;
+  localControlName$!: string;
+  showLabel$ = false;
+  tooltip$!: string;
+
+  fieldControl = new FormControl("", null);
+  actionsHandler: HandleActions | undefined;
+
+  constructor(private gcservice: GetChangesService, private gaservice: GetActionsService, private refHelper: ReferenceHelper) {
+    this.actionsHandler = new HandleActions(gaservice);
+  }
+
+  ngOnInit() {
+    this.selectedValue = this.refHelper.htmlDecode(this.fieldComp.value);
+    this.fieldComp.label = this.refHelper.htmlDecode(this.fieldComp.label);
+    this.reference = this.fieldComp.reference;
+    this.tooltip$ = "";
+    if (this.fieldComp.control.modes.length > 0) {
+      const { tooltip, minChars, maxChars } = this.fieldComp.control.modes[0];
+      this.tooltip$ = this.refHelper.htmlDecode(tooltip);
+      if (minChars) {
+        this.fieldControl.setValidators([Validators.minLength(minChars)]);
+      }
+      if (maxChars) {
+        this.fieldControl.setValidators([Validators.maxLength(maxChars)]);
+      }
+    }
+
+    // create controlName so can be referenced from elsewhere
+    this.fieldComp.controlName = this.refHelper.getUniqueControlID();
+
+    if (this.fieldComp.required) {
+      //this.fieldControl.setValidators([Validators.required]);
+    }
+
+    if (this.noLabel) {
+      this.fieldComp.label = "";
+      this.showLabel$ = false;
+    } else {
+      if (this.fieldComp.label != "") {
+        this.showLabel$ = true;
+      } else if (this.fieldComp.label == "" && this.fieldComp.labelReserveSpace) {
+        this.showLabel$ = true;
+      }
+    }
+
+    if (this.fieldComp.disabled) {
+      this.fieldControl.disable();
+    }
+
+    // add a controlName so can use it when referencing the control
+    this.formGroup.addControl(this.fieldComp.controlName, this.fieldControl);
+    this.fieldControl.setValue(this.selectedValue);
+
+    if (this.fieldComp.validationMessages != "") {
+      const timer = interval(100).subscribe(() => {
+        this.fieldControl.setErrors({ message: true });
+        this.fieldControl.markAsTouched();
+
+        timer.unsubscribe();
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    this.formGroup.removeControl(this.fieldComp.controlName);
+
+    this.actionsHandler = undefined;
+    delete this.actionsHandler;
+  }
+
+  fieldChanged(e: Event | any) {
+    this.fieldComp.value = e.target.value;
+    this.gcservice.sendMessage(this.fieldComp.reference, e.target.value, this.CaseID, this.RefType$);
+
+    this.actionsHandler?.generateActions("change", this.fieldComp.control.actionSets, this.CaseID, this.fieldComp.reference);
+  }
+
+  fieldBlur(e: any) {
+    this.actionsHandler?.generateActions("blur", this.fieldComp.control.actionSets, this.CaseID, this.fieldComp.reference);
+  }
+
+  fieldClick(e: any) {
+    this.actionsHandler?.generateActions("click", this.fieldComp.control.actionSets, this.CaseID, this.fieldComp.reference);
+  }
+
+  referenceToName(sRef: string): string {
+    const returnString = sRef.replace(/\./gi, "-");
+
+    return returnString;
+  }
+
+  getErrorMessage() {
+    let errMessage = "";
+
+    // look for validation messages for json, pre-defined or just an error pushed from workitem (400)
+    if (this.fieldControl.hasError("message")) {
+      errMessage = this.fieldComp.validationMessages;
+    } else if (this.fieldControl.hasError("required")) {
+      errMessage = "You must enter a value";
+    } else if (this.fieldControl.hasError("maxlength")) {
+      errMessage = `Value must be less than or equal to ${this.fieldControl?.getError("maxlength").requiredLength} characters`;
+    } else if (this.fieldControl.hasError("minlength")) {
+      errMessage = `Value must be greater than or equal to ${this.fieldControl?.getError("maxlength").requiredLength} characters`;
+    } else if (this.fieldControl.errors) {
+      errMessage = this.fieldControl.errors.toString();
+    }
+
+    return errMessage;
+  }
+}

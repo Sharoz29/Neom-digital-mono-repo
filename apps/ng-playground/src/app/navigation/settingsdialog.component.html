@@ -1,0 +1,84 @@
+<h1 mat-dialog-title>Application Settings</h1>
+<div mat-dialog-content class="mat-typography no-scroll">
+  <div class="flex-container">
+    <div class="left">
+      <div class="group">
+        <h3><b>Optimizations for 8.3+</b></h3>
+        <mat-checkbox
+          [checked]="data.bUseNewRow"
+          [(ngModel)]="data.bUseNewRow"
+        >
+          PageList/Group New Row
+        </mat-checkbox>
+        <mat-checkbox
+          [disabled]="!data.bUseNewRow"
+          [checked]="data.bUseRepeatPageInstructions"
+          [(ngModel)]="data.bUseRepeatPageInstructions"
+        >
+          PageList/Group Use Page Instructions</mat-checkbox
+        >
+        <mat-checkbox
+          [checked]="data.bUsePagePageInstructions"
+          [(ngModel)]="data.bUsePagePageInstructions"
+          >Embeded Page Use Page Instructions</mat-checkbox
+        >
+        <mat-checkbox
+          [checked]="data.bUseLocalOptionsForDataPage"
+          [(ngModel)]="data.bUseLocalOptionsForDataPage"
+          >Autocomplete/Dropdown use local options for Data Page
+        </mat-checkbox>
+        <mat-checkbox
+          [checked]="data.bUseLocalOptionsForClipboardPage"
+          [(ngModel)]="data.bUseLocalOptionsForClipboardPage"
+          >Autocomplete/Dropdown use local options for Clipboard Page
+        </mat-checkbox>
+      </div>
+      <div class="group">
+        <h3><b>Optimizations for 8.4+</b></h3>
+        <mat-checkbox
+          [checked]="data.bUsePostAssignSave"
+          [(ngModel)]="data.bUsePostAssignSave"
+          >Save Assignment (preferred) (vs. Save Case)</mat-checkbox
+        >
+      </div>
+    </div>
+    <div class="right">
+      <div class="group">
+        <h3><b>Optimizations for 8.5+</b></h3>
+        <span>
+          Screen Flow: <b>{{ data.bUseScreenFlow ? "Enabled" : "Disabled" }}</b>
+        </span>
+      </div>
+      <div class="group">
+        <h3><b>General UI related</b></h3>
+        <mat-checkbox
+          [checked]="data.bShowRightPanel"
+          [(ngModel)]="data.bShowRightPanel"
+          style="display: inline-block"
+        >
+          Show right panel
+        </mat-checkbox>
+        <mat-form-field style="margin-left: 10px">
+          <input
+            matInput
+            type="text"
+            [value]="data.sRightPanelSection"
+            [(ngModel)]="data.sRightPanelSection"
+            id="rightPanelSection"
+          />
+        </mat-form-field>
+        <mat-checkbox
+          [checked]="data.bShowAttachments"
+          [(ngModel)]="data.bShowAttachments"
+        >
+          Show Attachments
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Ok</button>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+</div>

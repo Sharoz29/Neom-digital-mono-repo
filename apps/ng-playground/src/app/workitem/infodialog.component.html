@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+
+<div mat-dialog-content>
+ 
+  <textarea matInput rows="25"  [value]="data.infoData"></textarea>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancelInfoDialog()">Cancel</button>
+</div>

@@ -1,0 +1,15 @@
+<div class="flex-container-center" *ngIf="loader; else showContent">
+  <mat-spinner class="progress-spinner"></mat-spinner>
+</div>
+
+<ng-template #showContent>
+  <div *ngIf="showDetails; else noDetails">
+    <h1>{{ detailsName }}</h1>
+    <mat-divider *ngIf="detailsName" style="position: unset"></mat-divider>
+    <app-group [groups]="groups$" [formGroup]="fg"></app-group>
+  </div>
+
+  <ng-template #noDetails>
+    <div class="flex-container-center">Invalid Case Details</div>
+  </ng-template>
+</ng-template>
