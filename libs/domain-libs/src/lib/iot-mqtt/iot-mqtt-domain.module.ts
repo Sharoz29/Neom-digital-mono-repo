@@ -1,22 +1,22 @@
 import { Module } from '@nestjs/common';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
 import { redisStore } from 'cache-manager-redis-store';
 import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { environment } from '@neom/shared/lib/environments/dev';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { RMQQueues } from '@neom/shared';
-import { ApiLibsModule } from '@neom/api-libs';
-import { DomainLibsModule } from '@neom/domain-libs';
+import { IoTQueues, RMQQueues } from '@neom/shared';
+import { NstLibsModule } from '@neom/nst-libs';
 
+import { IotMqttDomainController } from './iot-mqtt-domain.controller';
+import { IotMqttDomainService } from './iot-mqtt-domain.service';
+
+/**
+ * Module to provide MQTT domain services for IoT.
+ * Configures caching, MQTT clients, and imports necessary libraries.
+ */
 @Module({
   imports: [
-    ApiLibsModule,
-    DomainLibsModule,
+    NstLibsModule,
     CacheModule.registerAsync({
-      // imports: [ConfigModule],
       useFactory: async () => {
         const store = await redisStore({
           socket: {
@@ -30,23 +30,18 @@ import { DomainLibsModule } from '@neom/domain-libs';
           ttl: 60 * 60 * 24 * 7,
         };
       },
-      // inject: [ConfigService],
     }),
     ClientsModule.register([
       {
-        name: RMQQueues.PY_WORKER_QUEUE,
-        transport: Transport.RMQ,
+        name: IoTQueues.IoT_WORKER_QUEUE,
+        transport: Transport.MQTT,
         options: {
-          urls: [environment.rabbitmq.url],
-          queue: RMQQueues.PY_WORKER_QUEUE,
-          queueOptions: {
-            durable: false,
-          },
+          url: `mqtt://${environment.mqtt.host}:${environment.mqtt.port}`,
         },
       },
     ]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [IotMqttDomainController],
+  providers: [IotMqttDomainService],
 })
-export class AppModule {}
+export class IotMqttDomainModule {}
