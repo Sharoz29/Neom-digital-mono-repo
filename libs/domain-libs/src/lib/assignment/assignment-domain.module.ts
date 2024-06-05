@@ -7,8 +7,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { NstLibsModule } from '@neom/nst-libs';
 
-import { OperatorIdDomainController } from './operator-id-domain.controller';
-import { OperatorIdDomainService } from './operator-id-domain.service';
+import { AssignmentDomainController } from './assignment-domain.controller';
+import { AssignmentDomainService } from './assignment-domain.service';
 
 @Module({
   imports: [
@@ -37,7 +37,7 @@ import { OperatorIdDomainService } from './operator-id-domain.service';
       },
     ]),
   ],
-  controllers: [OperatorIdDomainController],
-  providers: [OperatorIdDomainService],
+  controllers: [AssignmentDomainController],
+  providers: [AssignmentDomainService],
 })
-export class OperatorIdDomainModule {}
+export class AssignmentDomainModule {}

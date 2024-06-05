@@ -1,0 +1,20 @@
+/**
+ * User PubSub Message Patterns
+ */
+
+export enum PSCASE {
+  // CUSTOM
+  GETFIELDS = 'case:getFields',
+  GETATTACHMENTS = 'case:getAttachments',
+  GETPAGE = 'case:getPage',
+  GETVIEW = 'case:getView',
+
+  // CRUD
+  // Do not change the pattern below this line
+  GET = 'case:get',
+  GETONE = 'case:getOne',
+  POST = 'case:post',
+  PUT = 'case:put',
+  CREATE = 'case:create',
+  DELETE = 'case:delete',
+}

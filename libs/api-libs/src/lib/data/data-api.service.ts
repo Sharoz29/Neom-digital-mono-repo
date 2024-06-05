@@ -6,29 +6,22 @@ import { ClientProxy } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 
 import { BaseApiService } from '../services/baseapi.service';
-import { OperatorIdVm, PSOPERATOR_ID } from '@neom/models';
+import { DataVm, PSDATA } from '@neom/models';
 
-// Extending from BaseApiService to implement Basic Api's for CRUD Functionalities
 @Injectable()
-export class OperatorIdApiService extends BaseApiService<
-  OperatorIdVm,
-  OperatorIdVm,
-  OperatorIdVm
-> {
+export class DataApiService extends BaseApiService<DataVm, DataVm, DataVm> {
   constructor(
     @Inject(CACHE_MANAGER) cacheManagerRef: Cache,
     @Inject(RMQQueues.PY_WORKER_QUEUE) _client: ClientProxy
   ) {
-    super(_client, 'operatorId', cacheManagerRef);
+    super(_client, 'data', cacheManagerRef);
   }
-
-  async getOperatorID(req: Request) {
+  async getData(params: string, req: Request) {
     try {
-      const response = this.client.send(PSOPERATOR_ID.GET, {
+      return this.client.send(PSDATA.GET, {
         headers: req.headers,
+        params,
       });
-      const worklist = await response.toPromise();
-      return worklist;
     } catch (error: any) {
       console.error('Error sending message to microservice:', error);
       throw error;

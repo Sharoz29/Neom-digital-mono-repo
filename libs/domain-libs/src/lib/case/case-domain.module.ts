@@ -7,8 +7,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { NstLibsModule } from '@neom/nst-libs';
 
-import { WorklistApiController } from './worklist-api.controller';
-import { WorklistApiService } from './worklist-api.service';
+import { CaseDomainController } from './case-domain.controller';
+import { CaseDomainService } from './case-domain.service';
 
 @Module({
   imports: [
@@ -33,18 +33,11 @@ import { WorklistApiService } from './worklist-api.service';
     ClientsModule.register([
       {
         name: RMQQueues.PY_WORKER_QUEUE,
-        transport: Transport.RMQ,
-        options: {
-          urls: [environment.rabbitmq.url],
-          queue: RMQQueues.PY_WORKER_QUEUE,
-          queueOptions: {
-            durable: false,
-          },
-        },
+        transport: Transport.TCP,
       },
     ]),
   ],
-  controllers: [WorklistApiController],
-  providers: [WorklistApiService],
+  controllers: [CaseDomainController],
+  providers: [CaseDomainService],
 })
-export class WorklistApiModule {}
+export class CaseDomainModule {}

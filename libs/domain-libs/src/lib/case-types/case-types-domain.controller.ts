@@ -25,7 +25,6 @@ import { MessagePattern } from '@nestjs/microservices';
 
 @Controller('case-types')
 @ApiTags('case-types')
-// @CustomizeLogInterceptor({module: 'CaseTypes'})
 export class CaseTypesDomainController {
   constructor(
     private readonly _caseTypesDomainService: CaseTypesDomainService
@@ -33,5 +32,9 @@ export class CaseTypesDomainController {
   @MessagePattern(PSCASE_TYPES.GET)
   async getCaseTypes({ headers }: any) {
     return this._caseTypesDomainService.getCaseTypes(headers);
+  }
+  @MessagePattern(PSCASE_TYPES.GETCREATIONPAGE)
+  async getCaseCreationPage(payload: any) {
+    return this._caseTypesDomainService.getCaseCreationPage(payload);
   }
 }

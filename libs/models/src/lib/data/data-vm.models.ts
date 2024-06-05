@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { BaseModelVm } from '../base.modelvm';
 
-export class OperatorIdVm extends BaseModelVm {
+export class DataVm extends BaseModelVm {
   @ApiProperty()
   name!: string;
 
@@ -12,7 +12,7 @@ export class OperatorIdVm extends BaseModelVm {
   // Model Getters and Setters
 }
 
-export class OperatorIdCreateVm extends OmitType(OperatorIdVm, [
+export class DataCreateVm extends OmitType(DataVm, [
   'createdAt',
   'updatedAt',
   'id',

@@ -4,7 +4,7 @@
 
 export enum PSCASE_TYPES {
   // CUSTOM
-
+  GETCREATIONPAGE = 'caseTypes:getCreationPage',
   // CRUD
   // Do not change the pattern below this line
   GET = 'caseTypes:get',

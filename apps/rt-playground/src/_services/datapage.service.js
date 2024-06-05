@@ -1,5 +1,5 @@
-import { endpoints } from "./endpoints";
-import { axios, getError } from "../_helpers";
+import { endpoints } from './endpoints';
+import { axios, getError } from '../_helpers';
 
 /**
  * Functions used to issue AJAX requests and manage responses.
@@ -11,7 +11,7 @@ export const dataPageService = {
 
 function getDataPage(id, params) {
   return axios
-    .get(`http://localhost:5001/api/v1` + endpoints.DATA + "/" + id, {
+    .get(endpoints.API_URL + endpoints.DATA + '/' + id, {
       // .get(endpoints.BASEURL + endpoints.DATA + "/" + id, {
       params: params,
     })

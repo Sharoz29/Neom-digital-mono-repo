@@ -24,13 +24,22 @@ export class CaseTypesApiService extends BaseApiService<
 
   async getCaseTypes(req: Request) {
     try {
-      const response = this.client.send(PSCASE_TYPES.GET, {
+      return this.client.send(PSCASE_TYPES.GET, {
         headers: req.headers,
       });
-      const caseTypes = await response.toPromise();
-      return caseTypes;
     } catch (error: any) {
       console.error('Error sending message to microservice:', error);
+      throw error;
+    }
+  }
+  async getCaseCreationPage(params: string, req: Request) {
+    try {
+      return this.client.send(PSCASE_TYPES.GETCREATIONPAGE, {
+        headers: req.headers,
+        params,
+      });
+    } catch (error: any) {
+      console.error('Error sending message to microservice', error);
       throw error;
     }
   }
