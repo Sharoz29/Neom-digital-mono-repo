@@ -11,6 +11,10 @@ import { RMQQueues } from '@neom/shared';
 import { ApiLibsModule } from '@neom/api-libs';
 import { DomainLibsModule } from '@neom/domain-libs';
 
+/*
+ * TODO: Finalize the role of DomainLibsModule
+ * and its integration with the gateway
+ */
 @Module({
   imports: [
     ApiLibsModule,
