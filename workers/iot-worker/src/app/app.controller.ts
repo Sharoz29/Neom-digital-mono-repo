@@ -1,13 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
-
+import { Controller, Get, Param, Post, Body, Logger } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Ctx, MessagePattern, Payload, MqttContext } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  private readonly logger = new Logger('IoT Worker');
 
-  @Get()
-  getData() {
+  constructor(
+    private readonly appService: AppService,
+  ) {}
+
+  @MessagePattern('#')
+  getData(@Ctx() context: MqttContext) {
+    this.logger.log('Received data', context.getTopic());
     return this.appService.getData();
   }
 }

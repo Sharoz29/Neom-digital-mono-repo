@@ -7,3 +7,7 @@ export enum MessagePatterns {
 export enum RMQQueues {
   PY_WORKER_QUEUE = 'py_worker_queue',
 }
+
+export enum IoTQueues {
+  IoT_WORKER_QUEUE = 'iot_worker_queue'
+}

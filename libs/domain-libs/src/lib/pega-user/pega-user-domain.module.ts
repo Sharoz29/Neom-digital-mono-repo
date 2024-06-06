@@ -10,7 +10,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 
 import { PegaUserDomainController } from './pega-user-domain.controller';
-import { BaseDomainService } from '../services/domain.service';
+import { PegaUserDomainService } from './pega-user-domain.service';
 
 @Module({
   imports: [
@@ -42,7 +42,7 @@ import { BaseDomainService } from '../services/domain.service';
   ],
   controllers: [PegaUserDomainController],
   providers: [
-    BaseDomainService,
+    PegaUserDomainService,
   ],
 })
 export class PegaUserDomainModule {}
