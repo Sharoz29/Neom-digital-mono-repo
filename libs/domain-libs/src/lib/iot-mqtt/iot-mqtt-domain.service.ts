@@ -35,14 +35,6 @@ export class IotMqttDomainService implements OnModuleInit {
 
     this.cumulocityClient.on('connect', () => {
       this.logger.log('Connected to Cumulocity IoT');
-      this.cumulocityClient.publish(
-        's/us',
-        `100,${this.deviceName},c8y_MQTTDevice`,
-        () => {
-          this.logger.log('Device registered at Cumulocity');
-        }
-      );
-      this.cumulocityClient.subscribe('s/ds');
     });
 
     // Connection to MQTT broker
@@ -113,6 +105,15 @@ export class IotMqttDomainService implements OnModuleInit {
 
     this.mqttClient.on('message', (receivedTopic: string, message: Buffer) => {
       if (receivedTopic === topic || topic === '#') {
+        const deviceName = receivedTopic.split('/')
+        this.cumulocityClient.publish(
+          's/us',
+          `100,${deviceName[1]},c8y_MQTTDevice`,
+          () => {
+            this.logger.log('Device registered at Cumulocity');
+          }
+        );
+        this.cumulocityClient.subscribe('s/ds');
         const messageStr = message.toString();
         const parsedPayload = JSON.parse(message.toString());
         this.logger.debug('Payload', parsedPayload);
