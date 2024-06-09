@@ -9,7 +9,6 @@ import { environment } from '@neom/shared/lib/environments/dev';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { ApiLibsModule } from '@neom/api-libs';
-import { DomainLibsModule } from '@neom/domain-libs';
 
 /*
  * TODO: Finalize the role of DomainLibsModule
@@ -18,7 +17,6 @@ import { DomainLibsModule } from '@neom/domain-libs';
 @Module({
   imports: [
     ApiLibsModule,
-    DomainLibsModule,
     CacheModule.registerAsync({
       // imports: [ConfigModule],
       useFactory: async () => {

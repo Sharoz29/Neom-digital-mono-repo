@@ -7,8 +7,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { NstLibsModule } from '@neom/nst-libs';
 
-import { PegaUserApiController } from './pega-user-api.controller';
-import { PegaUserApiService } from './pega-user-api.service';
+import { IotMqttApiController } from './iot-mqtt-api.controller';
+import { IotMqttApiService } from './iot-mqtt-api.service';
 
 @Module({
   imports: [
@@ -44,7 +44,7 @@ import { PegaUserApiService } from './pega-user-api.service';
       },
     ]),
   ],
-  controllers: [PegaUserApiController],
-  providers: [PegaUserApiService],
+  controllers: [IotMqttApiController],
+  providers: [IotMqttApiService],
 })
-export class PegaUserApiModule {}
+export class IotMqttApiModule {}

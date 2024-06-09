@@ -3,6 +3,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { environment } from '@neom/shared/lib/environments/dev';
 import { connect } from 'mqtt';
 import { Injectable, Inject, OnModuleInit, Logger } from '@nestjs/common';
+import { IotMqttDto } from '@neom/models';
 
 /**
  * Service to handle MQTT communication and interaction with Cumulocity IoT platform.
@@ -65,13 +66,13 @@ export class IotMqttDomainService implements OnModuleInit {
    * @param {string} payload - The message payload to publish.
    * @returns {Promise<string>} - A promise that resolves to a confirmation message.
    */
-  async publish(topic: string, payload: string): Promise<string> {
-    this.logger.log(`Publishing to ${topic}`);
-    this.deviceName = topic.split('/');
-    this.logger.debug('Payload', payload);
-    await this.cacheManager.set(topic, payload, 1000);
-    this.mqttClient.publish(topic, payload);
-    return `Publishing to ${topic} ${payload}`;
+  async publish({pattern, message}: IotMqttDto): Promise<string> {
+    this.logger.log(`Publishing to ${pattern}`);
+    this.deviceName = pattern.split('/');
+    this.logger.debug('Payload', message);
+    await this.cacheManager.set(pattern, message, 1000);
+    this.mqttClient.publish(pattern, message);
+    return `Publishing to ${pattern} ${message}`;
   }
 
   /**

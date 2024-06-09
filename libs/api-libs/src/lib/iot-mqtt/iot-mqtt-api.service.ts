@@ -6,19 +6,24 @@ import { ClientProxy } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 
 import { BaseApiService } from '../services/baseapi.service';
-import { PegaUserCreateVm, PegaUserVm } from '@neom/models';
+import { IotMqttCreateVm, IotMqttDto, IotMqttVm, PSIOT_MQTT } from '@neom/models';
 
 // Extending from BaseApiService to implement Basic Api's for CRUD Functionalities
 @Injectable()
-export class PegaUserApiService extends BaseApiService<PegaUserVm, PegaUserCreateVm, any> {
+export class IotMqttApiService extends BaseApiService<any,any,any> {
   constructor(
     @Inject(CACHE_MANAGER) cacheManagerRef: Cache,
-    @Inject(RMQQueues.PY_WORKER_QUEUE) _client: ClientProxy
+    @Inject(RMQQueues.PY_WORKER_QUEUE)public _client: ClientProxy
   ) {
-    super(_client, 'PegaUser', cacheManagerRef);
+    super(_client, 'iotMqtt', cacheManagerRef);
   }
 
   /**
    * Specialized Methods Come below:
    */
+
+  publishMQTT(body: IotMqttCreateVm) {
+    return this._client.send(PSIOT_MQTT.PUBLISH, new IotMqttDto({...body}))
+  }
+
 }

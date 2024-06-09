@@ -3,7 +3,10 @@ import { BaseModelVm } from '../base.modelvm';
 
 export class IotMqttVm extends BaseModelVm {
   @ApiProperty()
-  name?: string;
+  message?: string;
+  
+  @ApiProperty()
+  pattern?: string;
 
   // Create and add more VmModel Properties below:
   // !Note that if you want to map a different name of property in Vm from the Model
@@ -11,6 +14,8 @@ export class IotMqttVm extends BaseModelVm {
 
   // Model Getters and Setters
 }
+
+
 
 export class IotMqttCreateVm extends OmitType(IotMqttVm, [
   'createdAt',

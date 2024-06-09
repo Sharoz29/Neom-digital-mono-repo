@@ -4,6 +4,7 @@
 
 export enum PSIOT_MQTT {
   // CUSTOM
+  PUBLISH = 'iotMqtt:publish',
 
   // CRUD
   // Do not change the pattern below this line
