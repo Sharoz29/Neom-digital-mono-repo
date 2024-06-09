@@ -11,7 +11,7 @@
 import axios, { AxiosError } from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 
-export class PegaUserApiControllerClient {
+export class CaseTypesApiControllerClient {
     protected instance: AxiosInstance;
     protected baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -25,17 +25,884 @@ export class PegaUserApiControllerClient {
     }
 
     /**
-     * Get method for pega-user
-     * @return Successfully retrieved the record for the specified Pega user.
+     * Gets all the casetypes
+     * @return Successfully retrieved the record for the specified case types.
      */
-    get( cancelToken?: CancelToken): Promise<PegaUserVm[]> {
-        let url_ = this.baseUrl + "/api/v1/pega-user";
+    getCaseTypes( cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/casetypes";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: AxiosRequestConfig = {
             method: "GET",
             url: url_,
             headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetCaseTypes(_response);
+        });
+    }
+
+    protected processGetCaseTypes(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * Gets the creation page of the case by the specified id
+     * @return Successfully retrieved the record for the specified case types.
+     */
+    getCaseCreationPage(id: string, cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/casetypes/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetCaseCreationPage(_response);
+        });
+    }
+
+    protected processGetCaseCreationPage(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+}
+
+export class DataApiControllerClient {
+    protected instance: AxiosInstance;
+    protected baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+
+        this.instance = instance || axios.create();
+
+        this.baseUrl = baseUrl ?? "";
+
+    }
+
+    /**
+     * Gets the data by the provided id
+     * @return Successfully retrieved the specified data dynamically using the id.
+     */
+    getData(id: string, cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/data/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetData(_response);
+        });
+    }
+
+    protected processGetData(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+}
+
+export class AssignmentApiControllerClient {
+    protected instance: AxiosInstance;
+    protected baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+
+        this.instance = instance || axios.create();
+
+        this.baseUrl = baseUrl ?? "";
+
+    }
+
+    /**
+     * Gets all the assignments
+     * @return Successfully retrieved all assignments
+     */
+    getAssignments( cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/assignments";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetAssignments(_response);
+        });
+    }
+
+    protected processGetAssignments(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * Gets the assignment by the provided id
+     * @return Successfully retrieved the record for the specified assignment.
+     */
+    getAssignmentById(id: string, cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/assignments/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetAssignmentById(_response);
+        });
+    }
+
+    protected processGetAssignmentById(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * Gets the fields for the assignment by the provided case id and action id
+     * @return Successfully retrieved the record for the field types for the assignment.
+     */
+    getFieldsForAssignment(assignmentId: string, actionId: string, cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/assignments/{assignmentId}/actions/{actionId}";
+        if (assignmentId === undefined || assignmentId === null)
+            throw new Error("The parameter 'assignmentId' must be defined.");
+        url_ = url_.replace("{assignmentId}", encodeURIComponent("" + assignmentId));
+        if (actionId === undefined || actionId === null)
+            throw new Error("The parameter 'actionId' must be defined.");
+        url_ = url_.replace("{actionId}", encodeURIComponent("" + actionId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetFieldsForAssignment(_response);
+        });
+    }
+
+    protected processGetFieldsForAssignment(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+}
+
+export class CaseApiControllerClient {
+    protected instance: AxiosInstance;
+    protected baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+
+        this.instance = instance || axios.create();
+
+        this.baseUrl = baseUrl ?? "";
+
+    }
+
+    /**
+     * Gets all the cases
+     * @return Successfully retrieved all cases.
+     */
+    getCases( cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/cases";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetCases(_response);
+        });
+    }
+
+    protected processGetCases(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * Gets the case by the provided id
+     * @return Successfully retrieved the record for the specified case.
+     */
+    getCaseById(id: string, cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/cases/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetCaseById(_response);
+        });
+    }
+
+    protected processGetCaseById(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * Gets the attachments of the case by the provided case id
+     * @return Successfully retrieved the attachments for the specified case.
+     */
+    getCaseAttachments(caseId: string, cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/cases/{caseId}/attachments";
+        if (caseId === undefined || caseId === null)
+            throw new Error("The parameter 'caseId' must be defined.");
+        url_ = url_.replace("{caseId}", encodeURIComponent("" + caseId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetCaseAttachments(_response);
+        });
+    }
+
+    protected processGetCaseAttachments(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * Gets the fields for the case by the provided case id and action id
+     * @return Successfully retrieved the record for the field types for the case.
+     */
+    getFieldsForCase(caseInfoId: string, actionId: string, cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/cases/{caseInfoId}/actions/{actionId}";
+        if (caseInfoId === undefined || caseInfoId === null)
+            throw new Error("The parameter 'caseInfoId' must be defined.");
+        url_ = url_.replace("{caseInfoId}", encodeURIComponent("" + caseInfoId));
+        if (actionId === undefined || actionId === null)
+            throw new Error("The parameter 'actionId' must be defined.");
+        url_ = url_.replace("{actionId}", encodeURIComponent("" + actionId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetFieldsForCase(_response);
+        });
+    }
+
+    protected processGetFieldsForCase(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * Gets the page for the case by the provided case id and page id
+     * @return Successfully retrieved the record for the page for the case.
+     */
+    getCasePage(caseInfoId: string, pageId: string, cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/cases/{caseInfoId}/pages/{pageId}";
+        if (caseInfoId === undefined || caseInfoId === null)
+            throw new Error("The parameter 'caseInfoId' must be defined.");
+        url_ = url_.replace("{caseInfoId}", encodeURIComponent("" + caseInfoId));
+        if (pageId === undefined || pageId === null)
+            throw new Error("The parameter 'pageId' must be defined.");
+        url_ = url_.replace("{pageId}", encodeURIComponent("" + pageId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetCasePage(_response);
+        });
+    }
+
+    protected processGetCasePage(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    /**
+     * Gets the page for the case by the provided case id and page id
+     * @return Successfully retrieved the record for the view for the case.
+     */
+    getCaseView(caseInfoId: string, viewId: string, cancelToken?: CancelToken): Promise<void> {
+        let url_ = this.baseUrl + "/api/v1/cases/{caseInfoId}/views/{viewId}";
+        if (caseInfoId === undefined || caseInfoId === null)
+            throw new Error("The parameter 'caseInfoId' must be defined.");
+        url_ = url_.replace("{caseInfoId}", encodeURIComponent("" + caseInfoId));
+        if (viewId === undefined || viewId === null)
+            throw new Error("The parameter 'viewId' must be defined.");
+        url_ = url_.replace("{viewId}", encodeURIComponent("" + viewId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetCaseView(_response);
+        });
+    }
+
+    protected processGetCaseView(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status === 400) {
+            const _responseText = response.data;
+            return throwException("Bad Request: The request could not be understood or was missing required parameters.", status, _responseText, _headers);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("You are not authorized to view these resources.", status, _responseText, _headers);
+
+        } else if (status === 404) {
+            const _responseText = response.data;
+            return throwException("Not Found: The requested resource could not be found.", status, _responseText, _headers);
+
+        } else if (status === 502) {
+            const _responseText = response.data;
+            return throwException("Bad Gateway", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+}
+
+export class IotMqttApiControllerClient {
+    protected instance: AxiosInstance;
+    protected baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+
+        this.instance = instance || axios.create();
+
+        this.baseUrl = baseUrl ?? "";
+
+    }
+
+    /**
+     * Publish message to IoT Device
+     * @return Successfully published the message to the specified MQTT topic.
+     */
+    publishMessage(body: IotMqttCreateVm, cancelToken?: CancelToken): Promise<string> {
+        let url_ = this.baseUrl + "/api/v1/iot-mqtt/publish";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             },
             cancelToken
@@ -48,11 +915,11 @@ export class PegaUserApiControllerClient {
                 throw _error;
             }
         }).then((_response: AxiosResponse) => {
-            return this.processGet(_response);
+            return this.processPublishMessage(_response);
         });
     }
 
-    protected processGet(response: AxiosResponse): Promise<PegaUserVm[]> {
+    protected processPublishMessage(response: AxiosResponse): Promise<string> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -66,15 +933,9 @@ export class PegaUserApiControllerClient {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(PegaUserVm.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return Promise.resolve<PegaUserVm[]>(result200);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return Promise.resolve<string>(result200);
 
         } else if (status === 400) {
             const _responseText = response.data;
@@ -92,19 +953,17 @@ export class PegaUserApiControllerClient {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<PegaUserVm[]>(null as any);
+        return Promise.resolve<string>(null as any);
     }
 }
 
-export class PegaUserVm implements IPegaUserVm {
-    createdAt!: Date;
-    updatedAt!: Date;
-    id!: string;
-    name!: string;
+export class IotMqttCreateVm implements IIotMqttCreateVm {
+    message!: string;
+    pattern!: string;
 
     [key: string]: any;
 
-    constructor(data?: IPegaUserVm) {
+    constructor(data?: IIotMqttCreateVm) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -119,16 +978,14 @@ export class PegaUserVm implements IPegaUserVm {
                 if (_data.hasOwnProperty(property))
                     this[property] = _data[property];
             }
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>undefined;
-            this.id = _data["id"];
-            this.name = _data["name"];
+            this.message = _data["message"];
+            this.pattern = _data["pattern"];
         }
     }
 
-    static fromJS(data: any): PegaUserVm {
+    static fromJS(data: any): IotMqttCreateVm {
         data = typeof data === 'object' ? data : {};
-        let result = new PegaUserVm();
+        let result = new IotMqttCreateVm();
         result.init(data);
         return result;
     }
@@ -139,19 +996,15 @@ export class PegaUserVm implements IPegaUserVm {
             if (this.hasOwnProperty(property))
                 data[property] = this[property];
         }
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["updatedAt"] = this.updatedAt ? this.updatedAt.toISOString() : <any>undefined;
-        data["id"] = this.id;
-        data["name"] = this.name;
+        data["message"] = this.message;
+        data["pattern"] = this.pattern;
         return data;
     }
 }
 
-export interface IPegaUserVm {
-    createdAt: Date;
-    updatedAt: Date;
-    id: string;
-    name: string;
+export interface IIotMqttCreateVm {
+    message: string;
+    pattern: string;
 
     [key: string]: any;
 }

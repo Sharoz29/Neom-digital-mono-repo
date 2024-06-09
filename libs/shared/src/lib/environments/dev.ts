@@ -16,6 +16,19 @@ export const environment = {
     baseUrl: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/application/v2`,
     basev1Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/v1`,
   },
+  mqtt: {
+    host: "192.168.60.102",
+    port: 1883,
+    username: "mqtt-test",
+    password: "mqtt-test"
+    
+  },
+  cumulocity: {
+  username: "email_here",
+  password: "password_here",
+  tenantid: "tenant_id",
+  url: "mqtt://tenant_id.eu-latest.cumulocity.com:1883"
+  },
   production: false,
   apiUrl: 'http://localhost:5001/api/vi',
 

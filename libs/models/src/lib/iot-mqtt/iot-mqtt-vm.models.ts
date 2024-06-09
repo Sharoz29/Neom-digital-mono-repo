@@ -1,9 +1,12 @@
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 import { BaseModelVm } from '../base.modelvm';
 
-export class PegaUserVm extends BaseModelVm {
+export class IotMqttVm extends BaseModelVm {
   @ApiProperty()
-  name?: string;
+  message?: string;
+  
+  @ApiProperty()
+  pattern?: string;
 
   // Create and add more VmModel Properties below:
   // !Note that if you want to map a different name of property in Vm from the Model
@@ -12,7 +15,9 @@ export class PegaUserVm extends BaseModelVm {
   // Model Getters and Setters
 }
 
-export class PegaUserCreateVm extends OmitType(PegaUserVm, [
+
+
+export class IotMqttCreateVm extends OmitType(IotMqttVm, [
   'createdAt',
   'updatedAt',
   'id',
