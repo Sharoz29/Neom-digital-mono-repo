@@ -24,13 +24,14 @@ import {
   HttpResponse,
   HttpResponseBase,
 } from '@angular/common/http';
+import { IotMqttCreateVm } from '@neom/models';
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable({
   providedIn: 'root',
 })
-export class PegaUserApiControllerClient {
+export class IotMqttApiControllerClient {
   private http: HttpClient;
   private baseUrl: string;
   protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
@@ -45,43 +46,49 @@ export class PegaUserApiControllerClient {
   }
 
   /**
-   * Get method for pega-user
-   * @return Successfully retrieved the record for the specified Pega user.
+   * Publish message to IoT Device
+   * @return Successfully published the message to the specified MQTT topic.
    */
-  get(): Observable<PegaUserVm[]> {
-    let url_ = this.baseUrl + '/api/v1/pega-user';
+  publishMessage(body: IotMqttCreateVm): Observable<string> {
+    let url_ = this.baseUrl + '/api/v1/iot-mqtt/publish';
     url_ = url_.replace(/[?&]$/, '');
 
+    const content_ = JSON.stringify(body);
+
     let options_: any = {
+      body: content_,
       observe: 'response',
       responseType: 'blob',
       headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+
         Accept: 'application/json',
       }),
     };
 
     return this.http
-      .request('get', url_, options_)
+      .request('post', url_, options_)
       .pipe(
         _observableMergeMap((response_: any) => {
-          return this.processGet(response_);
+          return this.processPublishMessage(response_);
         })
       )
       .pipe(
         _observableCatch((response_: any) => {
           if (response_ instanceof HttpResponseBase) {
             try {
-              return this.processGet(<any>response_);
+              return this.processPublishMessage(<any>response_);
             } catch (e) {
-              return <Observable<PegaUserVm[]>>(<any>_observableThrow(e));
+              return <Observable<string>>(<any>_observableThrow(e));
             }
-          } else
-            return <Observable<PegaUserVm[]>>(<any>_observableThrow(response_));
+          } else return <Observable<string>>(<any>_observableThrow(response_));
         })
       );
   }
 
-  protected processGet(response: HttpResponseBase): Observable<PegaUserVm[]> {
+  protected processPublishMessage(
+    response: HttpResponseBase
+  ): Observable<string> {
     const status = response.status;
     const responseBlob =
       response instanceof HttpResponse
