@@ -1,25 +1,15 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Post,
-  Body,
-  HttpException,
-  HttpStatus,
-  Put,
-  Delete,
-} from '@nestjs/common';
-import {
-  ApiParam,
-  ApiBody,
-  ApiTags,
-  ApiResponse,
-  ApiOperation,
-} from '@nestjs/swagger';
+import { Controller } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { Observable } from 'rxjs';
 
-import { CaseTypesVm, PSCASE_TYPES } from '@neom/models';
+import {
+  CaseTypeActionsVm,
+  CaseTypeResponseVm,
+  CaseTypeVm,
+  CaseTypesVm,
+  PSCASE_TYPES,
+} from '@neom/models';
 import { CaseTypesDomainService } from './case-types-domain.service';
 import { MessagePattern } from '@nestjs/microservices';
 
@@ -30,11 +20,17 @@ export class CaseTypesDomainController {
     private readonly _caseTypesDomainService: CaseTypesDomainService
   ) {}
   @MessagePattern(PSCASE_TYPES.GET)
-  async getCaseTypes({ headers }: any) {
+  getCaseTypes({ headers }: any): Promise<Observable<CaseTypeResponseVm>> {
     return this._caseTypesDomainService.getCaseTypes(headers);
   }
   @MessagePattern(PSCASE_TYPES.GETCREATIONPAGE)
-  async getCaseCreationPage(payload: any) {
+  getCaseCreationPage(payload: any): Promise<Observable<CaseTypeVm>> {
     return this._caseTypesDomainService.getCaseCreationPage(payload);
+  }
+  @MessagePattern(PSCASE_TYPES.GETCASETYPEACTIONS)
+  async getCaseTypeActions(
+    payload: any
+  ): Promise<Observable<CaseTypeActionsVm>> {
+    return this._caseTypesDomainService.getCaseTypeActions(payload);
   }
 }
