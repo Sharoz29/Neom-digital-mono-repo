@@ -34,7 +34,7 @@ export class CaseTypesApiController {
   // Gets all the case types
   @Get()
   @ApiOkResponse({
-    type: Observable<CaseTypeResponseVm>,
+    type: CaseTypeResponseVm,
     description:
       'Successfully retrieved the record for the specified case types.',
   })
@@ -63,7 +63,7 @@ export class CaseTypesApiController {
   // Gets the creation page for cases
   @Get('/:id')
   @ApiOkResponse({
-    type: Observable<CaseTypeVm>,
+    type: CaseTypeVm,
     description:
       'Successfully retrieved the record for the specified case types.',
   })
@@ -95,7 +95,7 @@ export class CaseTypesApiController {
   //Gets the bulk action details for this casetype
   @Get('/:caseTypeId/actions/:actionId')
   @ApiOkResponse({
-    type: Observable<CaseTypeActionsVm>,
+    type: CaseTypeActionsVm,
     description:
       'Successfully retrieved the action details for the specified case type.',
   })
