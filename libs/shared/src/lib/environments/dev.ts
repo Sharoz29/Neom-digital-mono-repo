@@ -31,6 +31,19 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:5001/api/vi',
   ngApiUrl: 'http://localhost:5001',
+    username: "mqtt-test",
+    password: "mqtt-test",
+    url: `mqtt://192.168.60.102:1883`,
+    
+  },
+  cumulocity: {
+  username: "your-user-name",
+  password: "your-password",
+  tenantid: "tenant_id",
+  url: "mqtt://tenant_id.eu-latest.cumulocity.com:1883"
+  },
+  production: false,
+  apiUrl: 'http://localhost:5001/api/v1',
   CASETYPES: '/casetypes',
   WORKLIST: `/D_Worklist`,
   OPERATORID: `/D_OperatorID`,

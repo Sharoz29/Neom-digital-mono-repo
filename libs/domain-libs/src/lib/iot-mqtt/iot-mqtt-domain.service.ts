@@ -8,7 +8,6 @@ import { Injectable, Inject, Logger, HttpException, HttpStatus } from '@nestjs/c
 import { BaseDomainService } from '../services/domain.service';
 
 import { IotMqttCreateVm, IotMqttVm } from '@neom/models';
-import { env } from 'process';
 
 /**
  * Service to handle MQTT domain operations for IoT.
