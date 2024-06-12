@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getData(): { topic: string } {
-    return { topic: '#' };
+  getData(): { message: string } {
+    return { message: 'ping from IoT worker' };
   }
 }
