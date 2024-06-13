@@ -12,9 +12,9 @@ import { environment } from '@neom/shared/lib/environments/dev';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice(AppModule, {
-    transport: Transport.MQTT,
+    transport: Transport.RMQ,
     options: {
-      url: `mqtt://${environment.mqtt.host}:${environment.mqtt.port}`,
+      urls: [environment.rabbitmq.url],
       queue: IoTQueues.IoT_WORKER_QUEUE,
       queueOptions: {
         durable: false,

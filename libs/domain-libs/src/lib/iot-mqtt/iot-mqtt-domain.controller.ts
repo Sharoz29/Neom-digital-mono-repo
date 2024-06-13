@@ -1,12 +1,8 @@
 import {
   Controller,
-  Get,
-  Post,
-  Param,
-  HttpException,
-  HttpStatus,
+  Logger,
 } from '@nestjs/common';
-import { ApiParam, ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import {  ApiTags } from '@nestjs/swagger';
 import { IotMqttDomainService } from './iot-mqtt-domain.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { IotMqttDto, PSIOT_MQTT } from '@neom/models';
@@ -18,15 +14,72 @@ import { IotMqttDto, PSIOT_MQTT } from '@neom/models';
 @Controller('iot-mqtt')
 @ApiTags('iot-mqtt')
 export class IotMqttDomainController {
+  private readonly logger = new Logger(IotMqttDomainController.name);
+
+  /**
+   * Constructor to inject the IotMqttDomainService.
+   * @param _iotMqttDomainService The service to handle domain-specific MQTT operations.
+   */
   constructor(private readonly _iotMqttDomainService: IotMqttDomainService) {}
 
   /**
-   * Publish a message to an MQTT topic.
-   * @param {IotMqttDto} _iotMqttDto - The MQTT topic to publish to.
-   * @returns {Promise<string>} - A promise that resolves to a confirmation message.
+   * Handles messages with the PUBLISH pattern.
+   * Publishes a message to the MQTT broker.
+   * 
+   * @param {IotMqttDto} iotMqttDto - The message DTO containing the pattern and message.
+   * @returns {Promise<any>} The result of the publish operation.
+   * @throws {Error} If an error occurs while processing the message.
    */
   @MessagePattern(PSIOT_MQTT.PUBLISH)
-  publishMQTT(_iotMqttDto: IotMqttDto): Promise<string> {
-    return this._iotMqttDomainService.publish(_iotMqttDto);
+  async publishMQTT(iotMqttDto: IotMqttDto) {
+    this.logger.log(`Received message: ${iotMqttDto.message}, pattern: ${iotMqttDto.pattern}`);
+    try {
+      const result = await this._iotMqttDomainService.publishTopicToMqttBroker(iotMqttDto);
+      return result; // Ensure response is sent back correctly
+    } catch (error: any) {
+      this.logger.error(`Error processing message: ${error.message}`);
+      throw error;
+    }
+  }
+
+  /**
+   * Handles messages with the PUBLISHFROMCUMULOCITY pattern.
+   * Publishes a message from Cumulocity IoT to the MQTT broker.
+   * 
+   * @param {IotMqttDto} iotMqttDto - The message DTO containing the pattern and message.
+   * @returns {Promise<any>} The result of the publish operation.
+   * @throws {Error} If an error occurs while processing the message.
+   */
+  @MessagePattern(PSIOT_MQTT.PUBLISHFROMCUMULOCITY)
+  async publishMQTTfromCumulocity(iotMqttDto: IotMqttDto) {
+    this.logger.log(`Received message: ${iotMqttDto.message}, pattern: ${iotMqttDto.pattern}`);
+    try {
+      const result = await this._iotMqttDomainService.publishMessageFromCumulocityIoT(iotMqttDto);
+      return result; // Ensure response is sent back correctly
+    } catch (error: any) {
+      this.logger.error(`Error processing message: ${error.message}`);
+      throw error;
+    }
+  }
+
+  /**
+   * Handles messages with the SUBSCRIBE pattern.
+   * Subscribes to a specified MQTT topic.
+   * 
+   * @param {Object} param - The subscription parameters.
+   * @param {string} param.topic - The MQTT topic to subscribe to.
+   * @returns {Promise<any>} The result of the subscription operation.
+   * @throws {Error} If an error occurs while subscribing to the topic.
+   */
+  @MessagePattern(PSIOT_MQTT.SUBSCRIBE)
+  async subscribeToMqttBroker({ topic }: { topic: string }) {
+    this.logger.log(`Subscribing to topic: ${topic}`);
+    try {
+      const result = await this._iotMqttDomainService.subscribeToMqttBroker(topic);
+      return result;
+    } catch (error: any) {
+      this.logger.error(`Error subscribing to topic: ${error.message}`);
+      throw error;
+    }
   }
 }
