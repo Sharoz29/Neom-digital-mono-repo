@@ -21,6 +21,7 @@ export const environment = {
     port: 1883,
     username: 'mqtt-test',
     password: 'mqtt-test',
+    url: `mqtt://192.168.60.102:1883`,
   },
   cumulocity: {
     username: 'email_here',
@@ -29,21 +30,8 @@ export const environment = {
     url: 'mqtt://tenant_id.eu-latest.cumulocity.com:1883',
   },
   production: false,
-  apiUrl: 'http://localhost:5001/api/vi',
-  ngApiUrl: 'http://localhost:5001',
-    username: "mqtt-test",
-    password: "mqtt-test",
-    url: `mqtt://192.168.60.102:1883`,
-    
-  },
-  cumulocity: {
-  username: "your-user-name",
-  password: "your-password",
-  tenantid: "tenant_id",
-  url: "mqtt://tenant_id.eu-latest.cumulocity.com:1883"
-  },
-  production: false,
   apiUrl: 'http://localhost:5001/api/v1',
+  ngApiUrl: 'http://localhost:5001',
   CASETYPES: '/casetypes',
   WORKLIST: `/D_Worklist`,
   OPERATORID: `/D_OperatorID`,
