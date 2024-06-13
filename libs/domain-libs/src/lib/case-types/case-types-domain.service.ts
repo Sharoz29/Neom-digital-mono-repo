@@ -13,7 +13,7 @@ import {
 } from '@neom/models';
 import axios from 'axios';
 import { environment } from '@neom/shared/lib/environments/dev';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 
 // Extending from BaseDomainService to get Basic Functionality for CRUD
 @Injectable()
@@ -29,52 +29,48 @@ export class CaseTypesDomainService extends BaseDomainService<
     super(_client, cacheManagerRef, 'caseTypes');
   }
 
-  async getCaseTypes({
-    authorization,
-  }: any): Promise<Observable<CaseTypeResponseVm>> {
-    return await axios
-      .get(environment.pega.baseUrl + environment.CASETYPES, {
-        headers: { Authorization: authorization },
-      })
-      .then(function (response) {
-        return response.data;
-      })
-      .catch(function (error) {
-        return Promise.reject(error);
-      });
+  getCaseTypes({ authorization }: any): Observable<CaseTypeResponseVm> {
+    return from(
+      axios
+        .get(encodeURI(environment.pega.baseUrl + environment.CASETYPES), {
+          headers: { Authorization: authorization },
+        })
+        .then((response) => response.data)
+        .catch((error) => Promise.reject(error))
+    );
   }
-  async getCaseCreationPage({
-    headers,
-    params,
-  }: any): Promise<Observable<CaseTypeVm>> {
-    return await axios
-      .get(environment.pega.baseUrl + environment.CASETYPES + `/${params}`, {
-        headers: { Authorization: headers.authorization },
-      })
-      .then(function (response) {
-        return response.data;
-      })
-      .catch(function (error) {
-        return Promise.reject(error);
-      });
+  getCaseCreationPage({ headers, params }: any): Observable<CaseTypeVm> {
+    return from(
+      axios
+        .get(
+          encodeURI(
+            environment.pega.baseUrl + environment.CASETYPES + `/${params}`
+          ),
+          {
+            headers: { Authorization: headers.authorization },
+          }
+        )
+        .then((response) => response.data)
+        .catch((error) => Promise.reject(error))
+    );
   }
-  async getCaseTypeActions(
-    payload: any
-  ): Promise<Observable<CaseTypeActionsVm>> {
-    return await axios
-      .get(
-        encodeURI(
-          environment.pega.baseUrl +
-            environment.CASETYPES +
-            `/${payload.caseTypeId}` +
-            environment.ACTIONS +
-            `/${payload.actionId}`
-        ),
-        {
-          headers: { Authorization: payload.headers.authorization },
-        }
-      )
-      .then((response) => response.data)
-      .catch((error) => Promise.reject(error.message));
+  getCaseTypeActions(payload: any): Observable<CaseTypeActionsVm> {
+    return from(
+      axios
+        .get(
+          encodeURI(
+            environment.pega.baseUrl +
+              environment.CASETYPES +
+              `/${payload.caseTypeId}` +
+              environment.ACTIONS +
+              `/${payload.actionId}`
+          ),
+          {
+            headers: { Authorization: payload.headers.authorization },
+          }
+        )
+        .then((response) => response.data)
+        .catch((error) => Promise.reject(error))
+    );
   }
 }

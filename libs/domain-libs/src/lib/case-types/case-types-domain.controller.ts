@@ -20,17 +20,15 @@ export class CaseTypesDomainController {
     private readonly _caseTypesDomainService: CaseTypesDomainService
   ) {}
   @MessagePattern(PSCASE_TYPES.GET)
-  getCaseTypes({ headers }: any): Promise<Observable<CaseTypeResponseVm>> {
+  getCaseTypes({ headers }: any): Observable<CaseTypeResponseVm> {
     return this._caseTypesDomainService.getCaseTypes(headers);
   }
   @MessagePattern(PSCASE_TYPES.GETCREATIONPAGE)
-  getCaseCreationPage(payload: any): Promise<Observable<CaseTypeVm>> {
+  getCaseCreationPage(payload: any): Observable<CaseTypeVm> {
     return this._caseTypesDomainService.getCaseCreationPage(payload);
   }
   @MessagePattern(PSCASE_TYPES.GETCASETYPEACTIONS)
-  async getCaseTypeActions(
-    payload: any
-  ): Promise<Observable<CaseTypeActionsVm>> {
+  getCaseTypeActions(payload: any): Observable<CaseTypeActionsVm> {
     return this._caseTypesDomainService.getCaseTypeActions(payload);
   }
 }
