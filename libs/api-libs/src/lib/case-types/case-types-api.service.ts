@@ -6,7 +6,14 @@ import { ClientProxy } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 
 import { BaseApiService } from '../services/baseapi.service';
-import { CaseTypesVm, PSCASE_TYPES } from '@neom/models';
+import {
+  CaseTypeActionsVm,
+  CaseTypeResponseVm,
+  CaseTypeVm,
+  CaseTypesVm,
+  PSCASE_TYPES,
+} from '@neom/models';
+import { Observable } from 'rxjs';
 
 // Extending from BaseApiService to implement Basic Api's for CRUD Functionalities
 @Injectable()
@@ -22,7 +29,7 @@ export class CaseTypesApiService extends BaseApiService<
     super(_client, 'caseTypes', cacheManagerRef);
   }
 
-  async getCaseTypes(req: Request) {
+  getCaseTypes(req: Request): Observable<CaseTypeResponseVm> {
     try {
       return this.client.send(PSCASE_TYPES.GET, {
         headers: req.headers,
@@ -32,7 +39,7 @@ export class CaseTypesApiService extends BaseApiService<
       throw error;
     }
   }
-  async getCaseCreationPage(params: string, req: Request) {
+  getCaseCreationPage(params: string, req: Request): Observable<CaseTypeVm> {
     try {
       return this.client.send(PSCASE_TYPES.GETCREATIONPAGE, {
         headers: req.headers,
@@ -40,6 +47,22 @@ export class CaseTypesApiService extends BaseApiService<
       });
     } catch (error: any) {
       console.error('Error sending message to microservice', error);
+      throw error;
+    }
+  }
+  getCaseTypeActions(
+    caseTypeid: string,
+    actionId: string,
+    req: Request
+  ): Observable<CaseTypeActionsVm> {
+    try {
+      return this.client.send(PSCASE_TYPES.GETCASETYPEACTIONS, {
+        headers: req.headers,
+        caseTypeid,
+        actionId,
+      });
+    } catch (error) {
+      console.error('Error sending message to microservice:', error);
       throw error;
     }
   }
