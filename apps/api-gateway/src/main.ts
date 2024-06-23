@@ -21,7 +21,7 @@ async function bootstrap() {
     },
   });
   app.enableCors();
-  const globalPrefix = 'api/v1';
+  const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
   const config = new DocumentBuilder()

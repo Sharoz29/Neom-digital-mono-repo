@@ -4,7 +4,7 @@
 
 export enum PSASSIGNMENT {
   // CUSTOM
-  GETFIELDS = 'assignment:getFields',
+  GETACTIONS = 'assignment:getActions',
 
   // CRUD
   // Do not change the pattern below this line

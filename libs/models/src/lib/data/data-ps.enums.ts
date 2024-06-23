@@ -4,7 +4,7 @@
 
 export enum PSDATA {
   // CUSTOM
-
+  GETMETADATA = 'data:getMetaData',
   // CRUD
   // Do not change the pattern below this line
   GET = 'data:get',
