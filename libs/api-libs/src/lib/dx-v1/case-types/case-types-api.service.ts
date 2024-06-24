@@ -50,22 +50,4 @@ export class CaseTypesApiService extends BaseApiService<
       throw error;
     }
   }
-  // To do
-  // Move to v2
-  getCaseTypeActions(
-    caseTypeid: string,
-    actionId: string,
-    req: Request
-  ): Observable<CaseTypeActionsVm> {
-    try {
-      return this.client.send(PSCASE_TYPES.GETCASETYPEACTIONS, {
-        headers: req.headers,
-        caseTypeid,
-        actionId,
-      });
-    } catch (error) {
-      console.error('Error sending message to microservice:', error);
-      throw error;
-    }
-  }
 }

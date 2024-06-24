@@ -51,6 +51,16 @@ export const environment = {
   NOTIFICATIONS: '/notifications',
   SPACES: '/spaces',
   PINS: '/pins',
+  NEXT: '/next',
+  ANCESTORS: '/ancestors',
+  DESCENDANTS: '/descendants',
+  STAGES: '/stages',
+  DATAOBJECTS: '/data_objects',
+  DATAPAGES: '/data_pages',
+  DATAVIEWS: '/data_views',
+  FOLLOWERS: '/followers',
+  PARTICIPANTS: '/participants',
+  PARTICIPANTROLES: '/participant_roles',
   // V2 endpoints
   NAVIGATION_STEPS: '/navigation_steps',
 };

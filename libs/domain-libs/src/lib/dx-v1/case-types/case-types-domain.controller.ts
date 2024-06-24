@@ -27,8 +27,4 @@ export class CaseTypesDomainController {
   getCaseTypeById(payload: any): Observable<CaseTypeVm> {
     return this._caseTypesDomainService.getCaseTypeById(payload);
   }
-  @MessagePattern(PSCASE_TYPES.GETCASETYPEACTIONS)
-  getCaseTypeActions(payload: any): Observable<CaseTypeActionsVm> {
-    return this._caseTypesDomainService.getCaseTypeActions(payload);
-  }
 }

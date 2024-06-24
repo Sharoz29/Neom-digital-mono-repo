@@ -54,25 +54,4 @@ export class CaseTypesDomainService extends BaseDomainService<
         .catch((error) => Promise.reject(error))
     );
   }
-  //To do
-  //Move to v2
-  getCaseTypeActions(payload: any): Observable<CaseTypeActionsVm> {
-    return from(
-      axios
-        .get(
-          encodeURI(
-            environment.pega.basev1Url +
-              environment.CASETYPES +
-              `/${payload.caseTypeId}` +
-              environment.ACTIONS +
-              `/${payload.actionId}`
-          ),
-          {
-            headers: { Authorization: payload.headers.authorization },
-          }
-        )
-        .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
-    );
-  }
 }
