@@ -23,3 +23,7 @@ export * from './lib/follower';
 export * from './lib/participant';
 
 export * from './lib/related-case';
+
+export * from './lib/tag';
+
+export * from './lib/page';

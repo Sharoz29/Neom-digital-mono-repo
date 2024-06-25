@@ -61,6 +61,12 @@ export const environment = {
   FOLLOWERS: '/followers',
   PARTICIPANTS: '/participants',
   PARTICIPANTROLES: '/participant_roles',
+  RELATEDCASES: '/related_cases',
+  TAGS: '/tags',
+  CHANNELS: '/channels',
+  DASHBOARD: '/dashboard',
+  INSIGHT: '/insight',
+  PORTALS: '/portals',
   // V2 endpoints
   NAVIGATION_STEPS: '/navigation_steps',
 };

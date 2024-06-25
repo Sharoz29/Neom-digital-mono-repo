@@ -12,7 +12,9 @@ import { DataDomainModule as DataV2DomainModule } from './dx-v2/data/data-domain
 import { DocumentDomainModule } from './dx-v2/document/document-domain.module';
 import { FollowerDomainModule } from './dx-v2/follower/follower-domain.module';
 import { ParticipantDomainModule } from './dx-v2/participant/participant-domain.module';
-// import { RelatedCaseDomainModule } from './related-case/related-case-domain.module';
+import { RelatedCaseDomainModule } from './dx-v2/related-case/related-case-domain.module';
+import { TagDomainModule } from './dx-v2/tag/tag-domain.module';
+import { PageDomainModule } from './dx-v2/page/page-domain.module';
 import { DynamicModule, Module } from '@nestjs/common';
 import { IotMqttDomainModule } from './iot-mqtt/iot-mqtt-domain.module';
 const generatedModules = [
@@ -31,7 +33,9 @@ const generatedModules = [
   DocumentDomainModule,
   FollowerDomainModule,
   ParticipantDomainModule,
-  // RelatedCaseDomainModule,
+  RelatedCaseDomainModule,
+  TagDomainModule,
+  PageDomainModule,
 ];
 @Module({
   controllers: [],

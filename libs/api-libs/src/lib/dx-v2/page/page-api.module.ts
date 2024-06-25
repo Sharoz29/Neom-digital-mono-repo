@@ -7,8 +7,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { NstLibsModule } from '@neom/nst-libs';
 
-import { RelatedCaseApiController } from './related-case-api.controller';
-import { RelatedCaseApiService } from './related-case-api.service';
+import { PageApiController } from './page-api.controller';
+import { PageApiService } from './page-api.service';
 
 @Module({
   imports: [
@@ -44,7 +44,7 @@ import { RelatedCaseApiService } from './related-case-api.service';
       },
     ]),
   ],
-  controllers: [RelatedCaseApiController],
-  providers: [RelatedCaseApiService],
+  controllers: [PageApiController],
+  providers: [PageApiService],
 })
-export class RelatedCaseApiModule {}
+export class PageApiModule {}

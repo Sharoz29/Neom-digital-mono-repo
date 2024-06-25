@@ -13,14 +13,16 @@ import { DataApiModule as DataV2ApiModule } from './dx-v2/data/data-api.module';
 import { DocumentApiModule } from './dx-v2/document/document-api.module';
 import { FollowerApiModule } from './dx-v2/follower/follower-api.module';
 import { ParticipantApiModule } from './dx-v2/participant/participant-api.module';
-// import { RelatedCaseApiModule } from './dx-v2/related-case/related-case-api.module';
+import { RelatedCaseApiModule } from './dx-v2/related-case/related-case-api.module';
+import { TagApiModule } from './dx-v2/tag/tag-api.module';
+import { PageApiModule } from './dx-v2/page/page-api.module';
 import { Module } from '@nestjs/common';
 const generatedModules = [
   CaseTypesV1ApiModule,
   DataV1ApiModule,
   AssignmentV1ApiModule,
   CaseV1ApiModule,
-  IotMqttApiModule,
+  // IotMqttApiModule,
   AttachmentV1ApiModule,
   CollaborationApiModule,
   AssignmentV2ApiModule,
@@ -31,7 +33,9 @@ const generatedModules = [
   DocumentApiModule,
   FollowerApiModule,
   ParticipantApiModule,
-  // RelatedCaseApiModule,
+  RelatedCaseApiModule,
+  TagApiModule,
+  PageApiModule,
 ];
 @Module({
   controllers: [],

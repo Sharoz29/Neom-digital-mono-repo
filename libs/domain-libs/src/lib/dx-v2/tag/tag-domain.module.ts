@@ -7,8 +7,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { NstLibsModule } from '@neom/nst-libs';
 
-import { RelatedCaseApiController } from './related-case-api.controller';
-import { RelatedCaseApiService } from './related-case-api.service';
+import { TagDomainController } from './tag-domain.controller';
+import { TagDomainService } from './tag-domain.service';
 
 @Module({
   imports: [
@@ -33,18 +33,11 @@ import { RelatedCaseApiService } from './related-case-api.service';
     ClientsModule.register([
       {
         name: RMQQueues.PY_WORKER_QUEUE,
-        transport: Transport.RMQ,
-        options: {
-          urls: [environment.rabbitmq.url],
-          queue: RMQQueues.PY_WORKER_QUEUE,
-          queueOptions: {
-            durable: false,
-          },
-        },
+        transport: Transport.TCP,
       },
     ]),
   ],
-  controllers: [RelatedCaseApiController],
-  providers: [RelatedCaseApiService],
+  controllers: [TagDomainController],
+  providers: [TagDomainService],
 })
-export class RelatedCaseApiModule {}
+export class TagDomainModule {}

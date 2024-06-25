@@ -7,51 +7,50 @@ import {
   HttpException,
   HttpStatus,
   Put,
+  Request,
   Delete,
   UseInterceptors,
-  Request,
 } from '@nestjs/common';
 import {
   ApiParam,
   ApiBody,
   ApiTags,
   ApiResponse,
-  ApiOperation,
-  ApiUnauthorizedResponse,
-  ApiNotFoundResponse,
-  ApiBadGatewayResponse,
-  ApiBadRequestResponse,
   ApiOkResponse,
+  ApiBadRequestResponse,
+  ApiBadGatewayResponse,
+  ApiNotFoundResponse,
+  ApiUnauthorizedResponse,
+  ApiOperation,
 } from '@nestjs/swagger';
 
 import { Observable } from 'rxjs';
 
-import { DocumentVm, PSDOCUMENT } from '@neom/models';
-import { DocumentApiService } from './document-api.service';
+import { TagApiService } from './tag-api.service';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
-/**
- * Controller for handling document endpoints sending request to the v2 pega api.
- */
-@Controller('v2/documents')
-@ApiTags('document')
-export class DocumentApiController {
-  /**
-   * Constructor to inject the DocumentApiService.
-   * @param _documentApiService The service to handle document operations.
-   */
-  constructor(private readonly _documentApiService: DocumentApiService) {}
 
+/**
+ * Controller for handling tags endpoints sending request to the v2 pega api.
+ */
+@Controller('v2/tag')
+@ApiTags('tag')
+export class TagApiController {
   /**
-   * Gets the document by the provided id
+   * Constructor to inject the TagApiService.
+   * @param _tagApiService The service to handle tags operations.
+   */
+  constructor(private readonly _tagApiService: TagApiService) {}
+  /**
+   * Gets the tags by the provided case id
    *
-   * @param {string} id - The document id.
+   * @param {string} caseId - The case id.
    * @returns {Observable<any>} A the observable of type any.
    * @throws {HttpException} If an error occurs while sending the request.
    */
-  @Get('/:id')
+  @Get('/:caseId')
   @ApiOkResponse({
     description:
-      'Successfully retrieved the record for the specified document.',
+      'Successfully retrieved the record for the specified assignment.',
   })
   @ApiBadRequestResponse({
     description:
@@ -67,14 +66,14 @@ export class DocumentApiController {
     description: 'You are not authorized to view these resources.',
   })
   @ApiOperation({
-    summary: 'Gets the document by the provided id',
+    summary: 'Gets the tags by the provided case id',
   })
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(60 * 60 * 24)
-  getAssignmentById(
-    @Param('id') id: string,
+  getAttachmentById(
+    @Param('caseId') caseId: string,
     @Request() req: Request
   ): Observable<any> {
-    return this._documentApiService.getDocumentById(id, req);
+    return this._tagApiService.getCaseTags(caseId, req);
   }
 }

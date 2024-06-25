@@ -11,15 +11,15 @@ import { environment } from '@neom/shared/lib/environments/dev';
 
 // Extending from BaseDomainService to get Basic Functionality for CRUD
 @Injectable()
-export class RelatedCaseDomainService extends BaseDomainService<any, any, any> {
+export class TagDomainService extends BaseDomainService<any, any, any> {
   constructor(
     @Inject(RMQQueues.PY_WORKER_QUEUE) _client: ClientProxy,
     @Inject(CACHE_MANAGER) cacheManagerRef: Cache
   ) {
-    super(_client, cacheManagerRef, 'relatedCase');
+    super(_client, cacheManagerRef, 'tag');
   }
 
-  getRelatedCases({ headers, caseId }: any): Observable<any> {
+  getCaseTags({ headers, caseId }: any): Observable<any> {
     return from(
       axios
         .get(
@@ -27,7 +27,7 @@ export class RelatedCaseDomainService extends BaseDomainService<any, any, any> {
             environment.pega.basev2Url +
               environment.CASES +
               `/${caseId}` +
-              environment.RELATEDCASES
+              environment.TAGS
           ),
           {
             headers: { Authorization: headers.authorization },
