@@ -88,4 +88,44 @@ export class IotMqttApiService extends BaseApiService<any, any, any> {
       throw error;
     }
   }
+
+  /**
+   * Retrieves device details from Cumulocity IoT based on the given device ID.
+   * 
+   * @param {string} deviceID - The unique identifier of the device in Cumulocity.
+   * @returns {Promise<any>} The detailed information of the device.
+   * @throws {Error} If an error occurs while retrieving the device details.
+   */
+  async fetchDeviceDetailsFromCumulocity(deviceID: string) {
+    this.logger.log(`Sending Device ID ${deviceID}`);
+    try {
+      const response$ = this.client.send(PSIOT_MQTT.DEVICEDETAILSFROMCUMULOCITY, {deviceID});
+      const response = await lastValueFrom(response$);
+      this.logger.log(`Message sent to domain service: ${response}`);
+      return response; // Ensure the response is returned
+    } catch (error: any) {
+      this.logger.error(`Failed to send message to domain service: ${error.message}`);
+      throw error;
+    }
+  }
+
+  /**
+   * Registers and subscribes a device to Cumulocity IoT based on the given topic.
+   * 
+   * @param {string} topic - The MQTT topic to subscribe the device to.
+   * @returns {Promise<any>} The response from the domain service.
+   * @throws {Error} If an error occurs while registering or subscribing the device.
+   */
+  async registerAndSubscribeDeviceToCumulocity(topic: string) {
+    this.logger.log(`Sending Device topic as name ${topic}`);
+    try {
+      const response$ = this.client.send(PSIOT_MQTT.REGISTERDEVICETOCUMULOCITY, {topic});
+      const response = await lastValueFrom(response$);
+      this.logger.log(`Message sent to domain service: ${response}`);
+      return response; // Ensure the response is returned
+    } catch (error: any) {
+      this.logger.error(`Failed to send message to domain service: ${error.message}`);
+      throw error;
+    }
+  }
 }

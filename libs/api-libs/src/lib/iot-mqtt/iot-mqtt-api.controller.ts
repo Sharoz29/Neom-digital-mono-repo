@@ -36,9 +36,9 @@ export class IotMqttApiController {
   @Post('publish-to-mqtt')
   @ApiResponse({
     status: 200,
-    type: String,
     description:
       'Successfully published the message to the specified MQTT topic.',
+    type: String,
   })
   @ApiResponse({
     status: 400,
@@ -80,24 +80,21 @@ export class IotMqttApiController {
   @Post('publishFromCumulocity/:topic/:message')
   @ApiResponse({
     status: 200,
-    type: String,
     description:
       'Successfully published the message to the specified MQTT topic.',
+    type: String,
   })
   @ApiResponse({
     status: 400,
-    type: String,
     description:
       'Bad Request: The request could not be understood or was missing required parameters.',
   })
   @ApiResponse({
     status: 502,
-    type: String,
     description: 'Bad Gateway',
   })
   @ApiResponse({
     status: 404,
-    type: String,
     description: 'Not Found: The requested resource could not be found.',
   })
   @ApiOperation({
@@ -105,6 +102,76 @@ export class IotMqttApiController {
   })
   async publishMessageFromCumulocityIoT(@Body() body: IotMqttCreateVm) {
     return await this._iotMqttApiService.publishMessageFromCumulocityIoT(body);
+  }
+
+  /**
+   * Retrieves device details from Cumulocity IoT based on the given device ID.
+   *
+   * @param {string} deviceID - The unique identifier of the device in Cumulocity.
+   * @returns {Promise<any>} The detailed information of the device.
+   * @throws {HttpException} If the device cannot be found or if an error occurs during the API call.
+   */
+  @Get('fetchDeviceDetailsFromCumulocity/:deviceID')
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully retrieved info of the Cumulocity IoT device',
+    type: String,
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: The requested resource could not be found.',
+  })
+  @ApiOperation({
+    summary: 'Get Device Details from Cumulocity IoT',
+  })
+  async fetchDeviceDetailsFromCumulocity(@Param('deviceID') deviceID: string) {
+    return await this._iotMqttApiService.fetchDeviceDetailsFromCumulocity(
+      deviceID
+    );
+  }
+
+  /**
+   * Registers and subscribes a device to Cumulocity IoT based on the given topic.
+   *
+   * @param {string} topic - The MQTT topic to subscribe the device to.
+   * @returns {Promise<any>} A success message.
+   * @throws {HttpException} If an error occurs while registering or subscribing the device.
+   */
+  @Post('registerAndSubscribeDeviceToCumulocity/:topic/:message')
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully registered the device.',
+    type: String,
+  })
+  @ApiResponse({
+    status: 400,
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiResponse({
+    status: 502,
+    description: 'Bad Gateway',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: The requested resource could not be found.',
+  })
+  @ApiOperation({
+    summary: 'Register the device to Cumulocity',
+  })
+  async registerAndSubscribeDeviceToCumulocity(@Param('topic') topic: string) {
+    return await this._iotMqttApiService.registerAndSubscribeDeviceToCumulocity(
+      topic
+    );
   }
 
   /**
@@ -117,8 +184,8 @@ export class IotMqttApiController {
   @Get('subscribe-to-mqtt-topic/:topic')
   @ApiResponse({
     status: 200,
-    type: String,
     description: 'Successfully subscribed to the specified MQTT topic.',
+    type: String,
   })
   @ApiResponse({
     status: 400,
