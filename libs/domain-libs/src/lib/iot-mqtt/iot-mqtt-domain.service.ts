@@ -228,7 +228,7 @@ export class IotMqttDomainService extends BaseDomainService<
    * @returns {Observable<any>} The result of the publish operation.
    * @throws {HttpException} If the MQTT client is not connected or if an error occurs while publishing the message.
    */
-  publishTopicToMqttBroker({ pattern, message }: IotMqttCreateVm) {
+  publishTopicToMqttBroker({ pattern, message }: IotMqttCreateVm): Observable<any> {
     if (!this.mqttConnected) {
       throw new HttpException(
         'MQTT client not connected',
@@ -268,7 +268,7 @@ export class IotMqttDomainService extends BaseDomainService<
    * @param {IotMqttCreateVm} body - The message DTO containing the pattern and message.
    * @returns {Observable<string>} The result of the publish operation.
    */
-  publishMessageFromCumulocityIoT(body: IotMqttCreateVm) {
+  publishMessageFromCumulocityIoT(body: IotMqttCreateVm): Observable<any> {
     this.logger.log(`Publishing to ${body.pattern} payload ${body.message}`);
     this.cumulocityClient.on('message', (topic: string, message: Buffer) => {
       this.logger.log(`Topic ${topic} message ${message.toString()}`);
@@ -365,7 +365,7 @@ export class IotMqttDomainService extends BaseDomainService<
    * @returns {Observable<any>} The device details.
    * @throws {HttpException} If an error occurs while fetching device details.
    */
-  fetchDeviceDetailsFromCumulocity(deviceId: string) {
+  fetchDeviceDetailsFromCumulocity(deviceId: string): Observable<any> {
     const url = `https://trialfdlpkgyf727j.eu-latest.cumulocity.com/inventory/managedObjects/${deviceId}`;
     const base64EncodedCredentials = Buffer.from(
       `${environment.cumulocity.username}:${environment.cumulocity.password}`

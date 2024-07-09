@@ -9,7 +9,7 @@ import {
   IotMqttVm,
   PSIOT_MQTT,
 } from '@neom/models';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 
 /**
  * Service for handling IoT MQTT operations.
@@ -37,13 +37,12 @@ export class IotMqttApiService extends BaseApiService<IotMqttVm, IotMqttVm, IotM
    * @returns {Promise<any>} The response from the domain service.
    * @throws {Error} If an error occurs while publishing the message.
    */
-  async publishToMqttBroker(body: IotMqttCreateVm) {
+   publishToMqttBroker(body: IotMqttCreateVm): Observable<any> {
     this.logger.log(`Publishing to ${body.pattern}`);
     try {
       const response$ = this.client.send(PSIOT_MQTT.PUBLISH, body);
-      const response = await lastValueFrom(response$);
-      this.logger.log(`Message sent to domain service: ${response}`);
-      return response; // Ensure the response is returned
+      this.logger.log(`Message sent to domain service: ${response$}`);
+      return response$; // Ensure the response is returned
     } catch (error: any) {
       this.logger.error(`Failed to send message to domain service: ${error.message}`);
       throw error;
@@ -54,16 +53,15 @@ export class IotMqttApiService extends BaseApiService<IotMqttVm, IotMqttVm, IotM
    * Subscribes to a specified MQTT topic.
    * 
    * @param {string} topic - The MQTT topic to subscribe to.
-   * @returns {Promise<any>} The response from the domain service.
+   * @returns {Observable<any>} The response from the domain service.
    * @throws {Error} If an error occurs while subscribing to the topic.
    */
-  async subscribeToMqttBroker(topic: string) {
+   subscribeToMqttBroker(topic: string): Observable<any> {
     this.logger.log(`Subscribing to ${topic}`);
     try {
       const response$ = this.client.send(PSIOT_MQTT.SUBSCRIBE, {topic});
-      const response = await lastValueFrom(response$);
-      this.logger.log(`Message sent to domain service: ${response}`);
-      return response; // Ensure the response is returned
+      this.logger.log(`Message sent to domain service: ${response$}`);
+      return response$; // Ensure the response is returned
     } catch (error: any) {
       this.logger.error(`Failed to send message to domain service: ${error.message}`);
       throw error;
@@ -74,16 +72,15 @@ export class IotMqttApiService extends BaseApiService<IotMqttVm, IotMqttVm, IotM
    * Publishes a message from Cumulocity IoT to the MQTT broker.
    * 
    * @param {IotMqttCreateVm} body - The message body to publish.
-   * @returns {Promise<any>} The response from the domain service.
+   * @returns {Observable<any>} The response from the domain service.
    * @throws {Error} If an error occurs while publishing the message.
    */
-  async publishMessageFromCumulocityIoT(body: IotMqttCreateVm) {
+   publishMessageFromCumulocityIoT(body: IotMqttCreateVm): Observable<any> {
     this.logger.log(`Publishing to ${body.pattern}`);
     try {
       const response$ = this.client.send(PSIOT_MQTT.PUBLISHFROMCUMULOCITY, body);
-      const response = await lastValueFrom(response$);
-      this.logger.log(`Message sent to domain service: ${response}`);
-      return response; // Ensure the response is returned
+      this.logger.log(`Message sent to domain service: ${response$ }`);
+      return response$; // Ensure the response is returned
     } catch (error: any) {
       this.logger.error(`Failed to send message to domain service: ${error.message}`);
       throw error;
@@ -94,16 +91,15 @@ export class IotMqttApiService extends BaseApiService<IotMqttVm, IotMqttVm, IotM
    * Retrieves device details from Cumulocity IoT based on the given device ID.
    * 
    * @param {string} deviceID - The unique identifier of the device in Cumulocity.
-   * @returns {Promise<any>} The detailed information of the device.
+   * @returns {Observable<any>} The detailed information of the device.
    * @throws {Error} If an error occurs while retrieving the device details.
    */
-  async fetchDeviceDetailsFromCumulocity(deviceID: string) {
+   fetchDeviceDetailsFromCumulocity(deviceID: string): Observable<any> {
     this.logger.log(`Sending Device ID ${deviceID}`);
     try {
       const response$ = this.client.send(PSIOT_MQTT.DEVICEDETAILSFROMCUMULOCITY, {deviceID});
-      const response = await lastValueFrom(response$);
-      this.logger.log(`Message sent to domain service: ${response}`);
-      return response; // Ensure the response is returned
+      this.logger.log(`Message sent to domain service: ${response$}`);
+      return response$; // Ensure the response is returned
     } catch (error: any) {
       this.logger.error(`Failed to send message to domain service: ${error.message}`);
       throw error;
@@ -114,16 +110,15 @@ export class IotMqttApiService extends BaseApiService<IotMqttVm, IotMqttVm, IotM
    * Registers and subscribes a device to Cumulocity IoT based on the given topic.
    * 
    * @param {string} topic - The MQTT topic to subscribe the device to.
-   * @returns {Promise<any>} The response from the domain service.
+   * @returns {Observable<any>} The response from the domain service.
    * @throws {Error} If an error occurs while registering or subscribing the device.
    */
-  async registerAndSubscribeDeviceToCumulocity(topic: string) {
+   registerAndSubscribeDeviceToCumulocity(topic: string): Observable<any> {
     this.logger.log(`Sending Device topic as name ${topic}`);
     try {
       const response$ = this.client.send(PSIOT_MQTT.REGISTERDEVICETOCUMULOCITY, {topic});
-      const response = await lastValueFrom(response$);
-      this.logger.log(`Message sent to domain service: ${response}`);
-      return response; // Ensure the response is returned
+      this.logger.log(`Message sent to domain service: ${response$}`);
+      return response$; // Ensure the response is returned
     } catch (error: any) {
       this.logger.error(`Failed to send message to domain service: ${error.message}`);
       throw error;
