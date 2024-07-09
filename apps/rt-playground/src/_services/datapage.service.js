@@ -11,7 +11,7 @@ export const dataPageService = {
 
 function getDataPage(id, params) {
   return axios
-    .get(endpoints.API_URL + endpoints.DATA + '/' + id, {
+    .get(endpoints.API__V1_URL + endpoints.DATA + '/' + id, {
       // .get(endpoints.BASEURL + endpoints.DATA + "/" + id, {
       params: params,
     })

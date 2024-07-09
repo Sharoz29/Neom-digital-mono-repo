@@ -13,7 +13,8 @@ const endpoints = {
   //  group is not the default access group specified within the operator record.
   appAlias: 'call-a-doctor',
 
-  API_URL: `http://localhost:5001/api/v1`,
+  API__V1_URL: `http://localhost:5001/api/v1`,
+  API__V2_URL: `http://localhost:5001/api/v2`,
 
   // use_v2apis should be set to true only for Pega 8.5 and better servers, where the application
   //  service package exists.  Also, it must be configured to the same authentication type as the
