@@ -24,7 +24,7 @@ export const caseService = {
 
 function getCaseTypes() {
   return axios
-    .get(endpoints.API_URL + endpoints.CASETYPES)
+    .get(endpoints.API__V1_URL + endpoints.CASETYPES)
     .then(function (response) {
       return response.data.caseTypes;
     })
@@ -52,7 +52,7 @@ function getFieldsForCase(caseInfo, actionId) {
         //   endpoints.ACTIONS +
         //   '/' +
         //   actionId
-        endpoints.API_URL +
+        endpoints.API__V1_URL +
           endpoints.CASES +
           '/' +
           caseInfo.ID +
@@ -73,7 +73,7 @@ function getCaseCreationPage(id) {
   return (
     axios
       // .get(endpoints.BASEV2URL + endpoints.CASETYPES + '/' + id)
-      .get(endpoints.API_URL + endpoints.CASETYPES + '/' + id)
+      .get(endpoints.API__V1_URL + endpoints.CASETYPES + '/' + id)
       .then(function (response) {
         return response.data;
       })
@@ -108,7 +108,7 @@ function createCase(id, processID, content) {
 //
 function getCase(id) {
   return axios
-    .get(encodeURI(endpoints.API_URL + endpoints.CASES + '/' + id), {
+    .get(encodeURI(endpoints.API__V1_URL + endpoints.CASES + '/' + id), {
       headers: {
         'Access-Control-Expose-Headers': 'etag',
       },
@@ -189,7 +189,7 @@ function getPage(caseID, pageID) {
     .get(
       encodeURI(
         // endpoints.BASEV2URL +
-        endpoints.API_URL +
+        endpoints.API__V1_URL +
           endpoints.CASES +
           '/' +
           caseID +
@@ -211,7 +211,7 @@ function getView(caseID, viewID) {
     .get(
       encodeURI(
         // endpoints.BASEV2URL +
-        endpoints.API_URL +
+        endpoints.API__V1_URL +
           endpoints.CASES +
           '/' +
           caseID +
@@ -232,7 +232,7 @@ function cases() {
   return (
     axios
       // .get(endpoints.BASEV2URL + endpoints.CASES)
-      .get(endpoints.API_URL + endpoints.CASES)
+      .get(endpoints.API__V1_URL + endpoints.CASES)
       .then(function (response) {
         return response.data.cases;
       })
@@ -246,7 +246,7 @@ function getAttachments(caseID) {
   endpoints;
   return axios({
     method: 'get',
-    url: endpoints.API_URL + `/cases/${caseID}/attachments`,
+    url: endpoints.API__V1_URL + `/cases/${caseID}/attachments`,
     // url: endpoints.BASEV2URL + `/cases/${caseID}/attachments`,
   })
     .then((attachments) => {

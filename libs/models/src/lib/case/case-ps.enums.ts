@@ -8,6 +8,9 @@ export enum PSCASE {
   GETATTACHMENTS = 'case:getAttachments',
   GETPAGE = 'case:getPage',
   GETVIEW = 'case:getView',
+  GETANCESTORS = 'case:getAncestors',
+  GETDESCENDANTS = 'case:getDecendants',
+  GETSTAGES = 'case:getStages',
 
   // CRUD
   // Do not change the pattern below this line

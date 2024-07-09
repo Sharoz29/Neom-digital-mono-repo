@@ -5,6 +5,7 @@
 export enum PSASSIGNMENT {
   // CUSTOM
   GETACTIONS = 'assignment:getActions',
+  GETNEXT = 'assignment:getNext',
 
   // CRUD
   // Do not change the pattern below this line

@@ -5,6 +5,10 @@
 export enum PSDATA {
   // CUSTOM
   GETMETADATA = 'data:getMetaData',
+  GETDATAOBJECTS = 'data:getDataObjects',
+  GETDATAPAGES = 'data:getDataPages',
+  GETDATAPAGEVIEWS = 'data:getDataPageViews',
+  GETDATAPAGEVIEWMETADATA = 'data:getDataPageViewMetaData',
   // CRUD
   // Do not change the pattern below this line
   GET = 'data:get',
