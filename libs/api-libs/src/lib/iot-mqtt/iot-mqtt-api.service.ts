@@ -6,6 +6,7 @@ import { IoTQueues } from '@neom/shared';
 import { BaseApiService } from '../services/baseapi.service';
 import {
   IotMqttCreateVm,
+  IotMqttVm,
   PSIOT_MQTT,
 } from '@neom/models';
 import { lastValueFrom } from 'rxjs';
@@ -15,7 +16,7 @@ import { lastValueFrom } from 'rxjs';
  * Extends the BaseApiService to implement basic API functionalities for CRUD operations.
  */
 @Injectable()
-export class IotMqttApiService extends BaseApiService<any, any, any> {
+export class IotMqttApiService extends BaseApiService<IotMqttVm, IotMqttVm, IotMqttVm> {
 
   /**
    * Constructor to inject dependencies.
