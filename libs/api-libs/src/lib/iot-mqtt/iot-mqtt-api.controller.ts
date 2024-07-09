@@ -7,7 +7,15 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiOperation, ApiBadGatewayResponse, ApiBadRequestResponse, ApiOkResponse, ApiNotFoundResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiResponse,
+  ApiOperation,
+  ApiBadGatewayResponse,
+  ApiBadRequestResponse,
+  ApiOkResponse,
+  ApiNotFoundResponse,
+} from '@nestjs/swagger';
 import { Observable, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -29,21 +37,35 @@ export class IotMqttApiController {
    * @throws {HttpException} If an error occurs while publishing.
    */
   @Post('publish-to-mqtt')
-  @ApiResponse({
-    status: 200,
-    description: 'Successfully published the message to the specified MQTT topic.',
+  @ApiOkResponse({
+    description:
+      'Successfully published the message to the specified MQTT topic.',
     type: String,
   })
-  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
-  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
   @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Publish message to IoT Device' })
-  publishToMqtt(@Body() body: IotMqttCreateVm): Observable<{ message: string }> {
+  publishToMqtt(
+    @Body() body: IotMqttCreateVm
+  ): Observable<{ message: string }> {
     return from(this._iotMqttApiService.publishToMqttBroker(body)).pipe(
-      map(() => ({ message: 'Message successfully published to MQTT and sent to domain service' })),
+      map(() => ({
+        message:
+          'Message successfully published to MQTT and sent to domain service',
+      })),
       catchError((error: any) => {
         this.logger.error(`Error publishing message: ${error.message}`);
-        throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException(
+          'Internal server error',
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
       })
     );
   }
@@ -56,20 +78,35 @@ export class IotMqttApiController {
    * @throws {HttpException} If an error occurs while publishing.
    */
   @Post('publishFromCumulocity/:topic/:message')
-  @ApiResponse({
-    status: 200,
-    description: 'Successfully published the message to the specified MQTT topic.',
+  @ApiOkResponse({
+    description:
+      'Successfully published the message to the specified MQTT topic.',
     type: String,
   })
-  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
-  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
   @ApiNotFoundResponse({ description: 'Content Not Found' })
-  @ApiOperation({ summary: 'Publish message from Cumulocity IoT to MQTT device' })
-  publishMessageFromCumulocityIoT(@Body() body: IotMqttCreateVm): Observable<any> {
-    return from(this._iotMqttApiService.publishMessageFromCumulocityIoT(body)).pipe(
+  @ApiOperation({
+    summary: 'Publish message from Cumulocity IoT to MQTT device',
+  })
+  publishMessageFromCumulocityIoT(
+    @Body() body: IotMqttCreateVm
+  ): Observable<any> {
+    return from(
+      this._iotMqttApiService.publishMessageFromCumulocityIoT(body)
+    ).pipe(
       catchError((error: any) => {
         this.logger.error(`Error publishing message: ${error.message}`);
-        throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException(
+          'Internal server error',
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
       })
     );
   }
@@ -82,20 +119,32 @@ export class IotMqttApiController {
    * @throws {HttpException} If the device cannot be found or if an error occurs during the API call.
    */
   @Get('fetchDeviceDetailsFromCumulocity/:deviceID')
-  @ApiResponse({
-    status: 200,
+  @ApiOkResponse({
     description: 'Successfully retrieved info of the Cumulocity IoT device',
     type: String,
   })
-  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
-  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
   @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Get Device Details from Cumulocity IoT' })
-  fetchDeviceDetailsFromCumulocity(@Param('deviceID') deviceID: string): Observable<any> {
-    return from(this._iotMqttApiService.fetchDeviceDetailsFromCumulocity(deviceID)).pipe(
+  fetchDeviceDetailsFromCumulocity(
+    @Param('deviceID') deviceID: string
+  ): Observable<any> {
+    return from(
+      this._iotMqttApiService.fetchDeviceDetailsFromCumulocity(deviceID)
+    ).pipe(
       catchError((error: any) => {
         this.logger.error(`Error fetching device details: ${error.message}`);
-        throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException(
+          'Internal server error',
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
       })
     );
   }
@@ -112,11 +161,21 @@ export class IotMqttApiController {
     description: 'Successfully registered the device.',
     type: String,
   })
-  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
-  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
   @ApiOperation({ summary: 'Register the device to Cumulocity' })
-  registerAndSubscribeDeviceToCumulocity(@Param('topic') topic: string): Observable<any> {
-    return this._iotMqttApiService.registerAndSubscribeDeviceToCumulocity(topic);
+  registerAndSubscribeDeviceToCumulocity(
+    @Param('topic') topic: string
+  ): Observable<any> {
+    return this._iotMqttApiService.registerAndSubscribeDeviceToCumulocity(
+      topic
+    );
   }
 
   /**
@@ -132,15 +191,24 @@ export class IotMqttApiController {
     description: 'Successfully subscribed to the specified MQTT topic.',
     type: String,
   })
-  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
-  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
   @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Subscribe to an MQTT topic' })
   subscribeToTopic(@Param('topic') topic: string): Observable<any> {
     return from(this._iotMqttApiService.subscribeToMqttBroker(topic)).pipe(
       catchError((error: any) => {
         this.logger.error(`Error subscribing to topic: ${error.message}`);
-        throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException(
+          'Internal server error',
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
       })
     );
   }
