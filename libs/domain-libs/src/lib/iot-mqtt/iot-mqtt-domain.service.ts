@@ -403,7 +403,7 @@ export class IotMqttDomainService extends BaseDomainService<
    * @param {string} deviceName - The name of the device.
    * @returns {Observable<any>} The result of the registration and subscription.
    */
-  registerAndSubscribeDevices(deviceName: string) {
+  registerAndSubscribeDevices(deviceName: string): Observable<any> {
     if (deviceName) {
       return from(this.registerDeviceToCumulocity(deviceName)).pipe(
         tap(() => this.subscribeToDeviceTopic(deviceName))
@@ -439,7 +439,7 @@ export class IotMqttDomainService extends BaseDomainService<
    * @param {string} deviceName - The name of the device.
    * @returns {Observable<string>} The client ID of the registered device.
    */
-  registerDeviceToCumulocity(deviceName: string) {
+  registerDeviceToCumulocity(deviceName: string): Observable<any> {
     const cacheKey = `device-registration-${deviceName}`;
     return this.clearCacheKey(cacheKey).pipe(
       switchMap(() => from(this.cacheManagerRef.get<boolean>(cacheKey))),
@@ -508,7 +508,7 @@ export class IotMqttDomainService extends BaseDomainService<
    * @returns {Observable<any>} The result of the subscription operation.
    * @throws {HttpException} If the MQTT client is not connected or if an error occurs while subscribing to the topic.
    */
-  subscribeToMqttBroker(topic: string) {
+  subscribeToMqttBroker(topic: string): Observable<any> {
     if (!this.mqttConnected) {
       throw new HttpException(
         'MQTT client not connected',

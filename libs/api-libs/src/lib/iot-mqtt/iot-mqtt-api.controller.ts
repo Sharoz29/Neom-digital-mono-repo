@@ -7,7 +7,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiOperation, ApiBadGatewayResponse, ApiBadRequestResponse, ApiOkResponse, ApiNotFoundResponse } from '@nestjs/swagger';
 import { Observable, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -34,9 +34,9 @@ export class IotMqttApiController {
     description: 'Successfully published the message to the specified MQTT topic.',
     type: String,
   })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
-  @ApiResponse({ status: 502, description: 'Bad Gateway' })
-  @ApiResponse({ status: 404, description: 'Not Found' })
+  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
+  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
+  @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Publish message to IoT Device' })
   publishToMqtt(@Body() body: IotMqttCreateVm): Observable<{ message: string }> {
     return from(this._iotMqttApiService.publishToMqttBroker(body)).pipe(
@@ -61,9 +61,9 @@ export class IotMqttApiController {
     description: 'Successfully published the message to the specified MQTT topic.',
     type: String,
   })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
-  @ApiResponse({ status: 502, description: 'Bad Gateway' })
-  @ApiResponse({ status: 404, description: 'Not Found' })
+  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
+  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
+  @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Publish message from Cumulocity IoT to MQTT device' })
   publishMessageFromCumulocityIoT(@Body() body: IotMqttCreateVm): Observable<any> {
     return from(this._iotMqttApiService.publishMessageFromCumulocityIoT(body)).pipe(
@@ -87,9 +87,9 @@ export class IotMqttApiController {
     description: 'Successfully retrieved info of the Cumulocity IoT device',
     type: String,
   })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
-  @ApiResponse({ status: 502, description: 'Bad Gateway' })
-  @ApiResponse({ status: 404, description: 'Not Found' })
+  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
+  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
+  @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Get Device Details from Cumulocity IoT' })
   fetchDeviceDetailsFromCumulocity(@Param('deviceID') deviceID: string): Observable<any> {
     return from(this._iotMqttApiService.fetchDeviceDetailsFromCumulocity(deviceID)).pipe(
@@ -108,22 +108,15 @@ export class IotMqttApiController {
    * @throws {HttpException} If an error occurs while registering or subscribing the device.
    */
   @Post('registerAndSubscribeDeviceToCumulocity/:topic/:message')
-  @ApiResponse({
-    status: 200,
+  @ApiOkResponse({
     description: 'Successfully registered the device.',
     type: String,
   })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
-  @ApiResponse({ status: 502, description: 'Bad Gateway' })
-  @ApiResponse({ status: 404, description: 'Not Found' })
+  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
+  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
   @ApiOperation({ summary: 'Register the device to Cumulocity' })
   registerAndSubscribeDeviceToCumulocity(@Param('topic') topic: string): Observable<any> {
-    return from(this._iotMqttApiService.registerAndSubscribeDeviceToCumulocity(topic)).pipe(
-      catchError((error: any) => {
-        this.logger.error(`Error registering and subscribing device: ${error.message}`);
-        throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
-      })
-    );
+    return this._iotMqttApiService.registerAndSubscribeDeviceToCumulocity(topic);
   }
 
   /**
@@ -139,9 +132,9 @@ export class IotMqttApiController {
     description: 'Successfully subscribed to the specified MQTT topic.',
     type: String,
   })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
-  @ApiResponse({ status: 502, description: 'Bad Gateway' })
-  @ApiResponse({ status: 404, description: 'Not Found' })
+  @ApiBadGatewayResponse({description: 'Bad Gateway: Backend Service might be down or not responding at the moment.'})
+  @ApiBadRequestResponse({description: 'Bad Request: The request could not be understood or was missing required parameters.'})
+  @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Subscribe to an MQTT topic' })
   subscribeToTopic(@Param('topic') topic: string): Observable<any> {
     return from(this._iotMqttApiService.subscribeToMqttBroker(topic)).pipe(

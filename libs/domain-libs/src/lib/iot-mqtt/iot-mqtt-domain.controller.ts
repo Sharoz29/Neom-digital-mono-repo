@@ -29,19 +29,8 @@ export class IotMqttDomainController {
    * @throws {Error} If an error occurs while processing the message.
    */
   @MessagePattern(PSIOT_MQTT.PUBLISH)
-   publishMQTT(iotMqttDto: IotMqttDto): Observable<any> {
-    this.logger.log(
-      `Received message: ${iotMqttDto.message}, pattern: ${iotMqttDto.pattern}`
-    );
-    try {
-      const result =  this._iotMqttDomainService.publishTopicToMqttBroker(
-        iotMqttDto
-      );
-      return result; // Ensure response is sent back correctly
-    } catch (error: any) {
-      this.logger.error(`Error processing message: ${error.message}`);
-      throw error;
-    }
+  publishMQTT(iotMqttDto: IotMqttDto): Observable<any> {
+    return this._iotMqttDomainService.publishTopicToMqttBroker(iotMqttDto);
   }
 
   /**
@@ -53,20 +42,10 @@ export class IotMqttDomainController {
    * @throws {Error} If an error occurs while processing the message.
    */
   @MessagePattern(PSIOT_MQTT.PUBLISHFROMCUMULOCITY)
-   publishMQTTfromCumulocity(iotMqttDto: IotMqttDto): Observable<any> {
-    this.logger.log(
-      `Received message: ${iotMqttDto.message}, pattern: ${iotMqttDto.pattern}`
+  publishMQTTfromCumulocity(iotMqttDto: IotMqttDto): Observable<any> {
+    return this._iotMqttDomainService.publishMessageFromCumulocityIoT(
+      iotMqttDto
     );
-    try {
-      const result =
-         this._iotMqttDomainService.publishMessageFromCumulocityIoT(
-          iotMqttDto
-        );
-      return result; // Ensure response is sent back correctly
-    } catch (error: any) {
-      this.logger.error(`Error processing message: ${error.message}`);
-      throw error;
-    }
   }
 
   /**
@@ -80,14 +59,7 @@ export class IotMqttDomainController {
    */
   @MessagePattern(PSIOT_MQTT.SUBSCRIBE)
   subscribeToMqttBroker({ topic }: { topic: string }): Observable<any> {
-    this.logger.log(`Subscribing to topic: ${topic}`);
-    try {
-      const result = this._iotMqttDomainService.subscribeToMqttBroker(topic);
-      return result;
-    } catch (error: any) {
-      this.logger.error(`Error subscribing to topic: ${error.message}`);
-      throw error;
-    }
+    return this._iotMqttDomainService.subscribeToMqttBroker(topic);
   }
 
   /**
@@ -99,18 +71,14 @@ export class IotMqttDomainController {
    * @throws {Error} If an error occurs during the API call or the device cannot be found.
    */
   @MessagePattern(PSIOT_MQTT.DEVICEDETAILSFROMCUMULOCITY)
-  fetchDeviceDetailsFromCumulocity({ deviceID }: { deviceID: string }): Observable<any> {
-    this.logger.log(`Fetching Device Data from ID ${deviceID}`);
-    try {
-      const result =
-        this._iotMqttDomainService.fetchDeviceDetailsFromCumulocity(deviceID);
-      return result;
-    } catch (error: any) {
-      this.logger.error(
-        `Unable to fetch Device: ${deviceID}, Error: ${error.message}`
-      );
-      throw error;
-    }
+  fetchDeviceDetailsFromCumulocity({
+    deviceID,
+  }: {
+    deviceID: string;
+  }): Observable<any> {
+    return this._iotMqttDomainService.fetchDeviceDetailsFromCumulocity(
+      deviceID
+    );
   }
 
   /**
@@ -123,17 +91,11 @@ export class IotMqttDomainController {
    * @throws {Error} If an error occurs while registering or subscribing the device.
    */
   @MessagePattern(PSIOT_MQTT.REGISTERDEVICETOCUMULOCITY)
-   registerAndSubscribeDeviceToCumulocity({ topic }: { topic: string }): Observable<any> {
-    this.logger.log(`Fetching Device topic: ${topic}`);
-    try {
-      const result =
-         this._iotMqttDomainService.registerAndSubscribeDevices(topic);
-      return result;
-    } catch (error: any) {
-      this.logger.error(
-        `Unable to fetch Device: ${topic}, Error: ${error.message}`
-      );
-      throw error;
-    }
+  registerAndSubscribeDeviceToCumulocity({
+    topic,
+  }: {
+    topic: string;
+  }): Observable<any> {
+    return this._iotMqttDomainService.registerAndSubscribeDevices(topic);
   }
 }
