@@ -13,7 +13,7 @@ export const environment = {
     url: 'amqp://localhost:5672',
   },
   pega: {
-    baseUrl: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/application/v2`,
+    basev2Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/application/v2`,
     basev1Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/v1`,
   },
   mqtt: {
@@ -30,7 +30,7 @@ export const environment = {
     url: 'mqtt://tenant_id.eu-latest.cumulocity.com:1883',
   },
   production: false,
-  apiUrl: 'http://localhost:5001/api/v1',
+  apiUrl: 'http://localhost:5001/api/',
   ngApiUrl: 'http://localhost:5001',
   CASETYPES: '/casetypes',
   WORKLIST: `/D_Worklist`,
@@ -39,10 +39,18 @@ export const environment = {
   CASES: '/cases',
   VIEWS: '/views',
   ASSIGNMENTS: '/assignments',
+  ATTACHMENTS: '/attachments',
+  ATTACHMENTCATEGORIES: '/attachment_categories',
   ACTIONS: '/actions',
   PAGES: '/pages',
   DATA: '/data',
+  METADATA: '/metadata',
   REFRESH: '/refresh',
+  DOCUMENTS: '/documents',
+  MESSAGES: '/messages',
+  NOTIFICATIONS: '/notifications',
+  SPACES: '/spaces',
+  PINS: '/pins',
   // V2 endpoints
   NAVIGATION_STEPS: '/navigation_steps',
 };

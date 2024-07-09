@@ -4,7 +4,7 @@
 
 export enum PSCASE {
   // CUSTOM
-  GETFIELDS = 'case:getFields',
+  GETACTIONS = 'case:getActions',
   GETATTACHMENTS = 'case:getAttachments',
   GETPAGE = 'case:getPage',
   GETVIEW = 'case:getView',
