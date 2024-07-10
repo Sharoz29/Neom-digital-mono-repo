@@ -17,7 +17,6 @@ import {
   ApiNotFoundResponse,
 } from '@nestjs/swagger';
 import { Observable, from } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
 
 import { IotMqttCreateVm } from '@neom/models';
 import { IotMqttApiService } from './iot-mqtt-api.service';
@@ -55,19 +54,7 @@ export class IotMqttApiController {
   publishToMqtt(
     @Body() body: IotMqttCreateVm
   ): Observable<{ message: string }> {
-    return from(this._iotMqttApiService.publishToMqttBroker(body)).pipe(
-      map(() => ({
-        message:
-          'Message successfully published to MQTT and sent to domain service',
-      })),
-      catchError((error: any) => {
-        this.logger.error(`Error publishing message: ${error.message}`);
-        throw new HttpException(
-          'Internal server error',
-          HttpStatus.INTERNAL_SERVER_ERROR
-        );
-      })
-    );
+    return from(this._iotMqttApiService.publishToMqttBroker(body));
   }
 
   /**
@@ -98,17 +85,7 @@ export class IotMqttApiController {
   publishMessageFromCumulocityIoT(
     @Body() body: IotMqttCreateVm
   ): Observable<any> {
-    return from(
-      this._iotMqttApiService.publishMessageFromCumulocityIoT(body)
-    ).pipe(
-      catchError((error: any) => {
-        this.logger.error(`Error publishing message: ${error.message}`);
-        throw new HttpException(
-          'Internal server error',
-          HttpStatus.INTERNAL_SERVER_ERROR
-        );
-      })
-    );
+    return from(this._iotMqttApiService.publishMessageFromCumulocityIoT(body));
   }
 
   /**
@@ -138,14 +115,6 @@ export class IotMqttApiController {
   ): Observable<any> {
     return from(
       this._iotMqttApiService.fetchDeviceDetailsFromCumulocity(deviceID)
-    ).pipe(
-      catchError((error: any) => {
-        this.logger.error(`Error fetching device details: ${error.message}`);
-        throw new HttpException(
-          'Internal server error',
-          HttpStatus.INTERNAL_SERVER_ERROR
-        );
-      })
     );
   }
 
@@ -202,14 +171,6 @@ export class IotMqttApiController {
   @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Subscribe to an MQTT topic' })
   subscribeToTopic(@Param('topic') topic: string): Observable<any> {
-    return from(this._iotMqttApiService.subscribeToMqttBroker(topic)).pipe(
-      catchError((error: any) => {
-        this.logger.error(`Error subscribing to topic: ${error.message}`);
-        throw new HttpException(
-          'Internal server error',
-          HttpStatus.INTERNAL_SERVER_ERROR
-        );
-      })
-    );
+    return from(this._iotMqttApiService.subscribeToMqttBroker(topic));
   }
 }
