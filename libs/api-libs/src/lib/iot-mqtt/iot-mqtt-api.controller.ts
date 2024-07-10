@@ -16,7 +16,7 @@ import {
   ApiOkResponse,
   ApiNotFoundResponse,
 } from '@nestjs/swagger';
-import { Observable, from } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { IotMqttCreateVm } from '@neom/models';
 import { IotMqttApiService } from './iot-mqtt-api.service';
@@ -54,7 +54,7 @@ export class IotMqttApiController {
   publishToMqtt(
     @Body() body: IotMqttCreateVm
   ): Observable<{ message: string }> {
-    return from(this._iotMqttApiService.publishToMqttBroker(body));
+    return this._iotMqttApiService.publishToMqttBroker(body);
   }
 
   /**
@@ -85,7 +85,7 @@ export class IotMqttApiController {
   publishMessageFromCumulocityIoT(
     @Body() body: IotMqttCreateVm
   ): Observable<any> {
-    return from(this._iotMqttApiService.publishMessageFromCumulocityIoT(body));
+    return this._iotMqttApiService.publishMessageFromCumulocityIoT(body);
   }
 
   /**
@@ -113,9 +113,7 @@ export class IotMqttApiController {
   fetchDeviceDetailsFromCumulocity(
     @Param('deviceID') deviceID: string
   ): Observable<any> {
-    return from(
-      this._iotMqttApiService.fetchDeviceDetailsFromCumulocity(deviceID)
-    );
+    return this._iotMqttApiService.fetchDeviceDetailsFromCumulocity(deviceID);
   }
 
   /**
@@ -171,6 +169,6 @@ export class IotMqttApiController {
   @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Subscribe to an MQTT topic' })
   subscribeToTopic(@Param('topic') topic: string): Observable<any> {
-    return from(this._iotMqttApiService.subscribeToMqttBroker(topic));
+    return this._iotMqttApiService.subscribeToMqttBroker(topic);
   }
 }
