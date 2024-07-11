@@ -22,7 +22,7 @@ const generatedModules = [
   DataV1ApiModule,
   AssignmentV1ApiModule,
   CaseV1ApiModule,
-  // IotMqttApiModule,
+  IotMqttApiModule,
   AttachmentV1ApiModule,
   CollaborationApiModule,
   AssignmentV2ApiModule,

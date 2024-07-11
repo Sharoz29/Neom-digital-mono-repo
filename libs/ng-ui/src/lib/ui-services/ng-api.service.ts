@@ -50,7 +50,7 @@ export class IotMqttApiControllerClient {
    * @return Successfully published the message to the specified MQTT topic.
    */
   publishMessage(body: IotMqttCreateVm): Observable<string> {
-    let url_ = this.baseUrl + '/api/v1/iot-mqtt/publish';
+    let url_ = this.baseUrl + '/api/iot-mqtt/publish';
     url_ = url_.replace(/[?&]$/, '');
 
     const content_ = JSON.stringify(body);
@@ -1786,7 +1786,7 @@ export class IotMqttDomainControllerClient {
    * @return Successfully published the message to the specified MQTT topic.
    */
   publishMessage(topic: string, message: string): Observable<void> {
-    let url_ = this.baseUrl + '/api/v1/iot-mqtt/publish/{topic}/{message}';
+    let url_ = this.baseUrl + '/api/iot-mqtt/publish/{topic}/{message}';
     if (topic === undefined || topic === null)
       throw new Error("The parameter 'topic' must be defined.");
     url_ = url_.replace('{topic}', encodeURIComponent('' + topic));
@@ -1896,7 +1896,7 @@ export class IotMqttDomainControllerClient {
     message: string
   ): Observable<void> {
     let url_ =
-      this.baseUrl + '/api/v1/iot-mqtt/publishFromCumulocity/{topic}/{message}';
+      this.baseUrl + '/api/iot-mqtt/publishFromCumulocity/{topic}/{message}';
     if (topic === undefined || topic === null)
       throw new Error("The parameter 'topic' must be defined.");
     url_ = url_.replace('{topic}', encodeURIComponent('' + topic));
@@ -2002,7 +2002,7 @@ export class IotMqttDomainControllerClient {
    * @return Successfully retrieved the cached message for the specified topic.
    */
   getCachedMessage(topic: string): Observable<void> {
-    let url_ = this.baseUrl + '/api/v1/iot-mqtt/cache/{topic}';
+    let url_ = this.baseUrl + '/api/iot-mqtt/cache/{topic}';
     if (topic === undefined || topic === null)
       throw new Error("The parameter 'topic' must be defined.");
     url_ = url_.replace('{topic}', encodeURIComponent('' + topic));
@@ -2105,7 +2105,7 @@ export class IotMqttDomainControllerClient {
    * @return Successfully subscribed to the specified MQTT topic.
    */
   subscribeToTopic(topic: string): Observable<void> {
-    let url_ = this.baseUrl + '/api/v1/iot-mqtt/subscribe/{topic}';
+    let url_ = this.baseUrl + '/api/iot-mqtt/subscribe/{topic}';
     if (topic === undefined || topic === null)
       throw new Error("The parameter 'topic' must be defined.");
     url_ = url_.replace('{topic}', encodeURIComponent('' + topic));

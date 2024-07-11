@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  Inject,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ClientProxy } from '@nestjs/microservices';
@@ -132,7 +127,7 @@ export class IotMqttApiService extends BaseApiService<
   registerAndSubscribeDeviceToCumulocity(topic: string): Observable<any> {
     this.logger.log(`Sending Device topic as name ${topic}`);
 
-    if (!topic || /.*/.test(topic)) {
+    if (!topic) {
       throw new HttpException('Invalid Topic', HttpStatus.BAD_REQUEST);
     }
 
