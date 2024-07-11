@@ -61,7 +61,7 @@ export class IotMqttDomainService extends BaseDomainService<
   /**
    * Initializes the MQTT client.
    */
-  private initMqttClient() {
+  private initMqttClient(): void {
     const connectUrl = `mqtt://${environment.mqtt.host}:${environment.mqtt.port}`;
     this.logger.log(`Connecting to MQTT broker at ${connectUrl}`);
 
@@ -106,7 +106,7 @@ export class IotMqttDomainService extends BaseDomainService<
    * @param {string} deviceName - The name of the device.
    * @param {string} clientId - The client ID for the Cumulocity client.
    */
-  private initCumulocityClient(deviceName: string, clientId: string) {
+  private initCumulocityClient(deviceName: string, clientId: string): void {
     const cumulocityUrl = environment.cumulocity.url;
     this.logger.log(
       `Connecting to Cumulocity IoT for ${deviceName} at ${cumulocityUrl} with clientId ${clientId}`
