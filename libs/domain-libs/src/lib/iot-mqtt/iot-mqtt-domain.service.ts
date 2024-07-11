@@ -4,21 +4,40 @@ import { IoTQueues } from '@neom/shared';
 import { ClientProxy } from '@nestjs/microservices';
 import { environment } from '@neom/shared/lib/environments/dev';
 import { connect } from 'mqtt';
-import { Injectable, Inject, Logger, HttpException, HttpStatus } from '@nestjs/common';
+import * as fs from 'fs';
+import * as path from 'path';
+import {
+  Injectable,
+  Inject,
+  Logger,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { BaseDomainService } from '../services/domain.service';
-
 import { IotMqttCreateVm, IotMqttVm } from '@neom/models';
+import axios from 'axios';
+import { from, of, Observable } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 /**
  * Service to handle MQTT domain operations for IoT.
  * Extends the BaseDomainService to implement domain-specific functionalities.
  */
 @Injectable()
-export class IotMqttDomainService extends BaseDomainService<IotMqttVm, IotMqttVm, IotMqttVm> {
+export class IotMqttDomainService extends BaseDomainService<
+  IotMqttVm,
+  IotMqttVm,
+  IotMqttVm
+> {
   override readonly logger = new Logger(IotMqttDomainService.name);
   private mqttClient: any;
   private cumulocityClient: any;
   private mqttConnected = false;
+  private cumulocityClients: { [key: string]: any } = {}; // Store connections for each device
+  private deviceClientsFilePath = path.resolve(
+    process.cwd(),
+    'workers/iot-worker/src/assets/deviceClients.json'
+  ); // Path to store device client IDs
 
   /**
    * Constructor to inject dependencies.
@@ -26,24 +45,28 @@ export class IotMqttDomainService extends BaseDomainService<IotMqttVm, IotMqttVm
    * @param {Cache} cacheManagerRef - The cache manager instance.
    */
   constructor(
-    @Inject(CACHE_MANAGER) cacheManagerRef: Cache,
-    @Inject(IoTQueues.IoT_WORKER_QUEUE) _client: ClientProxy,
+    @Inject(CACHE_MANAGER) private cacheManagerRef: Cache,
+    @Inject(IoTQueues.IoT_WORKER_QUEUE) _client: ClientProxy
   ) {
     super(_client, cacheManagerRef, 'iot-mqtt');
     this.initMqttClient();
-    this.initCumulocityClient();
+    this.ensureDeviceClientsFileExists(); // Ensure the JSON file exists
+    this.initCumulocityClients(); // Initialize all cumulocity clients
+  }
+
+  async onModuleInit() {
+    await this.initializeDeviceSubscriptions().toPromise();
   }
 
   /**
    * Initializes the MQTT client.
    */
-  private initMqttClient() {
-    const clientId = `mqtt_${Math.random().toString(16).slice(3)}`;
+  private initMqttClient(): void {
     const connectUrl = `mqtt://${environment.mqtt.host}:${environment.mqtt.port}`;
     this.logger.log(`Connecting to MQTT broker at ${connectUrl}`);
-    
+
     this.mqttClient = connect(connectUrl, {
-      clientId,
+      clientId: environment.mqtt.cliendID,
       clean: true,
       connectTimeout: 4000,
       reconnectPeriod: 1000,
@@ -66,33 +89,115 @@ export class IotMqttDomainService extends BaseDomainService<IotMqttVm, IotMqttVm
   }
 
   /**
-   * Initializes the Cumulocity client.
+   * Initializes the Cumulocity clients for all devices listed in the JSON file.
+   * Note: This approach is valid until the database is implemented, after which
+   * the contents of this file will be stored in a database.
    */
-  private initCumulocityClient() {
-    const clientId = `c8y_${Math.random().toString(16).slice(3)}`;
+  private initCumulocityClients(): void {
+    const deviceClients = this.loadDeviceClients();
+    for (const deviceName in deviceClients) {
+      const clientId = deviceClients[deviceName];
+      this.initCumulocityClient(deviceName, clientId);
+    }
+  }
+
+  /**
+   * Initializes the Cumulocity client for a specific device.
+   * @param {string} deviceName - The name of the device.
+   * @param {string} clientId - The client ID for the Cumulocity client.
+   */
+  private initCumulocityClient(deviceName: string, clientId: string): void {
     const cumulocityUrl = environment.cumulocity.url;
+    this.logger.log(
+      `Connecting to Cumulocity IoT for ${deviceName} at ${cumulocityUrl} with clientId ${clientId}`
+    );
 
-    this.logger.log(`Connecting to Cumulocity IoT at ${cumulocityUrl}`);
-
-    this.cumulocityClient = connect(cumulocityUrl, {
+    const cumulocityClient = connect(cumulocityUrl, {
       username: `${environment.cumulocity.tenantid}/${environment.cumulocity.username}`,
       password: environment.cumulocity.password,
       clientId,
     });
 
-    this.cumulocityClient.on('connect', () => {
-      this.logger.log('Connected to Cumulocity IoT');
+    cumulocityClient.on('connect', () => {
+      this.logger.log(`Connected to Cumulocity IoT for device ${deviceName}`);
     });
 
-    this.cumulocityClient.on('error', (error: any) => {
-      this.logger.error('Cumulocity IoT Connection Error', error);
+    cumulocityClient.on('error', (error: any) => {
+      this.logger.error(
+        `Cumulocity IoT Connection Error for device ${deviceName}`,
+        error
+      );
     });
 
-    this.cumulocityClient.on('close', () => {
-      this.logger.log('Cumulocity IoT Connection closed');
+    cumulocityClient.on('close', () => {
+      this.logger.log(
+        `Cumulocity IoT Connection closed for device ${deviceName}`
+      );
     });
+
+    this.cumulocityClients[deviceName] = cumulocityClient; // Store the client in the map
   }
-  
+
+  /**
+   * Ensures the JSON file for storing device client IDs exists.
+   */
+  private ensureDeviceClientsFileExists(): void {
+    if (!fs.existsSync(this.deviceClientsFilePath)) {
+      fs.writeFileSync(this.deviceClientsFilePath, JSON.stringify({}, null, 2));
+      this.logger.log(
+        `Device clients file created at: ${this.deviceClientsFilePath}`
+      );
+    } else {
+      this.logger.log(
+        `Device clients file already exists at: ${this.deviceClientsFilePath}`
+      );
+    }
+  }
+
+  /**
+   * Loads device clients from the JSON file.
+   * @returns {Object} The device clients.
+   */
+  private loadDeviceClients(): { [key: string]: string } {
+    if (fs.existsSync(this.deviceClientsFilePath)) {
+      const data = fs.readFileSync(this.deviceClientsFilePath, 'utf8');
+      return JSON.parse(data);
+    }
+    return {};
+  }
+
+  /**
+   * Saves a device client ID to the JSON file.
+   * @param {string} deviceName - The name of the device.
+   * @param {string} clientId - The client ID to save.
+   */
+  private saveDeviceClient(deviceName: string, clientId: string): void {
+    const deviceClients = this.loadDeviceClients();
+    deviceClients[deviceName] = clientId;
+
+    this.logger.log(
+      `Saving device client: ${deviceName} with clientId: ${clientId}`
+    );
+    fs.writeFileSync(
+      this.deviceClientsFilePath,
+      JSON.stringify(deviceClients, null, 2),
+      'utf8'
+    );
+    this.logger.log(
+      `Device client saved: ${JSON.stringify(deviceClients, null, 2)}`
+    );
+  }
+
+  /**
+   * Retrieves a device client ID from the JSON file.
+   * @param {string} deviceName - The name of the device.
+   * @returns {string | undefined} The client ID, if found.
+   */
+  private getDeviceClient(deviceName: string): string | undefined {
+    const deviceClients = this.loadDeviceClients();
+    return deviceClients[deviceName];
+  }
+
   /**
    * Disconnects the MQTT and Cumulocity clients when the service is destroyed.
    */
@@ -106,27 +211,52 @@ export class IotMqttDomainService extends BaseDomainService<IotMqttVm, IotMqttVm
   }
 
   /**
+   * Clears a specific cache key.
+   * @param {string} cacheKey - The cache key to clear.
+   * @returns {Observable<void>}
+   */
+  clearCacheKey(cacheKey: string): Observable<void> {
+    return from(this.cacheManagerRef.del(cacheKey)).pipe(
+      tap(() => this.logger.log(`Cache cleared for key: ${cacheKey}`))
+    );
+  }
+
+  /**
    * Publishes a message to the MQTT broker.
-   * 
+   *
    * @param {IotMqttCreateVm} param0 - The message DTO containing the pattern and message.
-   * @returns {Promise<any>} The result of the publish operation.
+   * @returns {Observable<any>} The result of the publish operation.
    * @throws {HttpException} If the MQTT client is not connected or if an error occurs while publishing the message.
    */
-  async publishTopicToMqttBroker({ pattern, message }: IotMqttCreateVm) {
+  publishTopicToMqttBroker({ pattern, message }: IotMqttCreateVm): Observable<any> {
     if (!this.mqttConnected) {
-      throw new HttpException('MQTT client not connected', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'MQTT client not connected',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
     }
-    
-    this.logger.log(`Publishing to MQTT topic: ${pattern} with message: ${message}`);
-    
-    return new Promise((resolve, reject) => {
+
+    this.logger.log(
+      `Publishing to MQTT topic: ${pattern} with message: ${message}`
+    );
+
+    return new Observable((observer) => {
       this.mqttClient.publish(pattern, message, (error: any) => {
         if (error) {
           this.logger.error('Failed to publish message to MQTT broker', error);
-          reject(new HttpException('Failed to publish message', HttpStatus.INTERNAL_SERVER_ERROR));
+          observer.error(
+            new HttpException(
+              'Failed to publish message',
+              HttpStatus.INTERNAL_SERVER_ERROR
+            )
+          );
         } else {
           this.logger.log('Message published to MQTT broker');
-          resolve({ status: 'success', message: 'Message published to MQTT broker' });
+          observer.next({
+            status: 'success',
+            message: 'Message published to MQTT broker',
+          });
+          observer.complete();
         }
       });
     });
@@ -134,11 +264,11 @@ export class IotMqttDomainService extends BaseDomainService<IotMqttVm, IotMqttVm
 
   /**
    * Publishes a message from Cumulocity IoT to the MQTT broker.
-   * 
+   *
    * @param {IotMqttCreateVm} body - The message DTO containing the pattern and message.
-   * @returns {Promise<string>} The result of the publish operation.
+   * @returns {Observable<string>} The result of the publish operation.
    */
-  async publishMessageFromCumulocityIoT(body: IotMqttCreateVm) {
+  publishMessageFromCumulocityIoT(body: IotMqttCreateVm): Observable<any> {
     this.logger.log(`Publishing to ${body.pattern} payload ${body.message}`);
     this.cumulocityClient.on('message', (topic: string, message: Buffer) => {
       this.logger.log(`Topic ${topic} message ${message.toString()}`);
@@ -169,67 +299,341 @@ export class IotMqttDomainService extends BaseDomainService<IotMqttVm, IotMqttVm
       this.logger.log('Disconnecting clients on shutdown');
       process.exit();
     });
-    return `Publishing to ${body.pattern} ${body.message}`;
+    return of(`Publishing to ${body.pattern} ${body.message}`);
   }
 
   /**
-   * Subscribes to a specified MQTT topic.
-   * 
+   * Initializes subscriptions for all devices.
+   * @returns {Observable<void>}
+   */
+  initializeDeviceSubscriptions(): Observable<void> {
+    return from(this.fetchAllDeviceDetailsFromCumulocity()).pipe(
+      switchMap((devices) => from(devices)),
+      tap((device: { name: string }) => {
+        this.subscribeToDeviceTopic(device.name);
+      }),
+      tap(() =>
+        this.logger.log('Device subscriptions successfully initialized.')
+      ),
+      catchError((error) => {
+        this.logger.error('Error initializing device subscriptions:', error);
+        throw error;
+      }),
+      map(() => undefined)
+    );
+  }
+
+  /**
+   * Fetches details for all devices from Cumulocity.
+   * @returns {Observable<any[]>} The details of all devices.
+   * @throws {HttpException} If an error occurs while fetching device details.
+   */
+  fetchAllDeviceDetailsFromCumulocity(): Observable<any[]> {
+    const base64EncodedCredentials = Buffer.from(
+      `${environment.cumulocity.username}:${environment.cumulocity.password}`
+    ).toString('base64');
+
+    const config = {
+      headers: {
+        Authorization: `Basic ${base64EncodedCredentials}`,
+        Accept: 'application/json',
+      },
+      params: {
+        pageSize: 100, // Adjust based on how many devices you expect to fetch
+        withTotalPages: true, // Optional, based on API support
+      },
+    };
+
+    return from(axios.get(environment.cumulocity.deviceUrl, config)).pipe(
+      map((response) => response.data.managedObjects), // Adjust depending on actual API response structure
+      catchError((error) => {
+        this.logger.error(
+          'Failed to fetch all device details from Cumulocity',
+          error
+        );
+        throw new HttpException(
+          'Failed to fetch all device details from Cumulocity',
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
+      })
+    );
+  }
+
+  /**
+   * Fetches device details from Cumulocity.
+   * @param {string} deviceId - The ID of the device in Cumulocity.
+   * @returns {Observable<any>} The device details.
+   * @throws {HttpException} If an error occurs while fetching device details.
+   */
+  fetchDeviceDetailsFromCumulocity(deviceId: string): Observable<any> {
+    const url = `https://trialfdlpkgyf727j.eu-latest.cumulocity.com/inventory/managedObjects/${deviceId}`;
+    const base64EncodedCredentials = Buffer.from(
+      `${environment.cumulocity.username}:${environment.cumulocity.password}`
+    ).toString('base64');
+
+    const config = {
+      headers: {
+        Authorization: `Basic ${base64EncodedCredentials}`,
+        Accept: 'application/json',
+      },
+    };
+
+    return from(axios.get(url, config)).pipe(
+      map((response) => {
+        this.logger.log(
+          `Device details fetched: ${JSON.stringify(response.data)}`
+        );
+        return response.data;
+      }),
+      catchError((error) => {
+        this.logger.error(
+          'Failed to fetch device details from Cumulocity',
+          error
+        );
+        throw new HttpException(
+          'Failed to fetch device details from Cumulocity',
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
+      })
+    );
+  }
+
+  /**
+   * Registers and subscribes a device to Cumulocity.
+   * @param {string} deviceName - The name of the device.
+   * @returns {Observable<any>} The result of the registration and subscription.
+   */
+  registerAndSubscribeDevices(deviceName: string): Observable<any> {
+    if (deviceName) {
+      return from(this.registerDeviceToCumulocity(deviceName)).pipe(
+        tap(() => this.subscribeToDeviceTopic(deviceName))
+      );
+    }
+    return of(null);
+  }
+
+  /**
+   * Subscribes to a device's MQTT topic and handles incoming messages.
+   * @param {string} deviceName - The name of the device.
+   */
+  private subscribeToDeviceTopic(deviceName: string) {
+    const topic = `tele/${deviceName}/SENSOR`;
+    this.mqttClient.subscribe(topic, (err: any, granted: any) => {
+      if (err) {
+        this.logger.error(`Failed to subscribe to topic ${topic}:`, err);
+      } else {
+        this.logger.log(`Subscribed to topic ${topic}`);
+        // Listen for messages on this topic.
+        this.mqttClient.on('message', (receivedTopic: string, message: any) => {
+          // Ensure that messages are processed only for the subscribed topic
+          if (receivedTopic === topic) {
+            this.handleDeviceData(receivedTopic, message);
+          }
+        });
+      }
+    });
+  }
+
+  /**
+   * Registers a device to Cumulocity and subscribes it to a topic.
+   * @param {string} deviceName - The name of the device.
+   * @returns {Observable<string>} The client ID of the registered device.
+   */
+  registerDeviceToCumulocity(deviceName: string): Observable<any> {
+    const cacheKey = `device-registration-${deviceName}`;
+    return this.clearCacheKey(cacheKey).pipe(
+      switchMap(() => from(this.cacheManagerRef.get<boolean>(cacheKey))),
+      switchMap((isRegistered) => {
+        this.logger.log(
+          `Cache check for ${deviceName}: isRegistered = ${isRegistered}`
+        );
+
+        if (!isRegistered) {
+          this.logger.log(`Registering device with name: ${deviceName}`);
+          const clientId = `c8y-${deviceName}-${Math.random()
+            .toString(16)
+            .slice(2)}`; // Unique client ID for each device
+          const registrationMessage = `100,${deviceName},c8y_MQTTDevice`;
+          this.logger.log(`Registration Message: ${registrationMessage}`);
+
+          // Initialize the client for this device
+          this.initCumulocityClient(deviceName, clientId);
+          const cumulocityClient = this.cumulocityClients[deviceName];
+
+          return new Observable<string>((observer) => {
+            cumulocityClient.on('connect', () => {
+              cumulocityClient.publish(
+                's/us',
+                registrationMessage,
+                async (error: any) => {
+                  if (!error) {
+                    await this.cacheManagerRef.set(cacheKey, true);
+                    this.saveDeviceClient(deviceName, clientId); // Save the client ID to the JSON file
+                    this.logger.log(
+                      `Device ${deviceName} successfully registered with clientId ${clientId}.`
+                    );
+                    observer.next(clientId);
+                    observer.complete();
+                  } else {
+                    this.logger.error(
+                      `Failed to register device ${deviceName}`,
+                      error
+                    );
+                    observer.error(error);
+                  }
+                }
+              );
+            });
+
+            cumulocityClient.on('error', (error: any) => {
+              this.logger.error(
+                `Failed to connect Cumulocity IoT for device ${deviceName}`,
+                error
+              );
+              observer.error(error);
+            });
+          });
+        } else {
+          this.logger.log(`Device ${deviceName} already registered.`);
+          return of(this.getDeviceClient(deviceName)); // Retrieve the client ID from the JSON file
+        }
+      })
+    );
+  }
+
+  /**
+   * Subscribes to a specified MQTT topic and handles incoming messages.
+   *
    * @param {string} topic - The MQTT topic to subscribe to.
-   * @returns {Promise<any>} The result of the subscription operation.
+   * @returns {Observable<any>} The result of the subscription operation.
    * @throws {HttpException} If the MQTT client is not connected or if an error occurs while subscribing to the topic.
    */
-  async subscribeToMqttBroker(topic: string) {
+  subscribeToMqttBroker(topic: string): Observable<any> {
     if (!this.mqttConnected) {
-      throw new HttpException('MQTT client not connected', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'MQTT client not connected',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
     }
 
     this.logger.log(`Subscribing to MQTT topic: ${topic}`);
 
-    return new Promise((resolve, reject) => {
+    return new Observable((observer) => {
       this.mqttClient.subscribe(topic, (err: any) => {
         if (err) {
           this.logger.error(`Failed to subscribe to topic ${topic}`, err);
-          reject(new HttpException('Failed to subscribe to topic', HttpStatus.INTERNAL_SERVER_ERROR));
+          observer.error(
+            new HttpException(
+              'Failed to subscribe to topic',
+              HttpStatus.INTERNAL_SERVER_ERROR
+            )
+          );
         } else {
           this.logger.log(`Subscribed to topic ${topic}`);
-          resolve({ status: 'success', message: `Subscribed to topic ${topic}` });
+          observer.next({
+            status: 'success',
+            message: `Subscribed to topic ${topic}`,
+          });
+          observer.complete();
         }
       });
 
-      this.mqttClient.on('message', (receivedTopic: string, message: Buffer) => {
-        if (receivedTopic === topic || topic === '#') {
-          const deviceName = receivedTopic.split('/');
-          this.logger.log('device', receivedTopic, 'payload', message.toString());
-          this.cumulocityClient.publish(
-            's/us',
-            `100,${deviceName[1]},c8y_MQTTDevice`,
-            () => {
-              this.logger.log('Device registered at Cumulocity');
-            }
-          );
-          this.cumulocityClient.subscribe('s/ds');
-
-          const parsedPayload = JSON.parse(message.toString());
-          this.logger.debug('Payload', parsedPayload);
-          const energyValues = parsedPayload.ENERGY;
-          this.logger.debug('Energy values', energyValues);
-
-          const timestamp = new Date().toISOString();
-          const measurementMessage =
-            `201,EnergyMeasurement,${timestamp},` +
-            `c8y_EnergyMeasurement,Power,${energyValues.Power},W,` +
-            `c8y_EnergyMeasurement,Voltage,${energyValues.Voltage},V,` +
-            `c8y_EnergyMeasurement,Energy_Yesterday,${energyValues.Yesterday},kWh,` +
-            `c8y_EnergyMeasurement,Energy_Today,${energyValues.Today},kWh,` +
-            `c8y_EnergyMeasurement,Current,${energyValues.Current},A`;
-
-          this.logger.log(
-            `Sending measurements: Power - ${energyValues.Power} W, Voltage - ${energyValues.Voltage} V, Current - ${energyValues.Current} A, Energy_Yesterday - ${energyValues.Yesterday} kWh, Energy_Today - ${energyValues.Today} kWh`
-          );
-          this.cumulocityClient?.publish('s/us', measurementMessage);
+      this.mqttClient.on(
+        'message',
+        (receivedTopic: string, message: Buffer) => {
+          this.handleDeviceData(receivedTopic, message);
         }
-      });
+      );
     });
+  }
+
+  /**
+   * Handles incoming device data and processes it based on the topic.
+   * @param {string} topic - The MQTT topic.
+   * @param {Buffer} message - The message payload.
+   */
+  handleDeviceData(topic: string, message: Buffer) {
+    const deviceName = topic.split('/')[1];
+    const cacheKey = `device-registration-${deviceName}`;
+    from(this.cacheManagerRef.get<boolean>(cacheKey))
+      .pipe(
+        tap((isRegistered) => {
+          if (!isRegistered) {
+            this.logger.log(
+              `Device ${deviceName} not found in cache. Checking registration status.`
+            );
+            // Optionally, register the device or queue data until registration is confirmed
+            return;
+          }
+
+          const payload = JSON.parse(message.toString());
+          if (payload.SI7021) {
+            this.handleTemperatureData(deviceName, payload);
+          } else if (payload.AM2301) {
+            this.handleTemperatureData(deviceName, payload);
+          } else if (payload.ENERGY) {
+            this.handlePowerData(deviceName, payload);
+          } else {
+            this.logger.error(
+              `Unrecognized data format received from ${deviceName}`
+            );
+          }
+        })
+      )
+      .subscribe();
+  }
+
+  /**
+   * Handles incoming temperature data from a device and sends it to Cumulocity.
+   * @param {string} deviceName - The name of the device.
+   * @param {any} payload - The data payload containing temperature information.
+   */
+  private handleTemperatureData(deviceName: string, payload: any) {
+    const { Temperature, Humidity, DewPoint } = payload.SI7021;
+    const timestamp = new Date().toISOString();
+    const measurementMessage =
+      `201,TemperatureMeasurement,${timestamp},` +
+      `c8y_TemperatureMeasurement,Temperature,${Temperature},C,` +
+      `c8y_HumidityMeasurement,Humidity,${Humidity},%,` +
+      `c8y_DewPointMeasurement,DewPoint,${DewPoint},C`;
+
+    this.logger.log(
+      `Sending temperature data to Cumulocity for ${deviceName}, measurement: ${measurementMessage}`
+    );
+
+    const cumulocityClient = this.cumulocityClients[deviceName];
+    if (cumulocityClient) {
+      cumulocityClient.publish('s/us', measurementMessage);
+    } else {
+      this.logger.error(`Cumulocity client not found for device ${deviceName}`);
+    }
+  }
+
+  /**
+   * Handles incoming power data from a device and sends it to Cumulocity.
+   * @param {string} deviceName - The name of the device.
+   * @param {any} payload - The data payload containing power information.
+   */
+  private handlePowerData(deviceName: string, payload: any) {
+    const { Power, Voltage, Current, Yesterday, Today } = payload.ENERGY;
+    const timestamp = new Date().toISOString();
+    const measurementMessage =
+      `201,EnergyMeasurement,${timestamp},` +
+      `c8y_EnergyMeasurement,Power,${Power},W,` +
+      `c8y_EnergyMeasurement,Voltage,${Voltage},V,` +
+      `c8y_EnergyMeasurement,Current,${Current},A,` +
+      `c8y_EnergyMeasurement,Energy_Yesterday,${Yesterday},kWh,` +
+      `c8y_EnergyMeasurement,Energy_Today,${Today},kWh`;
+
+    this.logger.log(
+      `Sending power data to Cumulocity for ${deviceName} values: ${measurementMessage}`
+    );
+
+    const cumulocityClient = this.cumulocityClients[deviceName];
+    if (cumulocityClient) {
+      cumulocityClient.publish('s/us', measurementMessage);
+    } else {
+      this.logger.error(`Cumulocity client not found for device ${deviceName}`);
+    }
   }
 }
