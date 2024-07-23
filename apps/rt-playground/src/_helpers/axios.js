@@ -2,15 +2,16 @@
  * Custom axios instance
  */
 
-import axios from "axios";
-import createAuthRefreshInterceptor from "axios-auth-refresh";
-import { endpoints } from "../_services/endpoints";
-import { authRefresh } from "./";
+import axios from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
+import { endpoints } from '../_services/endpoints';
+import { authRefresh } from './';
 
 const instance = axios.create({
   baseURL: endpoints.BASEV2URL,
   timeout: 30000,
   headers: {
+    appName: 'CallADoc',
     // 'X-Custom-Header': 'foobar',
     // // true: need, false: dont need
     // 'Authorization': true,
@@ -24,8 +25,8 @@ const reAuthLogic = (failedRequest) => {
     return authRefresh()
       .then((token) => {
         if (token) {
-          failedRequest.response.config.headers["Authorization"] =
-            "Bearer " + token;
+          failedRequest.response.config.headers['Authorization'] =
+            'Bearer ' + token;
           return resolve();
         }
       })
@@ -43,7 +44,7 @@ if (endpoints.use_OAuth) {
 
 instance.interceptors.request.use((request) => {
   // Add authorization header if set
-  const authHdr = sessionStorage.getItem("pega_react_user");
+  const authHdr = sessionStorage.getItem('pega_react_user');
   if (authHdr) {
     //Add this to Neom digital
     request.headers.Authorization = authHdr;
@@ -54,7 +55,7 @@ instance.interceptors.request.use((request) => {
       // Should always have an authHdr (and we keep around expired ones to trigger the reauth logic)
       //  If we do fall in here, just cancel, as you are guaranteed to get a 400 failure on server without
       //  the Auhtorization header
-      throw new axios.Cancel("Invalid access token");
+      throw new axios.Cancel('Invalid access token');
     }
   }
   return request;

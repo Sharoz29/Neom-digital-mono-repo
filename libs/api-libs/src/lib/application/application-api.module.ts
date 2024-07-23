@@ -1,20 +1,14 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
 import { redisStore } from 'cache-manager-redis-store';
 import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { environment } from '@neom/shared/lib/environments/dev';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
-import { DxVersioningMiddleware, NstLibsModule } from '@neom/nst-libs';
+import { NstLibsModule } from '@neom/nst-libs';
 
-import { CaseTypesApiController } from './case-types-api.controller';
-import { CaseTypesApiService } from './case-types-api.service';
-import { HttpModule } from '@nestjs/axios';
+import { ApplicationApiController } from './application-api.controller';
+import { ApplicationApiService } from './application-api.service';
 
 @Module({
   imports: [
@@ -49,15 +43,8 @@ import { HttpModule } from '@nestjs/axios';
         },
       },
     ]),
-    HttpModule,
   ],
-  controllers: [CaseTypesApiController],
-  providers: [CaseTypesApiService],
+  controllers: [ApplicationApiController],
+  providers: [ApplicationApiService],
 })
-export class CaseTypesApiModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(DxVersioningMiddleware)
-      .forRoutes({ path: 'v1/casetypes', method: RequestMethod.ALL });
-  }
-}
+export class ApplicationApiModule {}

@@ -27,3 +27,5 @@ export * from './lib/related-case';
 export * from './lib/tag';
 
 export * from './lib/page';
+
+export * from './lib/application';
