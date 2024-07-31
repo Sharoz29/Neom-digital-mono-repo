@@ -18,10 +18,10 @@ html > body {
   /* height: 100%; */
 }
 
-.pushable.main {
+/* .pushable.main {
   margin-top: 47px;
   height: 100%;
-}
+} */
 
 div#root {
   height: calc(100% - 47px);

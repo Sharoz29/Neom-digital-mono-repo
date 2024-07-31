@@ -1,38 +1,92 @@
-import React from "react";
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Embedded from "../Embedded/Embedded";
-import { PegaApp } from "../PegaApp/PegaApp";
-import { AuthPage } from "../../AuthPage";
-import { getHomeUrl } from "../../_helpers";
+import Embedded from '../Embedded/Embedded';
+import { PegaApp } from '../PegaApp/PegaApp';
+import { AuthPage } from '../../AuthPage';
+import { getHomeUrl } from '../../_helpers';
+import AlarmDetail from '../../_components/Alarm/AlarmDetail';
+import Alarms from '../../_components/Alarm/Alarms';
 
-// The Main component renders one of the three provided
-// Routes (provided that one matches). Both the /roster
-// and /schedule routes will match any pathname that starts
-// with /roster or /schedule. The / route will only match
-// when the pathname is exactly the string "/"
+import AppHeader from '../../AppHeader/AppHeader';
+import Sidebar from '../../_components/sidebar';
+import styled from 'styled-components';
+import DeviceDetail from '../../_components/Device/DeviceDetail';
+import Device from '../../_components/Device/Device';
+import Footer from '../../_components/Footer';
 
-// Route exact
+const Layout = styled.div`
+  display: flex;
+  min-height: 100vh;
+`;
+
+const MainContent = styled.div`
+  //  height:auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Content = styled.div`
+  flex: 1;
+  overflow-y: none;
+  background: white;
+`;
+
 const AppSelector = () => {
-  const bHasToken = !!sessionStorage.getItem("pega_react_TI");
+  const bHasToken = !!sessionStorage.getItem('pega_react_TI');
   const homeUrl = getHomeUrl();
-  const sAuthPath = homeUrl + (homeUrl === "/" ? "auth" : "");
+  const sAuthPath = homeUrl + (homeUrl === '/' ? 'auth' : '');
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const code = urlParams.get("code");
+  const code = urlParams.get('code');
 
   return (
-    <Switch>
-      {(!bHasToken && code &&
-          <Route path={sAuthPath} component={AuthPage} />
-      )}
-      <Route path={`${process.env.PUBLIC_URL}/embedded`} component={Embedded} />
-      <Route path={`${process.env.PUBLIC_URL}/portal`} component={PegaApp} />
-      <Route path={`${process.env.PUBLIC_URL}/auth`} component={AuthPage} />
-      <Route exact path={`${homeUrl}`} component={PegaApp} />
-      <Route path="*" component={PegaApp} />
-    </Switch>
-  )
-
+    <Layout>
+      <Sidebar />
+      <MainContent>
+        <AppHeader />
+        <Content>
+          <Switch>
+            {!bHasToken && code && (
+              <Route path={sAuthPath} component={AuthPage} />
+            )}
+            <Route
+              path={`${process.env.PUBLIC_URL}/embedded`}
+              component={Embedded}
+            />
+            <Route
+              path={`${process.env.PUBLIC_URL}/portal`}
+              component={PegaApp}
+            />
+            <Route
+              path={`${process.env.PUBLIC_URL}/auth`}
+              component={AuthPage}
+            />
+            <Route exact path={`${homeUrl}`} component={PegaApp} />
+            <Route path="*" component={PegaApp} />
+            <Route
+              path={`${process.env.PUBLIC_URL}/alarms`}
+              component={Alarms}
+            />
+            <Route
+              path={`${process.env.PUBLIC_URL}/devices`}
+              component={Device}
+            />
+            <Route
+              path={`${process.env.PUBLIC_URL}/device/:id`}
+              component={DeviceDetail}
+            />
+            <Route
+              path={`${process.env.PUBLIC_URL}/alarm/:id
+              `}
+              component={AlarmDetail}
+            />
+          </Switch>
+        </Content>
+        <Footer />
+      </MainContent>
+    </Layout>
+  );
 };
 
 export default AppSelector;
