@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 
 
 import { environment } from '@neom/shared/lib/environments/dev';
-import { PegaUserVm } from '@neom/models';
 import { redisStore } from 'cache-manager-redis-store';
 import { NstLibsModule } from '@neom/nst-libs';
 import { CacheModule, CacheStore } from '@nestjs/cache-manager';

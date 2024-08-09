@@ -1,4 +1,4 @@
-import { PegaUserVm, PSPEGA_USER } from '@neom/models';
+// import { PegaUserVm, PSPEGA_USER } from '@neom/models';
 import {
   Controller,
   Get,
@@ -37,7 +37,7 @@ export class PegaUserDomainController {
 
   @ApiOkResponse({
     status: HttpStatus.OK,
-    type: PegaUserVm,
+    // type: PegaUserVm,
     isArray: true,
     description:
       'Successfully retrieved the record for the specified Pega user.',

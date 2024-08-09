@@ -1,0 +1,35 @@
+{
+  "name": "alfresco-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/alfresco-api/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "alfresco-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "alfresco-api:build:development"
+        },
+        "production": {
+          "buildTarget": "alfresco-api:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/alfresco-api/jest.config.ts"
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/alfresco-api/Dockerfile . -t alfresco-api:latest"
+    }
+  }
+}

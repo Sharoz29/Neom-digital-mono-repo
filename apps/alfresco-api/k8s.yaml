@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alfresco-api
+spec:
+  type: ClusterIP
+  selector:
+    app: alfresco-api
+  ports:
+  - port: 3001
+    targetPort: 3001
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alfresco-api
+  labels:
+    app: alfresco-api
+spec:
+  selector:
+    matchLabels:
+      app: alfresco-api
+  template:
+    metadata:
+      labels:
+        app: alfresco-api
+    spec:
+      containers:
+      - name: alfresco-api
+        imagePullPolicy: Always
+        image: ansaries/alfresco-api:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3001
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+    meta.helm.sh/release-name: pega23
+    meta.helm.sh/release-namespace: pega23
+    nginx.ingress.kubernetes.io/proxy-body-size: 2048m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "6000"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "6000"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "6000"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  name: alfresco-api
+  namespace: pega23
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: web.pega23.lowcodesol.co.uk
+      http:
+        paths:
+          - backend:
+              service:
+                name: alfresco-api
+                port:
+                  number: 3001
+            path: /afco
+            pathType: Prefix
+  tls:
+    - hosts:
+        - web.pega23.lowcodesol.co.uk
+      secretName: pega-ss
