@@ -28,7 +28,7 @@ export class AssignmentDomainService extends BaseDomainService<
     return from(
       axios
         .get(environment.pega.basev1Url + environment.ASSIGNMENTS, {
-          headers: { Authorization: headers.authorization },
+          headers: { Authorization: headers?.authorization },
         })
         .then(function (response) {
           return response.data;
