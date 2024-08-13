@@ -98,17 +98,10 @@ export class CaseTypesApiController {
   @ApiOperation({
     summary: 'Gets the creation page of the case by the specified id',
   })
-<<<<<<< HEAD:libs/api-libs/src/lib/case-types/case-types-api.controller.ts
-  // @UseInterceptors(CacheInterceptor)
-  // @CacheTTL(60 * 60 * 24)
-  async getCaseCreationPage(
-    @Param('id') param: string,
-=======
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(60 * 60 * 24)
   getCaseTypeById(
     @Param('id') id: string,
->>>>>>> 9a1e8e5cac07b9b935c09c04268538452568d783:libs/api-libs/src/lib/dx-v1/case-types/case-types-api.controller.ts
     @Request() req: Request
   ): Observable<CaseTypeVm> {
     return this._caseTypesApiService.getCaseTypeById(id, req);
