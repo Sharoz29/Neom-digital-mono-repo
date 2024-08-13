@@ -40,8 +40,8 @@ export class AuthService {
   initEndpoints = () => {
     if (endpoints.PEGAURL && !endpoints.bInitialized) {
       const appBase = endpoints.PEGAURL + (endpoints.appAlias ? `/app/${endpoints.appAlias}` : '');
-      if (!endpoints.BASEURL) {
-        endpoints.BASEURL = appBase + "/api/v1";
+      if (!endpoints.PEAGABASEURL) {
+        endpoints.PEAGABASEURL = appBase + '/api/v1';
       }
       if (endpoints.use_v2apis && !endpoints.BASEV2URL) {
         endpoints.BASEV2URL = appBase + "/api/application/v2";
@@ -71,7 +71,7 @@ export class AuthService {
     if (endpoints.use_OAuth) {
       this.initPegaOAuth();
     } else {
-      this.authUrl = endpoints.BASEURL + endpoints.AUTH;
+      this.authUrl = endpoints.PEAGABASEURL + endpoints.AUTH;
     }
   };
 

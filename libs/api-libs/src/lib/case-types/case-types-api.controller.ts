@@ -61,6 +61,7 @@ export class CaseTypesApiController {
     summary: 'Gets all the casetypes',
   })
   @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60 * 60 * 24)
   async getCaseTypes(@Request() req: Request) {
     return this._caseTypesApiService.getCaseTypes(req);
   }
@@ -87,8 +88,8 @@ export class CaseTypesApiController {
   @ApiOperation({
     summary: 'Gets the creation page of the case by the specified id',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   async getCaseCreationPage(
     @Param('id') param: string,
     @Request() req: Request

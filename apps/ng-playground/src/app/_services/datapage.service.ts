@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DatapageService {
-  dataPageUrl = endpoints.BASEURL + endpoints.DATA;
+  dataPageUrl = endpoints.API_URL + endpoints.DATA;
   pxResults: Object= new Object();
 
   constructor(private http: HttpClient) { }

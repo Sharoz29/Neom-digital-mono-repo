@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class AssignmentService {
 
   refHelper: ReferenceHelper = new ReferenceHelper();
-  assignmentUrl = endpoints.BASEURL + endpoints.ASSIGNMENTS;
+  assignmentUrl = endpoints.PEAGABASEURL + endpoints.ASSIGNMENTS;
   assignmentUrl2 = endpoints.BASEV2URL + endpoints.ASSIGNMENTS;
 
   constructor(private http: HttpClient) { }

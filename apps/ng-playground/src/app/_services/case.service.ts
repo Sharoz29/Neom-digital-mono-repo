@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 export class CaseService {
 
   refHelper: ReferenceHelper = new ReferenceHelper();
-  caseUrl = endpoints.BASEURL + endpoints.CASES;
-  caseTypeUrl = endpoints.BASEURL + endpoints.CASETYPES;
+  caseUrl = endpoints.API_URL + endpoints.CASES;
+  caseTypeUrl = endpoints.API_URL + endpoints.CASETYPES;
 
   constructor(private http: HttpClient) { }
 
@@ -112,28 +112,28 @@ export class CaseService {
   }
 
   getAttachments(caseID: any):Observable<HttpResponse<any>> {
-    const url = `${endpoints.BASEURL}/cases/${caseID}/attachments`;
+    const url = `${endpoints.API_URL}/cases/${caseID}/attachments`;
     return this.http.get(url, { observe: "response" });
   }
   
   uploadAttachments(formData: FormData):Observable<HttpResponse<any>> {
-    const url = `${endpoints.BASEURL}/attachments/upload`;
+    const url = `${endpoints.API_URL}/attachments/upload`;
     return this.http.post(url, formData, {observe: 'response'});
   }
 
   saveAttachments(data: any, caseID: any):Observable<HttpResponse<any>> {
     const attachmentData = { attachments: data };
-    const url = `${endpoints.BASEURL}/cases/${caseID}/attachments`;
+    const url = `${endpoints.API_URL}/cases/${caseID}/attachments`;
     return this.http.post(url, attachmentData) as any;
   }
   
   deleteAttachment(file: { ID: any; }):Observable<HttpResponse<any>> {
-    const url = `${endpoints.BASEURL}/attachments/${file.ID}`;
+    const url = `${endpoints.API_URL}/attachments/${file.ID}`;
     return this.http.delete(url, { observe: "response" });
   }
   
   downloadAttachment(file: { fileName?: any; ID: any; }):Observable<HttpResponse<any>> {
-    const url = `${endpoints.BASEURL}/attachments/${file.ID}`;
+    const url = `${endpoints.API_URL}/attachments/${file.ID}`;
     return this.http.get(url, { observe: "response", responseType: 'text' });
   }
   
