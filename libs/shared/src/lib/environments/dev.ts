@@ -17,6 +17,7 @@ export const environment = {
     baseUrl: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/application/v2`,
     basev1Url_comment: `https://tcsme-lcoe.pegatsdemo.com/prweb/api/v1`,
     basev1Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/v1`,
+    apiUrl: `https://web.pega23.lowcodesol.co.uk/prweb/api/v1`,
   },
   mqtt: {
     host: '192.168.60.102',
@@ -35,7 +36,7 @@ export const environment = {
     url: 'mqtt://tenant_id.eu-latest.cumulocity.com:1883',
   },
   production: false,
-  apiUrl: 'http://localhost:5001/api/',
+  apiUrl: 'http://localhost:5001/api',
   ngApiUrl: 'http://localhost:5001',
   CASETYPES: '/casetypes',
   WORKLIST: `/D_Worklist`,
@@ -72,6 +73,9 @@ export const environment = {
   DASHBOARD: '/dashboard',
   INSIGHT: '/insight',
   PORTALS: '/portals',
+  APPLICATIONS: '/applications',
+  APPLICATIONDATAPAGE: '/D_Application',
+  VERSION: '/version',
   // V2 endpoints
   NAVIGATION_STEPS: '/navigation_steps',
 };

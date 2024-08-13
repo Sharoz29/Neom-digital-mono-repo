@@ -52,7 +52,8 @@ function getFieldsForAssignment(assignment, actionId) {
       )
     )
     .then(function (response) {
-      return response.data.data.caseInfo.assignments[0].actions[0];
+      const data = response?.data;
+      return data.caseInfo.assignments[0].actions[0];
     })
     .catch(function (error) {
       return Promise.reject(getError(error));

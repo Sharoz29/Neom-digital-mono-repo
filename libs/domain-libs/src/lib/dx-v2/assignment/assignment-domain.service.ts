@@ -25,7 +25,10 @@ export class AssignmentDomainService extends BaseDomainService<any, any, any> {
         .get(environment.pega.basev2Url + environment.ASSIGNMENTS + `/${id}`, {
           headers: { Authorization: headers.authorization },
         })
-        .then((response) => response.data)
+        .then((response) => {
+          const { data } = response.data;
+          return data;
+        })
         .catch((error) => Promise.reject(error))
     );
   }
@@ -44,7 +47,10 @@ export class AssignmentDomainService extends BaseDomainService<any, any, any> {
             headers: { Authorization: payload.headers.authorization },
           }
         )
-        .then((response) => response.data)
+        .then((response) => {
+          const { data } = response.data;
+          return data;
+        })
         .catch((error) => Promise.reject(error.message))
     );
   }

@@ -15,6 +15,7 @@ import { ParticipantDomainModule } from './dx-v2/participant/participant-domain.
 import { RelatedCaseDomainModule } from './dx-v2/related-case/related-case-domain.module';
 import { TagDomainModule } from './dx-v2/tag/tag-domain.module';
 import { PageDomainModule } from './dx-v2/page/page-domain.module';
+import { ApplicationDomainModule } from './application/application-domain.module';
 import { DynamicModule, Module } from '@nestjs/common';
 import { IotMqttDomainModule } from './iot-mqtt/iot-mqtt-domain.module';
 const generatedModules = [
@@ -36,6 +37,7 @@ const generatedModules = [
   RelatedCaseDomainModule,
   TagDomainModule,
   PageDomainModule,
+  ApplicationDomainModule,
 ];
 @Module({
   controllers: [],

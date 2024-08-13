@@ -17,6 +17,7 @@ import { RelatedCaseApiModule } from './dx-v2/related-case/related-case-api.modu
 import { TagApiModule } from './dx-v2/tag/tag-api.module';
 import { PageApiModule } from './dx-v2/page/page-api.module';
 import { Module } from '@nestjs/common';
+import { ApplicationApiModule } from './application/application-api.module';
 const generatedModules = [
   CaseTypesV1ApiModule,
   DataV1ApiModule,
@@ -36,6 +37,7 @@ const generatedModules = [
   RelatedCaseApiModule,
   TagApiModule,
   PageApiModule,
+  ApplicationApiModule,
 ];
 @Module({
   controllers: [],
