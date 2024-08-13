@@ -7,14 +7,14 @@ import { Subscription, Observable } from 'rxjs';
 import { HttpParams, HttpHeaders } from '@angular/common/http';
 import { OpenAssignmentService } from '../_messages/openassignment.service';
 import { RefreshWorkListService } from '../_messages/refreshworklist.service';
-import { ProgressSpinnerService } from "../_messages/progressspinner.service";
+import { ProgressSpinnerService } from '../_messages/progressspinner.service';
 import { GetLoginStatusService } from '../_messages/getloginstatus.service';
 import { endpoints } from '../_services/endpoints';
 
 @Component({
   selector: 'app-worklist',
   templateUrl: './worklist.component.html',
-  styleUrls: ['./worklist.component.scss']
+  styleUrls: ['./worklist.component.scss'],
 })
 export class WorklistComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -27,41 +27,42 @@ export class WorklistComponent implements OnInit {
   message: any;
   subscription!: Subscription;
 
-  displayedColumns = ['pxRefObjectInsName','pyAssignmentStatus', 'pyLabel', 'pxUrgencyAssign'];
+  displayedColumns = [
+    'pxRefObjectInsName',
+    'pyAssignmentStatus',
+    'pyLabel',
+    'pxUrgencyAssign',
+  ];
   worklistResults: any[] = [];
 
-
-  constructor(private datapage: DatapageService, 
-              private oaservice: OpenAssignmentService,
-              private rwlservice: RefreshWorkListService,
-              private psservice: ProgressSpinnerService,
-              private glsservice: GetLoginStatusService,
-              ) { }
+  constructor(
+    private datapage: DatapageService,
+    private oaservice: OpenAssignmentService,
+    private rwlservice: RefreshWorkListService,
+    private psservice: ProgressSpinnerService,
+    private glsservice: GetLoginStatusService
+  ) {}
 
   ngOnInit() {
-
     this.getWorkList();
-    
+
     // will get operatorID datapage in case of OAuth, for basic auth it is done in the login method itself
-    if(endpoints.use_OAuth){
+    if (endpoints.use_OAuth) {
       this.loadFromOAuth();
     }
 
-    this.subscription = this.rwlservice.getMessage().subscribe(message => { 
+    this.subscription = this.rwlservice.getMessage().subscribe((message) => {
       this.message = message;
 
-
-      if (this.message.workList === 'Work' || this.message.workList === "Worklist") {
+      if (
+        this.message.workList === 'Work' ||
+        this.message.workList === 'Worklist'
+      ) {
         this.getWorkList();
-
-      }
-      else {
+      } else {
         this.getWorkBaskets(this.message.workList);
       }
     });
-
-    
-
   }
 
   ngOnDestroy() {
@@ -71,23 +72,25 @@ export class WorklistComponent implements OnInit {
   loadFromOAuth() {
     this.psservice.sendMessage(true);
 
-    const operatorParams = new HttpParams()
+    const operatorParams = new HttpParams();
 
-    this.datapage.getDataPage("D_OperatorID", operatorParams).subscribe(
-      response => {
-
-        const operator: any = response.body;
-        sessionStorage.setItem("userName", operator.pyUserName);
-        sessionStorage.setItem("userWorkBaskets", JSON.stringify(operator.pyWorkBasketList));
-      
+    this.datapage.getDataPage('D_OperatorID', operatorParams).subscribe(
+      (response: any) => {
+        const operator: any = response.pyUserName;
+        sessionStorage.setItem('userName', operator);
+        sessionStorage.setItem(
+          'userWorkBaskets',
+          JSON.stringify(response.pyWorkBasketList)
+        );
 
         this.psservice.sendMessage(false);
-        this.glsservice.sendMessage("LoggedIn");
+        this.glsservice.sendMessage('LoggedIn');
       },
-      err => {
+      (err) => {
         this.psservice.sendMessage(false);
-        console.log("Errors getting data page: " + err.message);
-      });
+        console.log('Errors getting data page: ' + err.message);
+      }
+    );
   }
 
   getWorkList() {
@@ -95,62 +98,65 @@ export class WorklistComponent implements OnInit {
 
     this.psservice.sendMessage(true);
 
-    const dsubscription = this.datapage.getDataPage("D_Worklist", worklistParams).subscribe(
+    const dsubscription = this.datapage
+      .getDataPage('D_Worklist', worklistParams)
+      .subscribe(
+        (response: any) => {
+          this.worklist$ = new MatTableDataSource<any>(
+            this.getResults(response)
+          );
+          this.headers = response.headers;
 
-      response => {
-        this.worklist$ = new MatTableDataSource<any>(this.getResults(response.body));
-        this.headers = response.headers;
+          this.worklist$.paginator = this.paginator;
+          this.worklist$.sort = this.sort;
 
-        this.worklist$.paginator = this.paginator;
-        this.worklist$.sort = this.sort;
-        
-        this.psservice.sendMessage(false);
+          this.psservice.sendMessage(false);
 
-        dsubscription.unsubscribe();
-        
-      },
-      err => {
-        this.psservice.sendMessage(false);
-        console.log("Error form worklist:" + err.errors);
-      }
-    );
-
-    
-
+          dsubscription.unsubscribe();
+        },
+        (err) => {
+          this.psservice.sendMessage(false);
+          console.log('Error form worklist:' + err.errors);
+        }
+      );
   }
 
   getWorkBaskets(workbasket: string | number | boolean) {
     const workbasketParams = new HttpParams().set('WorkBasket', workbasket);
 
-    const dsubscription = this.datapage.getDataPage("D_WorkBasket", workbasketParams).subscribe(
+    const dsubscription = this.datapage
+      .getDataPage('D_WorkBasket', workbasketParams)
+      .subscribe(
+        (response: any) => {
+          this.worklist$ = new MatTableDataSource<any>(
+            this.getResults(response)
+          );
+          this.headers = response.headers;
 
-      response => {
-        this.worklist$ = new MatTableDataSource<any>(this.getResults(response.body));
-        this.headers = response.headers;
+          this.worklist$.paginator = this.paginator;
 
-        this.worklist$.paginator = this.paginator;
-
-        dsubscription.unsubscribe();
-      },
-      err => {
-        console.log("Error form workbasket:" + err.errors);
-      }
-    );
+          dsubscription.unsubscribe();
+        },
+        (err) => {
+          console.log('Error form workbasket:' + err.errors);
+        }
+      );
   }
 
-  getResults(data: { pxResults: never[]; }) {
+  getResults(data: { pxResults: never[] }) {
     this.worklistResults = data.pxResults;
     return data.pxResults;
   }
 
   filterWorklistbyCaseId(value: string) {
-    const filteredList = this.worklistResults.filter(element => element.pxRefObjectInsName?.toLowerCase().includes(value?.toLowerCase()));
+    const filteredList = this.worklistResults.filter((element) =>
+      element.pxRefObjectInsName?.toLowerCase().includes(value?.toLowerCase())
+    );
     this.worklist$.data = filteredList;
   }
 
   openAssignment(row: any) {
     this.psservice.sendMessage(true);
     this.oaservice.sendMessage(row.pxRefObjectInsName, row);
-
   }
 }

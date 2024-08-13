@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 
-
 import { environment } from '@neom/shared/lib/environments/dev';
 import { redisStore } from 'cache-manager-redis-store';
 import { NstLibsModule } from '@neom/nst-libs';
@@ -13,7 +12,6 @@ import { PegaUserDomainService } from './pega-user-domain.service';
 
 @Module({
   imports: [
-
     NstLibsModule,
     CacheModule.registerAsync({
       // imports: [ConfigModule],
@@ -40,8 +38,6 @@ import { PegaUserDomainService } from './pega-user-domain.service';
     ]),
   ],
   controllers: [PegaUserDomainController],
-  providers: [
-    PegaUserDomainService,
-  ],
+  providers: [PegaUserDomainService],
 })
 export class PegaUserDomainModule {}

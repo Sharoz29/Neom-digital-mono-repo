@@ -1,22 +1,11 @@
-// import { PegaUserVm, PSPEGA_USER } from '@neom/models';
 import {
   Controller,
   Get,
-  Param,
-  Post,
-  Body,
-  HttpException,
   HttpStatus,
-  Put,
-  Delete,
   Query,
   Request,
 } from '@nestjs/common';
 import {
-  ApiParam,
-  ApiBody,
-  ApiTags,
-  ApiResponse,
   ApiOperation,
   ApiOkResponse,
   ApiNotFoundResponse,

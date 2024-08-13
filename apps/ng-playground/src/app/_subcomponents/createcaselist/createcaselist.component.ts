@@ -8,43 +8,38 @@ import { ProgressSpinnerService } from '../../_messages/progressspinner.service'
 import { Subscription } from 'rxjs';
 import { ReferenceHelper } from '../../_helpers/reference-helper';
 
-
 @Component({
   selector: 'app-createcaselist',
   templateUrl: './createcaselist.component.html',
-  styleUrls: ['./createcaselist.component.scss']
+  styleUrls: ['./createcaselist.component.scss'],
 })
 export class CreatecaselistComponent implements OnInit {
-
-
   caseManagement: any;
   caseTypes$!: Array<any>;
   displayableCaseTypes$!: Array<any>;
   subscription!: Subscription;
 
-  constructor(private cservice: CaseService, 
-              private oaservice: OpenAssignmentService,
-              private rwlservice: RefreshWorkListService,
-              private glsservice: GetLoginStatusService,
-              private oncservice: OpenNewCaseService,
-              private refhelper: ReferenceHelper,
-              private psservice: ProgressSpinnerService) { 
-
+  constructor(
+    private cservice: CaseService,
+    private oaservice: OpenAssignmentService,
+    private rwlservice: RefreshWorkListService,
+    private glsservice: GetLoginStatusService,
+    private oncservice: OpenNewCaseService,
+    private refhelper: ReferenceHelper,
+    private psservice: ProgressSpinnerService
+  ) {
     // if we have a user, get casetypes
-    if (sessionStorage.getItem("pega_ng_user")) {
+    if (sessionStorage.getItem('pega_ng_user')) {
       this.updateCaseTypes();
     }
-
   }
 
   ngOnInit() {
-    this.subscription = this.glsservice.getMessage().subscribe(
-      message => {
-        if (message.loginStatus === 'LoggedIn') {
-          this.updateCaseTypes();
-        }
+    this.subscription = this.glsservice.getMessage().subscribe((message) => {
+      if (message.loginStatus === 'LoggedIn') {
+        this.updateCaseTypes();
       }
-    );
+    });
   }
 
   ngOnDestroy() {
@@ -53,11 +48,11 @@ export class CreatecaselistComponent implements OnInit {
 
   updateCaseTypes() {
     this.cservice.getCaseTypes().subscribe(
-      response => {
-
-        this.caseManagement = response.body;
-        this.caseTypes$ = this.caseManagement.caseTypes;
-        this.displayableCaseTypes$  = [];
+      (response: any) => {
+        // Response contains the caseTypes itself
+        // this.caseManagement = response.body;
+        this.caseTypes$ = response.caseTypes;
+        this.displayableCaseTypes$ = [];
 
         for (const myCase of this.caseTypes$) {
           if (this.refhelper.isTrue(myCase.CanCreate)) {
@@ -71,60 +66,55 @@ export class CreatecaselistComponent implements OnInit {
             this.displayableCaseTypes$.push(newCase);
           }
         }
-
       },
-      err => {
-        console.log("Errors from get casetypes:" + err.errors);
+      (err: any) => {
+        console.log('Errors from get casetypes:' + err.errors);
       }
     );
-
   }
 
   createCaseType(caseType: any) {
-
     this.psservice.sendMessage(true);
 
     // starting with 8.5, startingProcesses can be blank or not there (Create Stage)
     // so, allow if "CanCreate" and have an "ID"
-    if ((caseType.startingProcesses != null && caseType.startingProcesses[0].requiresFieldsToCreate === 'false') ||
-        (this.refhelper.isTrue(caseType.CanCreate) && caseType.ID != null && caseType.startingProcesses[0].requiresFieldsToCreate === 'false')) {
-
-      let processName = "";
+    if (
+      (caseType.startingProcesses != null &&
+        caseType.startingProcesses[0].requiresFieldsToCreate === 'false') ||
+      (this.refhelper.isTrue(caseType.CanCreate) &&
+        caseType.ID != null &&
+        caseType.startingProcesses[0].requiresFieldsToCreate === 'false')
+    ) {
+      let processName = '';
       // if we have starting process, use that processName otherwise now blank
-      if (caseType.startingProcesses != null && caseType.startingProcesses[0].ID) {
+      if (
+        caseType.startingProcesses != null &&
+        caseType.startingProcesses[0].ID
+      ) {
         processName = caseType.startingProcesses[0].ID;
       }
       // skip new
       this.cservice.createCase(caseType.ID, processName, {}).subscribe(
-        response => {
+        (response) => {
           // create a "row" that matches the worklist row, this way we can re-use
           // the open assignment service
           const row: any = {};
           const myCase: any = response.body;
 
-
-          row["pxRefObjectKey"] = myCase.ID;
-          row["pxRefObjectInsName"] = myCase.ID.split(" ")[1];
-          row["pzInsKey"] = myCase.nextAssignmentID;
+          row['pxRefObjectKey'] = myCase.ID;
+          row['pxRefObjectInsName'] = myCase.ID.split(' ')[1];
+          row['pzInsKey'] = myCase.nextAssignmentID;
 
           this.oaservice.sendMessage(row.pxRefObjectInsName, row);
           this.rwlservice.sendMessage('Work');
-         
-
         },
-        err => {
-          console.log("Errors from create case:" + err.errors);
+        (err) => {
+          console.log('Errors from create case:' + err.errors);
         }
-
       );
-    }
-    else {
+    } else {
       // new
       this.oncservice.sendMessage(caseType.ID);
-
     }
-
-
   }
-
 }

@@ -6,165 +6,169 @@ import {
   Body,
   HttpException,
   HttpStatus,
-  Put,
-  Delete,
 } from '@nestjs/common';
-import { ApiParam, ApiBody, ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
-
+import {
+  ApiTags,
+  ApiResponse,
+  ApiOperation,
+  ApiBadGatewayResponse,
+  ApiBadRequestResponse,
+  ApiOkResponse,
+  ApiNotFoundResponse,
+} from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 
-import { IotMqttCreateVm, IotMqttVm, PSIOT_MQTT } from '@neom/models';
+import { IotMqttCreateVm } from '@neom/models';
 import { IotMqttApiService } from './iot-mqtt-api.service';
-import { ParseObjectPipe } from '@neom/nst-libs/lib/pipes/parseobject.pipe';
 
 @Controller('iot-mqtt')
 @ApiTags('IOT MQTT Endpoints')
-// @CustomizeLogInterceptor({module: 'IotMqtt'})
 export class IotMqttApiController {
+  logger: any;
+
   constructor(private readonly _iotMqttApiService: IotMqttApiService) {}
 
   /**
-   * Publish a message to an MQTT topic.
-   * @returns {Promise<string>} - A promise that resolves to a confirmation message.
+   * Publishes a message to the specified MQTT topic.
+   *
+   * @param {IotMqttCreateVm} body - The message body to publish.
+   * @returns {Observable<{message: string}>} An observable with a success message.
+   * @throws {HttpException} If an error occurs while publishing.
    */
-  @Post('publish')
-  @ApiResponse({
-    status: 200,
-    type: String,
+  @Post('publish-to-mqtt')
+  @ApiOkResponse({
     description:
       'Successfully published the message to the specified MQTT topic.',
+    type: String,
   })
-  @ApiResponse({
-    status: 400,
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
     description:
       'Bad Request: The request could not be understood or was missing required parameters.',
   })
-  @ApiResponse({
-    status: 502,
-    description: 'Bad Gateway',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Not Found: The requested resource could not be found.',
-  })
+  @ApiNotFoundResponse({ description: 'Content Not Found' })
   @ApiOperation({ summary: 'Publish message to IoT Device' })
-  publishMessage(
+  publishToMqtt(
     @Body() body: IotMqttCreateVm
-  ) {
-    try {
-      return this._iotMqttApiService.publishMQTT(body);
-    } catch (error: any) {
-      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  ): Observable<{ message: string }> {
+    return this._iotMqttApiService.publishToMqttBroker(body);
   }
 
-  // /**
-  //  * Publish a message from Cumulocity IoT to an MQTT topic.
-  //  * @param {string} topic - The MQTT topic to publish to.
-  //  * @param {string} message - The message payload to publish.
-  //  * @returns {Promise<string>} - A promise that resolves to a confirmation message.
-  //  */
-  // @Post('publishFromCumulocity/:topic/:message')
-  // @ApiResponse({
-  //   status: 200,
-  //   description:
-  //     'Successfully published the message to the specified MQTT topic.',
-  // })
-  // @ApiResponse({
-  //   status: 400,
-  //   description:
-  //     'Bad Request: The request could not be understood or was missing required parameters.',
-  // })
-  // @ApiResponse({
-  //   status: 502,
-  //   description: 'Bad Gateway',
-  // })
-  // @ApiResponse({
-  //   status: 404,
-  //   description: 'Not Found: The requested resource could not be found.',
-  // })
-  // @ApiOperation({
-  //   summary: 'Publish message from Cumulocity IoT to MQTT device',
-  // })
-  // async publishMessageFromCumulocity(
-  //   @Param('topic') topic: string,
-  //   @Param('message') message: string
-  // ): Promise<string> {
-  //   try {
-  //     return await this._iotMqttApiService.publishFromCumulocity(
-  //       topic,
-  //       message
-  //     );
-  //   } catch (error: any) {
-  //     throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-  //   }
-  // }
+  /**
+   * Publishes a message from Cumulocity IoT to the specified MQTT topic.
+   *
+   * @param {IotMqttCreateVm} body - The message body to publish.
+   * @returns {Observable<any>} An observable with a success message.
+   * @throws {HttpException} If an error occurs while publishing.
+   */
+  @Post('publishFromCumulocity/:topic/:message')
+  @ApiOkResponse({
+    description:
+      'Successfully published the message to the specified MQTT topic.',
+    type: String,
+  })
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiNotFoundResponse({ description: 'Content Not Found' })
+  @ApiOperation({
+    summary: 'Publish message from Cumulocity IoT to MQTT device',
+  })
+  publishMessageFromCumulocityIoT(
+    @Body() body: IotMqttCreateVm
+  ): Observable<any> {
+    return this._iotMqttApiService.publishMessageFromCumulocityIoT(body);
+  }
 
-  // /**
-  //  * Retrieve the cached message for a specific MQTT topic.
-  //  * @param {string} topic - The MQTT topic to retrieve the cached message for.
-  //  * @returns {Promise<string>} - A promise that resolves to the cached message.
-  //  */
-  // @Get('cache/:topic')
-  // @ApiResponse({
-  //   status: 200,
-  //   description:
-  //     'Successfully retrieved the cached message for the specified topic.',
-  // })
-  // @ApiResponse({
-  //   status: 400,
-  //   description:
-  //     'Bad Request: The request could not be understood or was missing required parameters.',
-  // })
-  // @ApiResponse({
-  //   status: 502,
-  //   description: 'Bad Gateway',
-  // })
-  // @ApiResponse({
-  //   status: 404,
-  //   description: 'Not Found: The requested resource could not be found.',
-  // })
-  // @ApiOperation({ summary: 'Get cached message for MQTT topic' })
-  // async getCachedMessage(@Param('topic') topic: string): Promise<string> {
-  //   try {
-  //     return await this._iotMqttApiService.getCachedMessage(topic);
-  //   } catch (error: any) {
-  //     throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-  //   }
-  // }
+  /**
+   * Retrieves device details from Cumulocity IoT based on the given device ID.
+   *
+   * @param {string} deviceID - The unique identifier of the device in Cumulocity.
+   * @returns {Observable<any>} An observable with the detailed information of the device.
+   * @throws {HttpException} If the device cannot be found or if an error occurs during the API call.
+   */
+  @Get('fetchDeviceDetailsFromCumulocity/:deviceID')
+  @ApiOkResponse({
+    description: 'Successfully retrieved info of the Cumulocity IoT device',
+    type: String,
+  })
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiNotFoundResponse({ description: 'Content Not Found' })
+  @ApiOperation({ summary: 'Get Device Details from Cumulocity IoT' })
+  fetchDeviceDetailsFromCumulocity(
+    @Param('deviceID') deviceID: string
+  ): Observable<any> {
+    return this._iotMqttApiService.fetchDeviceDetailsFromCumulocity(deviceID);
+  }
 
-  // /**
-  //  * Subscribe to an MQTT topic.
-  //  * @param {string} topic - The MQTT topic to subscribe to.
-  //  * @returns {Promise<string>} - A promise that resolves to a confirmation message.
-  //  */
-  // @Get('subscribe/:topic')
-  // @ApiResponse({
-  //   status: 200,
-  //   description: 'Successfully subscribed to the specified MQTT topic.',
-  // })
-  // @ApiResponse({
-  //   status: 400,
-  //   description:
-  //     'Bad Request: The request could not be understood or was missing required parameters.',
-  // })
-  // @ApiResponse({
-  //   status: 502,
-  //   description: 'Bad Gateway',
-  // })
-  // @ApiResponse({
-  //   status: 404,
-  //   description: 'Not Found: The requested resource could not be found.',
-  // })
-  // @ApiOperation({ summary: 'Subscribe to an MQTT topic' })
-  // async subscribeToTopic(@Param('topic') topic: string): Promise<string> {
-  //   try {
-  //     this._iotMqttApiService.subscribe(topic, (message) => {
-  //       console.log(`Received message from ${topic}: ${message}`);
-  //     });
-  //     return `Subscribed to ${topic}`;
-  //   } catch (error: any) {
-  //     throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-  //   }
-// }
+  /**
+   * Registers and subscribes a device to Cumulocity IoT based on the given topic.
+   *
+   * @param {string} topic - The MQTT topic to subscribe the device to.
+   * @returns {Observable<any>} An observable with a success message.
+   * @throws {HttpException} If an error occurs while registering or subscribing the device.
+   */
+  @Post('registerAndSubscribeDeviceToCumulocity/:topic/:message')
+  @ApiOkResponse({
+    description: 'Successfully registered the device.',
+    type: String,
+  })
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiOperation({ summary: 'Register the device to Cumulocity' })
+  registerAndSubscribeDeviceToCumulocity(
+    @Param('topic') topic: string
+  ): Observable<any> {
+    return this._iotMqttApiService.registerAndSubscribeDeviceToCumulocity(
+      topic
+    );
+  }
+
+  /**
+   * Subscribes to the specified MQTT topic.
+   *
+   * @param {string} topic - The MQTT topic to subscribe to.
+   * @returns {Observable<any>} An observable with a success message.
+   * @throws {HttpException} If an error occurs while subscribing.
+   */
+  @Get('subscribe-to-mqtt-topic/:topic')
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully subscribed to the specified MQTT topic.',
+    type: String,
+  })
+  @ApiBadGatewayResponse({
+    description:
+      'Bad Gateway: Backend Service might be down or not responding at the moment.',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'Bad Request: The request could not be understood or was missing required parameters.',
+  })
+  @ApiNotFoundResponse({ description: 'Content Not Found' })
+  @ApiOperation({ summary: 'Subscribe to an MQTT topic' })
+  subscribeToTopic(@Param('topic') topic: string): Observable<any> {
+    return this._iotMqttApiService.subscribeToMqttBroker(topic);
+  }
 }

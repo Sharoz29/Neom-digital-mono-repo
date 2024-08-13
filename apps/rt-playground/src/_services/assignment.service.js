@@ -17,7 +17,7 @@ export const assignmentService = {
 
 function getAssignment(id) {
   return axios
-    .get(encodeURI(endpoints.API_URL + endpoints.ASSIGNMENTS + '/' + id))
+    .get(encodeURI(endpoints.API__V1_URL + endpoints.ASSIGNMENTS + '/' + id))
     .then(function (response) {
       return response.data;
     })
@@ -42,7 +42,7 @@ function getFieldsForAssignment(assignment, actionId) {
   return axios
     .get(
       encodeURI(
-        endpoints.API_URL +
+        endpoints.API__V1_URL +
           endpoints.ASSIGNMENTS +
           '/' +
           assignment.assignments[0].ID +
@@ -169,7 +169,7 @@ function saveAssignment(assignmentID, actionID, body, pageInstr) {
 
 function assignments() {
   return axios
-    .get(endpoints.API_URL + endpoints.ASSIGNMENTS)
+    .get(endpoints.API__V1_URL + endpoints.ASSIGNMENTS)
     .then(function (response) {
       return response.data.assignments;
     })

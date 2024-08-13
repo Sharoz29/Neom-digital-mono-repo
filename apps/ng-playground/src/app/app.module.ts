@@ -33,15 +33,21 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { WorklistComponent } from './worklist/worklist.component';
-import { NavigationComponent, SettingsdialogComponent } from './navigation/navigation.component';
+import {
+  NavigationComponent,
+  SettingsdialogComponent,
+} from './navigation/navigation.component';
 import { MaintabsComponent } from './maintabs/maintabs.component';
 import { WorklistpanelComponent } from './worklistpanel/worklistpanel.component';
-import { WorkitemComponent, LocalactiondialogComponent, InfoDialogComponent } from './workitem/workitem.component';
+import {
+  WorkitemComponent,
+  LocalactiondialogComponent,
+  InfoDialogComponent,
+} from './workitem/workitem.component';
 import { LayoutComponent } from './_subcomponents/layout/layout.component';
 import { GroupComponent } from './_subcomponents/group/group.component';
 import { ViewComponent } from './_subcomponents/view/view.component';
@@ -74,15 +80,16 @@ import { SafeHtmlPipe } from './_pipe/safehtml.pipe';
 import { RecentlistComponent } from './_subcomponents/recentlist/recentlist.component';
 import { NumberComponent } from './_fieldcomponents/number/number.component';
 import { NosupportComponent } from './_fieldcomponents/nosupport/nosupport.component';
-import { ReferenceHelper } from  './_helpers/reference-helper';
+import { ReferenceHelper } from './_helpers/reference-helper';
 import { InterceptorService } from './_services/interceptor.service';
 import { AuthPageComponent } from './auth-page/auth-page.component';
 import { AttachmentComponent } from './_fieldcomponents/attachment/attachment.component';
 import { AttachmentListComponent } from './attachmentList/attachment-list.component';
-import { AttachmentItemComponent  } from './attachmentItem/attachment-item.component';
+import { AttachmentItemComponent } from './attachmentItem/attachment-item.component';
 import { MaskedTextComponent } from './_fieldcomponents/masked-text/masked-text.component';
 import { MaskedPipe } from './_pipe/masked.pipe';
-
+import { API_BASE_URL } from '@neom/ng-ui';
+import { environment } from '@neom/shared/lib/environments/dev';
 
 @NgModule({
   declarations: [
@@ -132,7 +139,7 @@ import { MaskedPipe } from './_pipe/masked.pipe';
     AttachmentItemComponent,
     SafeHtmlPipe,
     MaskedTextComponent,
-    MaskedPipe
+    MaskedPipe,
   ],
 
   imports: [
@@ -167,27 +174,24 @@ import { MaskedPipe } from './_pipe/masked.pipe';
     MatRadioModule,
     MatAutocompleteModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   // entryComponents: [
   //   SettingsdialogComponent,
   //   LocalactiondialogComponent,
   //   InfoDialogComponent
   // ],
-  exports: [
-    MatButtonModule,
-    MatButtonModule
-  ],
+  exports: [MatButtonModule, MatButtonModule],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { float: "auto" } },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { float: 'auto' } },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true,
     },
-    ReferenceHelper
+    { provide: API_BASE_URL, useValue: environment.ngApiUrl },
+    ReferenceHelper,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-
-export class AppModule { }
+export class AppModule {}
