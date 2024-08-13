@@ -5,6 +5,10 @@
   "scripts": {
     "rmq:start": "docker run -d --hostname my-rabbit --name rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3.12.14-management-alpine",
     "redis:start": "docker run -d --name redis -p 6379:6379 redis:7.2.5-alpine",
+    "gateway:start": "nx serve api-gateway",
+    "pega-worker:start": "nx serve py-worker",
+    "rt-start": "nx start rt-playground",
+    "ng-start": "nx serve ng-playground",
     "nswag:ng": "nswag run ./tools/nswag/ng.nswag",
     "nswag:rt": "nswag run ./tools/nswag/rt.nswag"
   },
