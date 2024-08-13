@@ -1,7 +1,7 @@
-import { actionTypes } from "./actionTypes";
-import { assignmentService } from "../_services";
-import { getError, isShowRightPanel, getRightPanelSection } from "../_helpers";
-import { alertActions, caseActions, errorActions } from "./";
+import { actionTypes } from './actionTypes';
+import { assignmentService } from '../_services';
+import { getError, isShowRightPanel, getRightPanelSection } from '../_helpers';
+import { alertActions, caseActions, errorActions } from './';
 
 /**
  * Action creators. Used to dispatch actions with Redux.
@@ -36,8 +36,8 @@ function getAssignment(woID, id) {
 
     return assignmentService.getAssignment(id).then(
       (data) => {
-        if (data.data.caseInfo) {
-          const { caseInfo } = data.data;
+        if (data.caseInfo) {
+          const { caseInfo } = data;
           const assignmentActions = caseInfo.assignments.reduce(
             (acc, assignment) => {
               acc.push(...assignment.actions);
@@ -51,7 +51,7 @@ function getAssignment(woID, id) {
             ...caseInfo.availableActions,
           ];
           if (allActions.length > 0) {
-            dispatch(getFieldsForAssignment(woID, data.data.caseInfo)).then(
+            dispatch(getFieldsForAssignment(woID, data.caseInfo)).then(
               (data) => {
                 return dispatch(success(woID, caseInfo));
               }
@@ -60,15 +60,15 @@ function getAssignment(woID, id) {
             dispatch(assignmentActions.closeAssignment(woID));
             dispatch(
               alertActions.error(
-                "Assignment does not have any actions configured."
+                'Assignment does not have any actions configured.'
               )
             );
-            return dispatch(failure(woID, "No actions found"));
+            return dispatch(failure(woID, 'No actions found'));
           }
         } else {
           dispatch(assignmentActions.closeAssignment(woID));
-          dispatch(alertActions.error("Assignment data is missing."));
-          return dispatch(failure(woID, "No assignment data found"));
+          dispatch(alertActions.error('Assignment data is missing.'));
+          return dispatch(failure(woID, 'No assignment data found'));
         }
       },
       (error) => {
@@ -92,7 +92,7 @@ function getAssignment(woID, id) {
 function getNextAssignment() {
   return (dispatch) => {
     dispatch(request());
-    return assignmentService.getAssignment("next").then(
+    return assignmentService.getAssignment('next').then(
       (assignment) => {
         const woID = assignment.data.caseInfo.ID; // Updated to match v2 structure
         dispatch(
@@ -432,7 +432,7 @@ function getAssignmentFromCaseId(woID, id) {
             assignmentActions.getAssignment(woID, assignments[index].ID)
           );
         } else {
-          dispatch(failure("No matching assignment found."));
+          dispatch(failure('No matching assignment found.'));
         }
       },
       (error) => {
@@ -492,7 +492,7 @@ function stepPrevious(woID, caseID, assignmentID, etag) {
     dispatch(request(woID, caseID, assignmentID, etag));
 
     return assignmentService
-      .navigationSteps(assignmentID, "previous", etag)
+      .navigationSteps(assignmentID, 'previous', etag)
       .then(
         (stepResponse) => {
           if (stepResponse?.nextAssignmentInfo?.ID) {
