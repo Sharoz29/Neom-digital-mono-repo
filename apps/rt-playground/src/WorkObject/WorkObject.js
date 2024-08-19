@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Menu,
   Container,
@@ -9,12 +9,12 @@ import {
   Breadcrumb,
   Message,
   Icon,
-} from "semantic-ui-react";
-import _ from "lodash";
+} from 'semantic-ui-react';
+import _ from 'lodash';
 
-import { caseActions, assignmentActions } from "../_actions";
-import { PegaForm } from "../PegaForm/PegaForm";
-import { endpoints } from "../_services";
+import { caseActions, assignmentActions } from '../_actions';
+import { PegaForm } from '../PegaForm/PegaForm';
+import { endpoints } from '../_services';
 
 /**
  * Wrapper React component for PegaForm.
@@ -25,17 +25,14 @@ class WorkObject extends Component {
   constructor(props) {
     super(props);
 
-    const stages =
-      props.case && props.case.caseInfo.stages
-        ? props.case.caseInfo.stages
-        : [];
+    const stages = props.case && props.case.stages ? props.case.stages : [];
     const assignmentAction = props.assignment
-      ? props.assignment.assignments[0].actions[0]
+      ? props.assignment.actions[0].ID
       : null;
 
     // To check if we're in /embedded mode
     const bIsEmbeddedMode =
-      window.location.pathname === "/embedded" ? true : false;
+      window.location.pathname === '/embedded' ? true : false;
 
     // Initial state
     this.state = {
@@ -57,10 +54,10 @@ class WorkObject extends Component {
       prevState &&
       prevState.stages.length === 0 &&
       this.props.case &&
-      this.props.case.caseInfo.stages
+      this.props.case.stages
     ) {
       this.setState({
-        stages: this.props.case.caseInfo.stages,
+        stages: this.props.case.stages,
       });
     }
 
@@ -93,8 +90,8 @@ class WorkObject extends Component {
    * @return { Array } Array of local action Dropdown Items
    */
   getLocalActions() {
-    return this.props.allActions.map((action) => {
-      if (action.type === "Case") {
+    return this.props.assignment.actions.map((action) => {
+      if (action.type === 'Case') {
         return (
           <Dropdown.Item
             key={action.ID}
@@ -116,9 +113,9 @@ class WorkObject extends Component {
     let validActions = [];
 
     if (this.props.assignment) {
-      this.props.allActions.forEach((action) => {
+      this.props.assignment.actions.forEach((action) => {
         if (
-          action.type === "Assignment" &&
+          action.type === 'Assignment' &&
           action.ID !== this.state.currAssignmentAction
         ) {
           validActions.push(
@@ -287,19 +284,19 @@ class WorkObject extends Component {
       return;
     }
 
-    const { stageID } = this.props.case.caseInfo;
+    const { stage } = this.props.case;
     const { stages } = this.state;
 
     return (
       <Breadcrumb size="large">
-        {stageID
+        {stage
           ? _.flatMap(
               stages.map((aStage) => {
                 return (
                   <Breadcrumb.Section
                     key={aStage.ID}
-                    link={aStage.ID !== stageID}
-                    active={aStage.ID === stageID}
+                    link={aStage.ID !== stage}
+                    active={aStage.ID === stage}
                   >
                     {aStage.name}
                   </Breadcrumb.Section>

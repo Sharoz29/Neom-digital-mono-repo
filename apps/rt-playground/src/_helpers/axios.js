@@ -11,10 +11,10 @@ const instance = axios.create({
   baseURL: endpoints.BASEV2URL,
   timeout: 30000,
   headers: {
-    appName: 'CallADoc',
+    // appName: 'uipoc',
     // 'X-Custom-Header': 'foobar',
     // // true: need, false: dont need
-    // 'Authorization': true,
+    Authorization: true,
     // 'X-Requested-With': 'XMLHttpRequest'
   },
 });

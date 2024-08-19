@@ -16,7 +16,6 @@ function getDataPage(id, params) {
       params: params,
     })
     .then(function (response) {
-      console.log(response, params, id);
       return response.data;
     })
     .catch(function (error) {

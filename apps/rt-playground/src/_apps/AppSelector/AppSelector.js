@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import DeviceDetail from '../../_components/Device/DeviceDetail';
 import Device from '../../_components/Device/Device';
 import Footer from '../../_components/Footer';
+import Cases from '../../_components/Cases/Cases';
 
 const Layout = styled.div`
   display: flex;
@@ -80,6 +81,11 @@ const AppSelector = () => {
               path={`${process.env.PUBLIC_URL}/alarm/:id
               `}
               component={AlarmDetail}
+            />
+            <Route
+              path={`${process.env.PUBLIC_URL}/cases
+              `}
+              component={Cases}
             />
           </Switch>
         </Content>

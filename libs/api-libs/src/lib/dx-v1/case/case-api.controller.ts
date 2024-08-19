@@ -66,8 +66,8 @@ export class CaseApiController {
   @ApiOperation({
     summary: 'Gets all the cases',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getCases(@Request() req: Request): Observable<any> {
     return this._caseApiService.getCases(req);
   }
@@ -99,8 +99,8 @@ export class CaseApiController {
   @ApiOperation({
     summary: 'Gets the case by the provided id',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getCaseById(
     @Param('id') id: string,
     @Request() req: Request
@@ -138,8 +138,8 @@ export class CaseApiController {
     summary:
       'Gets the fields for the case by the provided case id and action id',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getCaseActions(
     @Param('caseInfoId') caseId: string,
     @Param('actionId') actionId: string,
@@ -176,8 +176,8 @@ export class CaseApiController {
   @ApiOperation({
     summary: 'Gets the page for the case by the provided case id and page id',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getCasePage(
     @Param('caseInfoId') caseId: string,
     @Param('pageId') pageId: string,
@@ -215,8 +215,8 @@ export class CaseApiController {
   @ApiOperation({
     summary: 'Gets the page for the case by the provided case id and page id',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getCaseView(
     @Param('caseId') caseId: string,
     @Param('viewId') viewId: string,

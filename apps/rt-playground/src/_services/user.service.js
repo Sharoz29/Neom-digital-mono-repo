@@ -1,5 +1,5 @@
-import { endpoints } from "./endpoints";
-import { axios, getError, authLogin, authLogout } from "../_helpers";
+import { endpoints } from './endpoints';
+import { axios, getError, authLogin, authLogout } from '../_helpers';
 
 /**
  * Functions used to issue AJAX requests and manage responses.
@@ -22,10 +22,9 @@ function login(username, password) {
       }
     });
   } else {
-    alert(endpoints.BASEV2URL);
-    const encodedUser = btoa(username + ":" + password);
+    const encodedUser = btoa(username + ':' + password);
     const authHdr = `Basic ${encodedUser}`;
-    sessionStorage.setItem("pega_react_user", authHdr);
+    sessionStorage.setItem('pega_react_user', authHdr);
 
     return axios
       .get(endpoints.BASEURL + endpoints.AUTHENTICATE)
@@ -39,19 +38,19 @@ function login(username, password) {
 }
 
 function setToken(token) {
-  const authHdr = token ? `Bearer ${token}` : "";
-  sessionStorage.setItem("pega_react_user", authHdr);
+  const authHdr = token ? `Bearer ${token}` : '';
+  sessionStorage.setItem('pega_react_user', authHdr);
   return authHdr;
 }
 
 function logout() {
   authLogout();
-  sessionStorage.removeItem("pega_react_user");
+  sessionStorage.removeItem('pega_react_user');
 }
 
 function operator() {
   return axios
-    .get(endpoints.BASEURL + endpoints.DATA + "/D_OperatorID")
+    .get(endpoints.BASEURL + endpoints.DATA + '/D_OperatorID')
     .then(function (response) {
       return response.data;
     })
@@ -62,38 +61,38 @@ function operator() {
 
 function updateAppSettings(appSettings) {
   localStorage.setItem(
-    "useEmbeddedPageInstructions",
-    appSettings.bUseEmbeddedPageInstructions ? "1" : ""
+    'useEmbeddedPageInstructions',
+    appSettings.bUseEmbeddedPageInstructions ? '1' : ''
   );
   localStorage.setItem(
-    "useRepeatPageInstructions",
-    appSettings.bUseRepeatPageInstructions ? "1" : ""
+    'useRepeatPageInstructions',
+    appSettings.bUseRepeatPageInstructions ? '1' : ''
   );
   localStorage.setItem(
-    "useLocalOptionsForDataPage",
-    appSettings.bUseLocalOptionsForDataPage ? "1" : ""
+    'useLocalOptionsForDataPage',
+    appSettings.bUseLocalOptionsForDataPage ? '1' : ''
   );
   localStorage.setItem(
-    "useLocalOptionsForClipboardPage",
-    appSettings.bUseLocalOptionsForClipboardPage ? "1" : ""
+    'useLocalOptionsForClipboardPage',
+    appSettings.bUseLocalOptionsForClipboardPage ? '1' : ''
   );
   localStorage.setItem(
-    "usePostAssignmentsSave",
-    appSettings.bUsePostAssignmentsSave ? "1" : ""
+    'usePostAssignmentsSave',
+    appSettings.bUsePostAssignmentsSave ? '1' : ''
   );
-  localStorage.setItem("useScreenFlow", appSettings.bUseScreenFlow ? "1" : "");
+  localStorage.setItem('useScreenFlow', appSettings.bUseScreenFlow ? '1' : '');
   localStorage.setItem(
-    "showCaseDetails",
-    appSettings.bShowCaseDetails ? "1" : ""
+    'showCaseDetails',
+    appSettings.bShowCaseDetails ? '1' : ''
   );
-  localStorage.setItem("saveButton", appSettings.bSaveButton ? "1" : "");
-  localStorage.setItem("createCaseContext", appSettings.createCaseContext);
+  localStorage.setItem('saveButton', appSettings.bSaveButton ? '1' : '');
+  localStorage.setItem('createCaseContext', appSettings.createCaseContext);
   localStorage.setItem(
-    "showWorkgroupBaskets",
-    appSettings.bshowWorkgroupBaskets ? "1" : ""
+    'showWorkgroupBaskets',
+    appSettings.bshowWorkgroupBaskets ? '1' : ''
   );
   localStorage.setItem(
-    "showAttachments",
-    appSettings.bShowAttachments ? "1" : ""
+    'showAttachments',
+    appSettings.bShowAttachments ? '1' : ''
   );
 }

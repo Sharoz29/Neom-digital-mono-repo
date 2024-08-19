@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, ParamData } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
@@ -17,11 +17,12 @@ export class DataApiService extends BaseApiService<DataVm, DataVm, DataVm> {
   ) {
     super(_client, 'data', cacheManagerRef);
   }
-  getData(id: string, req: Request): Observable<any> {
+  getData(id: string, req: Request, query?: any): Observable<any> {
     try {
       return this.client.send(PSDATA.GET, {
         headers: req.headers,
         id,
+        query,
       });
     } catch (error: any) {
       console.error('Error sending message to microservice:', error);

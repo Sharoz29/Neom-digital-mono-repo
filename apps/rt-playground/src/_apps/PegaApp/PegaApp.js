@@ -19,6 +19,8 @@ import AlarmDetail from '../../_components/Alarm/AlarmDetail';
 import DeviceDetail from '../../_components/Device/DeviceDetail';
 import Device from '../../_components/Device/Device';
 import Alarms from '../../_components/Alarm/Alarms';
+import Cases from '../../_components/Cases/Cases';
+import CaseDetail from '../../_components/Cases/CaseDetail';
 
 function PegaApp() {
   const [visible, setVisible] = useState(false);
@@ -178,6 +180,16 @@ function PegaApp() {
                   exact
                   path={`${process.env.PUBLIC_URL}/device/:id`}
                   component={DeviceDetail}
+                />
+                <PrivateRoute
+                  exact
+                  path={`${process.env.PUBLIC_URL}/cases`}
+                  component={Cases}
+                />
+                <PrivateRoute
+                  exact
+                  path={`${process.env.PUBLIC_URL}/cases/:id`}
+                  component={CaseDetail}
                 />
                 <Container className="alert-container">
                   {alert.activeAlerts.map((alert, index) =>

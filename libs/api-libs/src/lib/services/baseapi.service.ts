@@ -15,7 +15,7 @@ export class BaseApiService<X, Y, Z> {
   constructor(
     public readonly client: ClientProxy,
     private pattern: string,
-    private cacheManagerRef: Cache
+    private cacheManagerRef?: Cache
   ) {
     this.logger = new Logger(`${pattern.toUpperCase()}`);
   }

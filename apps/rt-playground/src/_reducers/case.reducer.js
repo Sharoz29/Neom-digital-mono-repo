@@ -1,6 +1,6 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-import { actionTypes } from "../_actions";
+import { actionTypes } from '../_actions';
 
 /**
  * Redux reducers.
@@ -22,67 +22,68 @@ export function cases(state = casesDefaultState, action) {
     case actionTypes.CASETYPES_REQUEST:
       return {
         ...state,
-        caseTypesRequestInProgress: true
+        caseTypesRequestInProgress: true,
       };
     case actionTypes.CASETYPES_SUCCESS:
       return {
         ...state,
         caseTypes: action.caseTypes,
         caseTypesError: null,
-        caseTypesRequestInProgress: false
+        caseTypesRequestInProgress: false,
       };
     case actionTypes.CASETYPES_FAILURE:
       // Set some state on a error to avoid repeated attempts to invoke this initial API
       return {
         ...state,
         caseTypesError: action.error,
-        caseTypesRequestInProgress: false
-      }
+        caseTypesRequestInProgress: false,
+      };
     case actionTypes.CASE_CREATION_PAGE_SUCCESS:
       // Store the processID within the page structure if one was specified (else would need to create a new pageProcessIDs array)
-      if( action.processID ) action.data.creation_page.processID = action.processID;
+      if (action.processID)
+        action.data.creation_page.processID = action.processID;
       return {
         ...state,
         pages: {
           ...state.pages,
           [action.id]: action.data.creation_page,
-        }
+        },
       };
     case actionTypes.CASES_REQUEST:
       return {
         ...state,
-        loadingCases: true
+        loadingCases: true,
       };
     case actionTypes.CASES_SUCCESS:
       return {
         ...state,
         loadingCases: false,
-        allCases: _.keyBy(action.cases, o => o.caseID)
+        allCases: _.keyBy(action.cases, (o) => o.caseID),
       };
     case actionTypes.CASES_FAILURE:
       return {
         ...state,
         loadingCases: false,
-        allCases: []
+        allCases: [],
       };
     case actionTypes.CASE_REQUEST:
       return {
         ...state,
-        loadingCase: true
+        loadingCase: true,
       };
     case actionTypes.CASE_SUCCESS:
       let targetCase =
         action.aCase.cases && action.aCase.cases.length === 1
           ? action.aCase.cases[0]
           : action.aCase;
-      let successIndex = state.openCases.findIndex(x => x === action.woID);
+      let successIndex = state.openCases.findIndex((x) => x === action.woID);
 
       return {
         ...state,
         loadingCase: false,
         caseDetails: {
           ...state.caseDetails,
-          [action.woID]: targetCase
+          [action.woID]: targetCase,
         },
         openCases:
           successIndex === -1
@@ -90,23 +91,23 @@ export function cases(state = casesDefaultState, action) {
             : [
                 ...state.openCases.slice(0, successIndex),
                 ...state.openCases.slice(successIndex + 1),
-                action.woID
-              ]
+                action.woID,
+              ],
       };
     case actionTypes.CASE_FAILURE:
       return {
         ...state,
-        loadingCase: false
+        loadingCase: false,
       };
     case actionTypes.CASE_CLOSED:
-      let close_index = state.openCases.findIndex(x => x === action.id);
+      let close_index = state.openCases.findIndex((x) => x === action.id);
 
       return {
         ...state,
         openCases: [
           ...state.openCases.slice(0, close_index),
-          ...state.openCases.slice(close_index + 1)
-        ]
+          ...state.openCases.slice(close_index + 1),
+        ],
       };
     case actionTypes.CASE_REFRESH_REQUEST:
       return state;
@@ -120,8 +121,8 @@ export function cases(state = casesDefaultState, action) {
         ...state,
         caseDetails: {
           ...state.caseDetails,
-          [action.woID]: targetRefreshCase
-        }
+          [action.woID]: targetRefreshCase,
+        },
       };
     case actionTypes.CASE_REFRESH_FAILURE:
       return state;
@@ -132,8 +133,8 @@ export function cases(state = casesDefaultState, action) {
         ...state,
         pages: {
           ...state.pages,
-          [action.woID]: action.data
-        }
+          [action.woID]: action.data,
+        },
       };
     case actionTypes.CASE_PAGE_FAILURE:
       return state;
@@ -144,8 +145,8 @@ export function cases(state = casesDefaultState, action) {
         ...state,
         caseViews: {
           ...state.caseViews,
-          [action.woID]: action.data
-        }
+          [action.woID]: action.data,
+        },
       };
     case actionTypes.CASE_VIEW_FAILURE:
       return state;
@@ -154,8 +155,8 @@ export function cases(state = casesDefaultState, action) {
         ...state,
         pages: {
           ...state.pages,
-          [action.woID]: null
-        }
+          [action.woID]: null,
+        },
       };
     case actionTypes.ATTACHMENTS_REQUEST:
       return {
@@ -164,7 +165,7 @@ export function cases(state = casesDefaultState, action) {
     case actionTypes.ATTACHMENTS_SUCCESS:
       return {
         ...state,
-        attachments: action.attachments
+        attachments: action.attachments,
       };
     case actionTypes.ATTACHMENTS_FAILURE:
       return {
@@ -208,7 +209,7 @@ export function cases(state = casesDefaultState, action) {
       return {
         ...state,
         // attachmentUploadError: action.error
-      };  
+      };
     case actionTypes.ATTACHMENT_DOWNLOAD_REQUEST:
       return {
         ...state,
@@ -220,7 +221,7 @@ export function cases(state = casesDefaultState, action) {
     case actionTypes.ATTACHMENT_DOWNLOAD_FAILURE:
       return {
         ...state,
-      };        
+      };
     default:
       return state;
   }

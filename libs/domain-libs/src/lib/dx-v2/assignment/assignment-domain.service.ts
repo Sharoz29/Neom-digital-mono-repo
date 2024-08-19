@@ -26,8 +26,7 @@ export class AssignmentDomainService extends BaseDomainService<any, any, any> {
           headers: { Authorization: headers.authorization },
         })
         .then((response) => {
-          const { data } = response.data;
-          return data;
+          return response.data;
         })
         .catch((error) => Promise.reject(error))
     );
@@ -48,8 +47,7 @@ export class AssignmentDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => {
-          const { data } = response.data;
-          return data;
+          return response.data;
         })
         .catch((error) => Promise.reject(error.message))
     );

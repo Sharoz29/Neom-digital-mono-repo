@@ -1,13 +1,13 @@
-import { actionTypes } from "./actionTypes";
-import { caseService } from "../_services";
+import { actionTypes } from './actionTypes';
+import { caseService } from '../_services';
 import {
   getError,
   getCreateCaseContext,
   caseCreationPageExists,
   isShowRightPanel,
-} from "../_helpers";
-import { alertActions } from "./";
-import { assignmentActions, errorActions } from "./";
+} from '../_helpers';
+import { alertActions } from './';
+import { assignmentActions, errorActions } from './';
 
 /**
  * Action creators. Used to dispatch actions with Redux.
@@ -144,7 +144,7 @@ function getCaseCreationPage(id, processID) {
   }
 }
 
-function createCase(id, processID = "", content = {}) {
+function createCase(id, processID = '', content = {}) {
   // If no content argument specified, use any createCaseContext in settings
   if (arguments.length < 3) {
     content = getCreateCaseContext();
@@ -210,7 +210,7 @@ function getCase(woID, id) {
 
     return caseService.getCase(id).then(
       (aCase) => {
-        return dispatch(success(woID, aCase.data));
+        return dispatch(success(woID, aCase));
       },
       (error) => {
         dispatch(alertActions.error(error));

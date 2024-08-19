@@ -58,8 +58,8 @@ export class CaseTypesApiController {
   @ApiOperation({
     summary: 'Gets all the casetypes',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getCaseTypes(@Request() req: Request): Observable<any> {
     return this._caseTypesApiService.getCaseTypes(req);
   }

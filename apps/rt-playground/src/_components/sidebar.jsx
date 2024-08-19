@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Menu as MenuIcon, Home, Devices, Alarm } from '@mui/icons-material';
+import AppsIcon from '@mui/icons-material/Apps';
 import { Menu, MenuItem } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { history } from '../_helpers';
@@ -174,6 +175,11 @@ function Sidebar() {
           <Alarm />
         </IconContainer>
       </MenuItemStyled>
+      <MenuItemStyled onClick={() => handleNavigation('/cases')}>
+        <IconContainer active={currentPath === '/cases'}>
+          <AppsIcon />
+        </IconContainer>
+      </MenuItemStyled>
     </>
   );
 
@@ -206,6 +212,12 @@ function Sidebar() {
                 <Alarm />
               </IconContainer>
               Alarm
+            </MenuItem>
+            <MenuItem onClick={() => handleNavigation('/cases')}>
+              <IconContainer active={currentPath === '/cases'}>
+                <AppsIcon />
+              </IconContainer>
+              Cases
             </MenuItem>
           </Menu>
           <ToggleButton ref={toggleButtonRef} onClick={toggleSidebar}>

@@ -1,7 +1,7 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-import { actionTypes } from "../_actions";
-import { appConstants } from "../_constants";
+import { actionTypes } from '../_actions';
+import { appConstants } from '../_constants';
 
 /**
  * Redux reducers.
@@ -20,9 +20,9 @@ const assignmentsDefaultState = {
   activeIndex: 0,
   openAssignmentsTabIdx: [],
   worklistSettings: {
-    column: "pxUrgencyAssign",
-    direction: "descending",
-    assignmentType: "Worklist",
+    column: 'pxUrgencyAssign',
+    direction: 'descending',
+    assignmentType: 'Worklist',
   },
   openCasesData: {},
 };
@@ -132,7 +132,7 @@ export function assignments(state = assignmentsDefaultState, action) {
               ],
       };
     case actionTypes.ASSIGNMENT_SUCCESS:
-      let woID = action.woID ? action.woID : action.assignments.ID;
+      let woID = action.woID ? action.woID : action.assignment.caseID;
       return {
         ...state,
         openAssignmentsTabIdx: state.openAssignmentsTabIdx.find(
@@ -142,7 +142,7 @@ export function assignments(state = assignmentsDefaultState, action) {
           : [woID, ...state.openAssignmentsTabIdx],
         assignmentDetails: {
           ...state.assignmentDetails,
-          [woID]: action.assignments,
+          [woID]: action.assignment,
         },
         activeIndex: state.openAssignments ? state.openAssignments.length : 0,
         openCasesData: {
@@ -193,8 +193,8 @@ export function assignments(state = assignmentsDefaultState, action) {
       // Added an extra check to get correct 'activeIndex' in case of 'new harness' tab
       if (
         caseIdx === -1 &&
-        !action.id.includes(" ") &&
-        !action.id.includes("NewSimple")
+        !action.id.includes(' ') &&
+        !action.id.includes('NewSimple')
       )
         caseIdx = openAssignments.length;
 

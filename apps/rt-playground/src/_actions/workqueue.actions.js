@@ -1,6 +1,6 @@
-import { actionTypes } from "./actionTypes";
-import { dataPageService } from "../_services";
-import { alertActions } from "./";
+import { actionTypes } from './actionTypes';
+import { dataPageService } from '../_services';
+import { alertActions } from './';
 
 /**
  * Action creators. Used to dispatch actions with Redux.
@@ -12,18 +12,18 @@ import { alertActions } from "./";
  */
 export const workQueueActions = {
   getWorkList,
-  getWorkQueue
+  getWorkQueue,
 };
 
-function getWorkList() {
-  return dispatch => {
+function getWorkList(params) {
+  return (dispatch) => {
     dispatch(request());
 
-    return dataPageService.getDataPage("D_Worklist").then(
-      worklist => {
+    return dataPageService.getDataPage('D_Worklist', params).then(
+      (worklist) => {
         dispatch(success(worklist));
       },
-      error => {
+      (error) => {
         dispatch(failure(error));
         dispatch(alertActions.error(error));
       }
@@ -42,16 +42,16 @@ function getWorkList() {
 }
 
 function getWorkQueue(basketId) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(request(basketId));
 
     return dataPageService
-      .getDataPage("D_WorkBasket", { WorkBasket: basketId })
+      .getDataPage('D_WorkBasket', { WorkBasket: basketId })
       .then(
-        workqueue => {
+        (workqueue) => {
           dispatch(success(basketId, workqueue));
         },
-        error => {
+        (error) => {
           dispatch(failure(error));
           dispatch(alertActions.error(error));
         }

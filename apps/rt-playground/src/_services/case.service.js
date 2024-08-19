@@ -161,7 +161,7 @@ function refreshCase(myCase, body) {
   return axios
     .put(
       encodeURI(
-        endpoints.BASEV2URL +
+        endpoints.PEGAURL +
           endpoints.CASES +
           '/' +
           myCase.ID +

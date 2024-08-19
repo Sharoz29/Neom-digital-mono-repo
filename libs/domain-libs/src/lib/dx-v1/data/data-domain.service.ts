@@ -20,11 +20,12 @@ export class DataDomainService extends BaseDomainService<any, any, any> {
     super(_client, cacheManagerRef, 'data');
   }
 
-  getData({ headers, id }: any) {
+  getData({ headers, id, query }: any) {
     return from(
       axios
         .get(environment.pega.basev1Url + `/${environment.DATA}/${id}`, {
           headers: { Authorization: headers.authorization },
+          params: query,
         })
         .then(function (response) {
           return response.data;

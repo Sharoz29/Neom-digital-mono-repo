@@ -70,8 +70,8 @@ export class AssignmentApiController {
   @ApiOperation({
     summary: 'Gets the assignment by the provided id',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getAssignmentById(
     @Param('id') id: string,
     @Request() req: Request
@@ -109,8 +109,8 @@ export class AssignmentApiController {
     summary:
       'Gets the actions for the assignment by the provided case id and action id',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getActionsForAssignment(
     @Param('assignmentId') assignmentId: string,
     @Param('actionId') actionId: string,
@@ -142,8 +142,8 @@ export class AssignmentApiController {
   @ApiOperation({
     summary: 'Gets the details of next assignment',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getNextAssignmentDetail(@Request() req: Request): Observable<any> {
     return this._assignmentApiService.getNextAssignmentDetail(req);
   }

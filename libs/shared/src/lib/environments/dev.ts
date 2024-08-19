@@ -14,10 +14,10 @@ export const environment = {
   },
   pega: {
     baseUrl_comment: `https://tcsme-lcoe.pegatsdemo.com/prweb/api/application/v2`,
-    baseUrl: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/application/v2`,
-    basev2Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/application/v2`,
+    baseUrl: `https://web.pega23.lowcodesol.co.uk/prweb/app/uipoc/api/application/v1`,
+    basev2Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/uipoc/api/v1`,
     basev1Url_comment: `https://tcsme-lcoe.pegatsdemo.com/prweb/api/v1`,
-    basev1Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/call-a-doctor/api/v1`,
+    basev1Url: `https://web.pega23.lowcodesol.co.uk/prweb/app/uipoc/api/v1`,
     apiUrl: `https://web.pega23.lowcodesol.co.uk/prweb/api/v1`,
   },
   mqtt: {

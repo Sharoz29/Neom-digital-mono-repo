@@ -35,8 +35,8 @@ export class DxVersioningMiddleware implements NestMiddleware {
           .pipe(
             tap((response: any) => {
               const data = response.data;
-              const version = data.pyIsConstellationApp ? 'v2' : 'v1';
-              req.headers['dxApiVersion'] = version;
+              // const version = data.pyIsConstellationApp ? 'v2' : 'v1';
+              req.headers['dxApiVersion'] = 'v1';
               next();
             })
           )

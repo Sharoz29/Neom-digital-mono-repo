@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Header,
   Segment,
@@ -9,13 +9,14 @@ import {
   Button,
   Icon,
   Grid,
-} from "semantic-ui-react";
-import CaseRow from "../_components/Table/CaseRow";
-import CaseTable from "../_components/Table/CaseTable";
-import _ from "lodash";
-import { caseActions, workQueueActions } from "../_actions";
-import { assignmentActions } from "../_actions";
-
+} from 'semantic-ui-react';
+import _ from 'lodash';
+import { caseActions, workQueueActions } from '../_actions';
+import { assignmentActions } from '../_actions';
+import EnhancedTable from '../_components/Table/EnhancedTable';
+import { Table } from 'semantic-ui-react';
+import { format as datefn_format, parseISO as datefn_parseISO } from 'date-fns';
+import { withRouter } from 'react-router-dom/cjs/react-router-dom';
 /**
  * React component to show WorkLists and WorkQueues
  */
@@ -26,7 +27,7 @@ class Worklist extends Component {
     this.state = {
       column: props.worklistSettings.column,
       direction: props.worklistSettings.direction,
-      searchText: "",
+      searchText: '',
       pageSize: 10,
       pages: {
         Worklist: 1,
@@ -52,13 +53,13 @@ class Worklist extends Component {
 
   refreshWorklist(basketId) {
     this.setState({ loading: true });
-    if (basketId !== "Worklist") {
+    if (basketId !== 'Worklist') {
       this.props
         .dispatch(workQueueActions.getWorkQueue(basketId))
         .then(() => this.setState({ loading: false }));
     } else {
       // Retrieve the case list if that attempt failed on load of PegaApp
-      if (this.props.caseTypes?.length === 0 && this.props.caseTypesError) {
+      if (this.props.caseTypes.length === 0 && this.props.caseTypesError) {
         this.props.dispatch(caseActions.getCaseTypes());
       }
       this.props
@@ -79,17 +80,14 @@ class Worklist extends Component {
   }
 
   openAssignment(id, caseID) {
-    const woID = caseID;
-    this.props.dispatch(assignmentActions.addOpenAssignment(woID, caseID, id));
-    this.props.dispatch(assignmentActions.getAssignment(woID, id));
-    this.props.dispatch(caseActions.getCase(woID, caseID));
+    this.props.history.push({ pathname: `/cases/${id}`, state: caseID });
   }
 
   sortAssignments(targetList, column, direction) {
-    if (column === "pxRefObjectInsName") {
+    if (column === 'pxRefObjectInsName') {
       targetList = targetList.sort((x, y) => {
-        const prefixX = x.pxRefObjectInsName.split("-");
-        const prefixY = y.pxRefObjectInsName.split("-");
+        const prefixX = x.pxRefObjectInsName.split('-');
+        const prefixY = y.pxRefObjectInsName.split('-');
 
         if (prefixX[0] !== prefixY[0]) {
           if (prefixX[0] < prefixY[0]) return -1;
@@ -101,7 +99,7 @@ class Worklist extends Component {
     } else {
       targetList = _.sortBy(targetList, [column]);
     }
-    if (direction === "descending") {
+    if (direction === 'descending') {
       targetList = targetList.reverse();
     }
     return targetList;
@@ -118,7 +116,7 @@ class Worklist extends Component {
 
   getTableData() {
     let targetList =
-      this.state.current === "Worklist"
+      this.state.current === 'Worklist'
         ? this.props.workList
         : this.props.workQueues[this.state.current];
 
@@ -135,21 +133,35 @@ class Worklist extends Component {
       // Encountered scenario where two entries had same case id...hence using index to always get a unique key
       return targetList.slice(startIndex, endIndex).map((entry, index) => {
         return (
-          entry && (
-            <CaseRow
-              onClick={(e) => {
-                this.openAssignment(entry.pzInsKey, entry.pxRefObjectKey);
-              }}
-              entry={entry}
-              index={index}
-            />
-          )
+          <>
+            {entry ? (
+              <Table.Row
+                onClick={(e) => {
+                  this.openAssignment(entry.pzInsKey, entry.pxRefObjectKey);
+                }}
+                key={index}
+              >
+                <Table.Cell>{entry.pxRefObjectInsName}</Table.Cell>
+                <Table.Cell>{entry.pyAssignmentStatus}</Table.Cell>
+                <Table.Cell>{entry.pxUrgencyAssign}</Table.Cell>
+                <Table.Cell>
+                  {datefn_format(
+                    datefn_parseISO(entry.pxCreateDateTime.replace('GMT', 'Z')),
+                    'PPPP p'
+                  )}
+                </Table.Cell>
+              </Table.Row>
+            ) : (
+              <Table.Row>
+                <Table.Cell>---</Table.Cell>
+                <Table.Cell />
+                <Table.Cell />
+              </Table.Row>
+            )}
+          </>
         );
       });
     }
-
-    // No entries found for current workbasket, this is to demonstrate no rows
-    return <CaseRow />;
   }
 
   getTotalPagesForCurrent(data, pageSize) {
@@ -163,11 +175,11 @@ class Worklist extends Component {
     if (column !== clickedColumn) {
       this.setState({
         column: clickedColumn,
-        direction: "ascending",
+        direction: 'ascending',
       });
     } else {
       this.setState({
-        direction: direction === "ascending" ? "descending" : "ascending",
+        direction: direction === 'ascending' ? 'descending' : 'ascending',
       });
     }
   }
@@ -194,26 +206,33 @@ class Worklist extends Component {
 
     const totalPages = this.getTotalPagesForCurrent(data, pageSize);
     const pageOptions = [
-      { key: 5, text: "5", value: 5 },
-      { key: 10, text: "10", value: 10 },
-      { key: 20, text: "20", value: 20 },
-      { key: 30, text: "30", value: 30 },
-      { key: 50, text: "50", value: 50 },
+      { key: 5, text: '5', value: 5 },
+      { key: 10, text: '10', value: 10 },
+      { key: 20, text: '20', value: 20 },
+      { key: 30, text: '30', value: 30 },
+      { key: 50, text: '50', value: 50 },
     ];
+    const columnData = ['Case', 'Status', 'Urgency', 'Create Date'];
+
     return (
-      <div style={{ display: "flex", flexDirection: "row", gap: 20 }}>
+      <div style={{ display: 'flex', flexDirection: 'row', gap: 20 }}>
         {caseTypes.map((caseType, i) => {
           const rows = this.getTableRows(caseType, startIndex, endIndex);
           return (
             <div style={{ width: `${100 / caseTypes.length}%` }} key={i}>
-              <h3 style={{ textAlign: "center" }}>
-                {caseType[0]?.pyLabel.includes("Appointment")
-                  ? "New Appointments"
-                  : caseType[0]?.pyLabel.includes("Registration")
-                  ? `New ${caseType[0]?.pyLabel}`
-                  : caseType[0]?.pyLabel}
-              </h3>
-              <CaseTable column={column} direction={direction} rows={rows} />
+              <h3 style={{ textAlign: 'center' }}>{caseType[0]?.pyLabel}</h3>
+              <Table celled sortable striped selectable compact color="yellow">
+                <Table.Header key={i++}>
+                  <Table.Row key={i}>
+                    {columnData.map((label, index) => (
+                      <Table.HeaderCell width="3" key={index}>
+                        {label}
+                      </Table.HeaderCell>
+                    ))}
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>{rows}</Table.Body>
+              </Table>
               <Container fluid>
                 <Pagination
                   activePage={activePage}
@@ -224,16 +243,16 @@ class Worklist extends Component {
                   selection
                   floating
                   labeled
-                  style={{ float: "right" }}
+                  style={{ float: 'right' }}
                   options={pageOptions}
                   onChange={(e, obj) => this.handlePageSizeChange(e, obj)}
-                  text={this.state.pageSize + " records"}
+                  text={this.state.pageSize + ' records'}
                 />
                 <label
                   style={{
-                    float: "right",
-                    marginTop: "10px",
-                    paddingRight: ".5em",
+                    float: 'right',
+                    marginTop: '10px',
+                    paddingRight: '.5em',
                   }}
                 >
                   Rows per page:
@@ -255,7 +274,7 @@ class Worklist extends Component {
   }
 
   changePage(e) {
-    const activePage = e.target.getAttribute("value");
+    const activePage = e.target.getAttribute('value');
     this.setState({
       pages: {
         ...this.state.pages,
@@ -278,12 +297,12 @@ class Worklist extends Component {
     }
 
     let workBaskets = this.props.workBaskets.slice(0);
-    workBaskets.unshift("Worklist");
+    workBaskets.unshift('Worklist');
 
     return (
       <Dropdown
         text={
-          this.state.current === "Worklist"
+          this.state.current === 'Worklist'
             ? this.state.current
             : /*"Workqueue for " + */ this.state.current
         }
@@ -293,16 +312,16 @@ class Worklist extends Component {
           style={{
             height:
               workBaskets?.length > 13
-                ? "500px"
+                ? '500px'
                 : `${workBaskets?.length * 37}px`,
-            overflowY: workBaskets?.length > 13 ? "scroll" : "unset",
+            overflowY: workBaskets?.length > 13 ? 'scroll' : 'unset',
           }}
         >
           {workBaskets.map((wb, index) => {
-            if (wb !== "") {
+            if (wb !== '') {
               return (
                 <Dropdown.Item
-                  key={wb}
+                  key={index}
                   text={wb}
                   onClick={() => this.changeBasket(wb)}
                 />
@@ -338,7 +357,7 @@ class Worklist extends Component {
           <Grid.Column as="h3" width={4} textAlign="left">
             <Button
               basic
-              color="blue"
+              color="black"
               icon
               labelPosition="left"
               size="large"
@@ -355,7 +374,7 @@ class Worklist extends Component {
           <Grid.Column as="h4" width={4} textAlign="right">
             <Button
               basic
-              color="blue"
+              color="black"
               icon
               size="large"
               data-tooltip="Refresh list"
@@ -364,7 +383,7 @@ class Worklist extends Component {
             >
               <Icon name="refresh" />
             </Button>
-            <span style={{ paddingLeft: "1em" }} />
+            <span style={{ paddingLeft: '1em' }} />
             <div className="ui icon input top aligned">
               <input
                 type="text"
@@ -406,5 +425,5 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedWorklist = connect(mapStateToProps)(Worklist);
+const connectedWorklist = connect(mapStateToProps)(withRouter(Worklist));
 export { connectedWorklist as Worklist };

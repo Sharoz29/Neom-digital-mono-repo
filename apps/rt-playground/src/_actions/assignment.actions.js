@@ -35,40 +35,20 @@ function getAssignment(woID, id) {
     dispatch(request(id));
 
     return assignmentService.getAssignment(id).then(
-      (data) => {
-        if (data.caseInfo) {
-          const { caseInfo } = data;
-          const assignmentActions = caseInfo.assignments.reduce(
-            (acc, assignment) => {
-              acc.push(...assignment.actions);
-              return acc;
-            },
-            []
-          );
-
-          const allActions = [
-            ...assignmentActions,
-            ...caseInfo.availableActions,
-          ];
-          if (allActions.length > 0) {
-            dispatch(getFieldsForAssignment(woID, data.caseInfo)).then(
-              (data) => {
-                return dispatch(success(woID, caseInfo));
-              }
-            );
-          } else {
-            dispatch(assignmentActions.closeAssignment(woID));
-            dispatch(
-              alertActions.error(
-                'Assignment does not have any actions configured.'
-              )
-            );
-            return dispatch(failure(woID, 'No actions found'));
-          }
+      (assignment) => {
+        if (assignment.actions && assignment.actions.length > 0) {
+          // use then() to delay issuing ASSIGNMENT_SUCCESS until fields are returned
+          dispatch(getFieldsForAssignment(woID, assignment)).then((data) => {
+            return dispatch(success(woID, assignment));
+          });
         } else {
           dispatch(assignmentActions.closeAssignment(woID));
-          dispatch(alertActions.error('Assignment data is missing.'));
-          return dispatch(failure(woID, 'No assignment data found'));
+          dispatch(
+            alertActions.error(
+              'Assignment does not have any actions configured.'
+            )
+          );
+          return dispatch(failure(woID, assignment));
         }
       },
       (error) => {
@@ -78,11 +58,11 @@ function getAssignment(woID, id) {
     );
   };
 
-  function request(id) {
+  function request(woID, id) {
     return { type: actionTypes.ASSIGNMENT_REQUEST, woID, id };
   }
-  function success(woID, assignments) {
-    return { type: actionTypes.ASSIGNMENT_SUCCESS, woID, assignments };
+  function success(woID, assignment) {
+    return { type: actionTypes.ASSIGNMENT_SUCCESS, woID, assignment };
   }
   function failure(woID, error) {
     return { type: actionTypes.ASSIGNMENT_FAILURE, woID, error };
@@ -94,15 +74,15 @@ function getNextAssignment() {
     dispatch(request());
     return assignmentService.getAssignment('next').then(
       (assignment) => {
-        const woID = assignment.data.caseInfo.ID; // Updated to match v2 structure
+        const woID = assignment.caseID;
         dispatch(
           assignmentActions.addOpenAssignment(
             woID,
-            assignment.data.caseInfo.ID,
+            assignment.caseID,
             assignment.ID
           )
         );
-        dispatch(caseActions.getCase(woID, assignment.data.caseInfo.ID));
+        dispatch(caseActions.getCase(woID, assignment.caseID));
         dispatch(getFieldsForAssignment(woID, assignment)).then((data) => {
           dispatch(success(woID, assignment));
         });
@@ -134,14 +114,10 @@ function getFieldsForAssignment(
   return (dispatch) => {
     dispatch(request(woID, assignment, actionId));
 
-    // Get configured right panel view for case
+    // Get configured right panel view for case --  section to display alongside WorkObject.
     if (isShowRightPanel()) {
       dispatch(
-        caseActions.getView(
-          woID,
-          assignment.caseInfo.ID,
-          getRightPanelSection()
-        )
+        caseActions.getView(woID, assignment.caseID, getRightPanelSection())
       );
     }
 
@@ -168,7 +144,7 @@ function getFieldsForAssignment(
     };
   }
   function success(woID, data) {
-    return { type: actionTypes.ASSIGNMENT_FIELDS_SUCCESS, woID, data: data };
+    return { type: actionTypes.ASSIGNMENT_FIELDS_SUCCESS, woID, data };
   }
   function failure(woID, error) {
     return { type: actionTypes.ASSIGNMENT_FIELDS_FAILURE, woID, error };
@@ -291,7 +267,7 @@ function performActionOnAssignment(
               refreshAssignment(woID, assignment.nextAssignmentID)
             ).then((data) => {
               return dispatch(
-                success(woID, caseID, assignment, data.assignment.actions[0].ID)
+                success(woID, caseID, assignment, data.caseInfo.actions[0].ID)
               );
             });
           } else {
@@ -372,7 +348,7 @@ function saveAssignment(woID, caseID, assignmentID, actionID, body, pageInstr) {
           if (error?.response?.data?.errors) {
             error.response.data.errors.forEach((pegaError) => {
               dispatch(errorActions.pegaError(caseID, pegaError));
-              // dispatch(alertActions.error(pegaError));
+              dispatch(alertActions.error(pegaError));
             });
           }
           let errorData = getError(error);
@@ -385,7 +361,7 @@ function saveAssignment(woID, caseID, assignmentID, actionID, body, pageInstr) {
   function request(woID, caseID) {
     return { type: actionTypes.ASSIGNMENT_SAVE_REQUEST, woID, caseID };
   }
-  function success(WoID, aCase) {
+  function success(woID, aCase) {
     return { type: actionTypes.ASSIGNMENT_SAVE_SUCCESS, woID, aCase };
   }
   function failure(woID, caseID, error, actionID) {
@@ -495,7 +471,7 @@ function stepPrevious(woID, caseID, assignmentID, etag) {
       .navigationSteps(assignmentID, 'previous', etag)
       .then(
         (stepResponse) => {
-          if (stepResponse?.nextAssignmentInfo?.ID) {
+          if (stepResponse.nextAssignmentInfo.ID) {
             dispatch(caseActions.refreshCase(woID, caseID));
             return dispatch(
               refreshAssignment(woID, stepResponse.nextAssignmentInfo.ID)
@@ -505,7 +481,7 @@ function stepPrevious(woID, caseID, assignmentID, etag) {
                   woID,
                   caseID,
                   stepResponse,
-                  data.assignment.actions[0].ID
+                  data.caseInfo.assignment.actions[0].ID
                 )
               );
             });

@@ -13,10 +13,10 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AssignmentApiService extends BaseApiService<any, any, any> {
   constructor(
-    @Inject(CACHE_MANAGER) cacheManagerRef: Cache,
+    // @Inject(CACHE_MANAGER) cacheManagerRef: Cache,
     @Inject(RMQQueues.PY_WORKER_QUEUE) _client: ClientProxy
   ) {
-    super(_client, 'assignment', cacheManagerRef);
+    super(_client, 'assignment');
   }
 
   getAssignments(req: Request): Observable<any> {

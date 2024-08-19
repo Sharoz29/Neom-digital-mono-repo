@@ -11,7 +11,7 @@ const endpoints = {
 
   // Specify an appAlias to allow operators to access application when this application's access
   //  group is not the default access group specified within the operator record.
-  appAlias: 'call-a-doctor',
+  appAlias: 'uipoc',
 
   API__V1_URL: `http://localhost:5001/api/v1`,
   API__V2_URL: `http://localhost:5001/api/v2`,

@@ -27,33 +27,29 @@ function getAssignment(id) {
 }
 
 function getFieldsForAssignment(assignment, actionId) {
-  if (!actionId && assignment) {
-    console.log(assignment.availableActions, 'checking', assignment);
-    const allActions = [
-      ...assignment.availableActions,
-      ...assignment.assignments[0].actions,
-    ];
-    if (allActions && allActions.length > 0) {
-      actionId = assignment.assignments[0].actions[0].ID;
+  if (!actionId) {
+    if (assignment.actions && assignment.actions.length > 0) {
+      actionId = assignment.actions[0].ID;
     } else {
       return Promise.reject('No valid actions found.');
     }
   }
+
   return axios
     .get(
       encodeURI(
         endpoints.API__V1_URL +
           endpoints.ASSIGNMENTS +
           '/' +
-          assignment.assignments[0].ID +
+          assignment.ID +
           endpoints.ACTIONS +
           '/' +
           actionId
       )
     )
     .then(function (response) {
-      const data = response?.data;
-      return data.caseInfo.assignments[0].actions[0];
+      // const data = response?.data;
+      return response.data;
     })
     .catch(function (error) {
       return Promise.reject(getError(error));
@@ -61,13 +57,48 @@ function getFieldsForAssignment(assignment, actionId) {
 }
 
 // body has already been passed thru ReferenceHelper.getPostContent
+// function performRefreshOnAssignment(assignmentID, actionID, body, pageInstr) {
+//   let refreshFor = '';
+//   if (body && body.refreshFor) {
+//     refreshFor = `?refreshFor=${body.refreshFor}`;
+//     delete body.refreshFor;
+//   }
+
+//   return axios
+//     .put(
+//       encodeURI(
+//         endpoints.API__V1_URL +
+//           endpoints.ASSIGNMENTS +
+//           '/' +
+//           assignmentID +
+//           endpoints.ACTIONS +
+//           '/' +
+//           actionID +
+//           endpoints.REFRESH +
+//           refreshFor
+//       ),
+//       pageInstr && pageInstr.pageInstructions
+//         ? {
+//             content: body,
+//             pageInstructions: pageInstr.pageInstructions,
+//           }
+//         : {
+//             content: body,
+//           }
+//     )
+//     .then(function (response) {
+//       return response.data;
+//     })
+//     .catch(function (error) {
+//       return Promise.reject(getError(error));
+//     });
+// }
 function performRefreshOnAssignment(assignmentID, actionID, body, pageInstr) {
   let refreshFor = '';
   if (body && body.refreshFor) {
     refreshFor = `?refreshFor=${body.refreshFor}`;
     delete body.refreshFor;
   }
-
   return axios
     .put(
       encodeURI(
@@ -102,7 +133,7 @@ function performActionOnAssignment(assignmentID, actionID, body, pageInstr) {
   return axios
     .post(
       encodeURI(
-        endpoints.BASEV2URL + endpoints.ASSIGNMENTS + '/' + assignmentID
+        endpoints.API__V1_URL + endpoints.ASSIGNMENTS + '/' + assignmentID
       ),
       pageInstr.postSettings.bUseEmbedPI || pageInstr.postSettings.bUseRepeatPI
         ? {
@@ -137,7 +168,7 @@ function saveAssignment(assignmentID, actionID, body, pageInstr) {
   return axios
     .post(
       encodeURI(
-        endpoints.BASEV2URL + endpoints.ASSIGNMENTS + '/' + assignmentID
+        endpoints.API__V1_URL + endpoints.ASSIGNMENTS + '/' + assignmentID
       ),
       pageInstr.postSettings.bUseEmbedPI || pageInstr.postSettings.bUseRepeatPI
         ? {
@@ -183,7 +214,7 @@ function navigationSteps(assignmentID, step, etag) {
   return axios
     .patch(
       encodeURI(
-        endpoints.BASEV2URL +
+        endpoints.API__V1_URL +
           endpoints.ASSIGNMENTS +
           '/' +
           assignmentID +

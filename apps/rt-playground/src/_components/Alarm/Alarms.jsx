@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import EnhancedTable from '../Table/EnhancedTable';
 
 const AlarmHeader = styled.div`
-padding: 20px;
-font-size: 24px;
-font-weight: bold;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
 `;
 
 const columns = [
@@ -47,33 +47,124 @@ const columns = [
   },
 ];
 
-function createData(id, deviceName, deviceLocation, alarmDateTime, alarmSeverity, alarmType, alarmStatus) {
-  return { id, deviceName, deviceLocation, alarmDateTime, alarmSeverity, alarmType, alarmStatus };
+function createData(
+  id,
+  deviceName,
+  deviceLocation,
+  alarmDateTime,
+  alarmSeverity,
+  alarmType,
+  alarmStatus
+) {
+  return {
+    id,
+    deviceName,
+    deviceLocation,
+    alarmDateTime,
+    alarmSeverity,
+    alarmType,
+    alarmStatus,
+  };
 }
 
 const rows = [
-  createData(1, 'AC', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Active'),
-  createData(2, 'name', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Badge'),
-  createData(3, 'name', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Badge'),
-  createData(4, 'name', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Badge'),
-  createData(5, 'name', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Badge'),
-  createData(6, 'name', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Badge'),
-  createData(7, 'name', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Badge'),
-  createData(8, 'name', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Badge'),
-  createData(9, 'name', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Badge'),
-  createData(10, 'name', 'Cell Text', 'Cell Text', 'Cell Text', 'Cell Text', 'Badge'),
+  createData(
+    1,
+    'AC',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Active'
+  ),
+  createData(
+    2,
+    'name',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Badge'
+  ),
+  createData(
+    3,
+    'name',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Badge'
+  ),
+  createData(
+    4,
+    'name',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Badge'
+  ),
+  createData(
+    5,
+    'name',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Badge'
+  ),
+  createData(
+    6,
+    'name',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Badge'
+  ),
+  createData(
+    7,
+    'name',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Badge'
+  ),
+  createData(
+    8,
+    'name',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Badge'
+  ),
+  createData(
+    9,
+    'name',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Badge'
+  ),
+  createData(
+    10,
+    'name',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Cell Text',
+    'Badge'
+  ),
 ];
 
 const Alarms = () => {
   return (
     <>
-       <AlarmHeader>
-         Alarms
-      </AlarmHeader>
-      <EnhancedTable columns={columns} rows={rows} title="Alarms List"/>
-
-
-            
+      <AlarmHeader>Alarms</AlarmHeader>
+      <EnhancedTable columns={columns} rows={rows} title="Alarms List" />
     </>
   );
 };

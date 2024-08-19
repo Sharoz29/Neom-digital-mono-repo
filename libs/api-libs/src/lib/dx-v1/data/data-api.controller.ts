@@ -10,6 +10,7 @@ import {
   Delete,
   Request,
   UseInterceptors,
+  Query,
 } from '@nestjs/common';
 import {
   ApiParam,
@@ -24,7 +25,7 @@ import {
   ApiOperation,
 } from '@nestjs/swagger';
 
-import { Observable } from 'rxjs';
+import { defaultIfEmpty, map, Observable, throwIfEmpty } from 'rxjs';
 
 import { DataVm, PSDATA } from '@neom/models';
 import { DataApiService } from './data-api.service';
@@ -70,10 +71,30 @@ export class DataApiController {
   @ApiOperation({
     summary: 'Gets the data by the provided id',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
-  getData(@Param('id') id: string, @Request() req: Request): Observable<any> {
-    return this._dataApiService.getData(id, req);
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
+  getData(
+    @Param('id') id: string,
+    @Request() req: Request,
+    @Query() query: any
+  ): Observable<any> {
+    return this._dataApiService.getData(id, req, query).pipe(
+      map((response) => {
+        if (!query?.$f) return response;
+        const columns = query.$f?.split(',');
+        if (columns?.length <= 0) return response;
+
+        const { pxResults } = response;
+
+        if (pxResults && pxResults.length > 0) {
+          return pxResults.map((result: Record<string, any>) =>
+            columns.reduce((pre: object, cur: string, index: number) => {
+              return { ...pre, [cur]: result[cur] };
+            }, {})
+          );
+        }
+      })
+    );
   }
   //Get data metadata
   /**
@@ -104,8 +125,8 @@ export class DataApiController {
   @ApiOperation({
     summary: 'Gets the metadata of a data view given its name',
   })
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(60 * 60 * 24)
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(60 * 60 * 24)
   getDataMetaData(
     @Param('id') id: string,
     @Request() req: Request
