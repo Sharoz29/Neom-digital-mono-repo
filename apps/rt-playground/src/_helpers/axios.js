@@ -2,22 +2,11 @@
  * Custom axios instance
  */
 
+import instance from './axios_cache';
 import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { endpoints } from '../_services/endpoints';
 import { authRefresh } from './';
-
-const instance = axios.create({
-  baseURL: endpoints.BASEV2URL,
-  timeout: 30000,
-  headers: {
-    // appName: 'uipoc',
-    // 'X-Custom-Header': 'foobar',
-    // // true: need, false: dont need
-    Authorization: true,
-    // 'X-Requested-With': 'XMLHttpRequest'
-  },
-});
 
 // Function that will be called to re-authenticate
 const reAuthLogic = (failedRequest) => {
@@ -46,7 +35,6 @@ instance.interceptors.request.use((request) => {
   // Add authorization header if set
   const authHdr = sessionStorage.getItem('pega_react_user');
   if (authHdr) {
-    //Add this to Neom digital
     request.headers.Authorization = authHdr;
   } else {
     if (endpoints.use_OAuth) {

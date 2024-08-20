@@ -30,6 +30,7 @@ import { defaultIfEmpty, map, Observable, throwIfEmpty } from 'rxjs';
 import { DataVm, PSDATA } from '@neom/models';
 import { DataApiService } from './data-api.service';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { CustomCacheInterceptor } from '@neom/nst-libs/lib/interceptors/custom-cache.interceptor';
 
 /**
  * Controller for handling data endpoints sedning request to the v1 pega api.
@@ -71,8 +72,8 @@ export class DataApiController {
   @ApiOperation({
     summary: 'Gets the data by the provided id',
   })
-  // @UseInterceptors(CacheInterceptor)
-  // @CacheTTL(60 * 60 * 24)
+  @UseInterceptors(CustomCacheInterceptor)
+  @CacheTTL(60 * 60 * 24)
   getData(
     @Param('id') id: string,
     @Request() req: Request,

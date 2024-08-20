@@ -60,7 +60,6 @@ import { errorActions, alertActions } from '../_actions';
 import { AttachContent } from '../_components/AttachContent';
 import { AttachmentsWidget } from '../Widgets/AttachmentsWidget';
 import { MaskedText } from '../_components/MaskedText';
-import { endpoints } from '../_services';
 import { fieldResolver, dropDownOnFocus } from '../_helpers/fieldLogic';
 
 // import { locale } from "core-js";
@@ -1105,9 +1104,10 @@ class PegaForm extends Component {
     const msgRequiredInput = 'You must enter a value';
     const msgRequiredOption = 'You must select an option';
 
+    // Arslan: field transformer to resolve the customAttributes.fieldLogic
     fieldResolver(this._fields, field);
 
-    if (field.visible === false) {
+    if (field.visible === false || field.hide) {
       return;
     }
 
@@ -1187,12 +1187,8 @@ class PegaForm extends Component {
     // Note: some field.control.type values do not start with px
     const fieldClass = 'pr-field-' + field.control.type.replace(/^(px)/, '');
 
+    // Arslan: Hide and Disable here
     this.dropDownOnFocus = dropDownOnFocus.apply(this, [field]);
-
-    const userNameValidator = (field) => {
-      const fieldID = field.fieldID;
-      console.log(field);
-    };
 
     switch (field.control.type) {
       case fieldTypes.CHECKBOX:
@@ -1658,7 +1654,7 @@ class PegaForm extends Component {
               }
               onChange={handleChange}
               onKeyPress={(e) => this.disableEnter(e)}
-              onBlur={userNameValidator(field)}
+              onBlur={handleEvent}
               value={value}
               reference={field.reference}
               repeatlayouttype={repeatLayoutType}

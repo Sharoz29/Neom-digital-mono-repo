@@ -54,7 +54,6 @@ export class CustomCacheInterceptor implements NestInterceptor {
 
     if (request?.url) {
       const query = request.query;
-      console.log('queryString', query);
       if (query && query['$c'] === '1') {
         httpCached = true;
       }
