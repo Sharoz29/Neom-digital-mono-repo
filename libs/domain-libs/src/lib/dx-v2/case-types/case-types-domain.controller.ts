@@ -30,11 +30,11 @@ export class CaseTypesDomainController {
   constructor(
     private readonly _caseTypesDomainService: CaseTypesDomainService
   ) {}
-  @MessagePattern(PSCASE_TYPES.GET)
+  @MessagePattern(PSCASE_TYPES.GETV2)
   getCaseTypes({ headers }: any): Observable<any> {
     return this._caseTypesDomainService.getCaseTypes(headers);
   }
-  @MessagePattern(PSCASE_TYPES.GETCASETYPEACTIONS)
+  @MessagePattern(PSCASE_TYPES.GETCASETYPEACTIONSV2)
   getCaseTypeActions(payload: any): Observable<any> {
     return this._caseTypesDomainService.getCaseTypeActions(payload);
   }

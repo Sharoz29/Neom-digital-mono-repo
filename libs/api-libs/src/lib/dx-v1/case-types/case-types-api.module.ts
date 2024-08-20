@@ -54,10 +54,11 @@ import { HttpModule } from '@nestjs/axios';
   controllers: [CaseTypesApiController],
   providers: [CaseTypesApiService],
 })
-export class CaseTypesApiModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(DxVersioningMiddleware)
-      .forRoutes({ path: 'v1/casetypes', method: RequestMethod.ALL });
-  }
-}
+export class CaseTypesApiModule {}
+// export class CaseTypesApiModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer
+//       .apply(DxVersioningMiddleware)
+//       .forRoutes({ path: 'v1/casetypes', method: RequestMethod.ALL });
+//   }
+// }
