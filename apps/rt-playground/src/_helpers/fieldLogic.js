@@ -132,6 +132,7 @@ export function dropDownOnFocus(field) {
     let control = field.control;
     let fieldLogic = getFieldLogicObject(field);
     let mode = control.modes && control.modes.length && control.modes[0];
+    let parentOf = fieldLogic?.data?.pof;
 
     // TODO: Implement pof
     // if (fieldLogic?.pof) {
@@ -139,6 +140,22 @@ export function dropDownOnFocus(field) {
     //     controls: { ...this.state.controls, [field.fieldID]: [] },
     //     loadingElems: { ...this.state.loadingElems, [field.fieldID]: true },
     //   });
+    // console.log(fieldLogic, 'vvv', parentOf);
+
+    if (parentOf && parentOf?.length > 0) {
+      parentOf.forEach((p) => {
+        console.log(p, this.state, 'vvv');
+        // this.setState(...this.state, (this.state.values[p] = ''));
+        this.setState(...this.state, (this.state.values[p] = ''));
+      });
+    }
+
+    // if (parentOf) {
+    //   this.setState({
+    //     control: { ...this.state.controls, [field.fieldID]: [] },
+    //     loadingElems: { ...this.state.loadingElems, [field.fieldID]: true },
+    //   });
+    // }
 
     // if from DataPage or List or Options already in place, return
 

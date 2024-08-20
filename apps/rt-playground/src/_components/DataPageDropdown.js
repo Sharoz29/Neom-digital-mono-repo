@@ -1,10 +1,10 @@
-import _ from "lodash";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Form } from "formsy-semantic-ui-react";
+import _ from 'lodash';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Form } from 'formsy-semantic-ui-react';
 
-import { dataPageService } from "../_services";
-import { buildDPParams, buildDPQueryString } from "../_helpers";
+import { dataPageService } from '../_services';
+import { buildDPParams, buildDPQueryString } from '../_helpers';
 
 /**
  * Standardized component to handle dropdowns sourced from data pages.
@@ -14,33 +14,31 @@ class DataPageDropdown extends Component {
     super(props);
 
     this.state = {
-      dataPageQuery: "", //String representation of last DP query with params
-      options: []
+      dataPageQuery: '', //String representation of last DP query with params
+      options: [],
     };
   }
 
-  fetchDP( mode ) {
+  fetchDP(mode) {
     let params = buildDPParams(mode.dataPageParams);
     let dataPageQuery = buildDPQueryString(mode.dataPageID, params);
 
     // Directly calling dataPageService methods so we do not have actions overhead.
     // This should be very narrow use case, specific to component.
-    dataPageService
-      .getDataPage(mode.dataPageID, params)
-      .then(
-        dataPage => {
-          this.setState({
-            dataPageQuery: dataPageQuery,
-            options: this.convertDataPageToOptions(dataPage)
-          });
-        },
-        error => {
-          this.setState({
-            dataPageQuery: dataPageQuery,
-            options: [{ key: error, text: error, value: error }]
-          });
-        }
-      );
+    dataPageService.getDataPage(mode.dataPageID, params).then(
+      (dataPage) => {
+        this.setState({
+          dataPageQuery: dataPageQuery,
+          options: this.convertDataPageToOptions(dataPage),
+        });
+      },
+      (error) => {
+        this.setState({
+          dataPageQuery: dataPageQuery,
+          options: [{ key: error, text: error, value: error }],
+        });
+      }
+    );
   }
 
   convertDataPageToOptions(dataPage) {
@@ -48,20 +46,22 @@ class DataPageDropdown extends Component {
     let options = [];
 
     // Value it the first advanced search entered entry (main result)
-    let propName = mode.dataPageValue, propPrompt = mode.dataPagePrompt, propTooltip = mode.dataPageTooltip;
+    let propName = mode.dataPageValue,
+      propPrompt = mode.dataPagePrompt,
+      propTooltip = mode.dataPageTooltip;
 
-    if (propName.indexOf(".") === 0) {
+    if (propName.indexOf('.') === 0) {
       propName = propName.substring(1);
     }
 
-    dataPage.pxResults.forEach(result => {
+    dataPage.pxResults.forEach((result) => {
       if (result[propName]) {
         let option = {
-          key: result["pzInsKey"] ? result["pzInsKey"] : result[propName],
+          key: result['pzInsKey'] ? result['pzInsKey'] : result[propName],
           text: result[propPrompt],
           value: result[propName],
         };
-        if( propTooltip != "" ) {
+        if (propTooltip != '') {
           option.tooltip = result[propTooltip];
         }
         options.push(option);
@@ -88,10 +88,10 @@ class DataPageDropdown extends Component {
     const { mode } = this.props;
     let params = buildDPParams(mode.dataPageParams);
     let dataPageQuery = buildDPQueryString(mode.dataPageID, params);
-    
-    if( this.state.dataPageQuery != dataPageQuery ) {
+
+    if (this.state.dataPageQuery != dataPageQuery) {
       this.fetchDP(mode);
-    } 
+    }
   }
 
   render() {

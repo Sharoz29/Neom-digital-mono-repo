@@ -1188,6 +1188,12 @@ class PegaForm extends Component {
     const fieldClass = 'pr-field-' + field.control.type.replace(/^(px)/, '');
 
     this.dropDownOnFocus = dropDownOnFocus.apply(this, [field]);
+
+    const userNameValidator = (field) => {
+      const fieldID = field.fieldID;
+      console.log(field);
+    };
+
     switch (field.control.type) {
       case fieldTypes.CHECKBOX:
         value = field.value === 'true' || value === true;
@@ -1487,6 +1493,7 @@ class PegaForm extends Component {
           );
         }
         break;
+      case fieldTypes.MULTISELECT:
       case fieldTypes.DROPDOWN:
         if (readOnly) {
           let displayValue = this.getDisplayTextFormattedValue(field);
@@ -1542,12 +1549,10 @@ class PegaForm extends Component {
                   placeholder={placeholder}
                   labeled
                   selection
+                  multiple={field.control.type == fieldTypes.MULTISELECT}
                   search
                   clearable
                   loading={this.state.loadingElems[field.fieldID]}
-                  // onFocus={async (e, data) => {
-
-                  // }}
                   onFocus={this.dropDownOnFocus}
                   options={
                     options && options.length > 0
@@ -1577,7 +1582,6 @@ class PegaForm extends Component {
             );
           }
         }
-        ['Pakistan', 'USA'].includes('Pakistan');
         break;
       case fieldTypes.EMAIL:
       case fieldTypes.PHONE:
@@ -1654,7 +1658,7 @@ class PegaForm extends Component {
               }
               onChange={handleChange}
               onKeyPress={(e) => this.disableEnter(e)}
-              onBlur={handleEvent}
+              onBlur={userNameValidator(field)}
               value={value}
               reference={field.reference}
               repeatlayouttype={repeatLayoutType}
