@@ -61,7 +61,7 @@ import { AttachContent } from '../_components/AttachContent';
 import { AttachmentsWidget } from '../Widgets/AttachmentsWidget';
 import { MaskedText } from '../_components/MaskedText';
 import { endpoints } from '../_services';
-// import { fieldResolver } from '../_helpers/fieldLogic';
+import { fieldResolver, dropDownOnFocus } from '../_helpers/fieldLogic';
 
 // import { locale } from "core-js";
 
@@ -1105,6 +1105,8 @@ class PegaForm extends Component {
     const msgRequiredInput = 'You must enter a value';
     const msgRequiredOption = 'You must select an option';
 
+    fieldResolver(this._fields, field);
+
     if (field.visible === false) {
       return;
     }
@@ -1185,152 +1187,7 @@ class PegaForm extends Component {
     // Note: some field.control.type values do not start with px
     const fieldClass = 'pr-field-' + field.control.type.replace(/^(px)/, '');
 
-    // field transformer to resolve the customAttributes.fieldLogic
-    // fieldResolver(this._fields, field);
-    // if (field.hide) {
-    //   return null;
-    // }
-
-    // Hide and Disable here
-
-    const model = this._fields;
-    let _options = [];
-
-    const evalStr = (str) => {
-      try {
-        return eval(str);
-      } catch (error) {
-        console.error(`Error evaluating expression: ${str}`, error);
-        return null;
-      }
-    };
-
-    const { customAttributes } = field;
-    let fieldLogic = customAttributes?.fieldLogic;
-    if (fieldLogic) {
-      fieldLogic = JSON.parse(fieldLogic);
-      if (fieldLogic) {
-        if (evalStr(fieldLogic.hide)) {
-          return null;
-        }
-        if (evalStr(fieldLogic.disabled)) {
-          disabled = true;
-        }
-        // if(!!fieldLogic.data && fieldLogic.data.page) {
-        //   let query = evalStr(fieldLogic.data.query);
-        //   if (query && query.charAt(query.length - 1) != '=') {
-        //     const url = `https://web.pega23.lowcodesol.co.uk/prweb/app/uipoc/api/v1/data/${fieldLogic.data.page}?${query}`;
-        //     axios.interceptors.request.use((request) => {
-        //       // Add authorization header if set
-        //       const authHdr = sessionStorage.getItem("pega_react_user");
-        //       if (authHdr) {
-        //         request.headers.Authorization = authHdr;
-        //       } else {
-        //         if (endpoints.use_OAuth) {
-        //           // Tried to implement popping up login dialog, but with scenarios where async requests might fire
-        //           //  was much easier to leverage the reAuth logic to coordinate this
-        //           // Should always have an authHdr (and we keep around expired ones to trigger the reauth logic)
-        //           //  If we do fall in here, just cancel, as you are guaranteed to get a 400 failure on server without
-        //           //  the Auhtorization header
-        //           throw new axios.Cancel("Invalid access token");
-        //         }
-        //       }
-        //       return request;
-        //     });
-
-        //       const res = axios
-        //       .get(url,{params: {c: 1}}).then(res => {
-        //         if(res) {
-        //           _options = this.state[field.reference];
-        //           const _oldOptions = _options;
-        //           const prop = fieldLogic.data.prop;
-        //           _options = res.data.pxResults.map(v => ({key: v[prop], text: v[prop], value: v[prop]}));
-        //           if (!_.isEqual(_oldOptions, _options)) {
-        //             this.setState({[field.fieldId]: _options});
-        //           }
-        //         }
-        //     });
-        //   }
-        // }
-      }
-    }
-
-    this.onFocus = (e, data) => {
-      console.log('State: ', this.state);
-      if (!!fieldLogic?.data && fieldLogic?.data.page) {
-        this.setState({
-          controls: { ...this.state.controls, [field.fieldID]: [] },
-          loadingElems: { ...this.state.loadingElems, [field.fieldID]: true },
-        });
-        let query = evalStr(fieldLogic.data.query);
-        if (query && query.charAt(query.length - 1) != '=') {
-          const url = `https://web.pega23.lowcodesol.co.uk/prweb/app/uipoc/api/v1/data/${fieldLogic.data.page}?${query}`;
-          axios.interceptors.request.use((request) => {
-            // Add authorization header if set
-            const authHdr = sessionStorage.getItem('pega_react_user');
-            if (authHdr) {
-              request.headers.Authorization = authHdr;
-            } else {
-              if (endpoints.use_OAuth) {
-                // Tried to implement popping up login dialog, but with scenarios where async requests might fire
-                //  was much easier to leverage the reAuth logic to coordinate this
-                // Should always have an authHdr (and we keep around expired ones to trigger the reauth logic)
-                //  If we do fall in here, just cancel, as you are guaranteed to get a 400 failure on server without
-                //  the Auhtorization header
-                throw new axios.Cancel('Invalid access token');
-              }
-            }
-            return request;
-          });
-
-          const res = axios
-            .get(
-              endpoints.API__V1_URL +
-                endpoints.DATA +
-                '/' +
-                fieldLogic.data.page +
-                '?' +
-                query,
-              {
-                params: { $c: 1, $f: fieldLogic?.data?.fields?.join(',') },
-              }
-            )
-            .then((res) => {
-              if (res) {
-                _options = this.state.controls[field.fieldID];
-                const _oldOptions = _options;
-                const prop = fieldLogic.data.prop;
-                // function evalLabel(model){
-                //   try {
-                //     this = {...this, model};
-                //     return evalStr(prop);
-                //   } catch (error) {
-                //     console.error(`Error evaluating expression: ${model}`, error);
-                //     return model[prop];
-                //   }
-                // }
-                _options = res.data.pxResults.map((v) => ({
-                  key: v[prop],
-                  text: v[prop],
-                  value: v[prop],
-                }));
-                if (!_.isEqual(_oldOptions, _options)) {
-                  this.setState({
-                    controls: {
-                      ...this.state.controls,
-                      [field.fieldID]: _options,
-                    },
-                    loadingElems: {
-                      ...this.state.loadingElems,
-                      [field.fieldID]: false,
-                    },
-                  });
-                }
-              }
-            });
-        }
-      }
-    };
+    this.dropDownOnFocus = dropDownOnFocus.apply(this, [field]);
     switch (field.control.type) {
       case fieldTypes.CHECKBOX:
         value = field.value === 'true' || value === true;
@@ -1691,7 +1548,7 @@ class PegaForm extends Component {
                   // onFocus={async (e, data) => {
 
                   // }}
-                  onFocus={this.onFocus}
+                  onFocus={this.dropDownOnFocus}
                   options={
                     options && options.length > 0
                       ? options

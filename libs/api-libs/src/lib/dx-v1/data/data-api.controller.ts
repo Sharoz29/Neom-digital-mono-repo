@@ -87,11 +87,13 @@ export class DataApiController {
         const { pxResults } = response;
 
         if (pxResults && pxResults.length > 0) {
-          return pxResults.map((result: Record<string, any>) =>
-            columns.reduce((pre: object, cur: string, index: number) => {
-              return { ...pre, [cur]: result[cur] };
-            }, {})
-          );
+          return {
+            pxResults: pxResults.map((result: Record<string, any>) =>
+              columns.reduce((pre: object, cur: string, index: number) => {
+                return { ...pre, [cur]: result[cur] };
+              }, {})
+            ),
+          };
         }
       })
     );
