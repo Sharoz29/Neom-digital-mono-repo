@@ -133,38 +133,36 @@ export function dropDownOnFocus(field) {
     let fieldLogic = getFieldLogicObject(field);
     let mode = control.modes && control.modes.length && control.modes[0];
     let parentOf = fieldLogic?.data?.pof;
-
-    // TODO: Implement pof
-    // if (fieldLogic?.pof) {
-    //   this.setState({
-    //     controls: { ...this.state.controls, [field.fieldID]: [] },
-    //     loadingElems: { ...this.state.loadingElems, [field.fieldID]: true },
-    //   });
-    // console.log(fieldLogic, 'vvv', parentOf);
+    let state = this.state;
 
     if (parentOf && parentOf?.length > 0) {
-      parentOf.forEach((p) => {
-        console.log(p, this.state, 'vvv');
-        // this.setState(...this.state, (this.state.values[p] = ''));
-        this.setState(...this.state, (this.state.values[p] = ''));
+      const obj = parentOf.reduce((p, c) => {
+        return {
+          ...p,
+          [c]: null,
+        };
+      }, {});
+      state = {
+        ...this.state,
+        values: {
+          ...this.state.values,
+          ...obj,
+        },
+        controls: {
+          ...obj,
+        },
+      };
+      this.setState({
+        ...state,
       });
     }
-
-    // if (parentOf) {
-    //   this.setState({
-    //     control: { ...this.state.controls, [field.fieldID]: [] },
-    //     loadingElems: { ...this.state.loadingElems, [field.fieldID]: true },
-    //   });
-    // }
-
-    // if from DataPage or List or Options already in place, return
 
     if (mode?.options && mode.options?.length > 0) return;
 
     if (!!fieldLogic?.data && fieldLogic?.data.page) {
       this.setState({
-        controls: { ...this.state.controls, [field.fieldID]: [] },
-        loadingElems: { ...this.state.loadingElems, [field.fieldID]: true },
+        controls: { ...state.controls, [field.fieldID]: [] },
+        loadingElems: { ...state.loadingElems, [field.fieldID]: true },
       });
 
       let query = evalString(this._fields, fieldLogic.data.query);
@@ -198,7 +196,7 @@ export function dropDownOnFocus(field) {
           })
           .then((res) => {
             if (res) {
-              _options = this.state.controls[field.fieldID];
+              _options = state.controls[field.fieldID];
               const _oldOptions = _options;
               const prop = fieldLogic.data.prop;
               _options = res.data.pxResults.map((v) => ({
@@ -209,11 +207,11 @@ export function dropDownOnFocus(field) {
               if (!_.isEqual(_oldOptions, _options)) {
                 this.setState({
                   controls: {
-                    ...this.state.controls,
+                    ...state.controls,
                     [field.fieldID]: _options,
                   },
                   loadingElems: {
-                    ...this.state.loadingElems,
+                    ...state.loadingElems,
                     [field.fieldID]: false,
                   },
                 });
