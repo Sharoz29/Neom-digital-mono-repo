@@ -37,14 +37,15 @@ export class AttachmentListComponent implements OnInit {
     }
 
     deleteAttachment(file: { ID: any; }) {
-        this.caseService.deleteAttachment(file).subscribe(response => {
-            if (this.attachmentList?.length > 0) {
-                const index = this.attachmentList.findIndex(element => element.ID === file.ID);
-                if (index > -1) {
-                    this.attachmentList.splice(index, 1);
-                }
-            }
-        });
+        // TODO: Implement Delete Attachment
+        // this.caseService.deleteAttachment(file).subscribe(response => {
+        //     if (this.attachmentList?.length > 0) {
+        //         const index = this.attachmentList.findIndex(element => element.ID === file.ID);
+        //         if (index > -1) {
+        //             this.attachmentList.splice(index, 1);
+        //         }
+        //     }
+        // });
     }
 
     downloadAttachment(file: { fileName?: any; ID?: any; }) {

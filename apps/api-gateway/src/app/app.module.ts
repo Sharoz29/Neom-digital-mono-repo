@@ -9,6 +9,7 @@ import { environment } from '@neom/shared/lib/environments/dev';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 import { ApiLibsModule } from '@neom/api-libs';
+import { CustomCacheInterceptor } from '@neom/nst-libs/lib/interceptors/custom-cache.interceptor';
 
 /*
  * TODO: Finalize the role of DomainLibsModule
@@ -49,6 +50,6 @@ import { ApiLibsModule } from '@neom/api-libs';
     ]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CustomCacheInterceptor],
 })
 export class AppModule {}

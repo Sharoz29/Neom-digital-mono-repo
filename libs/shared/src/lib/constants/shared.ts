@@ -1,5 +1,6 @@
 export enum MessagePatterns {
   PY_HOST_INFO = 'py_hostInfo',
+  PY_HELLO = 'py_hello',
   PY_GET_DATA= 'py_getData',
   PY_GET_CASE_DATA = 'py_getCaseData',
 }

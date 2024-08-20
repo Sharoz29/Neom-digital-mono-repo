@@ -1,3 +1,5 @@
+import { RmqRecordBuilder } from "@nestjs/microservices";
+
 export function underscoreToSentenseCase ( text: string ): string {
   return text
     ? String( text[ 0 ].toUpperCase() + text.substr( 1 ) )
