@@ -1,10 +1,12 @@
 import axios from './axios';
 import { endpoints } from '../_services/endpoints';
+import * as Formsy from 'formsy-react';
+import { user } from '../_reducers';
 
 function getFieldLogicObject(field) {
   try {
     let fieldLogic = null;
-    if (field.customAttributes && field.customAttributes.fieldLogic) {
+    if (field?.customAttributes && field.customAttributes?.fieldLogic) {
       fieldLogic = JSON.parse(field.customAttributes.fieldLogic);
     }
     return fieldLogic;
@@ -49,12 +51,12 @@ function setFieldByCustomAttributes(fields, field, logic, prop) {
     case 'disabled':
       resolveDisabled(fields, fieldID, logic);
       break;
-    case 'data':
-      // const dataEndpoint = evalString(fields, logic);
-      // const splitted = dataEndpint.split('=');
-      //
-      // const response = await axios.get(dataEndpoint);
-
+    case 'validations':
+       
+      console.debug('errors', field.fieldValidations);
+      break;
+    case 'asyncValidations':
+      
       break;
     default:
       break;
@@ -76,56 +78,175 @@ export function fieldResolver(fields, field) {
   const customAttributes = field.customAttributes;
   let fieldLogic = null;
 
-  // TODO
-  // will remove this when logic is implemented on backend
-  // if (field.fieldID === "City") {
-  //   field.customAttributes = {};
-  //   if (field.customAttributes) {
-  //     field.customAttributes.fieldLogic = JSON.stringify({
-  //       // hide: "model.IWantToReport.value=='Business'",
-  //       hide: "model.visitedCoutries.value.includes('Pakistan')",
-  //       disabled: "model.IWantToReport.value=='Business'",
-  //       data: "D_ListStates?Country=${model.Country.value}",
-  //       validation: {
-  //         required: {
-  //           message: "Please select a state",
-  //           condition: "model.Country.value=='Pakistan'",
-  //         },
-  //         pattern: {
-  //           message: "Please select a valid email address",
-  //           condition: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-  //         },
-  //       },
-  //       asyncValidations: {
-  //         usernameAvailable: {
-  //           message: "Username is not available",
-  //           condition: false,
-  //           data: "D_CheckUsername?Username=model.Username.value",
-  //         },
-  //       },
-  //     });
-  //   }
-  // }
-
+  
   if (customAttributes && customAttributes.fieldLogic) {
     fieldLogic = JSON.parse(customAttributes.fieldLogic);
   }
 
   if (fieldLogic) {
     Object.entries(fieldLogic).map(([key, value]) => {
-      setFieldByCustomAttributes(fields, field, value, key);
+      setFieldByCustomAttributes.apply(this, [fields, field, value, key]);
     });
-    // // check hidden attribute
-    // if (fieldLogic.hide) {
-    //   setFieldByCustomAttributes(fields, field, fieldLogic.hide, "hide");
-    // }
-    // // check disabled attribute
-    // if (fieldLogic.disabled) {
-    //   setFieldByCustomAttributes(fields, field, fieldLogic.disabled, "disabled");
-    // }
   }
 }
+export function onBlurTextInputCheckValidations(fields, field) {
+  
+  return (e, data) => {
+    const logic = getFieldLogicObject(field);
+    const toggleClass = (add = false) => {
+      let element = document.querySelector(
+        `[reference="${field.fieldID}"]`
+      );
+      if (!element) return;
 
+      element.classList.remove('error');
+      element.parentElement.classList.remove('error');
+
+      if (add) {
+        element.classList.add('error');
+        element.parentElement.classList.add('error');
+      }
+    };
+    const resetErrors = (k, v) => {
+      field.fieldValidations.errors =
+        field.fieldValidations?.errors?.filter(
+          (e) => e.message !== v?.message
+        ) || [];
+      delete field.fieldValidations?.validations[k];
+      delete field.fieldValidations?.validationErrors[k];
+      this.setState({ ...this.state }, () => null);
+      toggleClass();
+    };
+
+    if (logic && logic.validations) {
+       Object.entries(logic.validations).forEach(([key, value]) => {
+         switch (key) {
+           case 'required':
+             if (field.value.length === 0) {
+               field.fieldValidations.errors.uniquePush('message', { message: value.message });
+               Formsy.addValidationRule(key, (values, value) => {
+                 // return evalString(values, value?.condition);
+                 return false;
+               });
+               field.fieldValidations.validations = {
+                 ...field.fieldValidations.validations,
+                 required: false,
+               };
+               field.fieldValidations.validationErrors = {
+                 ...field.fieldValidations.validationErrors,
+                 required: value.message,
+               };
+               this.setState({ ...this.state }, () => null);
+             } else resetErrors(key, value);
+             break;
+           case 'minLength':
+             if (field.value.length < +value.condition) {
+               field.fieldValidations.errors.uniquePush('message', { message: value.message });
+               field.fieldValidations.validations = {
+                 ...field.fieldValidations.validations,
+                 minLength: value.condition,
+               };
+               field.fieldValidations.validationErrors = {
+                 ...field.fieldValidations.validationErrors,
+                 minLength: value.message,
+               };
+               this.setState({ ...this.state }, () => null);
+             } else resetErrors(key, value);
+             break;
+           case 'maxLength':
+             if (field.value.length > +value.condition) {
+               field.fieldValidations.errors.uniquePush('message', { message: value.message });
+               field.fieldValidations.validations = {
+                 ...field.fieldValidations.validations,
+                 maxLength: value.condition,
+               };
+               field.fieldValidations.validationErrors = {
+                 ...field.fieldValidations.validationErrors,
+                 maxLength: value.message,
+               };
+               this.setState({ ...this.state }, () => null);
+             } else resetErrors(key, value);
+             break;
+           case 'pattern':
+             // if (!new RegExp(value.condition).test(field.value)) {
+             //   field.fieldValidations.errors.uniquePush('message', { message: value });
+             // } else {
+             //   undoValidation();
+             // }
+             break;
+           default:
+             const condition =
+               value?.condition && evalString(fields, value?.condition);
+             if (condition) {
+               Formsy.addValidationRule(key, (values, value) => {
+                 // return evalString(values, value?.condition);
+                 return false;
+               });
+               field.fieldValidations.errors.uniquePush('message', { message: value?.message });
+               field.fieldValidations.validations = {
+                 ...field.fieldValidations.validations,
+                 [key]: false,
+               };
+               field.fieldValidations.validationErrors = {
+                 ...field.fieldValidations.validationErrors,
+                 [key]: value?.message,
+               };
+               this.setState({ ...this.state }, () => null);
+             } else resetErrors(key, value);
+             break;
+         }
+       });
+    };
+
+    if(logic && logic.asyncValidations) {
+      Object.entries(logic?.asyncValidations).forEach(([key, value]) => {
+         if (field.value.length < 5 || field.value.length > 12) { resetErrors(key, value); return; }
+         switch (key) {
+           case 'usernameAvailable':
+             
+               // Call ASYNC to check if username is available
+               // if not, set error
+               let url =
+                 endpoints.API__V1_URL +
+                 endpoints.DATA +
+                 '/' +
+                 evalString(fields, value?.data);
+               console.log(url);
+               axios
+                 .get(url)
+                 .then((res) => {
+                   if (evalString(res.data, value?.condition)) {
+                     Formsy.addValidationRule(key, (values, value) => {
+                       return false;
+                     });
+                     field.fieldValidations.errors.uniquePush('message', {
+                       message: value.message,
+                     });
+                     field.fieldValidations.validations = {
+                       ...field.fieldValidations.validations,
+                       usernameAvailable: true,
+                     };
+                     field.fieldValidations.validationErrors = {
+                       ...field.fieldValidations.validationErrors,
+                       usernameAvailable: value.message,
+                     };
+                     this._fields[field.fieldID] = field;
+                     this.setState({...this.state}, () => null);
+                   }else {
+                    resetErrors(key, value);
+                    
+                   }
+                 })
+                 .catch((err) => {
+                   console.log(err);
+                 });
+           default:
+             break;
+         }
+       });
+    }
+  }
+}
 export function dropDownOnFocus(field) {
   return (e, data) => {
     let _options = [];
@@ -172,24 +293,6 @@ export function dropDownOnFocus(field) {
         url = `${url}?${query}`;
       }
       if (fieldLogic.data.page) {
-        axios.interceptors.request.use((request) => {
-          // Add authorization header if set
-          const authHdr = sessionStorage.getItem('pega_react_user');
-          if (authHdr) {
-            request.headers.Authorization = authHdr;
-          } else {
-            if (endpoints.use_OAuth) {
-              // Tried to implement popping up login dialog, but with scenarios where async requests might fire
-              //  was much easier to leverage the reAuth logic to coordinate this
-              // Should always have an authHdr (and we keep around expired ones to trigger the reauth logic)
-              //  If we do fall in here, just cancel, as you are guaranteed to get a 400 failure on server without
-              //  the Auhtorization header
-              throw new axios.Cancel('Invalid access token');
-            }
-          }
-          return request;
-        });
-
         axios
           .get(url, {
             params: { $c: 1, $f: fieldLogic?.data?.fields?.join(',') },
@@ -204,21 +307,39 @@ export function dropDownOnFocus(field) {
                 text: v[prop],
                 value: v[prop],
               }));
-              if (!_.isEqual(_oldOptions, _options)) {
-                this.setState({
-                  controls: {
-                    ...state.controls,
-                    [field.fieldID]: _options,
-                  },
-                  loadingElems: {
-                    ...state.loadingElems,
-                    [field.fieldID]: false,
-                  },
-                });
-              }
+              this.setState({
+                controls: {
+                  ...state.controls,
+                  [field.fieldID]: _options,
+                },
+                loadingElems: {
+                  ...state.loadingElems,
+                  [field.fieldID]: false,
+                },
+              });
+              
             }
           });
       }
     }
   };
+}
+
+
+Array.prototype.uniquePush = function (prop, item) {
+  if(prop) {
+    if (!this.some((e) => e[prop] === item[prop])) {
+      this.push(item);
+    }
+    return this;
+  }
+
+  if (!this.includes(item)) {
+    this.push(item);
+  }
+  return this;
+}
+
+Array.prototype.popByPropAll = function (prop, value) {
+  return this.filter((e) => e[prop] !== value);
 }

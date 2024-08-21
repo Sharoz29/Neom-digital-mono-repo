@@ -60,7 +60,7 @@ import { errorActions, alertActions } from '../_actions';
 import { AttachContent } from '../_components/AttachContent';
 import { AttachmentsWidget } from '../Widgets/AttachmentsWidget';
 import { MaskedText } from '../_components/MaskedText';
-import { fieldResolver, dropDownOnFocus } from '../_helpers/fieldLogic';
+import { fieldResolver, dropDownOnFocus, onBlurTextInputCheckValidations } from '../_helpers/fieldLogic';
 
 // import { locale } from "core-js";
 
@@ -590,6 +590,10 @@ class PegaForm extends Component {
 
     if (group.field) {
       this._fields = this._fields || {};
+        // this._fields[group.field.fieldID] = _.defaults(
+      //   this._fields[group.field.fieldID] || {},
+      //   group.field
+      // );
       this._fields[group.field.fieldID] = group.field;
       return this.createField(group.field, index, showLabel);
     }
@@ -1103,9 +1107,17 @@ class PegaForm extends Component {
     const rightLabel = <Label color="red" pointing="left" />;
     const msgRequiredInput = 'You must enter a value';
     const msgRequiredOption = 'You must select an option';
+    
+    field = this._fields[field.fieldID];
+    // set the validations default on the field
+    field.fieldValidations = {
+      validations: field.fieldValidations?.validations || {},
+      validationErrors: field.fieldValidations?.validationErrors || {},
+      errors: field.fieldValidations?.errors || [],
+    };
 
     // Arslan: field transformer to resolve the customAttributes.fieldLogic
-    fieldResolver(this._fields, field);
+    fieldResolver.apply(this, [this._fields, field]);
 
     if (field.visible === false || field.hide) {
       return;
@@ -1183,7 +1195,12 @@ class PegaForm extends Component {
       return <MaskedText field={field} label={label} index={index} />;
     }
 
-    let error = false;
+    // let error = false;
+    let error = field.fieldValidations.errors.length > 0 ? { content:
+     
+        field.fieldValidations.errors[0].message ||
+      ""} : null;
+
     // Note: some field.control.type values do not start with px
     const fieldClass = 'pr-field-' + field.control.type.replace(/^(px)/, '');
 
@@ -1609,23 +1626,26 @@ class PegaForm extends Component {
 
           // validations and validationErros objects will be passed as a prop to Input element only when specific min/max chars are specified for field
           // + used below as minimal way to convert from string to integer
-          let validations = {},
-            validationErrors = {};
-          if (mode.minChars || mode.maxChars) {
-            if (mode.minChars) {
-              validations['minLength'] = +mode.minChars;
-              validationErrors[
-                'minLength'
-              ] = `You must enter at least ${mode.minChars} characters`;
-            }
-            if (mode.maxChars) {
-              validations['maxLength'] = +mode.maxChars;
-              validationErrors[
-                'maxLength'
-              ] = `You must enter at most ${mode.maxChars} characters`;
-            }
-          }
+          // let validations = {},
+          //   validationErrors = {};
+          // if (mode.minChars || mode.maxChars) {
+          //   if (mode.minChars) {
+          //     validations['minLength'] = +mode.minChars;
+          //     validationErrors[
+          //       'minLength'
+          //     ] = `You must enter at least ${mode.minChars} characters`;
+          //   }
+          //   if (mode.maxChars) {
+          //     validations['maxLength'] = +mode.maxChars;
+          //     validationErrors[
+          //       'maxLength'
+          //     ] = `You must enter at most ${mode.maxChars} characters`;
+          //   }
+          // }
 
+          
+          this.onBlurTextInputCheckValidations =
+            onBlurTextInputCheckValidations.apply(this, [this._fields, field]);
           let placeholder = mode.placeholder
             ? this.getPropertyValue(mode.placeholder)
             : '';
@@ -1638,7 +1658,7 @@ class PegaForm extends Component {
             <Form.Input
               className={fieldClass}
               key={index}
-              required={required}
+              
               disabled={field.disabled}
               name={field.reference}
               type={type}
@@ -1654,14 +1674,14 @@ class PegaForm extends Component {
               }
               onChange={handleChange}
               onKeyPress={(e) => this.disableEnter(e)}
-              onBlur={handleEvent}
+              onBlur={this.onBlurTextInputCheckValidations}
               value={value}
               reference={field.reference}
               repeatlayouttype={repeatLayoutType}
-              errorLabel={bottomLabel}
-              validationError={msgRequiredInput}
-              validations={validations}
-              validationErrors={validationErrors}
+              errorLabel={error && bottomLabel}
+              validationError={error?.content}
+              validations={field.fieldValidations.validations}
+              validationErrors={field.fieldValidations.validationErrors}
               error={error}
               data-test-id={field.testID}
               {...this.getTooltip(field)}
@@ -2680,6 +2700,8 @@ class PegaForm extends Component {
 
     let actionsList = [];
 
+    onBlurTextInputCheckValidations.apply(this, field)(e);
+
     // We are going to append together each function, startin with the base handler that does a preventDefault().
     for (let i = 0; i < actionData.length; i++) {
       switch (actionData[i].action) {
@@ -2761,6 +2783,7 @@ class PegaForm extends Component {
           });
           break;
         default:
+          
           break;
       }
     }
@@ -2972,6 +2995,8 @@ class PegaForm extends Component {
     let bDateCleared = false;
     let sPriorSetLocalRadioRef = null;
 
+    
+
     if (field && field.control?.type == fieldTypes.DATETIME) {
       let fmtDetails = this.getDatePickerFmtDetails(field);
       let fmtDateTime = !fmtDetails.bIncludeTime
@@ -3056,6 +3081,7 @@ class PegaForm extends Component {
     // Make sure we have a reference attribute on the obj else create a new obj
     // (DateTime synthetic events may not have a reference but should have passed in a field)
     if (field) {
+
       if (!obj.name) {
         obj.name = field.fieldID;
       }
@@ -3127,6 +3153,7 @@ class PegaForm extends Component {
     // Store new values and also keep track of updated values for any future PUT calls (performRefreshOnAssignment)
 
     this._fields[obj.reference] = this._fields[obj.reference] || {};
+    this._fields[obj.reference]['oldValue'] = this._fields[obj.reference]['value'];
     this._fields[obj.reference]['value'] = value;
 
     const updatedFields = Object.keys(this._fields).reduce(
@@ -3137,6 +3164,11 @@ class PegaForm extends Component {
       {}
     );
     let updatedState = {
+      fields: {...this._fields},
+      oldValues: {
+        ...this.state.oldValues,
+        [obj.reference]: this._fields[obj.reference]['oldValue'],
+      },
       values: {
         ...this.state.values,
         ...updatedFields,
