@@ -2139,7 +2139,7 @@ class PegaForm extends Component {
         className={`readonlytext ${fieldClass}`}
         data-test-id={field?.testID}
       >
-        <label className="readonlytext-label">{label ? label : ''}</label>
+        <div className="" dangerouslySetInnerHTML={{__html: label}}></div>
         {displayValue && displayValueClasses.length > 0 && (
           <div className={displayValueClasses.join(' ')}>{displayValue}</div>
         )}
