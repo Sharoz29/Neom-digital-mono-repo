@@ -3,6 +3,11 @@ import { endpoints } from '../_services/endpoints';
 import * as Formsy from 'formsy-react';
 import { user } from '../_reducers';
 
+Formsy.addValidationRule('required', (values, value) => {
+  // return evalString(values, value?.condition);
+  return value != '' && value != null && value != undefined;
+});
+
 function getFieldLogicObject(field) {
   try {
     let fieldLogic = null;
@@ -44,6 +49,15 @@ export function resolveValidations(fields, fieldId) {}
 function setFieldByCustomAttributes(fields, field, logic, prop) {
   const fieldID = field.fieldID;
 
+   const resetErrors = (k, v) => {
+     field.fieldValidations.errors =
+       field.fieldValidations?.errors?.filter(
+         (e) => e.message !== v?.message
+       ) || [];
+    //  delete field.fieldValidations?.validations[k];
+     delete field.fieldValidations?.validationErrors[k];
+   };
+
   switch (prop) {
     case 'hide':
       resolveHidden(fields, fieldID, logic);
@@ -52,8 +66,83 @@ function setFieldByCustomAttributes(fields, field, logic, prop) {
       resolveDisabled(fields, fieldID, logic);
       break;
     case 'validations':
-       
-      console.debug('errors', field.fieldValidations);
+       Object.entries(logic).forEach(([key, value]) => {
+         switch (key) {
+           case 'required':
+             if (field.value.length === 0) {
+               field.fieldValidations.errors.uniquePush('message', {
+                 message: value.message,
+               });
+               field.fieldValidations.validations = {
+                 ...field.fieldValidations.validations,
+                 required: false,
+               };
+               field.fieldValidations.validationErrors = {
+                 ...field.fieldValidations.validationErrors,
+                 required: value.message,
+               };
+             } else resetErrors(key, value);
+             break;
+           case 'minLength':
+             if (field.value.length < +value.condition) {
+               field.fieldValidations.errors.uniquePush('message', {
+                 message: value.message,
+               });
+               field.fieldValidations.validations = {
+                 ...field.fieldValidations.validations,
+                 minLength: value.condition,
+               };
+               field.fieldValidations.validationErrors = {
+                 ...field.fieldValidations.validationErrors,
+                 minLength: value.message,
+               };
+             } else resetErrors(key, value);
+             break;
+           case 'maxLength':
+             if (field.value.length > +value.condition) {
+               field.fieldValidations.errors.uniquePush('message', {
+                 message: value.message,
+               });
+               field.fieldValidations.validations = {
+                 ...field.fieldValidations.validations,
+                 maxLength: value.condition,
+               };
+               field.fieldValidations.validationErrors = {
+                 ...field.fieldValidations.validationErrors,
+                 maxLength: value.message,
+               };
+             } else resetErrors(key, value);
+             break;
+           case 'pattern':
+             // if (!new RegExp(value.condition).test(field.value)) {
+             //   field.fieldValidations.errors.uniquePush('message', { message: value });
+             // } else {
+             //   undoValidation();
+             // }
+             break;
+           case 'equalsField':
+             const condition =
+               value?.condition && evalString(fields, value?.condition);
+             
+             if (fields[condition]['value'] != field.value) {
+               field.fieldValidations.errors.uniquePush('message', {
+                 message: value?.message,
+               });
+               field.fieldValidations.validations = {
+                 ...field.fieldValidations.validations,
+                 [key]: condition,
+               };
+               field.fieldValidations.validationErrors = {
+                 ...field.fieldValidations.validationErrors,
+                 [key]: value?.message,
+               };
+             } else resetErrors(key, value);
+             break;
+           default:
+             break;
+         }
+       }); 
+      
       break;
     case 'asyncValidations':
       
@@ -118,85 +207,7 @@ export function onBlurTextInputCheckValidations(fields, field) {
       toggleClass();
     };
 
-    if (logic && logic.validations) {
-       Object.entries(logic.validations).forEach(([key, value]) => {
-         switch (key) {
-           case 'required':
-             if (field.value.length === 0) {
-               field.fieldValidations.errors.uniquePush('message', { message: value.message });
-               Formsy.addValidationRule(key, (values, value) => {
-                 // return evalString(values, value?.condition);
-                 return false;
-               });
-               field.fieldValidations.validations = {
-                 ...field.fieldValidations.validations,
-                 required: false,
-               };
-               field.fieldValidations.validationErrors = {
-                 ...field.fieldValidations.validationErrors,
-                 required: value.message,
-               };
-               this.setState({ ...this.state }, () => null);
-             } else resetErrors(key, value);
-             break;
-           case 'minLength':
-             if (field.value.length < +value.condition) {
-               field.fieldValidations.errors.uniquePush('message', { message: value.message });
-               field.fieldValidations.validations = {
-                 ...field.fieldValidations.validations,
-                 minLength: value.condition,
-               };
-               field.fieldValidations.validationErrors = {
-                 ...field.fieldValidations.validationErrors,
-                 minLength: value.message,
-               };
-               this.setState({ ...this.state }, () => null);
-             } else resetErrors(key, value);
-             break;
-           case 'maxLength':
-             if (field.value.length > +value.condition) {
-               field.fieldValidations.errors.uniquePush('message', { message: value.message });
-               field.fieldValidations.validations = {
-                 ...field.fieldValidations.validations,
-                 maxLength: value.condition,
-               };
-               field.fieldValidations.validationErrors = {
-                 ...field.fieldValidations.validationErrors,
-                 maxLength: value.message,
-               };
-               this.setState({ ...this.state }, () => null);
-             } else resetErrors(key, value);
-             break;
-           case 'pattern':
-             // if (!new RegExp(value.condition).test(field.value)) {
-             //   field.fieldValidations.errors.uniquePush('message', { message: value });
-             // } else {
-             //   undoValidation();
-             // }
-             break;
-           default:
-             const condition =
-               value?.condition && evalString(fields, value?.condition);
-             if (condition) {
-               Formsy.addValidationRule(key, (values, value) => {
-                 // return evalString(values, value?.condition);
-                 return false;
-               });
-               field.fieldValidations.errors.uniquePush('message', { message: value?.message });
-               field.fieldValidations.validations = {
-                 ...field.fieldValidations.validations,
-                 [key]: false,
-               };
-               field.fieldValidations.validationErrors = {
-                 ...field.fieldValidations.validationErrors,
-                 [key]: value?.message,
-               };
-               this.setState({ ...this.state }, () => null);
-             } else resetErrors(key, value);
-             break;
-         }
-       });
-    };
+   
 
     if(logic && logic.asyncValidations) {
       Object.entries(logic?.asyncValidations).forEach(([key, value]) => {
