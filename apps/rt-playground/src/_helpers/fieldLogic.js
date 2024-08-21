@@ -213,7 +213,7 @@ export function onBlurTextInputCheckValidations(fields, field) {
                  evalString(fields, value?.data);
                console.log(url);
                axios
-                 .get(url)
+                 .get(url, {params: { $c: 1, $f: 'Username' }})
                  .then((res) => {
                    if (evalString(res.data, value?.condition)) {
                      Formsy.addValidationRule(key, (values, value) => {
