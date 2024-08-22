@@ -30,31 +30,31 @@ export class CollaborationDomainController {
   constructor(
     private readonly _collaborationDomainService: CollaborationDomainService
   ) {}
-  @MessagePattern(PSCOLLABORATION.GETDOCUMENTS)
+  @MessagePattern(PSCOLLABORATION.GETDOCUMENTSV1)
   getDocuments({ headers }: any): Observable<any> {
     return this._collaborationDomainService.getDocuments(headers);
   }
-  @MessagePattern(PSCOLLABORATION.GETDOCUMENTBYID)
+  @MessagePattern(PSCOLLABORATION.GETDOCUMENTBYIDV1)
   getDocumentById(payload: any): Observable<any> {
     return this._collaborationDomainService.getDocumentById(payload);
   }
-  @MessagePattern(PSCOLLABORATION.GETMESSAGES)
+  @MessagePattern(PSCOLLABORATION.GETMESSAGESV1)
   getMessages({ headers }: any): Observable<any> {
     return this._collaborationDomainService.getMessages(headers);
   }
-  @MessagePattern(PSCOLLABORATION.GETNOTIFICATIONS)
+  @MessagePattern(PSCOLLABORATION.GETNOTIFICATIONSV1)
   getNotifications({ headers }: any): Observable<any> {
     return this._collaborationDomainService.getNotifications(headers);
   }
-  @MessagePattern(PSCOLLABORATION.GETSPACES)
+  @MessagePattern(PSCOLLABORATION.GETSPACESV1)
   getSpaces({ headers }: any): Observable<any> {
     return this._collaborationDomainService.getSpaces(headers);
   }
-  @MessagePattern(PSCOLLABORATION.GETSPACEBYID)
+  @MessagePattern(PSCOLLABORATION.GETSPACEBYIDV1)
   getSpaceById(payload: any): Observable<any> {
     return this._collaborationDomainService.getSpaceById(payload);
   }
-  @MessagePattern(PSCOLLABORATION.GETPINSOFSPACEBYID)
+  @MessagePattern(PSCOLLABORATION.GETPINSOFSPACEBYIDV1)
   getPinsOfSpace(payload: any): Observable<any> {
     return this._collaborationDomainService.getPinsOfSpace(payload);
   }
