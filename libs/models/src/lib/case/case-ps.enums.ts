@@ -33,8 +33,15 @@ export enum PSCASE {
   GETONEV1 = 'case:getOneV1',
   GETONEV2 = 'case:getOneV2',
 
-  POST = 'case:post',
-  PUT = 'case:put',
-  CREATE = 'case:create',
-  DELETE = 'case:delete',
+  POSTV1 = 'case:postV1',
+  POSTV2 = 'case:postV2',
+
+  PUTV1 = 'case:putV1',
+  PUTV2 = 'case:putV2',
+
+  CREATEV1 = 'case:createV1',
+  CREATEV2 = 'case:createV2',
+
+  DELETEV1 = 'case:deleteV1',
+  DELETEV2 = 'case:deleteV2',
 }

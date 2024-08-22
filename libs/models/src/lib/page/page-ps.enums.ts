@@ -24,8 +24,15 @@ export enum PSPAGE {
   GETONEV1 = 'page:getOneV1',
   GETONEV2 = 'page:getOneV2',
 
-  POST = 'page:post',
-  PUT = 'page:put',
-  CREATE = 'page:create',
-  DELETE = 'page:delete',
+  POSTV1 = 'page:postV1',
+  POSTV2 = 'page:postV2',
+
+  PUTV1 = 'page:putV1',
+  PUTV2 = 'page:putV2',
+
+  CREATEV1 = 'page:createV1',
+  CREATEV2 = 'page:createV2',
+
+  DELETEV1 = 'page:deleteV1',
+  DELETEV2 = 'page:deleteV2',
 }
