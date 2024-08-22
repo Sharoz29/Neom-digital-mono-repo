@@ -21,7 +21,7 @@ export class PageApiService extends BaseApiService<any, any, any> {
 
   getChannelById(channelId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSPAGE.GETCHANNEL, {
+      return this.client.send(PSPAGE.GETCHANNELV2, {
         headers: req.headers,
         channelId,
       });
@@ -32,7 +32,7 @@ export class PageApiService extends BaseApiService<any, any, any> {
   }
   getDashboardById(dashboardId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSPAGE.GETDASHBOARD, {
+      return this.client.send(PSPAGE.GETDASHBOARDV2, {
         headers: req.headers,
         dashboardId,
       });
@@ -43,7 +43,7 @@ export class PageApiService extends BaseApiService<any, any, any> {
   }
   getInsightById(insightId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSPAGE.GETINSIGHT, {
+      return this.client.send(PSPAGE.GETINSIGHTV2, {
         headers: req.headers,
         insightId,
       });
@@ -54,7 +54,7 @@ export class PageApiService extends BaseApiService<any, any, any> {
   }
   getPageById(pageId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSPAGE.GETONE, {
+      return this.client.send(PSPAGE.GETONEV2, {
         headers: req.headers,
         pageId,
       });
@@ -65,7 +65,7 @@ export class PageApiService extends BaseApiService<any, any, any> {
   }
   getPortalById(portalId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSPAGE.GETPORTAL, {
+      return this.client.send(PSPAGE.GETPORTALV2, {
         headers: req.headers,
         portalId,
       });
