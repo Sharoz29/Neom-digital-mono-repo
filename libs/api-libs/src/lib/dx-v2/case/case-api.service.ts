@@ -20,58 +20,50 @@ export class CaseApiService extends BaseApiService<any, any, any> {
   }
 
   getCaseById(id: string, req: Request): Observable<any> {
-
-      return this.client.send(PSCASE.GETONE, {
+    return this.client
+      .send(PSCASE.GETONEV2, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getCaseAncestors(id: string, req: Request): Observable<any> {
-   
-      return this.client.send(PSCASE.GETANCESTORS, {
+    return this.client
+      .send(PSCASE.GETANCESTORSV2, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getCaseDescendants(id: string, req: Request): Observable<any> {
-  
-      return this.client.send(PSCASE.GETDESCENDANTS, {
+    return this.client
+      .send(PSCASE.GETDESCENDANTSV2, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getCaseStages(id: string, req: Request): Observable<any> {
-
-      return this.client.send(PSCASE.GETSTAGES, {
+    return this.client
+      .send(PSCASE.GETSTAGESV2, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
@@ -80,32 +72,28 @@ export class CaseApiService extends BaseApiService<any, any, any> {
     actionId: string,
     req: Request
   ): Observable<any> {
- 
-      return this.client.send(PSCASE.GETACTIONS, {
+    return this.client
+      .send(PSCASE.GETACTIONSV2, {
         headers: req.headers,
         caseId,
         actionId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getCaseView(caseId: string, viewId: string, req: Request): Observable<any> {
-
-      return this.client.send(PSCASE.GETVIEW, {
+    return this.client
+      .send(PSCASE.GETVIEWV2, {
         headers: req.headers,
         caseId,
         viewId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
