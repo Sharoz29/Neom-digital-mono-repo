@@ -21,7 +21,7 @@ export class FollowerApiService extends BaseApiService<any, any, any> {
 
   getCaseFollowers(caseId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSFOLLOWER.GETCASEFOLLOWERS, {
+      return this.client.send(PSFOLLOWER.GETCASEFOLLOWERSV2, {
         headers: req.headers,
         caseId,
       });

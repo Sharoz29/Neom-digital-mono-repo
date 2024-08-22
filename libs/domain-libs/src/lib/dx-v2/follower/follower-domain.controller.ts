@@ -28,7 +28,7 @@ import { MessagePattern } from '@nestjs/microservices';
 export class FollowerDomainController {
   constructor(private readonly _followerDomainService: FollowerDomainService) {}
 
-  @MessagePattern(PSFOLLOWER.GETCASEFOLLOWERS)
+  @MessagePattern(PSFOLLOWER.GETCASEFOLLOWERSV2)
   getCaseFollowers(payload: any): Observable<any> {
     return this._followerDomainService.getCaseFollowers(payload);
   }
