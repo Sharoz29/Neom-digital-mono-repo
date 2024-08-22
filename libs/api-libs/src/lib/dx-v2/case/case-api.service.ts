@@ -21,7 +21,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
 
   getCaseById(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETONE, {
+      return this.client.send(PSCASE.GETONEV2, {
         headers: req.headers,
         id,
       });
@@ -32,7 +32,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
   }
   getCaseAncestors(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETANCESTORS, {
+      return this.client.send(PSCASE.GETANCESTORSV2, {
         headers: req.headers,
         id,
       });
@@ -43,7 +43,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
   }
   getCaseDescendants(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETDESCENDANTS, {
+      return this.client.send(PSCASE.GETDESCENDANTSV2, {
         headers: req.headers,
         id,
       });
@@ -54,7 +54,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
   }
   getCaseStages(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETSTAGES, {
+      return this.client.send(PSCASE.GETSTAGESV2, {
         headers: req.headers,
         id,
       });
@@ -69,7 +69,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
     req: Request
   ): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETACTIONS, {
+      return this.client.send(PSCASE.GETACTIONSV2, {
         headers: req.headers,
         caseId,
         actionId,
@@ -81,7 +81,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
   }
   getCaseView(caseId: string, viewId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETVIEW, {
+      return this.client.send(PSCASE.GETVIEWV2, {
         headers: req.headers,
         caseId,
         viewId,

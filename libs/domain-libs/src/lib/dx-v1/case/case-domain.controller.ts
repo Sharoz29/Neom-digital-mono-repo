@@ -30,25 +30,25 @@ import axios from 'axios';
 export class CaseDomainController {
   constructor(private readonly _caseDomainService: CaseDomainService) {}
 
-  @MessagePattern(PSCASE.GET)
+  @MessagePattern(PSCASE.GETV1)
   getCases({ headers }: any): Observable<any> {
     return this._caseDomainService.getCases(headers);
   }
 
-  @MessagePattern(PSCASE.GETONE)
+  @MessagePattern(PSCASE.GETONEV1)
   getCaseById(payload: any): Observable<any> {
     return this._caseDomainService.getCaseById(payload);
   }
 
-  @MessagePattern(PSCASE.GETACTIONS)
+  @MessagePattern(PSCASE.GETACTIONSV1)
   getCaseActions(payload: any): Observable<any> {
     return this._caseDomainService.getCaseActions(payload);
   }
-  @MessagePattern(PSCASE.GETPAGE)
+  @MessagePattern(PSCASE.GETPAGEV1)
   getCasePage(payload: any): Observable<any> {
     return this._caseDomainService.getCasePage(payload);
   }
-  @MessagePattern(PSCASE.GETVIEW)
+  @MessagePattern(PSCASE.GETVIEWV1)
   getCaseView(payload: any): Observable<any> {
     return this._caseDomainService.getCaseView(payload);
   }

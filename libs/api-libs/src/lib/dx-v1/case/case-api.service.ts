@@ -20,7 +20,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
   }
   getCases(req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE.GET, {
+      return this.client.send(PSCASE.GETV1, {
         headers: req.headers,
       });
     } catch (error) {
@@ -30,7 +30,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
   }
   getCaseById(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETONE, {
+      return this.client.send(PSCASE.GETONEV1, {
         headers: req.headers,
         id,
       });
@@ -46,7 +46,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
     req: Request
   ): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETACTIONS, {
+      return this.client.send(PSCASE.GETACTIONSV1, {
         headers: req.headers,
         caseId,
         actionId,
@@ -58,7 +58,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
   }
   getCasePage(caseId: string, pageId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETPAGE, {
+      return this.client.send(PSCASE.GETPAGEV1, {
         headers: req.headers,
         caseId,
         pageId,
@@ -70,7 +70,7 @@ export class CaseApiService extends BaseApiService<any, any, any> {
   }
   getCaseView(caseId: string, viewId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE.GETVIEW, {
+      return this.client.send(PSCASE.GETVIEWV1, {
         headers: req.headers,
         caseId,
         viewId,
