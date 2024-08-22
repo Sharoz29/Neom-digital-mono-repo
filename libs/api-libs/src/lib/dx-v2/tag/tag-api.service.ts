@@ -19,17 +19,15 @@ export class TagApiService extends BaseApiService<any, any, any> {
     super(_client, 'tag', cacheManagerRef);
   }
   getCaseTags(caseId: string, req: Request) {
-  
-      return this.client.send(PSTAG.GETONE, {
+    return this.client
+      .send(PSTAG.GETONEV2, {
         headers: req.headers,
         caseId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
-      )
+      );
   }
 }

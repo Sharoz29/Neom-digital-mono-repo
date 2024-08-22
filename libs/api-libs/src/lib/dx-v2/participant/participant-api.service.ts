@@ -20,69 +20,61 @@ export class ParticipantApiService extends BaseApiService<any, any, any> {
   }
 
   getParticipantsOfACase(caseId: string, req: Request): Observable<any> {
-
-      return this.client.send(PSPARTICIPANT.GET, {
+    return this.client
+      .send(PSPARTICIPANT.GETV2, {
         headers: req.headers,
         caseId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
-      )
+      );
   }
   getParticipantOfACaseById(
     caseId: string,
     participantId: string,
     req: Request
   ) {
-
-      return this.client.send(PSPARTICIPANT.GETONE, {
+    return this.client
+      .send(PSPARTICIPANT.GETONEV2, {
         headers: req.headers,
         caseId,
         participantId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
-      )
+      );
   }
   getParticipantRoles(caseId: string, req: Request) {
-  
-      return this.client.send(PSPARTICIPANT.GETROLES, {
+    return this.client
+      .send(PSPARTICIPANT.GETROLESV2, {
         headers: req.headers,
         caseId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
-      )
+      );
   }
   getParticipantRoleDetails(
     caseId: string,
     participantRoleId: any,
     req: Request
   ) {
-
-      return this.client.send(PSPARTICIPANT.GETROLEDETAILS, {
+    return this.client
+      .send(PSPARTICIPANT.GETROLEDETAILSV2, {
         headers: req.headers,
         caseId,
         participantRoleId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
-      )
+      );
   }
 }

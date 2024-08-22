@@ -28,7 +28,7 @@ import { MessagePattern } from '@nestjs/microservices';
 // @CustomizeLogInterceptor({module: 'Tag'})
 export class TagDomainController {
   constructor(private readonly _tagDomainService: TagDomainService) {}
-  @MessagePattern(PSTAG.GETONE)
+  @MessagePattern(PSTAG.GETONEV2)
   getCaseTags(payload: any): Observable<any> {
     return this._tagDomainService.getCaseTags(payload);
   }

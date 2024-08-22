@@ -19,17 +19,15 @@ export class RelatedCaseApiService extends BaseApiService<any, any, any> {
     super(_client, 'relatedCase', cacheManagerRef);
   }
   getRelatedCases(caseId: string, req: Request) {
-
-      return this.client.send(PSRELATED_CASE.GETONE, {
+    return this.client
+      .send(PSRELATED_CASE.GETONEV2, {
         headers: req.headers,
         caseId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
-      )
+      );
   }
 }
