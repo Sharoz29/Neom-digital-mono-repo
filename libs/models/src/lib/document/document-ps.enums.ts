@@ -7,8 +7,12 @@ export enum PSDOCUMENT {
 
   // CRUD
   // Do not change the pattern below this line
-  GET = 'document:get',
-  GETONE = 'document:getOne',
+  GETV1 = 'document:getV1',
+  GETV2 = 'document:getV2',
+
+  GETONEV1 = 'document:getOneV1',
+  GETONEV2 = 'document:getOneV2',
+
   POST = 'document:post',
   PUT = 'document:put',
   CREATE = 'document:create',
