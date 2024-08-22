@@ -14,8 +14,15 @@ export enum PSFOLLOWER {
   GETONEV1 = 'follower:getOneV1',
   GETONEV2 = 'follower:getOneV2',
 
-  POST = 'follower:post',
-  PUT = 'follower:put',
-  CREATE = 'follower:create',
-  DELETE = 'follower:delete',
+  POSTV1 = 'follower:postV1',
+  POSTV2 = 'follower:postV2',
+
+  PUTV1 = 'follower:putV1',
+  PUTV2 = 'follower:putV2',
+
+  CREATEV1 = 'follower:createV1',
+  CREATEV2 = 'follower:createV2',
+
+  DELETEV1 = 'follower:deleteV1',
+  DELETEV2 = 'follower:deleteV2',
 }

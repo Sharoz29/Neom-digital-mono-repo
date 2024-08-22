@@ -27,8 +27,15 @@ export enum PSDATA {
   GETONEV1 = 'data:getOneV1',
   GETONEV2 = 'data:getOneV2',
 
-  POST = 'data:post',
-  PUT = 'data:put',
-  CREATE = 'data:create',
-  DELETE = 'data:delete',
+  POSTV1 = 'data:postV1',
+  POSTV2 = 'data:postV2',
+
+  PUTV1 = 'data:putV1',
+  PUTV2 = 'data:putV2',
+
+  CREATEV1 = 'data:createV1',
+  CREATEV2 = 'data:createV2',
+
+  DELETEV1 = 'data:deleteV1',
+  DELETEV2 = 'data:deleteV2',
 }

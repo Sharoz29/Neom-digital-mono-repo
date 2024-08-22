@@ -32,8 +32,15 @@ export enum PSCOLLABORATION {
   GETONEV1 = 'collaboration:getOneV1',
   GETONEV2 = 'collaboration:getOneV2',
 
-  POST = 'collaboration:post',
-  PUT = 'collaboration:put',
-  CREATE = 'collaboration:create',
-  DELETE = 'collaboration:delete',
+  POSTV1 = 'collaboration:post',
+  POSTV2 = 'collaboration:postV2',
+
+  PUTV1 = 'collaboration:put',
+  PUTV2 = 'collaboration:putV2',
+
+  CREATEV1 = 'collaboration:createV1',
+  CREATEV2 = 'collaboration:createV2',
+
+  DELETEV1 = 'collaboration:deleteV1',
+  DELETEV2 = 'collaboration:deleteV2',
 }

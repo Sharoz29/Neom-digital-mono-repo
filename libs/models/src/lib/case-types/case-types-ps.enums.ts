@@ -17,13 +17,15 @@ export enum PSCASE_TYPES {
   GETONEV1 = 'caseTypes:getOneV1',
   GETONEV2 = 'caseTypes:getOneV2',
 
-  POST = 'caseTypes:post',
-  PUT = 'caseTypes:put',
-  CREATE = 'caseTypes:create',
-  DELETE = 'caseTypes:delete',
+  POSTV1 = 'caseTypes:postV1',
+  POSTV2 = 'caseTypes:postV2',
 
-  POSTV2 = 'caseTypes:postv2',
-  PUTV2 = 'caseTypes:putv2',
-  CREATEV2 = 'caseTypes:createv2',
-  DELETEV2 = 'caseTypes:deletev2',
+  PUTV1 = 'caseTypes:putV1',
+  PUTV2 = 'caseTypes:putV2',
+
+  CREATEV1 = 'caseTypes:createV1',
+  CREATEV2 = 'caseTypes:createV2',
+
+  DELETEV1 = 'caseTypes:deleteV1',
+  DELETEV2 = 'caseTypes:deleteV2',
 }

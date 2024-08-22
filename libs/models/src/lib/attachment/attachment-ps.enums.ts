@@ -17,8 +17,15 @@ export enum PSATTACHMENT {
   GETONEV1 = 'attachment:getOneV1',
   GETONEV2 = 'attachment:getOneV2',
 
-  POST = 'attachment:post',
-  PUT = 'attachment:put',
-  CREATE = 'attachment:create',
-  DELETE = 'attachment:delete',
+  POSTV1 = 'attachment:postV1',
+  POSTV2 = 'attachment:postV2',
+
+  PUTV1 = 'attachment:putV1',
+  PUTV2 = 'attachment:put',
+
+  CREATEV1 = 'attachment:createV1',
+  CREATEV2 = 'attachment:create',
+
+  DELETEV1 = 'attachment:deleteV1',
+  DELETEV2 = 'attachment:delete',
 }
