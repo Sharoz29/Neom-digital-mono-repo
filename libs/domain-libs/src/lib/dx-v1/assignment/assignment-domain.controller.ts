@@ -31,15 +31,15 @@ export class AssignmentDomainController {
     private readonly _assignmentDomainService: AssignmentDomainService
   ) {}
 
-  @MessagePattern(PSASSIGNMENT.GET)
+  @MessagePattern(PSASSIGNMENT.GETV1)
   getAssignments({ headers }: any): Observable<any> {
     return this._assignmentDomainService.getAssignments(headers);
   }
-  @MessagePattern(PSASSIGNMENT.GETONE)
+  @MessagePattern(PSASSIGNMENT.GETONEV1)
   getAssignmentById(payload: any): Observable<any> {
     return this._assignmentDomainService.getAssignmentById(payload);
   }
-  @MessagePattern(PSASSIGNMENT.GETACTIONS)
+  @MessagePattern(PSASSIGNMENT.GETACTIONSV1)
   getActionsForAssignment(payload: any): Observable<any> {
     return this._assignmentDomainService.getActionsForAssignment(payload);
   }

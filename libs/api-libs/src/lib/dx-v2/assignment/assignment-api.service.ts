@@ -20,16 +20,14 @@ export class AssignmentApiService extends BaseApiService<any, any, any> {
   }
 
   getAssignmentById(id: string, req: Request): Observable<any> {
-
-      return this.client.send(PSASSIGNMENT.GETONE, {
+    return this.client
+      .send(PSASSIGNMENT.GETONEV2, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
@@ -38,29 +36,26 @@ export class AssignmentApiService extends BaseApiService<any, any, any> {
     actionId: string,
     req: Request
   ): Observable<any> {
-      return this.client.send(PSASSIGNMENT.GETACTIONS, {
+    return this.client
+      .send(PSASSIGNMENT.GETACTIONSV2, {
         headers: req.headers,
         assignmentId,
         actionId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getNextAssignmentDetail(req: Request): Observable<any> {
-
-      return this.client.send(PSASSIGNMENT.GETACTIONS, {
+    return this.client
+      .send(PSASSIGNMENT.GETNEXTV2, {
         headers: req.headers,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
