@@ -20,15 +20,13 @@ export class CaseTypesApiService extends BaseApiService<any, any, any> {
   }
 
   getCaseTypes(req: Request): Observable<any> {
-
-      return this.client.send(PSCASE_TYPES.GET, {
+    return this.client
+      .send(PSCASE_TYPES.GETV2, {
         headers: req.headers,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
@@ -37,17 +35,15 @@ export class CaseTypesApiService extends BaseApiService<any, any, any> {
     actionId: string,
     req: Request
   ): Observable<any> {
-
-      return this.client.send(PSCASE_TYPES.GETCASETYPEACTIONS, {
+    return this.client
+      .send(PSCASE_TYPES.GETCASETYPEACTIONSV2, {
         headers: req.headers,
         caseTypeid,
         actionId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }

@@ -30,30 +30,25 @@ export class CaseTypesApiService extends BaseApiService<
   }
 
   getCaseTypes(req: Request): Observable<CaseTypeResponseVm> {
-
-      return this.client.send(PSCASE_TYPES.GET, {
+    return this.client
+      .send(PSCASE_TYPES.GETV1, {
         headers: req.headers,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getCaseTypeById(id: string, req: Request): Observable<CaseTypeVm> {
-
-      return this.client.send(PSCASE_TYPES.GETONE, {
+    return this.client
+      .send(PSCASE_TYPES.GETONEV1, {
         headers: req.headers,
         id,
       })
       .pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }

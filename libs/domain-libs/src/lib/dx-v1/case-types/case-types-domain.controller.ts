@@ -19,11 +19,11 @@ export class CaseTypesDomainController {
   constructor(
     private readonly _caseTypesDomainService: CaseTypesDomainService
   ) {}
-  @MessagePattern(PSCASE_TYPES.GET)
+  @MessagePattern(PSCASE_TYPES.GETV1)
   getCaseTypes({ headers }: any): Observable<CaseTypeResponseVm> {
     return this._caseTypesDomainService.getCaseTypes(headers);
   }
-  @MessagePattern(PSCASE_TYPES.GETONE)
+  @MessagePattern(PSCASE_TYPES.GETONEV1)
   getCaseTypeById(payload: any): Observable<CaseTypeVm> {
     return this._caseTypesDomainService.getCaseTypeById(payload);
   }
