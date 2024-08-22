@@ -20,16 +20,14 @@ export class FollowerApiService extends BaseApiService<any, any, any> {
   }
 
   getCaseFollowers(caseId: string, req: Request): Observable<any> {
-
-      return this.client.send(PSFOLLOWER.GETCASEFOLLOWERS, {
+    return this.client
+      .send(PSFOLLOWER.GETCASEFOLLOWERSV2, {
         headers: req.headers,
         caseId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
