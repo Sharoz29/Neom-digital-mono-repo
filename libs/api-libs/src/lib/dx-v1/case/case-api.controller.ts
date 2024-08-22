@@ -66,8 +66,8 @@ export class CaseApiController {
   @ApiOperation({
     summary: 'Gets all the cases',
   })
-  // @UseInterceptors(CacheInterceptor)
-  // @CacheTTL(60 * 60 * 24)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60 * 60)
   getCases(@Request() req: Request): Observable<any> {
     return this._caseApiService.getCases(req);
   }
@@ -99,8 +99,8 @@ export class CaseApiController {
   @ApiOperation({
     summary: 'Gets the case by the provided id',
   })
-  // @UseInterceptors(CacheInterceptor)
-  // @CacheTTL(60 * 60 * 24)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60 * 60)
   getCaseById(
     @Param('id') id: string,
     @Request() req: Request

@@ -25,7 +25,7 @@ import {
   ApiOperation,
 } from '@nestjs/swagger';
 
-import { defaultIfEmpty, map, Observable, throwIfEmpty } from 'rxjs';
+import { catchError, defaultIfEmpty, EMPTY, map, Observable, of, throwIfEmpty } from 'rxjs';
 
 import { DataVm, PSDATA } from '@neom/models';
 import { DataApiService } from './data-api.service';
@@ -79,7 +79,9 @@ export class DataApiController {
     @Request() req: Request,
     @Query() query: any
   ): Observable<any> {
-    return this._dataApiService.getData(id, req, query).pipe(
+    return this._dataApiService.getData(id, req, query)
+    .pipe(
+      defaultIfEmpty({ pxResults: [] }),
       map((response) => {
         if (!query?.$f) return response;
         const columns = query.$f?.split(',');
@@ -92,10 +94,13 @@ export class DataApiController {
             pxResults: pxResults.map((result: Record<string, any>) =>
               columns.reduce((pre: object, cur: string, index: number) => {
                 return { ...pre, [cur]: result[cur] };
-              }, {})
+              }, {}) || []
             ),
           };
         }
+      }),
+      catchError((error) => {
+        return of({});
       })
     );
   }

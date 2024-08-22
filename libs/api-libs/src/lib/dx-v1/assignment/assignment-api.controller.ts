@@ -99,8 +99,8 @@ export class AssignmentApiController {
   @ApiOperation({
     summary: 'Gets the assignment by the provided id',
   })
-  // @UseInterceptors(CacheInterceptor)
-  // @CacheTTL(60 * 60 * 24)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60 * 60)
   getAssignmentById(
     @Param('id') id: string,
     @Request() req: Request

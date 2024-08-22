@@ -222,34 +222,38 @@ export function onBlurTextInputCheckValidations(fields, field) {
                  endpoints.DATA +
                  '/' +
                  evalString(fields, value?.data);
-               console.log(url);
+              //  console.log(url);
+              const validate = (res) => {
+                if (evalString(res.data, value?.condition)) {
+                  Formsy.addValidationRule(key, (values, value) => {
+                    return false;
+                  });
+                  field.fieldValidations.errors.uniquePush('message', {
+                    message: value.message,
+                  });
+                  field.fieldValidations.validations = {
+                    ...field.fieldValidations.validations,
+                    usernameAvailable: true,
+                  };
+                  field.fieldValidations.validationErrors = {
+                    ...field.fieldValidations.validationErrors,
+                    usernameAvailable: value.message,
+                  };
+                  this._fields[field.fieldID] = field;
+                  this.setState({ ...this.state }, () => null);
+                } else {
+                  resetErrors(key, value);
+                }
+              }
+              const $f = 'Username';
                axios
-                 .get(url, {params: { $c: 1, $f: 'Username' }})
+                 .get(url, {params: { $c: 1,  }})
                  .then((res) => {
-                   if (evalString(res.data, value?.condition)) {
-                     Formsy.addValidationRule(key, (values, value) => {
-                       return false;
-                     });
-                     field.fieldValidations.errors.uniquePush('message', {
-                       message: value.message,
-                     });
-                     field.fieldValidations.validations = {
-                       ...field.fieldValidations.validations,
-                       usernameAvailable: true,
-                     };
-                     field.fieldValidations.validationErrors = {
-                       ...field.fieldValidations.validationErrors,
-                       usernameAvailable: value.message,
-                     };
-                     this._fields[field.fieldID] = field;
-                     this.setState({...this.state}, () => null);
-                   }else {
-                    resetErrors(key, value);
-                    
-                   }
+                   validate(res);
                  })
                  .catch((err) => {
                    console.log(err);
+                   validate({ pxResults: [] });
                  });
            default:
              break;
