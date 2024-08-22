@@ -18,31 +18,27 @@ export class DataApiService extends BaseApiService<DataVm, DataVm, DataVm> {
     super(_client, 'data', cacheManagerRef);
   }
   getData(id: string, req: Request, query?: any): Observable<any> {
-
-      return this.client.send(PSDATA.GET, {
+    return this.client
+      .send(PSDATA.GETV1, {
         headers: req.headers,
         id,
         query,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getDataMetaData(id: string, req: Request): Observable<any> {
-
-      return this.client.send(PSDATA.GETMETADATA, {
+    return this.client
+      .send(PSDATA.GETMETADATAV1, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }

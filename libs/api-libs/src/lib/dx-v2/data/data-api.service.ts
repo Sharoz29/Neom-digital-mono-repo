@@ -20,56 +20,48 @@ export class DataApiService extends BaseApiService<any, any, any> {
   }
 
   getDataObjects(req: Request): Observable<any> {
-   
-      return this.client.send(PSDATA.GETDATAOBJECTS, {
+    return this.client
+      .send(PSDATA.GETDATAOBJECTSV2, {
         headers: req.headers,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getDataPages(req: Request): Observable<any> {
-
-      return this.client.send(PSDATA.GETDATAPAGES, {
+    return this.client
+      .send(PSDATA.GETDATAPAGESV2, {
         headers: req.headers,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getDataPageView(id: string, req: Request): Observable<any> {
-
-      return this.client.send(PSDATA.GETDATAPAGEVIEWS, {
+    return this.client
+      .send(PSDATA.GETDATAPAGEVIEWSV2, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getDataPageViewMetaData(id: string, req: Request): Observable<any> {
- 
-      return this.client.send(PSDATA.GETDATAPAGEVIEWMETADATA, {
+    return this.client
+      .send(PSDATA.GETDATAPAGEVIEWMETADATAV2, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
