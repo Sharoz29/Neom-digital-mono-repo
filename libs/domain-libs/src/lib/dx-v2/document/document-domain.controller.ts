@@ -28,7 +28,7 @@ import { MessagePattern } from '@nestjs/microservices';
 export class DocumentDomainController {
   constructor(private readonly _documentDomainService: DocumentDomainService) {}
 
-  @MessagePattern(PSDOCUMENT.GETONE)
+  @MessagePattern(PSDOCUMENT.GETONEV2)
   getDocumentById(payload: any): Observable<any> {
     return this._documentDomainService.getDocumentById(payload);
   }

@@ -20,17 +20,15 @@ export class DocumentApiService extends BaseApiService<any, any, any> {
   }
 
   getDocumentById(id: string, req: Request): Observable<any> {
-  
-      return this.client.send(PSDOCUMENT.GETONE, {
+    return this.client
+      .send(PSDOCUMENT.GETONEV2, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
-      )
-    }
+      );
+  }
 }
