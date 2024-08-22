@@ -20,44 +20,38 @@ export class AttachmentApiService extends BaseApiService<any, any, any> {
   }
 
   getAttachmentById(id: string, req: Request): Observable<any> {
-
-      return this.client.send(PSATTACHMENT.GETONE, {
+    return this.client
+      .send(PSATTACHMENT.GETONEV2, {
         headers: req.headers,
         id,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getCaseAttachments(caseId: string, req: Request): Observable<any> {
-
-      return this.client.send(PSATTACHMENT.GETCASEATTACHMENTS, {
+    return this.client
+      .send(PSATTACHMENT.GETCASEATTACHMENTSV2, {
         headers: req.headers,
         caseId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
   getCaseAttachmentCategories(caseId: string, req: Request): Observable<any> {
- 
-      return this.client.send(PSATTACHMENT.GETCASEATTACHMENTCATEGORIES, {
+    return this.client
+      .send(PSATTACHMENT.GETCASEATTACHMENTCATEGORIESV2, {
         headers: req.headers,
         caseId,
-      }).pipe(
-        catchError(error => {
-          throw new HttpException(
-            error.message,
-            error?.status 
-          );
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
         })
       );
   }
