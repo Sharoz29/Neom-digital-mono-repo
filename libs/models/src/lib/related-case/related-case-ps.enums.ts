@@ -7,8 +7,12 @@ export enum PSRELATED_CASE {
 
   // CRUD
   // Do not change the pattern below this line
-  GET = 'relatedCase:get',
-  GETONE = 'relatedCase:getOne',
+  GETV1 = 'relatedCase:getV1',
+  GETV2 = 'relatedCase:getV2',
+
+  GETONEV1 = 'relatedCase:getOneV1',
+  GETONEV2 = 'relatedCase:getOneV2',
+
   POST = 'relatedCase:post',
   PUT = 'relatedCase:put',
   CREATE = 'relatedCase:create',
