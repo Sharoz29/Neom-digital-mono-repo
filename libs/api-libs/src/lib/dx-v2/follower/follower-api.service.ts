@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
@@ -7,7 +7,7 @@ import { RMQQueues } from '@neom/shared';
 
 import { BaseApiService } from '../../services/baseapi.service';
 import { PSFOLLOWER } from '@neom/models';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 
 // Extending from BaseApiService to implement Basic Api's for CRUD Functionalities
 @Injectable()
@@ -20,14 +20,17 @@ export class FollowerApiService extends BaseApiService<any, any, any> {
   }
 
   getCaseFollowers(caseId: string, req: Request): Observable<any> {
-    try {
+
       return this.client.send(PSFOLLOWER.GETCASEFOLLOWERS, {
         headers: req.headers,
         caseId,
-      });
-    } catch (error) {
-      console.error('Error sending message to microservice', error);
-      throw error;
-    }
+      }).pipe(
+        catchError(error => {
+          throw new HttpException(
+            error.message,
+            error?.status 
+          );
+        })
+      );
   }
 }

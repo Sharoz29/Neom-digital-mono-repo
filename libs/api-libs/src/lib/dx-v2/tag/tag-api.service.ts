@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
@@ -7,6 +7,7 @@ import { RMQQueues } from '@neom/shared';
 
 import { BaseApiService } from '../../services/baseapi.service';
 import { PSTAG } from '@neom/models';
+import { catchError } from 'rxjs';
 
 // Extending from BaseApiService to implement Basic Api's for CRUD Functionalities
 @Injectable()
@@ -18,14 +19,17 @@ export class TagApiService extends BaseApiService<any, any, any> {
     super(_client, 'tag', cacheManagerRef);
   }
   getCaseTags(caseId: string, req: Request) {
-    try {
+  
       return this.client.send(PSTAG.GETONE, {
         headers: req.headers,
         caseId,
-      });
-    } catch (error) {
-      console.error('Error sending message to microservice', error);
-      throw error;
-    }
+      }).pipe(
+        catchError(error => {
+          throw new HttpException(
+            error.message,
+            error?.status 
+          );
+        })
+      )
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
@@ -6,7 +6,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { RMQQueues } from '@neom/shared';
 
 import { BaseApiService } from '../../services/baseapi.service';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { PSPARTICIPANT } from '@neom/models';
 
 // Extending from BaseApiService to implement Basic Api's for CRUD Functionalities
@@ -20,57 +20,69 @@ export class ParticipantApiService extends BaseApiService<any, any, any> {
   }
 
   getParticipantsOfACase(caseId: string, req: Request): Observable<any> {
-    try {
+
       return this.client.send(PSPARTICIPANT.GET, {
         headers: req.headers,
         caseId,
-      });
-    } catch (error) {
-      console.error('Error sending message to microservice:', error);
-      throw error;
-    }
+      }).pipe(
+        catchError(error => {
+          throw new HttpException(
+            error.message,
+            error?.status 
+          );
+        })
+      )
   }
   getParticipantOfACaseById(
     caseId: string,
     participantId: string,
     req: Request
   ) {
-    try {
+
       return this.client.send(PSPARTICIPANT.GETONE, {
         headers: req.headers,
         caseId,
         participantId,
-      });
-    } catch (error) {
-      console.error('Error sending message to microservice:', error);
-      throw error;
-    }
+      }).pipe(
+        catchError(error => {
+          throw new HttpException(
+            error.message,
+            error?.status 
+          );
+        })
+      )
   }
   getParticipantRoles(caseId: string, req: Request) {
-    try {
+  
       return this.client.send(PSPARTICIPANT.GETROLES, {
         headers: req.headers,
         caseId,
-      });
-    } catch (error) {
-      console.error('Error sending message to microservice:', error);
-      throw error;
-    }
+      }).pipe(
+        catchError(error => {
+          throw new HttpException(
+            error.message,
+            error?.status 
+          );
+        })
+      )
   }
   getParticipantRoleDetails(
     caseId: string,
     participantRoleId: any,
     req: Request
   ) {
-    try {
+
       return this.client.send(PSPARTICIPANT.GETROLEDETAILS, {
         headers: req.headers,
         caseId,
         participantRoleId,
-      });
-    } catch (error) {
-      console.error('Error sending message to microservice:', error);
-      throw error;
-    }
+      }).pipe(
+        catchError(error => {
+          throw new HttpException(
+            error.message,
+            error?.status 
+          );
+        })
+      )
   }
 }

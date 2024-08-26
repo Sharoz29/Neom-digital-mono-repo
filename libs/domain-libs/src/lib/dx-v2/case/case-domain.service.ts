@@ -1,7 +1,7 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { RMQQueues } from '@neom/shared';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 
 import { Injectable, Inject } from '@nestjs/common';
 import { BaseDomainService } from '../../services/domain.service';
@@ -31,9 +31,7 @@ export class CaseDomainService extends BaseDomainService<any, any, any> {
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getCaseAncestors({ headers, id }: any): Observable<any> {
@@ -53,9 +51,7 @@ export class CaseDomainService extends BaseDomainService<any, any, any> {
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getCaseDescendants({ headers, id }: any): Observable<any> {
@@ -75,9 +71,7 @@ export class CaseDomainService extends BaseDomainService<any, any, any> {
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getCaseStages({ headers, id }: any): Observable<any> {
@@ -97,9 +91,7 @@ export class CaseDomainService extends BaseDomainService<any, any, any> {
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getCaseActions(payload: any) {
@@ -118,7 +110,7 @@ export class CaseDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error.message))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getCaseView(payload: any) {
@@ -137,7 +129,7 @@ export class CaseDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
 }

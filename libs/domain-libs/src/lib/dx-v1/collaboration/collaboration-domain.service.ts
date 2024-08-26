@@ -1,7 +1,7 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { RMQQueues } from '@neom/shared';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 
 import { Injectable, Inject } from '@nestjs/common';
 import { BaseDomainService } from '../../services/domain.service';
@@ -30,7 +30,7 @@ export class CollaborationDomainService extends BaseDomainService<
           headers: { Authorization: authorization },
         })
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getDocumentById({ headers, id }: any) {
@@ -47,9 +47,7 @@ export class CollaborationDomainService extends BaseDomainService<
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getMessages({ authorization }: any) {
@@ -59,7 +57,7 @@ export class CollaborationDomainService extends BaseDomainService<
           headers: { Authorization: authorization },
         })
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getNotifications({ authorization }: any) {
@@ -72,7 +70,7 @@ export class CollaborationDomainService extends BaseDomainService<
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getSpaces({ authorization }: any) {
@@ -82,7 +80,7 @@ export class CollaborationDomainService extends BaseDomainService<
           headers: { Authorization: authorization },
         })
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getSpaceById({ headers, id }: any) {
@@ -97,9 +95,7 @@ export class CollaborationDomainService extends BaseDomainService<
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getPinsOfSpace({ headers, id }: any) {
@@ -119,9 +115,7 @@ export class CollaborationDomainService extends BaseDomainService<
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
 }
