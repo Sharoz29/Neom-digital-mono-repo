@@ -1,0 +1,183 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "angular-sdk-components": {
+      "projectType": "library",
+      "root": "packages/angular-sdk-components",
+      "sourceRoot": "packages/angular-sdk-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "packages/angular-sdk-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/angular-sdk-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/angular-sdk-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "packages/angular-sdk-components/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
+    },
+    "angular-test-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/angular-test-app",
+      "sourceRoot": "projects/angular-test-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "projects/angular-test-app/src/index.html",
+            "main": "projects/angular-test-app/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/angular-test-app/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "sdk-config.json",
+                "input": "./",
+                "output": "./"
+              },
+              {
+                "glob": "bootstrap-shell.*",
+                "input": "./node_modules/@pega/constellationjs/dist/",
+                "output": "./constellation"
+              },
+              {
+                "glob": "bootstrap-shell.*.*",
+                "input": "./node_modules/@pega/constellationjs/dist/",
+                "output": "./constellation"
+              },
+              {
+                "glob": "lib_asset.json",
+                "input": "./node_modules/@pega/constellationjs/dist/",
+                "output": "./constellation"
+              },
+              {
+                "glob": "constellation-core.*",
+                "input": "./node_modules/@pega/constellationjs/dist/",
+                "output": "./constellation/prerequisite"
+              },
+              {
+                "glob": "constellation-core.*.*",
+                "input": "./node_modules/@pega/constellationjs/dist/",
+                "output": "./constellation/prerequisite"
+              },
+              {
+                "glob": "*.*",
+                "input": "./projects/angular-test-app/src/assets/",
+                "output": "./constellation/assets"
+              },
+              {
+                "glob": "*.*",
+                "input": "./projects/angular-test-app/src/assets/icons/",
+                "output": "./constellation/assets/icons"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/tinymce",
+                "output": "./tinymce"
+              },
+              "projects/angular-test-app/src/favicon.ico",
+              "projects/angular-test-app/src/assets"
+            ],
+            "styles": ["projects/angular-test-app/src/styles.scss"],
+            "scripts": ["./node_modules/tinymce/tinymce.min.js"],
+            "customWebpackConfig": {
+              "path": "./scripts/extra-webpack.config.js"
+            },
+            "allowedCommonJsDependencies": ["lodash.clonedeep", "downloadjs", "dayjs", "fast-deep-equal", "moment"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-builders/custom-webpack:dev-server",
+          "options": {
+            "buildTarget": "angular-test-app:build:development",
+            "port": 3500
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "angular-test-app:build:production"
+            },
+            "development": {
+              "buildTarget": "angular-test-app:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "angular-test-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/angular-test-app/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": ["projects/angular-test-app/src/favicon.ico", "projects/angular-test-app/src/assets"],
+            "styles": ["projects/angular-test-app/src/styles.scss"],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  }
+}

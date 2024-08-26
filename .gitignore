@@ -8,6 +8,10 @@ node_modules/
 dist/
 build/
 
+**/node_modules/
+*/dist/
+*/build/
+
 # Compiled Java class files
 *.class
 

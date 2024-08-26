@@ -1,0 +1,8 @@
+<div>
+  <b>{{ heading }}</b>
+  <div>
+    <div *ngIf="item.children.getPConnect().getRawMetadata().type.toLowerCase() == 'region'">
+      <component-mapper name="Region" [props]="{ pConn$: item.children.getPConnect(), formGroup$ }"></component-mapper>
+    </div>
+  </div>
+</div>
