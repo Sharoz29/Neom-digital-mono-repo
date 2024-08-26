@@ -1,0 +1,31 @@
+.psdk-inline-dashboard {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.psdk-inline-dashboard-title {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+.psdk-not-block-style {
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+}
+
+.psdk-inline-style {
+  display: flex;
+  .psdk-inline-filter {
+    width: 25%;
+    padding: 0px 8px;
+    margin-top: 1rem;
+  }
+  .psdk-inline-list {
+    width: 75%;
+    padding: 0px 8px;
+  }
+}
+
+.psdk-inline-end {
+  flex-direction: row-reverse;
+}

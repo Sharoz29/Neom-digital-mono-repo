@@ -1,0 +1,45 @@
+{
+  "comment_sdk_config": "This is the configuration file for the Angular SDK",
+  "sdk_optional_configs_doc_comment": "See the document(link below) for more details on all the available config settings",
+  "sdk_optional_configs_doc": "https://docs.pega.com/bundle/constellation-sdk/page/constellation-sdks/sdks/configuring-sdk-config-json.html",
+  "authConfig": {
+    "authService": "pega",
+
+    "mashupClient_comment": "Client ID and Client secret from the OAuth 2.0 Client Registration record used for mashup use case",
+    "mashupClient_comment2": "See SDK Guide for instructions on how to generate and obtain the proper values for the following entries",
+    "mashupClientId": "14965090564081136535",
+    "mashupUserIdentifier": "cloudtek",
+    "mashupClient_comment3": "Note: mashupPassword requires Base64 encoding",
+    "mashupPassword": "VEVLLjEyMzQK",
+
+    "mashupClientSecret": "5038AA181BD81B18D9E6113E7668A9FD",
+    "mashupGrantType": "passwordCreds",
+
+    "portalClientId_comment": "Client ID from the OAuth 2.0 Client Registration record used for portal use case",
+    "portalClientId": "14965090564081136535",
+    "portalClientSecret": "5038AA181BD81B18D9E6113E7668A9FD",
+    "portalGrantType": "authCode"
+  },
+
+  "serverConfig": {
+    "infinityRestServerUrl_comment": "Full path to Infinity REST server",
+    "infinityRestServerUrl": "https://web.pega23.lowcodesol.co.uk/prweb/",
+
+    "appAlias_comment": "appAlias of the application which operators will be accessing (e.g., MediaCo)",
+    "appAlias": "call-a-doctor",
+
+    "sdkContentServerUrl_comment": "If specified, the given URL will be used. If left blank, window.location.origin will be used.",
+    "sdkContentServerUrl": "",
+
+    "grantType": "clientCreds",
+
+    "appPortal_comment": "If specified, the given appPortal will be loaded. If left blank, the operator's default Portal is used. Ignored for Embedded use",
+    "appPortal": "",
+
+    "appMashupCaseType_comment": "If specified, uses this case type for mashup.  Otherwise, uses the first case type found for the app",
+    "appMashupCaseType": "",
+
+    "excludePortals_comment": "Array of specific portals to avoid attempting to load with SDK",
+    "excludePortals": ["pxExpress", "Developer", "pxPredictionStudio", "pxAdminStudio", "pyCaseWorker", "pyCaseManager7"]
+  }
+}

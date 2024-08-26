@@ -1,0 +1,11 @@
+<div *ngFor="let kid of arChildren$">
+  <div *ngIf="kid.getPConnect().getRawMetadata()['type'] === 'Region' && kid.getPConnect().getRawMetadata()['name'] === 'A'">
+    <component-mapper name="Region" [props]="{ pConn$: kid.getPConnect(), formGroup$ }"></component-mapper>
+  </div>
+  <div *ngIf="kid.getPConnect().getRawMetadata()['type'] === 'View'">
+    <component-mapper name="View" [props]="{ pConn$: kid.getPConnect(), formGroup$ }"></component-mapper>
+  </div>
+  <div *ngIf="kid.getPConnect().getRawMetadata()['type'] === 'CaseCreateStage'">
+    <component-mapper name="CaseCreateStage" [props]="{ pConn$: kid.getPConnect(), formGroup$ }"></component-mapper>
+  </div>
+</div>
