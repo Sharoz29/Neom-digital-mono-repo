@@ -30,7 +30,7 @@ export class RelatedCaseDomainController {
     private readonly _relatedCaseDomainService: RelatedCaseDomainService
   ) {}
 
-  @MessagePattern(PSRELATED_CASE.GETONE)
+  @MessagePattern(PSRELATED_CASE.GETONEV2)
   getRelatedCases(payload: any): Observable<any> {
     return this._relatedCaseDomainService.getRelatedCases(payload);
   }

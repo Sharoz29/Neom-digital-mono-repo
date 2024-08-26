@@ -31,19 +31,19 @@ export class ParticipantDomainController {
     private readonly _participantDomainService: ParticipantDomainService
   ) {}
 
-  @MessagePattern(PSPARTICIPANT.GET)
+  @MessagePattern(PSPARTICIPANT.GETV2)
   getParticipantsOfACase(payload: any): Observable<any> {
     return this._participantDomainService.getParticipantsOfACase(payload);
   }
-  @MessagePattern(PSPARTICIPANT.GETONE)
+  @MessagePattern(PSPARTICIPANT.GETONEV2)
   getParticipantOfACaseById(payload: any): Observable<any> {
     return this._participantDomainService.getParticipantOfACaseById(payload);
   }
-  @MessagePattern(PSPARTICIPANT.GETROLES)
+  @MessagePattern(PSPARTICIPANT.GETROLESV2)
   getParticipantRoles(payload: any): Observable<any> {
     return this._participantDomainService.getParticipantRoles(payload);
   }
-  @MessagePattern(PSPARTICIPANT.GETROLEDETAILS)
+  @MessagePattern(PSPARTICIPANT.GETROLEDETAILSV2)
   getParticipantRoleDetails(payload: any): Observable<any> {
     return this._participantDomainService.getParticipantRoleDetails(payload);
   }

@@ -30,15 +30,15 @@ export class AttachmentDomainController {
   constructor(
     private readonly _attachmentDomainService: AttachmentDomainService
   ) {}
-  @MessagePattern(PSATTACHMENT.GETONE)
+  @MessagePattern(PSATTACHMENT.GETONEV1)
   getAttachmentById(payload: any): Observable<any> {
     return this._attachmentDomainService.getAttachmentById(payload);
   }
-  @MessagePattern(PSATTACHMENT.GETCASEATTACHMENTS)
+  @MessagePattern(PSATTACHMENT.GETCASEATTACHMENTSV1)
   getCaseAttachments(payload: any): Observable<any> {
     return this._attachmentDomainService.getCaseAttachments(payload);
   }
-  @MessagePattern(PSATTACHMENT.GETCASEATTACHMENTCATEGORIES)
+  @MessagePattern(PSATTACHMENT.GETCASEATTACHMENTCATEGORIESV1)
   getCaseAttachmentCategories(payload: any): Observable<any> {
     return this._attachmentDomainService.getCaseAttachmentCategories(payload);
   }

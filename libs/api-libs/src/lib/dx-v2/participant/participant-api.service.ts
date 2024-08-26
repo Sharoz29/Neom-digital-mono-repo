@@ -21,7 +21,7 @@ export class ParticipantApiService extends BaseApiService<any, any, any> {
 
   getParticipantsOfACase(caseId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSPARTICIPANT.GET, {
+      return this.client.send(PSPARTICIPANT.GETV2, {
         headers: req.headers,
         caseId,
       });
@@ -36,7 +36,7 @@ export class ParticipantApiService extends BaseApiService<any, any, any> {
     req: Request
   ) {
     try {
-      return this.client.send(PSPARTICIPANT.GETONE, {
+      return this.client.send(PSPARTICIPANT.GETONEV2, {
         headers: req.headers,
         caseId,
         participantId,
@@ -48,7 +48,7 @@ export class ParticipantApiService extends BaseApiService<any, any, any> {
   }
   getParticipantRoles(caseId: string, req: Request) {
     try {
-      return this.client.send(PSPARTICIPANT.GETROLES, {
+      return this.client.send(PSPARTICIPANT.GETROLESV2, {
         headers: req.headers,
         caseId,
       });
@@ -63,7 +63,7 @@ export class ParticipantApiService extends BaseApiService<any, any, any> {
     req: Request
   ) {
     try {
-      return this.client.send(PSPARTICIPANT.GETROLEDETAILS, {
+      return this.client.send(PSPARTICIPANT.GETROLEDETAILSV2, {
         headers: req.headers,
         caseId,
         participantRoleId,

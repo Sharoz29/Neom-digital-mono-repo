@@ -21,7 +21,7 @@ export class AssignmentApiService extends BaseApiService<any, any, any> {
 
   getAssignments(req: Request): Observable<any> {
     try {
-      return this.client.send(PSASSIGNMENT.GET, {
+      return this.client.send(PSASSIGNMENT.GETV1, {
         headers: req.headers,
       });
     } catch (error: any) {
@@ -31,7 +31,7 @@ export class AssignmentApiService extends BaseApiService<any, any, any> {
   }
   getAssignmentById(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSASSIGNMENT.GETONE, {
+      return this.client.send(PSASSIGNMENT.GETONEV1, {
         headers: req.headers,
         id,
       });
@@ -46,7 +46,7 @@ export class AssignmentApiService extends BaseApiService<any, any, any> {
     req: Request
   ): Observable<any> {
     try {
-      return this.client.send(PSASSIGNMENT.GETACTIONS, {
+      return this.client.send(PSASSIGNMENT.GETACTIONSV1, {
         headers: req.headers,
         assignmentId,
         actionId,

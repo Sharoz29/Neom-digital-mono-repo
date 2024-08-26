@@ -21,7 +21,7 @@ export class AttachmentApiService extends BaseApiService<any, any, any> {
 
   getAttachmentById(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSATTACHMENT.GETONE, {
+      return this.client.send(PSATTACHMENT.GETONEV2, {
         headers: req.headers,
         id,
       });
@@ -32,7 +32,7 @@ export class AttachmentApiService extends BaseApiService<any, any, any> {
   }
   getCaseAttachments(caseId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSATTACHMENT.GETCASEATTACHMENTS, {
+      return this.client.send(PSATTACHMENT.GETCASEATTACHMENTSV2, {
         headers: req.headers,
         caseId,
       });
@@ -43,7 +43,7 @@ export class AttachmentApiService extends BaseApiService<any, any, any> {
   }
   getCaseAttachmentCategories(caseId: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSATTACHMENT.GETCASEATTACHMENTCATEGORIES, {
+      return this.client.send(PSATTACHMENT.GETCASEATTACHMENTCATEGORIESV2, {
         headers: req.headers,
         caseId,
       });
