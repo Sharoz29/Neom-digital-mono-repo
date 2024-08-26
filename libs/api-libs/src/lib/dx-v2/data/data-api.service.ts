@@ -21,7 +21,7 @@ export class DataApiService extends BaseApiService<any, any, any> {
 
   getDataObjects(req: Request): Observable<any> {
     try {
-      return this.client.send(PSDATA.GETDATAOBJECTS, {
+      return this.client.send(PSDATA.GETDATAOBJECTSV2, {
         headers: req.headers,
       });
     } catch (error: any) {
@@ -31,7 +31,7 @@ export class DataApiService extends BaseApiService<any, any, any> {
   }
   getDataPages(req: Request): Observable<any> {
     try {
-      return this.client.send(PSDATA.GETDATAPAGES, {
+      return this.client.send(PSDATA.GETDATAPAGESV2, {
         headers: req.headers,
       });
     } catch (error: any) {
@@ -41,7 +41,7 @@ export class DataApiService extends BaseApiService<any, any, any> {
   }
   getDataPageView(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSDATA.GETDATAPAGEVIEWS, {
+      return this.client.send(PSDATA.GETDATAPAGEVIEWSV2, {
         headers: req.headers,
         id,
       });
@@ -52,7 +52,7 @@ export class DataApiService extends BaseApiService<any, any, any> {
   }
   getDataPageViewMetaData(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSDATA.GETDATAPAGEVIEWMETADATA, {
+      return this.client.send(PSDATA.GETDATAPAGEVIEWMETADATAV2, {
         headers: req.headers,
         id,
       });

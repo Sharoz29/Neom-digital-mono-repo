@@ -31,17 +31,17 @@ export class CaseTypesApiService extends BaseApiService<
 
   getCaseTypes(req: Request): Observable<CaseTypeResponseVm> {
     try {
-      return this.client.send(PSCASE_TYPES.GET, {
+      return this.client.send(PSCASE_TYPES.GETV1, {
         headers: req.headers,
       });
     } catch (error: any) {
       // console.error('Error sending message to microservice:', error);
-      throw new HttpException("Error sending message to microservice", error);
+      throw new HttpException('Error sending message to microservice', error);
     }
   }
   getCaseTypeById(id: string, req: Request): Observable<CaseTypeVm> {
     try {
-      return this.client.send(PSCASE_TYPES.GETONE, {
+      return this.client.send(PSCASE_TYPES.GETONEV1, {
         headers: req.headers,
         id,
       });

@@ -21,7 +21,7 @@ export class DocumentApiService extends BaseApiService<any, any, any> {
 
   getDocumentById(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSDOCUMENT.GETONE, {
+      return this.client.send(PSDOCUMENT.GETONEV2, {
         headers: req.headers,
         id,
       });

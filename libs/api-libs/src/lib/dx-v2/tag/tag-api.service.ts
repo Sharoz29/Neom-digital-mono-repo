@@ -19,7 +19,7 @@ export class TagApiService extends BaseApiService<any, any, any> {
   }
   getCaseTags(caseId: string, req: Request) {
     try {
-      return this.client.send(PSTAG.GETONE, {
+      return this.client.send(PSTAG.GETONEV2, {
         headers: req.headers,
         caseId,
       });

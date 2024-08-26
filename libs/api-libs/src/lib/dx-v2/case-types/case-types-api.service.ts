@@ -21,7 +21,7 @@ export class CaseTypesApiService extends BaseApiService<any, any, any> {
 
   getCaseTypes(req: Request): Observable<any> {
     try {
-      return this.client.send(PSCASE_TYPES.GET, {
+      return this.client.send(PSCASE_TYPES.GETV2, {
         headers: req.headers,
       });
     } catch (error: any) {
@@ -35,7 +35,7 @@ export class CaseTypesApiService extends BaseApiService<any, any, any> {
     req: Request
   ): Observable<any> {
     try {
-      return this.client.send(PSCASE_TYPES.GETCASETYPEACTIONS, {
+      return this.client.send(PSCASE_TYPES.GETCASETYPEACTIONSV2, {
         headers: req.headers,
         caseTypeid,
         actionId,

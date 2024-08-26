@@ -19,7 +19,7 @@ export class RelatedCaseApiService extends BaseApiService<any, any, any> {
   }
   getRelatedCases(caseId: string, req: Request) {
     try {
-      return this.client.send(PSRELATED_CASE.GETONE, {
+      return this.client.send(PSRELATED_CASE.GETONEV2, {
         headers: req.headers,
         caseId,
       });

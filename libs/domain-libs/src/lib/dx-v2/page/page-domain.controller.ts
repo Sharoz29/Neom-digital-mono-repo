@@ -29,23 +29,23 @@ import { MessagePattern } from '@nestjs/microservices';
 export class PageDomainController {
   constructor(private readonly _pageDomainService: PageDomainService) {}
 
-  @MessagePattern(PSPAGE.GETCHANNEL)
+  @MessagePattern(PSPAGE.GETCHANNELV2)
   getChannelById(payload: any): Observable<any> {
     return this._pageDomainService.getChannelById(payload);
   }
-  @MessagePattern(PSPAGE.GETDASHBOARD)
+  @MessagePattern(PSPAGE.GETDASHBOARDV2)
   getDashboardById(payload: any): Observable<any> {
     return this._pageDomainService.getDashboardById(payload);
   }
-  @MessagePattern(PSPAGE.GETINSIGHT)
+  @MessagePattern(PSPAGE.GETINSIGHTV2)
   getInsightById(payload: any): Observable<any> {
     return this._pageDomainService.getInsightById(payload);
   }
-  @MessagePattern(PSPAGE.GETONE)
+  @MessagePattern(PSPAGE.GETONEV2)
   getPageById(payload: any): Observable<any> {
     return this._pageDomainService.getPageById(payload);
   }
-  @MessagePattern(PSPAGE.GETPORTAL)
+  @MessagePattern(PSPAGE.GETPORTALV2)
   getPortalById(payload: any): Observable<any> {
     return this._pageDomainService.getPortalById(payload);
   }

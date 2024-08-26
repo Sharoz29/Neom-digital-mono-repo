@@ -29,27 +29,27 @@ import { MessagePattern } from '@nestjs/microservices';
 export class CaseDomainController {
   constructor(private readonly _caseDomainService: CaseDomainService) {}
 
-  @MessagePattern(PSCASE.GETONE)
+  @MessagePattern(PSCASE.GETONEV2)
   getCaseById(payload: any): Observable<any> {
     return this._caseDomainService.getCaseById(payload);
   }
-  @MessagePattern(PSCASE.GETANCESTORS)
+  @MessagePattern(PSCASE.GETANCESTORSV2)
   getCaseAncestors(payload: any): Observable<any> {
     return this._caseDomainService.getCaseAncestors(payload);
   }
-  @MessagePattern(PSCASE.GETDESCENDANTS)
+  @MessagePattern(PSCASE.GETDESCENDANTSV2)
   getCaseDescendants(payload: any): Observable<any> {
     return this._caseDomainService.getCaseDescendants(payload);
   }
-  @MessagePattern(PSCASE.GETSTAGES)
+  @MessagePattern(PSCASE.GETSTAGESV2)
   getCaseStages(payload: any): Observable<any> {
     return this._caseDomainService.getCaseStages(payload);
   }
-  @MessagePattern(PSCASE.GETACTIONS)
+  @MessagePattern(PSCASE.GETACTIONSV2)
   getCaseActions(payload: any): Observable<any> {
     return this._caseDomainService.getCaseActions(payload);
   }
-  @MessagePattern(PSCASE.GETVIEW)
+  @MessagePattern(PSCASE.GETVIEWV2)
   getCaseView(payload: any): Observable<any> {
     return this._caseDomainService.getCaseView(payload);
   }

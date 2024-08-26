@@ -19,7 +19,7 @@ export class DataApiService extends BaseApiService<DataVm, DataVm, DataVm> {
   }
   getData(id: string, req: Request, query?: any): Observable<any> {
     try {
-      return this.client.send(PSDATA.GET, {
+      return this.client.send(PSDATA.GETV1, {
         headers: req.headers,
         id,
         query,
@@ -31,7 +31,7 @@ export class DataApiService extends BaseApiService<DataVm, DataVm, DataVm> {
   }
   getDataMetaData(id: string, req: Request): Observable<any> {
     try {
-      return this.client.send(PSDATA.GETMETADATA, {
+      return this.client.send(PSDATA.GETMETADATAV1, {
         headers: req.headers,
         id,
       });

@@ -29,19 +29,19 @@ import { MessagePattern } from '@nestjs/microservices';
 export class DataDomainController {
   constructor(private readonly _dataDomainService: DataDomainService) {}
 
-  @MessagePattern(PSDATA.GETDATAOBJECTS)
+  @MessagePattern(PSDATA.GETDATAOBJECTSV2)
   getDataObjects(payload: any): Observable<any> {
     return this._dataDomainService.getDataObjects(payload);
   }
-  @MessagePattern(PSDATA.GETDATAPAGES)
+  @MessagePattern(PSDATA.GETDATAPAGESV2)
   getDataPages(payload: any): Observable<any> {
     return this._dataDomainService.getDataPages(payload);
   }
-  @MessagePattern(PSDATA.GETDATAPAGEVIEWS)
+  @MessagePattern(PSDATA.GETDATAPAGEVIEWSV2)
   getDataPageView(payload: any): Observable<any> {
     return this._dataDomainService.getDataPageView(payload);
   }
-  @MessagePattern(PSDATA.GETDATAPAGEVIEWMETADATA)
+  @MessagePattern(PSDATA.GETDATAPAGEVIEWMETADATAV2)
   getDataPageViewMetaData(payload: any): Observable<any> {
     return this._dataDomainService.getDataPageViewMetaData(payload);
   }
