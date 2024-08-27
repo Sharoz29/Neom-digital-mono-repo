@@ -1,7 +1,7 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { RMQQueues } from '@neom/shared';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 
 import { Injectable, Inject } from '@nestjs/common';
 import { BaseDomainService } from '../../services/domain.service';
@@ -31,7 +31,7 @@ export class AttachmentDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getCaseAttachments({ headers, caseId }: any): Observable<any> {
@@ -49,7 +49,7 @@ export class AttachmentDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getCaseAttachmentCategories({ headers, caseId }: any): Observable<any> {
@@ -67,7 +67,7 @@ export class AttachmentDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
 }

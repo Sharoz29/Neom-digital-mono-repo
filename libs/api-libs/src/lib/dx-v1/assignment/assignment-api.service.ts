@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
@@ -7,7 +7,7 @@ import { RMQQueues } from '@neom/shared';
 
 import { BaseApiService } from '../../services/baseapi.service';
 import { AssignmentVm, PSASSIGNMENT } from '@neom/models';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 
 // Extending from BaseApiService to implement Basic Api's for CRUD Functionalities
 @Injectable()
@@ -20,40 +20,43 @@ export class AssignmentApiService extends BaseApiService<any, any, any> {
   }
 
   getAssignments(req: Request): Observable<any> {
-    try {
-      return this.client.send(PSASSIGNMENT.GETV1, {
+    return this.client
+      .send(PSASSIGNMENT.GETV1, {
         headers: req.headers,
-      });
-    } catch (error: any) {
-      console.error('Error sending message to microservice:', error);
-      throw error;
-    }
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
+        })
+      );
   }
   getAssignmentById(id: string, req: Request): Observable<any> {
-    try {
-      return this.client.send(PSASSIGNMENT.GETONEV1, {
+    return this.client
+      .send(PSASSIGNMENT.GETONEV1, {
         headers: req.headers,
         id,
-      });
-    } catch (error) {
-      console.error('Error sending message to microservice:', error);
-      throw error;
-    }
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
+        })
+      );
   }
   getActionsForAssignment(
     assignmentId: string,
     actionId: string,
     req: Request
   ): Observable<any> {
-    try {
-      return this.client.send(PSASSIGNMENT.GETACTIONSV1, {
+    return this.client
+      .send(PSASSIGNMENT.GETACTIONSV1, {
         headers: req.headers,
         assignmentId,
         actionId,
-      });
-    } catch (error) {
-      console.error('Error sending message to microservice:', error);
-      throw error;
-    }
+      })
+      .pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error?.status);
+        })
+      );
   }
 }

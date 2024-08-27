@@ -1,7 +1,7 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { RMQQueues } from '@neom/shared';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 
 import { Injectable, Inject } from '@nestjs/common';
 import { BaseDomainService } from '../../services/domain.service';
@@ -28,9 +28,7 @@ export class DataDomainService extends BaseDomainService<any, any, any> {
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getDataPages({ headers }: any) {
@@ -42,9 +40,7 @@ export class DataDomainService extends BaseDomainService<any, any, any> {
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getDataPageView({ headers, id }: any) {
@@ -56,9 +52,7 @@ export class DataDomainService extends BaseDomainService<any, any, any> {
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getDataPageViewMetaData({ headers, id }: any) {
@@ -76,9 +70,7 @@ export class DataDomainService extends BaseDomainService<any, any, any> {
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
 }

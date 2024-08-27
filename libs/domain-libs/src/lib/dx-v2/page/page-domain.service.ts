@@ -1,7 +1,7 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { RMQQueues } from '@neom/shared';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 
 import { Injectable, Inject } from '@nestjs/common';
 import { BaseDomainService } from '../../services/domain.service';
@@ -29,7 +29,7 @@ export class PageDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getDashboardById({ headers, dashboardId }: any): Observable<any> {
@@ -44,7 +44,7 @@ export class PageDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getInsightById({ headers, insightId }: any): Observable<any> {
@@ -57,7 +57,7 @@ export class PageDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getPageById({ headers, pageId }: any): Observable<any> {
@@ -67,7 +67,7 @@ export class PageDomainService extends BaseDomainService<any, any, any> {
           headers: { Authorization: headers.authorization },
         })
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getPortalById({ headers, portalId }: any): Observable<any> {
@@ -80,7 +80,7 @@ export class PageDomainService extends BaseDomainService<any, any, any> {
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
 }

@@ -51,7 +51,7 @@ export class CaseTypesDomainService extends BaseDomainService<
           }
         )
         .then((response) => response.data)
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
 }

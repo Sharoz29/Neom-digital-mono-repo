@@ -1,7 +1,7 @@
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { RMQQueues } from '@neom/shared';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 
 import { Injectable, Inject } from '@nestjs/common';
 import { BaseDomainService } from '../../services/domain.service';
@@ -33,9 +33,7 @@ export class AssignmentDomainService extends BaseDomainService<
         .then(function (response) {
           return response.data;
         })
-        .catch(function (error) {
-          return Promise.reject(error);
-        })
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getAssignmentById({ headers, id }: any): Observable<any> {
@@ -47,7 +45,7 @@ export class AssignmentDomainService extends BaseDomainService<
         .then((response) => {
           return response.data;
         })
-        .catch((error) => Promise.reject(error))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
   getActionsForAssignment(payload: any): Observable<any> {
@@ -68,7 +66,7 @@ export class AssignmentDomainService extends BaseDomainService<
         .then((response) => {
           return response.data;
         })
-        .catch((error) => Promise.reject(error.message))
+        .catch((error) => {throw new RpcException(error)})
     );
   }
 }
