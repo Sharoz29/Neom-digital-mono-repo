@@ -1,0 +1,19 @@
+      <div class="chart-container">
+        <div class="chart">
+          <div class="y-axis-label">{{yAxisLabel}}</div>
+          <div class="bars">
+            <div
+              *ngFor="let item of chartData"
+              class="bar"
+              [ngStyle]="{'height': item.value / maxValue * 100 + '%'}"
+            >
+              <span class="label">{{ item.label }}</span>
+              <span class="value">{{ item.value }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="x-axis-label">{{xAxisLabel}}</div>
+      </div>
+      
+      
+      

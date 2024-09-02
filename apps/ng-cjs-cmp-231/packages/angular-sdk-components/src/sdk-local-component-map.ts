@@ -1,4 +1,6 @@
 // Statically load all "local" components that aren't yet in the npm package
+import { InsightComponent } from './lib/_components/custom/insight/insight.component';
+import { TaskChart } from './lib/_components/custom/task-chart/task-chart.component';
 
 /* import end - DO NOT REMOVE */
 
@@ -7,6 +9,8 @@
 
 const localSdkComponentMap = {
   /* map end - DO NOT REMOVE */
+  Insight: InsightComponent,
+  TaskChart: TaskChart
 };
 
 export default localSdkComponentMap;
