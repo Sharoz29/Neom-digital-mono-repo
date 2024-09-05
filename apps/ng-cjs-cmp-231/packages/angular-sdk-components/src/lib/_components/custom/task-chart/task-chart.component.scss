@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
 }
 
 h3 {
@@ -30,6 +29,7 @@ h3 {
 
 .bars {
   display: flex;
+  justify-content: space-between;
   align-items: flex-end;
   height: 100%;
   width: 500px;

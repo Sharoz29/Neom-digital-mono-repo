@@ -27,7 +27,6 @@ h1 {
 }
 
 .psdk-case-icon-div {
-  background-color: var(--app-primary-dark-color);
   border-radius: 1rem;
   padding: 0.5rem 0.3rem 0.3rem 0.3rem;
 }
@@ -89,6 +88,7 @@ h1 {
   padding: 0rem 0.3125rem;
   height: 100%; /* Should be removed. Only for demonstration */
 }
+
 
 .psdk-case-view-divider {
   border-bottom: 0.0625rem solid var(--app-neutral-light-color);

@@ -10,7 +10,11 @@
     flex-direction: row;
     justify-content: flex-start;
     gap: 10px;
-    padding:7px;
+    padding:18px;
+    background-color: rgb(255, 255, 255) ;
+}
+.insights-container{
+  padding: 19px;
 }
 
 .image-container{
@@ -27,7 +31,8 @@
 }
 .explore-data-title{
     font-size: max(1.0625rem, 15px);
-    font-weight: 600;
+    font-weight: 800;
+    font-size: 1rem;
     align-self: center;
 }
 .loading-container {

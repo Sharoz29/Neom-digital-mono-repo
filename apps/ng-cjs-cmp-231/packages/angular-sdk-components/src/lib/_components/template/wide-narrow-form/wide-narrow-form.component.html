@@ -1,4 +1,17 @@
 <div class="psdk-narrow-wide-column">
+
+
+
+  <h3 class="psdk-app-header">
+    
+    <span class="material-icons" style="vertical-align: middle; font-size: 24px;" >
+      home
+    </span>
+    
+    Call a doctor
+  </h3>
+
+
   <div *ngFor="let kid of arChildren$">
     <div class="psdk-wide-column" *ngIf="kid.getPConnect().getRawMetadata()['name'].toLowerCase() === 'left'">
       <component-mapper name="Region" [props]="{ pConn$: kid.getPConnect(), formGroup$ }"></component-mapper>
