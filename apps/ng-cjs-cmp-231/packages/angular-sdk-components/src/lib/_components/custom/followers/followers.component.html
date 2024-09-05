@@ -1,0 +1,42 @@
+<div class="psdk-followers">
+    <div class="psdk-follower-header">
+        <div class="psdk-follower-image-container">
+            <img src="{{titleIcon$}}"/>
+        </div>
+        <span class="psdk-followers-title">{{title$}}</span>
+        <span *ngIf="caseFollowers$ else noFollowers" class="psdk-follower-count">{{caseFollowers$.length}}</span>
+        <ng-template #noFollowers>
+            <span class="psdk-follower-count">0</span>
+        </ng-template>
+        <div style="flex-grow: 1;"></div>
+        <div class="psdk-follower-icon-container">
+            <button class="add-follower-button">
+                <img src={{plusIcon}}/>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="caseFollowers$ else noFollowerBody" class="psdk-follower-body">
+        <ul style="padding: 0;">
+            <li class="follower-list-item" *ngFor="let follower of caseFollowers$">
+                <div class="follower-list-image-container">
+                    <div class="follower-list-avatar" role="img">
+                        {{getInitials(follower.name)}}
+                    </div>
+                </div>
+                <div class="follower-name">
+                    <button class="follower-name-button">
+                        {{follower.name}}
+                    </button>
+                </div>
+                <div class="follower-actions">
+                    <button class="follower-action-button">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <ng-template #noFollowerBody>
+        <p>No Items</p>
+    </ng-template>
+</div>
