@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatCard, MatCardModule, MatCardTitle } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -11,9 +11,9 @@ import { Utils } from 'packages/angular-sdk-components/src/public-api';
   templateUrl: './explore-data.component.html',
   styleUrls: ['./explore-data.component.scss'],
   standalone: true,
-  imports: [MatTable, MatCard, MatCardTitle, CommonModule, MatProgressSpinnerModule, CommonModule, MatCardModule, MatTableModule, MatIconModule]
+  imports: [MatTable, MatCard, MatCardTitle, MatProgressSpinnerModule, CommonModule, MatCardModule, MatTableModule, MatIconModule]
 })
-export class ExploreDataPage {
+export class ExploreDataPage implements OnInit {
   @Input() pConn$: typeof PConnect;
   @Input() payload: any;
 
@@ -60,7 +60,6 @@ export class ExploreDataPage {
 
           this.uniqueLabelsArray = Array.from(labels, ([title, items]) => ({ title, items, showInsight: false }));
 
-          console.log(this.uniqueLabelsArray);
           this.dataSource.data = this.uniqueLabelsArray;
           this.dataLoaded = true;
         }, 5000);
