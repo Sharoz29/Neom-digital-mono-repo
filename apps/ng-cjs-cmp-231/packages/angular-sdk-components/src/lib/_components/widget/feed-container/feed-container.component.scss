@@ -59,27 +59,28 @@
 }
 
 .psdk-avatar-big {
-  margin: 0rem;
+  margin: 0.5rem;
   padding: 0rem;
-  min-width: 3.125rem;
-  min-height: 3.125rem;
-  max-width: 3.125rem;
-  max-height: 3.125rem;
+  min-width:2.5rem;
+  min-height: 2.5rem;
+  max-width: 2.5rem;
+  max-height: 2.5rem;
   border-radius: 50%;
   justify-content: center;
   align-items: center;
   text-align: center;
   display: flex;
-  background: var(--app-primary-color);
+  background:rgb(76, 90, 103);
   color: var(--app-form-color);
   font-weight: bold;
-  font-size: 1.5625rem;
+  font-size: 1rem;
 }
 
 .psdk-pulse {
   display: inline-flex;
   width: 100%;
-  padding-bottom: 0.625rem;
+  padding-bottom: 0.10rem;
+  
 }
 
 .psdk-pulse-message-group {
@@ -183,4 +184,12 @@
 .psdk-pulse-comment-post {
   padding: 0rem;
   min-width: 1.875rem;
+}
+.psdk-pulseMessage-button{
+  width: 90px;
+  height: 30px;
+  color: black;
+  background: white;
+  cursor: pointer;
+  border: 2px solid silver;
 }

@@ -1,7 +1,7 @@
 .psdk-list-header {
   background-color: var(--app-form-color);
   padding: 1rem;
-  margin: 0.5rem;
+  // margin: 0.5rem;
   border-radius: 0.6125rem;
 }
 
@@ -47,6 +47,7 @@ td.mat-mdc-footer-cell {
 
 .psdk-mat-header-arrow {
   display: inline-grid;
+  margin-right: 10px;
   vertical-align: middle;
 }
 
