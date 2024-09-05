@@ -49,22 +49,46 @@ export class ExploreDataPage {
         this.filteredInsights = f;
 
         setTimeout(() => {
-          console.log(this.filteredInsights, 'checking');
-          const labelCount = this.filteredInsights.reduce((acc, current) => {
+          const labels = this.filteredInsights.reduce((acc, current) => {
             if (acc.has(current.pyClassLabel)) {
-              acc.set(current.pyClassLabel, acc.get(current.pyClassLabel) + 1);
+              acc.get(current.pyClassLabel).push(current);
             } else {
-              acc.set(current.pyClassLabel, 1);
+              acc.set(current.pyClassLabel, [current]);
             }
             return acc;
-          }, new Map<string, number>());
+          }, new Map<string, any[]>());
 
-          this.uniqueLabelsArray = Array.from(labelCount, ([title, count]) => ({ title, count }));
+          this.uniqueLabelsArray = Array.from(labels, ([title, items]) => ({ title, items, showInsight: false }));
 
           console.log(this.uniqueLabelsArray);
           this.dataSource.data = this.uniqueLabelsArray;
           this.dataLoaded = true;
-        }, 10000);
+        }, 5000);
       });
+  }
+  toggleInsights(insight) {
+    insight.showInsight = !insight.showInsight;
+  }
+
+  formatReadableDate(dateString) {
+    const year = dateString.substring(0, 4);
+    const month = dateString.substring(4, 6);
+    const day = dateString.substring(6, 8);
+    const hour = dateString.substring(9, 11);
+    const minute = dateString.substring(11, 13);
+    const second = dateString.substring(13, 15);
+
+    const date = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}Z`);
+
+    const options = {
+      year: 'numeric' as const,
+      month: 'long' as const,
+      day: 'numeric' as const,
+      hour: '2-digit' as const,
+      minute: '2-digit' as const,
+      second: '2-digit' as const
+    };
+
+    return date.toLocaleString('en-US', options);
   }
 }

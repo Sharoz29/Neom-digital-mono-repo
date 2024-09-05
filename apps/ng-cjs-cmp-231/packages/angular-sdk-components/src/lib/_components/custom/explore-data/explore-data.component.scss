@@ -40,3 +40,69 @@
   mat-spinner {
     margin-bottom: 10px;
   }
+
+  .insight-title-row{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+  }
+
+  .insight-title{
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .rotated {
+    transform: rotate(90deg);
+  }
+  .toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    margin-right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .insight-item-date{
+    width:max-content;
+  }
+  .insight-title-container{
+    display: flex;
+    flex-direction: row;
+    height:25px;
+    margin-bottom: 15px;
+    align-items: center;
+  }
+  .inisght-title-row{
+    padding: 0 !important;
+  }
+  .insight-item-list{
+    height:50px;
+    padding: 0px 10px;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+  }
+  .sc-row{
+    margin-top: 40px;
+  }
+  .insight-table{
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+  .insight-visibility{
+    background-color: rgb(233, 238, 243);
+    border-radius: calc(0.125rem);
+    color: rgb(76, 90, 103);
+    box-shadow: rgba(76, 90, 103, 0.1) 0px 0px 0px 0.0625rem inset;
+    display: inline-block;
+    font-size: max(0.75rem, 12px);
+    font-weight: bold;
+    line-height: calc(1.25rem);
+    padding: 0px 0.5rem;
+    text-transform: uppercase;
+  }
+  .text-flex{
+    display: flex;
+    align-items: center;
+  }
