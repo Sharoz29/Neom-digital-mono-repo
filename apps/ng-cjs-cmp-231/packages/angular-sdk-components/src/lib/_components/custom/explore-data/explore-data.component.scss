@@ -24,15 +24,16 @@
     color: rgb(255, 255, 255);
     padding: 0.5rem;
     border-radius: calc(0.25rem);
+    
+    .explore-data-icon{
+        filter: var(--app-white-color-filter);
+    }
 }
 .explore-data-title{
     font-size: max(1.0625rem, 15px);
     font-weight: 800;
     font-size: 1rem;
     align-self: center;
-}
-.explore-data-icon{
-    filter: var(--app-white-color-filter);
 }
 .loading-container {
     display: flex;
