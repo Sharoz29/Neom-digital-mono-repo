@@ -1,0 +1,47 @@
+<div class="psdk-related-cases">
+    <div class="psdk-related-cases-header">
+        <div class="psdk-related-cases-image-container">
+            <img src="{{titleIcon$}}"/>
+        </div>
+        <span class="psdk-related-cases-title">{{title$}}</span>
+        <span *ngIf="relatedCases$ else noRelatedCases" class="psdk-related-cases-count">{{relatedCases$.length}}</span>
+        <ng-template #noRelatedCases>
+            <span class="psdk-related-cases-count">0</span>
+        </ng-template>
+        <div style="flex-grow: 1;"></div>
+        <div class="psdk-related-cases-icon-container">
+            <button class="add-related-cases-button">
+                <img src="{{plusIcon}}"/>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="relatedCases$ else noRelatedCaseBody" class="psdk-related-cases-body">
+        <ul style="padding: 0;">
+            <li class="related-cases-list-item" *ngFor="let relatedCase of relatedCases$">
+                <div class="related-case-item-body">
+                    <div class="related-case-name">
+                        <span>
+                            {{relatedCase.name}}
+                        </span>
+                    </div>
+                    <div class="related-case-id-container">
+                        <span class="related-case-id">
+                            {{idExtractor(relatedCase.ID)}}
+                        </span>
+                        <span class="related-case-date">
+                            {{formatDate(relatedCase.createTime)}}
+                        </span>
+                    </div>
+                </div>
+                <div class="related-case-actions">
+                    <button class="related-case-action-button" (click)="removeRelatedCase(relatedCase.ID)">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <ng-template #noRelatedCaseBody>
+        <p class="no-item-text">No Items</p>
+    </ng-template>
+</div>

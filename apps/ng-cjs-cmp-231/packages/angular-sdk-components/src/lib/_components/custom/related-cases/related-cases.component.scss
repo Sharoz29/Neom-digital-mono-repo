@@ -1,4 +1,4 @@
-.psdk-followers{
+.psdk-related-cases{
     text-align: left;
     width: 100%;
     padding: 0.625rem 0rem;
@@ -7,18 +7,16 @@
     border-radius: 0.6125rem;
     margin: 0.3125rem 0rem;
     position: relative;
-
-    .psdk-follower-header{
+    .psdk-related-cases-header{
         text-align: left;
         display: flex;
         align-items: center;
         margin: 0px 5px;
-
-        .psdk-follower-image-container{
+        .psdk-related-cases-image-container{
             display: inline-block;
             width: 1.4rem;
         }
-        .psdk-followers-title{
+        .psdk-related-cases-title{
             font-size: 1rem;
             font-weight: bold;
             padding-bottom: 0.3125rem;
@@ -26,7 +24,7 @@
             text-align: left;
             display: inline-block;
         }
-        .psdk-follower-count{
+        .psdk-related-cases-count{
             background: var(--app-primary-light-color);
             border-radius: 0.5625rem;
             color: var(--app-inverse-form-color);
@@ -38,9 +36,9 @@
             vertical-align: top;
             margin: 0 0 0.313rem 1rem;
         }
-        .psdk-follower-icon-container{
+        .psdk-related-cases-icon-container{
             display: inline-block;
-            .add-follower-button{
+            .add-related-cases-button{
                 width:35px;
                 height: 35px;
                 border:none;
@@ -48,75 +46,56 @@
             }
         }
     }
-    .psdk-follower-body{
+    .psdk-related-cases-body{
         padding-block-start: 0px;
         position: relative;
-        padding: calc(0.75rem) calc(1rem);
+        padding: calc(0.25rem) calc(1rem);
         display: flex;
         flex-direction: column;
 
-        ul> .follower-list-item:not(:last-child){
-            border-bottom: 0.0625rem solid rgb(207, 207, 207);
-        }
-        
-        ul > .follower-list-item{
+        ul> .related-cases-list-item{    
             padding: 0.5rem 0px;
             display: grid;
-            grid-template-columns: auto minmax(0px, 1fr) auto;
+            grid-template-columns: minmax(0px, 1fr) auto;
             grid-template-areas:
-                "visual primary actions"
-                "visual secondary actions";
+                "primary actions"
+                "secondary actions";
             column-gap: calc(1rem);
 
-            .follower-list-image-container{
-                grid-area: visual;
-                align-self: center;
-
-                .follower-list-avatar{
-                    position: relative;
-                    flex-shrink: 0;
-                    background-color: rgb(76, 90, 103);
-                    color: rgb(255, 255, 255);
-                    width: 2rem;
-                    height: 2rem;
-                    min-width: 2rem;
-                    min-height: 2rem;
-                    font-size: 0.8125rem;
-                    text-transform: uppercase;
-                    line-height: 2rem;
-                    text-align: center;
-                    vertical-align: top;
-                    display: inline-block;
-                    border-radius: 100%;
-                    user-select: none;
-                }
-            }
-            .follower-name{
+            .related-case-name{
                 word-break: break-word;
+                font-size: max(0.95rem, 12px);
+                font-weight: 600;
                 grid-area: primary;
                 align-self: end;
+            }
+            .related-case-id-container{
+                display: flex;
+                flex-direction: row;
+                justify-content:flex-start;
+                gap:10px;
+                word-break: break-word;
+                grid-area: secondary;
+                align-self: start;
+                padding:10px 0px;
 
-                .follower-name-button{
-                    outline: none;
-                    text-decoration: none;
-                    transition-property: background-color, color, box-shadow;
-                    transition-duration: calc(0.125s);
-                    transition-timing-function: cubic-bezier(0.4, 0.6, 0.1, 1);
-                    cursor: pointer;
-                    background-color: transparent;
-                    display: inline;
-                    text-align: start;
-                    border: none;
+                .related-case-id{
                     color: rgb(7, 107, 201);
-                    margin-top: 7px;
+                    font-size: max(0.8125rem, 12px);
+                    font-weight: 400;
+                }
+                .related-case-date{
+                    font-size: max(0.8125rem, 12px);
+                    font-weight: 400;
+                    color: rgba(0, 0, 0, 0.7);
                 }
             }
-            .follower-actions{
+            .related-case-actions{
                 white-space: nowrap;
                 grid-area: actions;
                 align-self: center;
 
-                .follower-action-button{
+                .related-case-action-button{
                     outline: none;
                     text-decoration: none;
                     transition-property: background-color, color, box-shadow;
@@ -139,9 +118,7 @@
                 }
             }
         }
-        
     }
-    
 }
 .no-item-text{
     text-align: center;

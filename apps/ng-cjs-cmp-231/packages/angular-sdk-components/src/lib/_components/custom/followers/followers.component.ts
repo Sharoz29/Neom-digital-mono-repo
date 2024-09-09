@@ -47,10 +47,7 @@ export class FollowersComponent implements OnInit {
       });
   }
 
-  getCaseFollowers(): any {
-    return this.caseFollowers$;
-  }
-  getInitials(fullName) {
+  getInitials(fullName: string) {
     if (!fullName) return '';
 
     const nameParts = fullName.split(' ');

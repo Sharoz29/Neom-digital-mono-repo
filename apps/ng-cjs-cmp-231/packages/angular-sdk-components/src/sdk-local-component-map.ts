@@ -3,6 +3,7 @@ import { DashboardsManager } from './lib/_components/custom/dashboards-manager/d
 import { ExploreDataPage } from './lib/_components/custom/explore-data/explore-data.component';
 import { FollowersComponent } from './lib/_components/custom/followers/followers.component';
 import { InsightComponent } from './lib/_components/custom/insight/insight.component';
+import { RelatedCases } from './lib/_components/custom/related-cases/related-cases.component';
 import { TaskChart } from './lib/_components/custom/task-chart/task-chart.component';
 
 /* import end - DO NOT REMOVE */
@@ -16,7 +17,8 @@ const localSdkComponentMap = {
   TaskChart: TaskChart,
   ExploreDataPage: ExploreDataPage,
   DashboardsManager: DashboardsManager,
-  Followers: FollowersComponent
+  Followers: FollowersComponent,
+  RelatedCases: RelatedCases
 };
 
 export default localSdkComponentMap;
