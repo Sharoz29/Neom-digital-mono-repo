@@ -1,12 +1,12 @@
 .psdk-followers{
     text-align: left;
-    width: 100%;
-    padding: 0.625rem 0rem;
+    padding: 10px;
     text-align: left;
     background-color: var(--app-form-color);
-    border-radius: 0.6125rem;
+    border-radius: 0.5rem;
     margin: 0.3125rem 0rem;
     position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
     .psdk-follower-header{
         text-align: left;
@@ -29,7 +29,7 @@
         .psdk-follower-count{
             background: var(--app-primary-light-color);
             border-radius: 0.5625rem;
-            color: var(--app-inverse-form-color);
+            color: white;
             display: inline-block;
             font-size: 0.75rem;
             font-weight: bold;

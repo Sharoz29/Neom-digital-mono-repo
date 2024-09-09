@@ -5,9 +5,10 @@
 }
 
 .psdk-default-form-two-column {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: calc(1rem);
+  // might be in use later on
+  //  display: grid;
+  // grid-template-columns: repeat(2, 1fr);
+  // column-gap: calc(1rem);
 }
 
 .psdk-default-form-three-column {

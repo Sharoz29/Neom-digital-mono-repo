@@ -1,11 +1,14 @@
 <mat-grid-list cols="2" rowHeight="6.25rem">
-  <mat-grid-tile>
-    <button *ngFor="let aButton of arSecondaryButtons$" mat-raised-button color="secondary" (click)="buttonClick(aButton.jsAction, 'secondary')">
-      {{ localizedVal(aButton.name, localeCategory) }}
-    </button>
+  <mat-grid-tile >
+    <div class="mat-grid-title-buttons-main" >
+
+      <button *ngFor="let aButton of arSecondaryButtons$" mat-raised-button class="action-buttons" (click)="buttonClick(aButton.jsAction, 'secondary')">
+        {{ localizedVal(aButton.name, localeCategory) }}
+      </button>
+    </div>
   </mat-grid-tile>
   <mat-grid-tile>
-    <button *ngFor="let aButton of arMainButtons$" mat-raised-button color="primary" (click)="buttonClick(aButton.jsAction, 'primary')">
+    <button class="action-buttons" *ngFor="let aButton of arMainButtons$" mat-raised-button (click)="buttonClick(aButton.jsAction, 'primary')">
       {{ localizedVal(aButton.name, localeCategory) }}
     </button>
   </mat-grid-tile>
