@@ -1,6 +1,8 @@
-<div class="psdk-case-summary-fields">
-  <dl class="psdk-case-summary-fields-primary">
-    <div *ngFor="let field of primaryFieldsWithStatus$" class="psdk-csf-primary-field">
+<div class="psdk-case-summary-fields-main">
+
+  <div class="psdk-case-summary-fields">
+    <dl class="psdk-case-summary-fields-primary">
+      <div *ngFor="let field of primaryFieldsWithStatus$" class="psdk-csf-primary-field">
       <dt class="psdk-csf-primary-field-header">
         {{ field.config?.label }}
       </dt>
@@ -27,18 +29,18 @@
 <div class="psdk-case-summary-fields">
   <dl *ngFor="let field of secondaryFields$" class="psdk-case-summary-fields-secondary">
     <div
-      *ngIf="
+    *ngIf="
         field?.config?.label?.toLowerCase() == 'create operator' ||
-          field?.displayLabel?.toLowerCase() == 'create operator' ||
-          field?.config?.label?.toLowerCase() == 'update operator' ||
-          field?.displayLabel?.toLowerCase() == 'update operator';
+        field?.displayLabel?.toLowerCase() == 'create operator' ||
+        field?.config?.label?.toLowerCase() == 'update operator' ||
+        field?.displayLabel?.toLowerCase() == 'update operator';
         else hasSecondaryValue
-      "
+        "
     >
-      <component-mapper name="Operator" [props]="{ pConn$: field?.kid, displayLabel: field?.displayLabel }"></component-mapper>
-    </div>
-    <ng-template #hasSecondaryValue>
-      <div class="psdk-csf-secondary-field">
+    <component-mapper name="Operator" [props]="{ pConn$: field?.kid, displayLabel: field?.displayLabel }"></component-mapper>
+  </div>
+  <ng-template #hasSecondaryValue>
+    <div class="psdk-csf-secondary-field">
         <dt class="psdk-csf-secondary-field-header">
           {{ field.config?.displayLabel || field.config?.label }}
         </dt>
@@ -52,4 +54,5 @@
       </div>
     </ng-template>
   </dl>
+</div>
 </div>

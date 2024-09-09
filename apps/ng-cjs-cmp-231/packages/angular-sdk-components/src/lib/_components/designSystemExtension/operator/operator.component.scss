@@ -36,6 +36,7 @@
 .psdk-double {
   column-gap: 1rem;
   text-align: center;
+  color: white;
 }
 
 .psdk-top-pad {
@@ -71,11 +72,11 @@ dd {
 .mat-mdc-outlined-button.mat-primary {
   padding: 0px;
   line-height: unset;
+  color: white;
 }
 
 .psdk-label {
   word-break: break-word;
   grid-column-start: 1;
   max-width: max-content;
-  color: var(--app-field-header-color);
 }

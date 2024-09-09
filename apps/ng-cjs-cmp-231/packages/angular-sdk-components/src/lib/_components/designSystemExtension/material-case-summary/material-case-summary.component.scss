@@ -49,22 +49,25 @@
 }
 
 .psdk-case-summary-fields {
-  padding: calc(2 * 0.5rem);
-  display: grid;
-  grid-row-gap: calc(2 * 0.5rem);
+  // might be in use later on
+  // padding: calc(2 * 0.5rem);
+  // display: grid;
+  // grid-row-gap: calc(2 * 0.5rem);
 }
 
 .psdk-case-summary-fields-primary {
-  grid-template-columns: 20ch 1fr;
-  display: grid;
-  grid-column-gap: calc(2 * 0.5rem);
-  grid-row-gap: calc(2 * 0.5rem);
+  // might be in use later on
+  // grid-template-columns: 20ch 1fr;
+  // display: grid;
+  // grid-column-gap: calc(2 * 0.5rem);
+  // grid-row-gap: calc(2 * 0.5rem);
 }
 
 .psdk-csf-primary-field {
   display: grid;
   grid-template-columns: 1fr;
   grid-column-gap: calc(0 * 0.5rem);
+  color: white;
 }
 
 .psdk-csf-primary-field-header {
@@ -74,7 +77,7 @@
   max-width: max-content;
   font-size: 0.8125rem;
   font-weight: 400;
-  color: var(--app-field-header-color);
+  // color: var(--app-field-header-color);
 }
 
 .psdk-csf-primary-field-data {
@@ -96,8 +99,12 @@
   display: grid;
   grid-template-columns: auto;
   grid-column-gap: calc(2 * 0.5rem);
+  color: white;
 }
-
+.psdk-case-summary-fields-main{
+  display: flex;
+  gap: 10px;
+}
 .psdk-csf-secondary-field-header {
   word-break: break-word;
   grid-column-start: 1;
@@ -105,7 +112,7 @@
   max-width: max-content;
   font-size: 0.8125rem;
   font-weight: 400;
-  color: var(--app-field-header-color);
+  // color: var(--app-field-header-color);
   align-items: center;
   display: flex;
 }

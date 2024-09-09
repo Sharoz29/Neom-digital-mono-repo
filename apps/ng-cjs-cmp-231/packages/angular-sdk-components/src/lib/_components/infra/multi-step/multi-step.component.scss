@@ -47,6 +47,7 @@ mat-horizontal-stepper {
   background-color: var(--app-form-color);
   padding: 0rem 0.625rem;
   border-radius: 0.3125rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .psdk-flow-container {
   padding-left: 2.1875rem;
@@ -203,7 +204,7 @@ mat-horizontal-stepper {
 }
 
 .psdk-horizontal-step-icon-selected {
-  background-color: var(--app-primary-color);
+ background-color: rgb(7, 107, 201);
   color: var(--app-form-color);
   border-radius: 50%;
   height: 24px;

@@ -23,9 +23,9 @@ $my-theme: mat.define-light-theme(
 
 @mixin generate-theme-vars($theme) {
   $primary: mat.get-color-from-palette($my-primary);
-  --app-primary-color: #{$primary};
-  --app-primary-dark-color: #4527a0;
-  --app-primary-light-color: #b499fc;
+  --app-primary-color: rgb(7, 107, 201);
+  --app-primary-dark-color:rgb(7, 107, 201);
+  --app-primary-light-color: rgb(7, 107, 201);
   --app-secondary-color: #ffc400;
   --app-neutral-color: grey;
   --app-neutral-light-color: lightgrey;

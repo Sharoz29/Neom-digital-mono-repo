@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, forwardRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, forwardRef, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -25,10 +25,32 @@ interface CaseViewProps {
   imports: [CommonModule, MatToolbarModule, MatButtonModule, MatMenuModule, forwardRef(() => ComponentMapperComponent)]
 })
 export class CaseViewComponent implements OnInit, OnDestroy {
+
   @Input() pConn$: typeof PConnect;
   @Input() formGroup$: FormGroup;
   @Input() displayOnlyFA$: boolean;
+  isExpanded: boolean = false;
 
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.checkWindowSize(); 
+  }
+
+  private checkWindowSize() {
+    // Automatically expand/collapse based on window width
+    this.isExpanded = window.innerWidth <= 1576;
+  }
+
+  toggletoolbar() {
+    // Only toggle if window width is <= 1576px
+    if (window.innerWidth <= 1576) {
+      this.isExpanded = !this.isExpanded;
+    }
+    else{
+      this.isExpanded = !this.isExpanded;
+    }
+  }
   // Used with AngularPConnect
   angularPConnectData: AngularPConnectData = {};
   configProps$: CaseViewProps;
@@ -63,6 +85,7 @@ export class CaseViewComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.checkWindowSize(); 
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 

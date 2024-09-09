@@ -20,6 +20,8 @@ h1 {
 .psdk-case-view {
   box-sizing: border-box;
   display: flex;
+  flex-wrap: wrap;
+
 }
 
 .ng-case-view-toolbar {
@@ -44,19 +46,26 @@ h1 {
 
 .psdk-case-view-info {
   flex: 0 0 auto;
-  width: 25rem;
   float: left;
   padding: 0rem 0.3125rem 0rem 0rem;
   margin-left: 0.5rem;
   margin-top: 0.5rem;
-  height: 100%; /* Should be removed. Only for demonstration */
-  background-color: var(--app-form-color);
+ background-color:rgb(7, 107, 201);
+ height: 98vh;
+ position: sticky;
+ left: 0px;
+ top: 3px;
+ z-index: 999;
+ 
 }
 
+
 .psdk-case-view-main {
-  flex-grow: 2;
+  flex-grow: 0.9;
+
   float: left;
-  padding: 0rem 0.3125rem;
+  padding:1rem 1.45rem;
+  width: 50%;
   height: 100%; /* Should be removed. Only for demonstration */
 }
 
@@ -82,11 +91,16 @@ h1 {
   padding: 0.3125rem;
 }
 
+@media (max-width: 1400px) {
+.psdk-case-utlities-header{
+width: 100%;
+}
+}
+
 .psdk-case-view-utilities {
-  width: 21.875rem;
+  width: 98%;
   float: left;
   padding: 0rem 0.3125rem;
-  height: 100%; /* Should be removed. Only for demonstration */
 }
 
 
@@ -105,3 +119,38 @@ h1 {
 button {
   margin: 0rem 0.3125rem;
 }
+.psdk-option-menu{
+  border: none;
+  color: black;
+
+  background: none;
+  color: white;
+  font-size: 39px;
+  cursor: pointer;
+
+}
+.psdk-mat-row-toolbar{
+  background: rgb(7, 107, 201);
+}
+
+.psdk-case.expanded{
+  display: flex;
+  flex-direction: column;
+}
+.psdk-case-view-toolbar{
+background-color: rgb(7, 107, 201);
+color: white;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.psdk-case-view-info.expanded{
+  display: flex;
+  height: auto;
+}
+.psdk-case-view-toolbar.expanded{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
