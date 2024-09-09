@@ -9,7 +9,7 @@
         <img class="psdk-utility-card-actions-svg-icon" src="{{ imagePath$ }}{{ item$.primary.icon }}.svg" />
       </button>
     </div>
-    <div *ngIf="item$.primary.type != 'URL'" class="psdk-utility-card-main-primary-label">
+    <div *ngIf="item$.primary.type != 'URL'" class="psdk-utility-card-main-primary-label custom-link" (click)="item$.primary.click()">
       {{ item$.primary.name }}
     </div>
     <div *ngIf="item$.secondary.text != ''" [style.color]="item$.secondary.error ? 'red' : undefined">{{ item$.secondary.text }}</div>
