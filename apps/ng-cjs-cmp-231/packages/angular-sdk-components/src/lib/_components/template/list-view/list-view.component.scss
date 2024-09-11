@@ -1,8 +1,13 @@
 .psdk-list-header {
+  --marginGap: calc(1* 0.5rem);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.6125rem;
   background-color: var(--app-form-color);
   padding: 1rem;
-  // margin: 0.5rem;
   border-radius: 0.6125rem;
+  margin-block-end: var(--totalMargin);
+  --totalMargin: calc(2* var(--marginGap));
+  margin-inline: var(--marginGap);
 }
 
 table {

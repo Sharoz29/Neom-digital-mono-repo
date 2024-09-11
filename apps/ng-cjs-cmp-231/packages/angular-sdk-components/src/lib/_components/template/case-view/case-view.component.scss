@@ -55,6 +55,7 @@ h1 {
  position: sticky;
  left: 0px;
  top: 3px;
+ transition: 0.3s ease-in-out;
  z-index: 999;
  
 }
@@ -62,7 +63,6 @@ h1 {
 
 .psdk-case-view-main {
   flex-grow: 0.9;
-
   float: left;
   padding:1rem 1.45rem;
   width: 50%;
@@ -118,6 +118,7 @@ width: 100%;
 
 button {
   margin: 0rem 0.3125rem;
+  background-color: none;
 }
 .psdk-option-menu{
   border: none;

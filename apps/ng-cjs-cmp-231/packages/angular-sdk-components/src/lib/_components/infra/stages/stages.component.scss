@@ -103,6 +103,24 @@
 }
 
 .psdk-stages-inner-future {
+  cursor: pointer;
   color: var(--app-neutral-color);
   font-size: 1rem;
+}
+.psdk-stages-inner-future .number{
+  display: none;
+}
+@media (max-width: 1200px) {
+  .psdk-stages-inner-future .text {
+    display: none;
+  }
+  .psdk-stages-inner-future .number {
+    display: block;
+  }
+  .psdk-stages-inner-future:hover .text {
+    display: block; 
+  }
+  .psdk-stages-inner-future:hover .number {
+    display: none;
+  }
 }

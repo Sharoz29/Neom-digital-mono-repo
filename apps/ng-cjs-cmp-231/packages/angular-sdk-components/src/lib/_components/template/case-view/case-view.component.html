@@ -12,8 +12,8 @@
         <div class="psdk-case-view-heading-id" id="caseId">{{ id$ }}</div>
       </div>
       <button class="psdk-option-menu" [matMenuTriggerFor]="actionMenu">{{ localizedVal('...', localeCategory) }}</button>
-      <button (click)="toggletoolbar()">
-        <i>{{ isExpanded ? '▼' : '➡' }}</i>
+      <button (click)="toggleToolbar()">
+        <i>{{ isExpanded ? '▼' : '▶' }}</i>
       </button>
       
     </div>
@@ -40,16 +40,7 @@
         <div class="psdk-case-view-summary">
           <component-mapper name="CaseSummary" [props]="{ pConn$: caseSummaryPConn$ }"></component-mapper>
         </div>
-        <div >
-              
-    <component-mapper
-    *ngIf="caseTabs$.length > 1"
-    name="VerticalTabs"
-    [props]="{ tabConfig$: caseTabs$ }"
-    [parent]="this"
-    [outputEvents]="{ tabClick: onTabClick }"
-  ></component-mapper>
-        </div>
+  
 </div>
 <div class="psdk-case-view" id="case-view">
   <div class="psdk-case-view-main">
@@ -72,12 +63,21 @@
         <component-mapper name="Region" [props]="{ pConn$: kid.getPConnect(), formGroup$ }"></component-mapper>
       </div>
     </div>
-
     <div *ngFor="let kid of arChildren$">
       <div *ngIf="kid.getPConnect().getRawMetadata().type.toLowerCase() == 'region' && kid.getPConnect().getRawMetadata().name == 'Main'">
         <component-mapper name="Region" [props]="{ pConn$: kid.getPConnect(), formGroup$ }"></component-mapper>
       </div>
     </div>
+    <div >
+            
+  <component-mapper
+  *ngIf="caseTabs$.length > 1"
+  name="VerticalTabs"
+  [props]="{ tabConfig$: caseTabs$ }"
+  [parent]="this"
+  [outputEvents]="{ tabClick: onTabClick }"
+></component-mapper>
+      </div>
     
     <div *ngIf="!displayOnlyFA$">
       <component-mapper name="DeferLoad" [props]="{ pConn$, loadData$: tabData$, name: tabData$?.config?.name }"></component-mapper>

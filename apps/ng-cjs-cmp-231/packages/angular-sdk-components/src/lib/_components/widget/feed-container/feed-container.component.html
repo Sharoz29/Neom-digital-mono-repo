@@ -1,11 +1,13 @@
-<div>
-  <div style="text-align: left">
-    <h3>Pulse</h3>
+<div class="psdk-pulse-main">
 
-    <div class="psdk-pulse-divider"></div>
-
-    <br />
-    <div class="psdk-pulse">
+  <div>
+    <div style="text-align: left">
+      <h3>Pulse</h3>
+      
+      <div class="psdk-pulse-divider"></div>
+      
+      <br />
+      <div class="psdk-pulse">
       <div class="psdk-avatar-big">{{ this.currentUserInitials$ }}</div>
       <mat-form-field class="psdk-full-width">
         <textarea matInput rows="5" id="pulseMessage" placeholder="Start a conversation" type="text" (change)="messageChange($event)"></textarea>
@@ -37,7 +39,7 @@
       <button mat-button (click)="commentClick(pulseMessage.ID)">
         <img class="psdk-comment-svg-icon" src="{{ svgComment$ }}" />
         <label class="psdk-pulse-message-like-label"
-          >Comment <span *ngIf="pulseMessage?.replies.length > 0"> | {{ pulseMessage.replies.length }}</span></label
+        >Comment <span *ngIf="pulseMessage?.replies.length > 0"> | {{ pulseMessage.replies.length }}</span></label
         >
       </button>
     </div>
@@ -63,7 +65,7 @@
       </ng-template>
     </div>
   </div>
-
+  
   <div *ngIf="pulseMessage?.replies" class="psdk-pulse-reply">
     <div *ngFor="let replyMessage of pulseMessage.replies" class="psdk-pulse-reply-align">
       <div class="psdk-pulse-divider"></div>
@@ -84,8 +86,8 @@
             (click)="likeClick(pulseMessage.ID, replyMessage.ID, true, 'reply')"
             class="psdk-pulse-reply-like"
           >
-            <img class="psdk-liked-by-me-svg-icon" src="{{ svgLikedByMe$ }}" />
-          </button>
+          <img class="psdk-liked-by-me-svg-icon" src="{{ svgLikedByMe$ }}" />
+        </button>
           <button
             *ngIf="replyMessage?.likedByMe != 'true'"
             mat-button
@@ -98,7 +100,7 @@
         </div>
         <ng-template #replyNotLiked>
           <button
-            *ngIf="replyMessage?.likedByMe != 'true'"
+          *ngIf="replyMessage?.likedByMe != 'true'"
             mat-button
             (click)="likeClick(pulseMessage.ID, replyMessage.ID, false, 'reply')"
             class="psdk-pulse-reply-like"
@@ -134,4 +136,6 @@
     </div>
   </div>
   <br />
+</div>
+
 </div>

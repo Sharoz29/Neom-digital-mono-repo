@@ -5,6 +5,7 @@
 .psdk-todo {
   padding: 1rem;
   background-color: var(--app-form-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   --marginGap: calc(1* 0.5rem);
     --totalMargin: calc(2* var(--marginGap));
     --percentageBasis: calc(100% - var(--totalMargin));
@@ -15,6 +16,7 @@
     max-width: var(--maxWidth);
     margin-block-end: var(--totalMargin);
     margin-inline: var(--marginGap);
+    border-radius: 0.6125rem;
 }
 
 .psdk-todo-header {
@@ -29,7 +31,7 @@
 
 .psdk-assignment-count {
 
-  padding: 0.11rem 0.4rem;
+  padding: 10px;
 }
 
 .psdk-todo-id {
@@ -87,6 +89,10 @@
 
 .psdk-todo-assignment-action {
   display: inline-flex;
+}
+.psdk-todo-assignment-action button {
+background-color: rgb(7, 107, 201);
+color: white;
 }
 
 .psdk-todo-card {

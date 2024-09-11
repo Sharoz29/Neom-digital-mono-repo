@@ -1,14 +1,15 @@
-<div class="psdk-insight">
+<div class="psdk-insight-main">
+  <div class="psdk-insight">
     <div class="psdk-insight-header">
       <div class="psdk-insight-text">
         {{ insightName$ }}
       </div>
       <div *ngIf="content$">
         <component-mapper
-          name="TaskChart"
-          [props]="{ content$: content$ }"
+        name="TaskChart"
+        [props]="{ content$: content$ }"
         ></component-mapper>
       </div>
     </div>
   </div>
-  
+</div>
