@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ChangeDetectorRef, forwardRef, OnDestroy, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+  import { Component, OnInit, Input, ChangeDetectorRef, forwardRef, OnDestroy, HostListener } from '@angular/core';
+  import { CommonModule } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,7 @@ import { interval } from 'rxjs';
 import { AngularPConnectData, AngularPConnectService } from '../../../_bridge/angular-pconnect';
 import { Utils } from '../../../_helpers/utils';
 import { ComponentMapperComponent } from '../../../_bridge/component-mapper/component-mapper.component';
+  import { ExpandStateService } from '../../../_services/expand-state.service';
 
 interface CaseViewProps {
   // If any, enter additional props that only exist on this component
@@ -29,28 +30,28 @@ export class CaseViewComponent implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
   @Input() formGroup$: FormGroup;
   @Input() displayOnlyFA$: boolean;
-  isExpanded: boolean = false;
+    isExpanded: boolean = false;
 
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.checkWindowSize(); 
-  }
 
-  private checkWindowSize() {
-    // Automatically expand/collapse based on window width
-    this.isExpanded = window.innerWidth <= 1576;
-  }
-
-  toggletoolbar() {
-    // Only toggle if window width is <= 1576px
-    if (window.innerWidth <= 1576) {
-      this.isExpanded = !this.isExpanded;
+  
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+      this.checkWindowSize();
     }
-    else{
-      this.isExpanded = !this.isExpanded;
+  
+    private checkWindowSize() {
+      if (window.innerWidth <= 1576) {
+        this.expandService.setExpand(true);
+      } else {
+        this.expandService.setExpand(false);
+      }
     }
-  }
+  
+    toggleToolbar() {
+      this.expandService.toggleExpand();
+    }
+  
   // Used with AngularPConnect
   angularPConnectData: AngularPConnectData = {};
   configProps$: CaseViewProps;
@@ -78,16 +79,21 @@ export class CaseViewComponent implements OnInit, OnDestroy {
   localeCategory = 'CaseView';
   localeKey: string;
 
-  constructor(
-    private cdRef: ChangeDetectorRef,
-    private angularPConnect: AngularPConnectService,
-    private utils: Utils
-  ) {}
+    constructor(
+      private expandService: ExpandStateService,
+      private cdRef: ChangeDetectorRef,
+      private angularPConnect: AngularPConnectService,
+      private utils: Utils
+    ) {}
 
-  ngOnInit(): void {
-    this.checkWindowSize(); 
-    // First thing in initialization is registering and subscribing to the AngularPConnect service
-    this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
+    ngOnInit(): void { 
+      this.expandService.isExpanded$.subscribe(isExpanded => {
+        this.isExpanded = isExpanded;
+        this.cdRef.detectChanges();
+      });
+      this.checkWindowSize();
+      // First thing in initialization is registering and subscribing to the AngularPConnect service
+      this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
     // this.updateSelf();
     this.checkAndUpdate();

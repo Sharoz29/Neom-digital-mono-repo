@@ -2,6 +2,8 @@ import { Component, OnInit, Input, forwardRef, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Utils } from '../../../_helpers/utils';
 import { ComponentMapperComponent } from '../../../_bridge/component-mapper/component-mapper.component';
+import { ExpandStateService } from '../../../_services/expand-state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-material-case-summary',
@@ -17,19 +19,27 @@ export class MaterialCaseSummaryComponent implements OnInit, OnChanges {
   @Input() secondaryFields$: any[];
 
   primaryFieldsWithStatus$: any[];
+  isExpanded: boolean;
+  private subscription: Subscription;
 
-  constructor(private utils: Utils) {}
+  constructor(private utils: Utils, private expandStateService: ExpandStateService) {}
   localizedVal = PCore.getLocaleUtils().getLocaleValue;
   localeCategory = 'ModalContainer';
   ngOnInit(): void {
+    this.subscription = this.expandStateService.isExpanded$.subscribe(expanded => {
+  this.isExpanded = expanded;
+});
     this.updatePrimaryWithStatus();
     this.updateLabelAndDate(this.primaryFieldsWithStatus$);
     this.updateLabelAndDate(this.secondaryFields$);
   }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   // eslint-disable-next-line sonarjs/no-identical-functions
   ngOnChanges() {
-    this.updatePrimaryWithStatus();
+    this.updatePrimaryWithStatus(); 
     this.updateLabelAndDate(this.primaryFieldsWithStatus$);
     this.updateLabelAndDate(this.secondaryFields$);
   }

@@ -12,7 +12,7 @@
 .psdk-narrow-column {
   float: left;
   min-width: 30%;
-  padding: 0rem 0.3125rem;
+  padding: 0rem 0.8rem;
 }
 
 .psdk-wide-column {
@@ -20,8 +20,20 @@
   width: 70%;
   padding: 0rem 0.3125rem;
 }
+
+@media (max-width: 1246px) {
+  .psdk-wide-column {
+    float: left;
+    width: 100%;
+    padding: 0rem 0.3125rem;
+  }
+  .psdk-narrow-column{
+    width: 100%;
+  }
+}
 .psdk-app-header{
   padding: 0.8rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--app-form-color);
     --marginGap: calc(1* 0.5rem);
     --totalMargin: calc(2* var(--marginGap));

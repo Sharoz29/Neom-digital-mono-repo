@@ -1,15 +1,16 @@
 <div class="psdk-stages-bar">
-  <div class="psdk-stages-chevron" *ngFor="let stage of arStageResults$">
+  <!-- <div class="psdk-stages-chevron" *ngFor="let stage of arStageResults$"> -->
+    <div class="psdk-stages-chevron" *ngFor="let stage of arStageResults$ ; let i = index">
     <div *ngIf="stage.visited_status == 'completed'" class="psdk-stages-inner-past">
       <img class="psdk-stages-icon" src="{{ checkSvgIcon$ }}" />{{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }}
     </div>
     <div *ngIf="stage.visited_status == 'active'" class="psdk-stages-inner-present">
-      {{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }}
+      {{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }} 
     </div>
-    <div *ngIf="stage.visited_status == 'future'" class="psdk-stages-inner-future">
-      {{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }}
+    <div *ngIf="stage.visited_status == 'future'" class="psdk-stages-inner-future" >
+      <span class="text"> {{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }}</span>
+      <span class="number"> {{ i + 1 }}</span>
     </div>
   </div>
 </div>
-
 <div class="psdk-stages-divider"></div>

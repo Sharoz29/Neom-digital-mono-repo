@@ -1,7 +1,7 @@
-<div class="psdk-case-summary-fields-main">
+<div class="psdk-case-summary-fields-main" [class.expanded]="isExpanded">
 
   <div class="psdk-case-summary-fields">
-    <dl class="psdk-case-summary-fields-primary">
+    <dl class="psdk-case-summary-fields-primary" [class.expanded]="isExpanded">
       <div *ngFor="let field of primaryFieldsWithStatus$" class="psdk-csf-primary-field">
       <dt class="psdk-csf-primary-field-header">
         {{ field.config?.label }}
@@ -26,7 +26,7 @@
     </div>
   </dl>
 </div>
-<div class="psdk-case-summary-fields">
+<div class="psdk-case-summary-fields" [class.expanded]="isExpanded">
   <dl *ngFor="let field of secondaryFields$" class="psdk-case-summary-fields-secondary">
     <div
     *ngIf="

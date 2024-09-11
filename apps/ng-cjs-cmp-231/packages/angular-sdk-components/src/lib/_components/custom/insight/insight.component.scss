@@ -1,7 +1,11 @@
+.psdk-insight-main{
+    padding: 0.5rem;
+}
 .psdk-insight{
     padding: 1rem;
     background-color: var(--app-form-color);
     border-radius: 0.6125rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .psdk-insight-header {
     display: inline-flex;
