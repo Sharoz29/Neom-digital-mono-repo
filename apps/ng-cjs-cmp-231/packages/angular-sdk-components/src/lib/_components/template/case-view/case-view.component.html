@@ -12,7 +12,7 @@
         <div class="psdk-case-view-heading-id" id="caseId">{{ id$ }}</div>
       </div>
       <button class="psdk-option-menu" [matMenuTriggerFor]="actionMenu">{{ localizedVal('...', localeCategory) }}</button>
-      <button (click)="toggleToolbar()">
+      <button class="psdk-expand-button" (click)="toggleToolbar()">
         <i>{{ isExpanded ? '▼' : '▶' }}</i>
       </button>
       
