@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { interval } from 'rxjs';
 import { AngularPConnectData, AngularPConnectService } from '../../../_bridge/angular-pconnect';
 import { Utils } from '../../../_helpers/utils';
+import { StageModalComponent } from '../stage-modal/StageModal/StageModal.component';
+import { MatDialog } from '@angular/material/dialog'; // Import MatDialog for the modal
 
 interface StagesProps {
   // If any, enter additional props that only exist on this component
@@ -31,7 +33,8 @@ export class StagesComponent implements OnInit, OnDestroy {
 
   constructor(
     private angularPConnect: AngularPConnectService,
-    private utils: Utils
+    private utils: Utils,
+    private dialog: MatDialog // Inject MatDialog for modal 
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +81,12 @@ export class StagesComponent implements OnInit, OnDestroy {
         this.arStageResults$ = arStages;
         this.lastStage$ = this.arStageResults$[this.arStageResults$.length - 1];
       }
+    });
+  }
+   openStageModal(stageName: string): void {
+    this.dialog.open(StageModalComponent, {
+      width: '300px',
+      data: { stageName }
     });
   }
 }

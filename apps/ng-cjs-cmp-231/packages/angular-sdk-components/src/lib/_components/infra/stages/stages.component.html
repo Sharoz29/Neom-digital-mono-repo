@@ -7,7 +7,7 @@
     <div *ngIf="stage.visited_status == 'active'" class="psdk-stages-inner-present">
       {{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }} 
     </div>
-    <div *ngIf="stage.visited_status == 'future'" class="psdk-stages-inner-future" >
+    <div *ngIf="stage.visited_status == 'future'" class="psdk-stages-inner-future" (click)="openStageModal(PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key))"  >
       <span class="text"> {{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }}</span>
       <span class="number"> {{ i + 1 }}</span>
     </div>

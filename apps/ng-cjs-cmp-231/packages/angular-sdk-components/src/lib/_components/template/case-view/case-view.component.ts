@@ -8,7 +8,7 @@ import { interval } from 'rxjs';
 import { AngularPConnectData, AngularPConnectService } from '../../../_bridge/angular-pconnect';
 import { Utils } from '../../../_helpers/utils';
 import { ComponentMapperComponent } from '../../../_bridge/component-mapper/component-mapper.component';
-  import { ExpandStateService } from '../../../_services/expand-state.service';
+import { ExpandStateService } from '../../../_services/expand-state.service';
 
 interface CaseViewProps {
   // If any, enter additional props that only exist on this component
