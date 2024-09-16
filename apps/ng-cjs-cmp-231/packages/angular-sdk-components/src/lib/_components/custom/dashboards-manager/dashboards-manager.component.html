@@ -1,8 +1,73 @@
-<div class="dashboard-container">
+<div class="dashboard-manager-container">
     <div class="title-container">
         <div class="image-container">
             <img src="{{titleIcon$}}" class="dashboard-icon"/>
         </div>
         <span class="dashboard-title">{{title$}}</span>
+    </div>
+    <div class="dashboard-container">
+        <mat-card>
+            <mat-card-title>
+                Dashboards ({{dataSource.data.length}} results)
+            </mat-card-title>
+            <table *ngIf="dataLoaded" mat-table [dataSource]="dataSource" class="mat-elevation-z8 dashboard-table">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let dashboard"  class="dashboard-title-row">
+                        <div class="text-flex">
+                            <span class="dashboard-name">
+                                {{dashboard.pyLabel}}
+                            </span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef> Description </th>
+                    <td mat-cell *matCellDef="let dashboard"  class="dashboard-title-row">
+                        <div class="text-flex">
+                            <span class="dashboard-description">
+                                {{dashboard.pyViewDescription}}
+                            </span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="visibility">
+                    <th mat-header-cell *matHeaderCellDef> Visibility </th>
+                    <td mat-cell *matCellDef="let dashboard"  class="dashboard-title-row">
+                        <div class="text-flex">
+                            <span class="dashboard-visibility">
+                                {{dashboard.pyVisibilityType}}
+                            </span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="updateDate">
+                    <th mat-header-cell *matHeaderCellDef> Update Time</th>
+                    <td mat-cell *matCellDef="let dashboard"  class="dashboard-title-row">
+                        <div class="text-flex">
+                            <span>
+                                {{formatReadableDate(dashboard.pxUpdateDateTime)}}
+                            </span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="updateOperator">
+                    <th mat-header-cell *matHeaderCellDef> Update operator name </th>
+                    <td mat-cell *matCellDef="let dashboard"  class="dashboard-title-row">
+                        <div class="text-flex">
+                            <span>
+                                {{dashboard.pxUpdateOpName}}
+                            </span>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-card>
     </div>
 </div>

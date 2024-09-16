@@ -1,4 +1,4 @@
-.dashboard-container{
+.dashboard-manager-container{
     background-color:  var(--app-background-color);
     display: flex;
     padding-block: calc(1.5rem);
@@ -28,4 +28,30 @@
     font-size: max(1.0625rem, 15px);
     font-weight: 600;
     align-self: center;
+}
+.dashboard-container{
+    padding: 19px;
+}
+.dashboard-table{
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.dashboard-title-row{
+    .text-flex{
+        display: flex;
+        align-items: center;
+    }
+}
+.dashboard-visibility{
+    background-color: rgb(233, 238, 243);
+    border-radius: calc(0.125rem);
+    color: rgb(76, 90, 103);
+    box-shadow: rgba(76, 90, 103, 0.1) 0px 0px 0px 0.0625rem inset;
+    display: inline-block;
+    font-size: max(0.75rem, 12px);
+    font-weight: bold;
+    line-height: calc(1.25rem);
+    padding: 0px 0.5rem;
+    text-transform: uppercase;
 }
