@@ -57,6 +57,7 @@ h1 {
  top: 3px;
  transition: 0.3s ease-in-out;
  z-index: 999;
+ box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.568627451);
  
 }
 
@@ -69,8 +70,19 @@ h1 {
   height: 100%; /* Should be removed. Only for demonstration */
 }
 
-.psdk-case-view-summary {
+.psdk-case-view-summary-nav {
   padding-left: 0.75rem;
+}
+.psdk-case-view-summary{
+  display: none;
+}
+@media (max-width: 1100px) {
+  .psdk-case-view-summary-nav{
+  display: none;
+  }
+  .psdk-case-view-summary{
+  display: block;
+  }
 }
 
 .psdk-case-view-heading {
@@ -93,13 +105,13 @@ h1 {
 
 @media (max-width: 1400px) {
 .psdk-case-utlities-header{
-width: 100%;
+width: 94%;
+padding: 16px;
 }
 .psdk-expand-button{
   display: none;
 }
 }
-
 .psdk-case-view-utilities {
   width: 98%;
   float: left;
@@ -124,9 +136,9 @@ button {
   background-color: none;
 }
 .psdk-option-menu{
+  margin: 0px;
+  padding-bottom: 20px;
   border: none;
-  color: black;
-
   background: none;
   color: white;
   font-size: 39px;
@@ -150,7 +162,8 @@ align-items: center;
 }
 .psdk-case-view-info.expanded{
   display: flex;
-  height: auto;
+  height: 83px;
+  transition: none;
 }
 .psdk-case-view-toolbar.expanded{
   display: flex;

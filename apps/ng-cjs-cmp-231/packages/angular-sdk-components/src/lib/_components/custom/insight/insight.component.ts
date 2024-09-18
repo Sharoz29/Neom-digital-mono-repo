@@ -30,4 +30,4 @@ export class InsightComponent implements OnInit {
         this.content$ = JSON.parse(this.insightData$.pyContent);
       });
   }
-}
+} 

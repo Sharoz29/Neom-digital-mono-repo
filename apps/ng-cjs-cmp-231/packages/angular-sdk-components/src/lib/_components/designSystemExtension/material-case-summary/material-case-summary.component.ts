@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, OnChanges, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Utils } from '../../../_helpers/utils';
 import { ComponentMapperComponent } from '../../../_bridge/component-mapper/component-mapper.component';
@@ -21,6 +21,14 @@ export class MaterialCaseSummaryComponent implements OnInit, OnChanges {
   primaryFieldsWithStatus$: any[];
   isExpanded: boolean;
   private subscription: Subscription;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.getDynamicClass();
+  }
+  getDynamicClass(): string {
+    return  window.innerWidth <= 1100 ? 'psdk-case-summary-fields-main' : 'psdk-case-summary-fields-main-nav';
+  }
 
   constructor(private utils: Utils, private expandStateService: ExpandStateService) {}
   localizedVal = PCore.getLocaleUtils().getLocaleValue;

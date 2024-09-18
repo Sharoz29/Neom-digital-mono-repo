@@ -8,8 +8,24 @@
 }
 
 .psdk-data-readonly {
-  padding-top: 0.625rem;
   width: 100%;
+  overflow: overlay;
+  padding: 5px;
+}
+::-webkit-scrollbar {
+height:8px;
+margin-top:6px;
+border: 1px solid black;
+}
+.psdk-data-readonly::-webkit-scrollbar {
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+}
+
+.psdk-data-readonly::-webkit-scrollbar-thumb{
+  background-color: rgb(7, 107, 201);
+  border-radius: 10px;
 }
 
 ::ng-deep .mat-mdc-form-field-infix {

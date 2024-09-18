@@ -19,7 +19,6 @@ span.psdk-details-status-style-hf {
   padding: 0 0.5rem;
   text-transform: uppercase;
 }
-
 .psdk-grid-filter {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -27,7 +26,7 @@ span.psdk-details-status-style-hf {
   row-gap: calc(2 * 0.5rem);
   align-items: start;
 }
-
 .psdk-csf-primary-field-value {
   margin: 8px 0;
+  word-break: break-word;
 }
