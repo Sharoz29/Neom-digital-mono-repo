@@ -1,7 +1,32 @@
 @use '@angular/material' as mat;
 @use '@angular/material-experimental' as matx;
+$my-custom-color: (
+  50: #e6f3fe,
+  100: #bfdfff,
+  200: #95cbff,
+  300: #6ab7ff,
+  400: #479ff4,
+  500: #076bc9, 
+  600: #035ab1,
+  700: #034a99,
+  800: #023a81,
+  900: #01255b,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #000,
+    400: #fff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+  )
+);
 
-$my-primary: mat.define-palette(mat.$deep-purple-palette, 500);
+$my-primary: mat.define-palette($my-custom-color, 500);
+
 $my-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
 
 $my-theme: mat.define-light-theme(

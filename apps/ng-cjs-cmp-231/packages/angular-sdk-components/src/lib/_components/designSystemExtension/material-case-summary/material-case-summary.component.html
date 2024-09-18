@@ -1,5 +1,4 @@
-<div class="psdk-case-summary-fields-main" [class.expanded]="isExpanded">
-
+<div [ngClass]="getDynamicClass()" [class.expanded]="isExpanded">
   <div class="psdk-case-summary-fields">
     <dl class="psdk-case-summary-fields-primary" [class.expanded]="isExpanded">
       <div *ngFor="let field of primaryFieldsWithStatus$" class="psdk-csf-primary-field">

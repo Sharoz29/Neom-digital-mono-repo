@@ -37,6 +37,7 @@ a.mat-mdc-menu-item > mat-icon {
 
 .mat-mdc-card {
   padding: 16px;
+  box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.568627451);
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled),
@@ -82,6 +83,7 @@ a.mat-mdc-menu-item > mat-icon {
 
 .mat-mdc-form-field {
   margin: 8px 0;
+  word-break: break-word;
 }
 
 .ngx-mat-tel-input-container button {

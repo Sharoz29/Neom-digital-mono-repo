@@ -109,8 +109,33 @@
   grid-column-gap: calc(2 * 0.5rem);
   color: white;
 }
-.psdk-case-summary-fields-main.expanded{
+.psdk-case-summary-fields-main-nav.expanded{
 display: flex;
+}
+@media (max-width: 1100px) {
+  .psdk-case-summary-fields-main.expanded{
+    display: flex;
+    background-color: white;
+    margin-top: 12px;
+    padding: 1rem;
+    --maxWidth: calc(100% - var(--totalMargin));
+    flex-wrap: wrap;
+    flex-basis: var(--percentageBasis);
+    margin-inline: var(--marginGap);
+    border-radius: 0.6125rem;
+    box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.568627451);
+  }
+  .psdk-case-summary-fields.expanded{
+    width: 70%;
+  }
+  .psdk-csf-primary-field {
+  }
+  .psdk-csf-secondary-field {
+  color: black;
+  }
+  .psdk-case-summary-fields-secondary {
+ width: 30%;
+  }
 }
 .psdk-csf-secondary-field-header {
   word-break: break-word;

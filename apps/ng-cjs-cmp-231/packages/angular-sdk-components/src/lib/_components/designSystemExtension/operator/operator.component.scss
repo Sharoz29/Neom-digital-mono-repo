@@ -80,3 +80,22 @@ dd {
   grid-column-start: 1;
   max-width: max-content;
 }
+
+@media (max-width: 1100px) {
+  .psdk-double {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .mat-mdc-button.mat-primary,
+.mat-mdc-icon-button.mat-primary,
+.mat-mdc-outlined-button.mat-primary {
+  padding: 0px;
+  line-height: unset;
+  color: black;
+}
+ 
+
+}

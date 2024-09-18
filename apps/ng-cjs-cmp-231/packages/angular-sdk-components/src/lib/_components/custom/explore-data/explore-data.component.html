@@ -8,7 +8,7 @@
     <div class="insights-container">
         <mat-card>
           <mat-card-title>
-            Insights ({{filteredInsights.length}} results)
+            Insights ({{filteredInsights?.length}} results)
           </mat-card-title>
           <div *ngIf="!dataLoaded" class="loading-container">
             <mat-spinner></mat-spinner>

@@ -18,7 +18,7 @@
       
     </div>
     <div >
-      <button *ngIf="editAction" mat-raised-button color="secondary" (click)="_editClick()">{{ localizedVal('Edit', localeCategory) }}</button>
+      <button *ngIf="editAction"  (click)="_editClick()">{{ localizedVal('Edit', localeCategory) }}</button>
       <div class="psdk-case-view-mat-menu">
 
         <mat-menu  #actionMenu="matMenu" overlapTrigger="false" >
@@ -37,19 +37,17 @@
     </div>
     </div>
         <div class="psdk-case-view-divider"></div>
-        <div class="psdk-case-view-summary">
+        <div class="psdk-case-view-summary-nav">
           <component-mapper name="CaseSummary" [props]="{ pConn$: caseSummaryPConn$ }"></component-mapper>
         </div>
-  
 </div>
 <div class="psdk-case-view" id="case-view">
   <div class="psdk-case-view-main">
     <div *ngIf="!displayOnlyFA$">
-      <div *ngFor="let kid of arChildren$">
+      <div *ngFor="let kid of arChildren$"> 
         <div
         *ngIf="
-            kid.getPConnect().getRawMetadata().type.toLowerCase() == 'region' && kid.getPConnect().getRawMetadata().name.toLowerCase() == 'stages'
-            "
+            kid.getPConnect().getRawMetadata().type.toLowerCase() == 'region' && kid.getPConnect().getRawMetadata().name.toLowerCase() == 'stages'            "
         >
         <component-mapper name="Region" [props]="{ pConn$: kid.getPConnect() }"></component-mapper>
       </div>
@@ -68,8 +66,11 @@
         <component-mapper name="Region" [props]="{ pConn$: kid.getPConnect(), formGroup$ }"></component-mapper>
       </div>
     </div>
+    <div class="psdk-case-view-summary">
+      <component-mapper name="CaseSummary" [props]="{ pConn$: caseSummaryPConn$ }"></component-mapper>
+    </div>
     <div >
-            
+   
   <component-mapper
   *ngIf="caseTabs$.length > 1"
   name="VerticalTabs"
