@@ -1,4 +1,5 @@
 // Statically load all "local" components that aren't yet in the npm package
+import { DashboardPage } from './lib/_components/custom/dashboard-page/dashboard-page.component';
 import { DashboardsManager } from './lib/_components/custom/dashboards-manager/dashboards-manager.component';
 import { ExploreDataPage } from './lib/_components/custom/explore-data/explore-data.component';
 import { FollowersComponent } from './lib/_components/custom/followers/followers.component';
@@ -18,7 +19,8 @@ const localSdkComponentMap = {
   ExploreDataPage: ExploreDataPage,
   DashboardsManager: DashboardsManager,
   Followers: FollowersComponent,
-  RelatedCases: RelatedCases
+  RelatedCases: RelatedCases,
+  DashboardPage: DashboardPage
 };
 
 export default localSdkComponentMap;

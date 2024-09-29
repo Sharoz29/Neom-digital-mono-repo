@@ -1,0 +1,49 @@
+<div class="dashboard-page-container">
+    <div class="title-container">
+      <div class="image-container">
+        <img src="{{titleIcon$}}" class="dashboard-page-icon" />
+      </div>
+      <span class="dashboard-page-title">{{title$}}</span>
+    </div>
+  
+    <div >
+      <div *ngIf="filters$" class="filter-region">
+        <div *ngFor="let kid of filters$.children">
+          <div *ngIf="kid.type === 'DateTime'" [formGroup]="filtersFormGroup$" class="date-picker">
+            <mat-form-field class="psdk-full-width">
+              <mat-label>{{ labelExtractor(kid.config.label) }}</mat-label>
+              <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" formControlName="start" />
+                <input matEndDate placeholder="End date" formControlName="end" (dateChange)="dateRangeChangeHandler(kid)" />
+              </mat-date-range-input>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+          <div *ngIf="kid.type === 'TextInput'" [formGroup]="filtersFormGroup$">
+            <mat-form-field class="psdk-full-width">
+              <mat-label>{{ labelExtractor(kid.config.label) }}</mat-label>
+              <input matInput placeholder="{{ labelExtractor(kid.config.label) }}" formControlName="{{getControlName(kid)}}" />
+            </mat-form-field>
+          </div>
+          <div *ngIf="kid.c11nEnv">
+            <span>
+              <component-mapper
+                [name]="kid.c11nEnv.getPConnect().getComponentName()"
+                [props]="{
+                  pConn$: kid.c11nEnv.getPConnect(),
+                  formGroup$: filtersFormGroup$
+                }"
+                errorMsg="Dashboard filter wants component not yet available: {{ kid.c11nEnv.getPConnect().getComponentName() }}"
+              >
+              </component-mapper>
+            </span>
+          </div>
+        </div>
+        <div>
+          <button mat-button color="primary" (click)="clearFilters()">Clear All</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
