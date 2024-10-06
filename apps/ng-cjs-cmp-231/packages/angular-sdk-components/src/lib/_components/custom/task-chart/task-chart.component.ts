@@ -97,12 +97,12 @@ export class TaskChart implements OnInit {
       return acc;
     }, {} as Record<string, number>);
 
-    const result = Object.keys(countMap).map(type => ({
+    const result = Object?.keys(countMap)?.map(type => ({
       label: type,
       value: countMap[type]
     }));
 
-    this.chartData = result.map(item => {
+    this.chartData = result?.map(item => {
       return {
         label: item.label,
         value: item.value

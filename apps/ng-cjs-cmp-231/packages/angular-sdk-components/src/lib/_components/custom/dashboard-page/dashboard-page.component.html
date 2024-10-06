@@ -1,0 +1,105 @@
+<div class="dashboard-page-container">
+    <div class="title-container">
+      <div class="image-container">
+        <img src="{{titleIcon$}}" class="dashboard-page-icon" />
+      </div>
+      <span class="dashboard-page-title">{{title$}}</span>
+    </div>
+  
+    <div >
+      <div *ngIf="filters$" class="filter-region">
+        <div *ngFor="let kid of filters$.children">
+          <div *ngIf="kid.type === 'DateTime'" [formGroup]="filtersFormGroup$" class="date-picker">
+            <mat-form-field class="psdk-full-width">
+              <mat-label>{{ labelExtractor(kid.config.label) }}</mat-label>
+              <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" formControlName="start" />
+                <input matEndDate placeholder="End date" formControlName="end" (dateChange)="dateRangeChangeHandler(kid)" />
+              </mat-date-range-input>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+          <div *ngIf="kid.type === 'TextInput'" [formGroup]="filtersFormGroup$">
+            <mat-form-field class="psdk-full-width">
+              <mat-label>{{ labelExtractor(kid.config.label) }}</mat-label>
+              <input matInput placeholder="{{ labelExtractor(kid.config.label) }}" formControlName="{{getControlName(kid)}}" />
+            </mat-form-field>
+          </div>
+          <div *ngIf="kid.c11nEnv">
+            <span>
+              <component-mapper
+                [name]="kid.c11nEnv.getPConnect().getComponentName()"
+                [props]="{
+                  pConn$: kid.c11nEnv.getPConnect(),
+                  formGroup$: filtersFormGroup$
+                }"
+                errorMsg="Dashboard filter wants component not yet available: {{ kid.c11nEnv.getPConnect().getComponentName() }}"
+              >
+              </component-mapper>
+            </span>
+          </div>
+        </div>
+        <div>
+          <button mat-button color="primary" (click)="clearFilters()">Clear All</button>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let region of viewChildrens$; let i = index" class="region-container">
+      <div *ngIf="region.children && region.children.length > 0" class="child-container">
+        <div class="child-region-container" *ngFor="let child of region.children; let j = index"
+          [ngStyle]="{ width: region.children.length === 1 ? '100%' : (100 / region.children.length) + '%' }"
+      >
+          <h2 class="child-region-header">{{regionLabels$[i][j]}}</h2>
+          <div class="chart-container">
+            <ngx-charts-pie-chart
+              *ngIf="regionLabels$[i][j]==='Appointments Created by' && pieChartData && pieChartData.length > 0"
+              [results]="pieChartData"
+              [scheme]="pieChartColorScheme"
+              [legend]="true"
+              [labels]="true"
+              class="pie-chart"
+              >
+          </ngx-charts-pie-chart>
+          <ngx-charts-line-chart
+              *ngIf="regionLabels$[i][j]==='Number of Work Items Created Daily' && lineChartData && lineChartData.length > 0"
+              [results]="lineChartData"
+              [scheme]="lineChartColorScheme"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Day Created'"
+              [yAxisLabel]="'Total Work Items'">
+          </ngx-charts-line-chart>
+          <ngx-charts-bar-vertical
+              *ngIf="regionLabels$[i][j]=== 'Daily Task for NP' && dailyTaskData && dailyTaskData.length > 0"
+              [results]="dailyTaskData"
+              [scheme]="barChartColorScheme"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'NP Name'"
+              [yAxisLabel]="'Daily Tasks'">
+          </ngx-charts-bar-vertical>
+          <!-- <ngx-charts-bar-vertical
+              *ngIf="child.config.chartType === 'bar'"
+              [results]="child.data"
+              [scheme]="colorScheme"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Category'"
+              [yAxisLabel]="'Value'">
+          </ngx-charts-bar-vertical> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
