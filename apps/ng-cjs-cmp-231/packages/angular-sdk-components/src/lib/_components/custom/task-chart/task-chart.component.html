@@ -1,5 +1,5 @@
 <ngx-charts-bar-vertical
-  *ngIf="chartData && chartData.length > 0"
+  *ngIf="chartData && chartData.length > 0; else noData"
   [results]="chartData"
   [xAxis]="true"
   [yAxis]="true"
@@ -11,4 +11,7 @@
   [scheme]="colorScheme"
   [barPadding]="calculatePadding(chartData.length)">
 </ngx-charts-bar-vertical>
+<ng-template #noData>
+  <app-no-data></app-no-data>
+</ng-template>
       

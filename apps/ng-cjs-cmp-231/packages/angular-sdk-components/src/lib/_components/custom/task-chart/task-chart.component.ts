@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
+import { NoDataComponent } from '../no-data/no-data.component';
 
 interface Measure {
   id: string;
@@ -61,7 +62,7 @@ type AppointmentTask = {
   templateUrl: './task-chart.component.html',
   styleUrls: ['./task-chart.component.scss'],
   standalone: true,
-  imports: [CommonModule, NgxChartsModule]
+  imports: [CommonModule, NgxChartsModule, NoDataComponent]
 })
 export class TaskChart implements OnInit {
   @Input() content$!: ChartProps;
