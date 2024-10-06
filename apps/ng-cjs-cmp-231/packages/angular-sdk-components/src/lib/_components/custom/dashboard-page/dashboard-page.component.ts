@@ -59,9 +59,16 @@ export class DashboardPage {
     name: 'customScheme',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#33FFF3', '#F3FF33'] // Custom colors
+    domain: ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#33FFF3', '#F3FF33']
+  };
+  lineChartColorScheme: Color = {
+    name: 'lineChartScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#33FFF3', '#F3FF33', '#E74C3C', '#8E44AD', '#2ECC71'] // Add more custom colors as needed
   };
   pieChartData: any;
+  lineChartData: any;
   chartTypes: any[] = [];
 
   constructor(private utils: Utils) {}
@@ -291,9 +298,30 @@ export class DashboardPage {
   }
 
   renderLineChart(data) {
-    // Render line chart using ngx-charts
-    console.log('Rendering line chart with data:', data);
-    // Setup chart data and bindings here
+    const formattedData = {};
+
+    data.forEach(item => {
+      const caseType = item['pyCaseTypeInformation:pyLabel'] || 'Unknown';
+      const date = item['kw6rcdqic0nftkn3bu8'] || 'Unknown Date';
+      const value = parseInt(item['kw6q7mqygj641amexef'], 10) || 0;
+
+      if (!formattedData[caseType]) {
+        formattedData[caseType] = [];
+      }
+
+      formattedData[caseType].push({
+        name: date,
+        value: value
+      });
+    });
+
+    const result = Object.keys(formattedData).map(caseType => ({
+      name: caseType,
+      series: formattedData[caseType]
+    }));
+
+    this.lineChartData = result;
+    console.log('Rendering line chart with data:', this.lineChartData);
   }
 
   renderPieChart(data) {
