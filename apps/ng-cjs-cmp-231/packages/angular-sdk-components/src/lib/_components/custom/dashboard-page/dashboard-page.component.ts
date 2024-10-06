@@ -67,8 +67,16 @@ export class DashboardPage {
     group: ScaleType.Ordinal,
     domain: ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#33FFF3', '#F3FF33', '#E74C3C', '#8E44AD', '#2ECC71'] // Add more custom colors as needed
   };
+  barChartColorScheme: Color = {
+    name: 'barChartScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#1E90FF', '#FFD700', '#FF6347', '#32CD32', '#FF4500', '#7B68EE', '#20B2AA', '#FF69B4', '#FFA500'] // Add or change colors as needed
+  };
   pieChartData: any;
   lineChartData: any;
+  dailyTaskData: any;
+  appointmentByFilterData: any;
   chartTypes: any[] = [];
 
   constructor(private utils: Utils) {}
@@ -267,43 +275,50 @@ export class DashboardPage {
           };
           PCore.getDataApiUtils()
             .getData(content.defaultListDataView, options)
-            .then(res => this.renderChart(content, res.data.data));
+            .then(res => this.renderChart(content, res.data.data, aggregationID, calculationID));
         });
     });
   }
 
-  renderChart(content, data) {
+  renderChart(content, data, aggregationID, calculationID) {
     const chartType = content?.settings?.charts[0].type;
     this.chartTypes.push(chartType);
-    console.log(this.chartTypes);
     switch (chartType) {
       case 'COLUMN':
-        this.renderBarChart(data);
+        this.renderBarChart(content.details.title, data, aggregationID);
         break;
       case 'MULTI_LINE':
-        this.renderLineChart(data);
+        this.renderLineChart(data, aggregationID, calculationID);
         break;
       case 'PIE':
-        this.renderPieChart(data);
+        this.renderPieChart(data, aggregationID);
         break;
       default:
         console.log('Chart type not supported');
     }
   }
 
-  renderBarChart(data) {
-    // Render bar chart using ngx-charts
-    console.log('Rendering bar chart with data:', data);
-    // Setup chart data and bindings here
+  renderBarChart(name, data, aggregationID) {
+    const transformData = (data, aggregationID) => {
+      return data?.map(item => ({
+        name: item['pxAssignedUserName'] || 'Unknown',
+        value: parseInt(item[aggregationID], 10) || 0
+      }));
+    };
+    if (name === 'Daily Task for NP') {
+      this.dailyTaskData = transformData(data, aggregationID);
+    } else if (name === 'Appointments by Status') {
+      this.appointmentByFilterData = [];
+    }
   }
 
-  renderLineChart(data) {
+  renderLineChart(data, aggregationID, calculationID) {
     const formattedData = {};
 
     data.forEach(item => {
       const caseType = item['pyCaseTypeInformation:pyLabel'] || 'Unknown';
-      const date = item['kw6rcdqic0nftkn3bu8'] || 'Unknown Date';
-      const value = parseInt(item['kw6q7mqygj641amexef'], 10) || 0;
+      const date = item[calculationID] || 'Unknown Date';
+      const value = parseInt(item[aggregationID], 10) || 0;
 
       if (!formattedData[caseType]) {
         formattedData[caseType] = [];
@@ -321,16 +336,14 @@ export class DashboardPage {
     }));
 
     this.lineChartData = result;
-    console.log('Rendering line chart with data:', this.lineChartData);
   }
 
-  renderPieChart(data) {
+  renderPieChart(data, aggregationID) {
     const formattedData = data.map(item => ({
       name: item['pxCreateOperator:pyUserName'] || 'Unknown',
-      value: parseInt(item['lsmv64qepibg75ozal'], 10) || 0
+      value: parseInt(item[aggregationID], 10) || 0
     }));
 
-    console.log('Rendering pie chart with formatted data:', formattedData);
     this.pieChartData = formattedData;
   }
 }

@@ -73,6 +73,30 @@
               [xAxisLabel]="'Day Created'"
               [yAxisLabel]="'Total Work Items'">
           </ngx-charts-line-chart>
+          <ngx-charts-bar-vertical
+              *ngIf="regionLabels$[i][j]=== 'Daily Task for NP' && dailyTaskData && dailyTaskData.length > 0"
+              [results]="dailyTaskData"
+              [scheme]="barChartColorScheme"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'NP Name'"
+              [yAxisLabel]="'Daily Tasks'">
+          </ngx-charts-bar-vertical>
+          <!-- <ngx-charts-bar-vertical
+              *ngIf="child.config.chartType === 'bar'"
+              [results]="child.data"
+              [scheme]="colorScheme"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [showXAxisLabel]="true"
+              [showYAxisLabel]="true"
+              [xAxisLabel]="'Category'"
+              [yAxisLabel]="'Value'">
+          </ngx-charts-bar-vertical> -->
           </div>
         </div>
       </div>
