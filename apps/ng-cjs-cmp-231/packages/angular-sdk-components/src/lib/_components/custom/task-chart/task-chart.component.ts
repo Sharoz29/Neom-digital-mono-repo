@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 
 interface Measure {
   id: string;
@@ -30,6 +31,7 @@ interface ChartProps {
     title: string;
   };
 }
+
 type AppointmentTask = {
   pxUrgencyAssign: number;
   pxProcessName: string;
@@ -59,17 +61,22 @@ type AppointmentTask = {
   templateUrl: './task-chart.component.html',
   styleUrls: ['./task-chart.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, NgxChartsModule]
 })
 export class TaskChart implements OnInit {
   @Input() content$!: ChartProps;
 
-  chartData: { label: string; value: number }[] = [];
-  maxValue: number = 0;
+  chartData: { name: string; value: number }[] = [];
   tasks$!: AppointmentTask[];
   chartTitle: string = '';
   xAxisLabel: string;
   yAxisLabel: string;
+  colorScheme: Color = {
+    name: 'vivid',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
 
   ngOnInit(): void {
     this.xAxisLabel = this.content$.settings.aliases.dimensions['kx0stpszzkhrm8yuf3f'];
@@ -97,18 +104,23 @@ export class TaskChart implements OnInit {
       return acc;
     }, {} as Record<string, number>);
 
-    const result = Object?.keys(countMap)?.map(type => ({
-      label: type,
+    this.chartData = Object.keys(countMap).map(type => ({
+      name: type,
       value: countMap[type]
     }));
-
-    this.chartData = result?.map(item => {
-      return {
-        label: item.label,
-        value: item.value
-      };
-    });
-
-    this.maxValue = Math.max(...this.chartData.map(item => item.value));
+  }
+  calculatePadding(total: number): number {
+    switch (total) {
+      case 1:
+        return 400;
+      case 2:
+        return 300;
+      case 3:
+        return 100;
+      case 4:
+        return 50;
+      default:
+        return 10;
+    }
   }
 }
