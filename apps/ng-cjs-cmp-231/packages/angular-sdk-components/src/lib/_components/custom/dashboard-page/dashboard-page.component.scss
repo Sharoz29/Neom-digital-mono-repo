@@ -1,9 +1,10 @@
 .dashboard-page-container{
-    background-color:  var(--app-background-color);
+    background-color: rgb(233, 238, 243);
     display: flex;
     padding-block: calc(1.5rem);
     padding-inline: calc(1.5rem);
     flex-direction: column;
+    gap:30px;
 
     .title-container{
         display: flex;
@@ -40,6 +41,27 @@
         div>.date-picker{
             width:250px;
             margin-right:20px;
+        }
+    }
+    .region-container{
+        width:100%;
+        .child-container{
+            display: flex;
+            flex-direction: row;
+            gap:30px;  
+            .child-region-container{
+                background-color: var(--app-background-color);
+                padding-block: calc(1.5rem);
+                padding-inline: calc(1.5rem);
+                .child-region-header{
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    line-height: 32px;
+                    font-size: max(1rem, 12px);
+                    font-weight: 600;
+                }
+            }
         }
     }
 }

@@ -45,5 +45,14 @@
         </div>
       </div>
     </div>
+    <div *ngFor="let region of viewChildrens$; let i = index" class="region-container">
+      <div *ngIf="region.children && region.children.length > 0" class="child-container">
+        <div class="child-region-container" *ngFor="let child of region.children; let j = index"
+          [ngStyle]="{ width: region.children.length === 1 ? '100%' : (100 / region.children.length) + '%' }"
+      >
+          <h2 class="child-region-header">{{regionLabels$[i][j]}}</h2>
+        </div>
+      </div>
+    </div>
   </div>
   

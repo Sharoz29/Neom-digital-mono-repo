@@ -51,17 +51,22 @@ export class DashboardPage {
   childrenConfigProps$: any;
   childrenViewResources$: any;
   filters$: any;
+  viewChildrens$: any;
+  regionLabels$: string[][] = [];
 
   constructor(private utils: Utils) {}
 
   ngOnInit(): void {
+    this.updateSelf();
+    this.handleFilters();
+    this.viewChildrens$ = this.children$.filter(child => child.name !== 'Filters');
+    this.viewChildrens$.forEach((child, index) => this.handleRegions(child, index));
+  }
+  handleFilters() {
     if (this.filtersFormGroup$ != null) {
       this.filtersFormGroup$.addControl('start', new FormControl(null));
       this.filtersFormGroup$.addControl('end', new FormControl(null));
     }
-    this.updateSelf();
-    console.log(this.filters$.children);
-
     this.filters$.children.forEach(child => {
       const controlName = this.getControlName(child);
       if (!this.filtersFormGroup$.get(controlName)) {
@@ -69,6 +74,7 @@ export class DashboardPage {
       }
     });
   }
+
   getControlName(child: any): string {
     return child.config ? child.config.value : '';
   }
@@ -111,5 +117,145 @@ export class DashboardPage {
   }
   labelExtractor(label: string): string {
     return label.startsWith('@L ') ? label.slice(3) : label;
+  }
+
+  handleRegions(region, index) {
+    this.regionLabels$[index] = [];
+    region.children.forEach(child => {
+      const childProps = this.pConn$.getConfigProps(child.config);
+      const childLabel = childProps.label;
+      this.regionLabels$[index].push(childLabel);
+      console.log(this.regionLabels$);
+      PCore.getAnalyticsUtils()
+        .getInsightByID(childProps.id)
+        .then(response => {
+          const content = JSON.parse(response.data?.pyInsights[0].pyContent);
+          const aggregationID = content?.query?.measures[0]?.id;
+          const calculationID = content?.query?.dimensions[0]?.id;
+
+          const options = {
+            paging: {
+              maxResultsToFetch: 5000
+            },
+            query: {
+              aggregations: {
+                [aggregationID]: {
+                  field: content?.query?.measures[0]?.field?.fieldID,
+                  summaryFunction: content?.query?.measures[0]?.aggregation.toUpperCase()
+                }
+              },
+              ...(content?.query?.filters.length > 0 &&
+                (content.defaultListDataView !== 'D_pyAllWork'
+                  ? {
+                      filter: {
+                        logic: 'F1 AND (F2 AND F3)',
+                        filterConditions: {
+                          F1: {
+                            lhs: {
+                              field: 'pxWorkGroup'
+                            },
+                            comparator: 'EQ',
+                            rhs: {
+                              value: 'default@LCS'
+                            },
+                            ignoreCase: true
+                          },
+                          F2: {
+                            lhs: {
+                              field: 'pxCreateDateTime'
+                            },
+                            comparator: 'GTE',
+                            rhs: {
+                              value: '2024-09-29T08:23:05.000Z'
+                            }
+                          },
+                          F3: {
+                            lhs: {
+                              field: 'pxCreateDateTime'
+                            },
+                            comparator: 'LTE',
+                            rhs: {
+                              value: '2024-09-30T08:23:05.000Z'
+                            }
+                          }
+                        }
+                      }
+                    }
+                  : {
+                      filter: {
+                        logic: 'F1',
+                        filterConditions: {
+                          F1: {
+                            lhs: {
+                              field: 'pxCreateDateTime'
+                            },
+                            comparator: 'GTE',
+                            rhs: {
+                              value: '2024-08-30T09:39:50.000Z'
+                            }
+                          }
+                        }
+                      },
+                      calculations: {
+                        [calculationID]: {
+                          function: 'DAYS',
+                          parameters: [
+                            {
+                              field: 'pxCreateDateTime'
+                            }
+                          ]
+                        }
+                      }
+                    })),
+              select:
+                content.defaultListDataView === 'D_pyAllWork'
+                  ? [
+                      {
+                        aggregation: aggregationID
+                      },
+                      {
+                        calculation: calculationID
+                      },
+                      {
+                        field: content?.query?.dimensions[1]?.field?.fieldID
+                      }
+                    ]
+                  : [
+                      {
+                        aggregation: aggregationID
+                      },
+                      {
+                        field: content.query?.dimensions?.[0]?.field?.fieldID
+                      }
+                    ],
+              sortBy:
+                content.defaultListDataView === 'D_pyAllWork'
+                  ? [
+                      {
+                        calculation: calculationID,
+                        type: 'ASC'
+                      },
+                      {
+                        field: content?.query?.dimensions[1]?.field?.fieldID,
+                        type: 'ASC'
+                      }
+                    ]
+                  : [
+                      {
+                        aggregation: aggregationID,
+                        type: 'DESC'
+                      }
+                    ],
+              useExtendedTimeout: false
+            }
+          };
+          // console.log('hello', content);
+          PCore.getDataApiUtils()
+            .getData(content.defaultListDataView, options)
+            .then(res => res.data.data);
+
+          // .then(res => console.log(res.data));
+        });
+    });
   }
 }
