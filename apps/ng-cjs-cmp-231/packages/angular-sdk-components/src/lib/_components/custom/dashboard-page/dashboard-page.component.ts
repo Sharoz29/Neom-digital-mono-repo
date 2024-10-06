@@ -12,6 +12,7 @@ import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/
 import { ComponentMapperComponent, Utils } from 'packages/angular-sdk-components/src/public-api';
 import { getFilterExpression, getFormattedDate, createFilter, combineFilters } from '../../../_helpers/filter-utils';
 import { MatInputModule } from '@angular/material/input';
+import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'dashboard-page',
@@ -33,6 +34,7 @@ import { MatInputModule } from '@angular/material/input';
     MatDatepickerModule,
     MatButtonModule,
     MatNativeDateModule,
+    NgxChartsModule,
     forwardRef(() => ComponentMapperComponent)
   ]
 })
@@ -53,6 +55,14 @@ export class DashboardPage {
   filters$: any;
   viewChildrens$: any;
   regionLabels$: string[][] = [];
+  pieChartColorScheme: Color = {
+    name: 'customScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#33FFF3', '#F3FF33'] // Custom colors
+  };
+  pieChartData: any;
+  chartTypes: any[] = [];
 
   constructor(private utils: Utils) {}
 
@@ -125,7 +135,6 @@ export class DashboardPage {
       const childProps = this.pConn$.getConfigProps(child.config);
       const childLabel = childProps.label;
       this.regionLabels$[index].push(childLabel);
-      console.log(this.regionLabels$);
       PCore.getAnalyticsUtils()
         .getInsightByID(childProps.id)
         .then(response => {
@@ -249,13 +258,51 @@ export class DashboardPage {
               useExtendedTimeout: false
             }
           };
-          // console.log('hello', content);
           PCore.getDataApiUtils()
             .getData(content.defaultListDataView, options)
-            .then(res => res.data.data);
-
-          // .then(res => console.log(res.data));
+            .then(res => this.renderChart(content, res.data.data));
         });
     });
+  }
+
+  renderChart(content, data) {
+    const chartType = content?.settings?.charts[0].type;
+    this.chartTypes.push(chartType);
+    console.log(this.chartTypes);
+    switch (chartType) {
+      case 'COLUMN':
+        this.renderBarChart(data);
+        break;
+      case 'MULTI_LINE':
+        this.renderLineChart(data);
+        break;
+      case 'PIE':
+        this.renderPieChart(data);
+        break;
+      default:
+        console.log('Chart type not supported');
+    }
+  }
+
+  renderBarChart(data) {
+    // Render bar chart using ngx-charts
+    console.log('Rendering bar chart with data:', data);
+    // Setup chart data and bindings here
+  }
+
+  renderLineChart(data) {
+    // Render line chart using ngx-charts
+    console.log('Rendering line chart with data:', data);
+    // Setup chart data and bindings here
+  }
+
+  renderPieChart(data) {
+    const formattedData = data.map(item => ({
+      name: item['pxCreateOperator:pyUserName'] || 'Unknown',
+      value: parseInt(item['lsmv64qepibg75ozal'], 10) || 0
+    }));
+
+    console.log('Rendering pie chart with formatted data:', formattedData);
+    this.pieChartData = formattedData;
   }
 }

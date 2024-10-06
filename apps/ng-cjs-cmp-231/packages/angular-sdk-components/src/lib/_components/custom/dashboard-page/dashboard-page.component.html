@@ -51,6 +51,17 @@
           [ngStyle]="{ width: region.children.length === 1 ? '100%' : (100 / region.children.length) + '%' }"
       >
           <h2 class="child-region-header">{{regionLabels$[i][j]}}</h2>
+          <div class="pie-chart-container">
+            <ngx-charts-pie-chart
+              *ngIf="regionLabels$[i][j]==='Appointments Created by' && pieChartData && pieChartData.length > 0"
+              [results]="pieChartData"
+              [scheme]="pieChartColorScheme"
+              [legend]="true"
+              [labels]="true"
+              class="pie-chart"
+              >
+          </ngx-charts-pie-chart>
+          </div>
         </div>
       </div>
     </div>

@@ -53,6 +53,9 @@
                 background-color: var(--app-background-color);
                 padding-block: calc(1.5rem);
                 padding-inline: calc(1.5rem);
+                flex: 1;
+                box-sizing: border-box;
+                max-width: 100%;
                 .child-region-header{
                     white-space: nowrap;
                     overflow: hidden;
@@ -60,6 +63,10 @@
                     line-height: 32px;
                     font-size: max(1rem, 12px);
                     font-weight: 600;
+                }
+                .pie-chart-container{
+                        width: 90%;
+                        height: auto;
                 }
             }
         }
