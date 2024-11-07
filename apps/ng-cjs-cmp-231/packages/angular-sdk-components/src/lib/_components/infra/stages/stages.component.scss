@@ -95,6 +95,7 @@
 .psdk-stages-inner-past {
   color: var(--app-inverse-form-color);
   font-size: 1rem;
+  cursor: pointer;
 }
 
 .psdk-stages-inner-present {
@@ -111,7 +112,7 @@
 .psdk-stages-inner-future .number{
   display: none;
 }
-@media (max-width: 1200px) {
+@media (max-width: 1500px) {
   .psdk-stages-inner-future .text {
     display: none;
   }
@@ -123,5 +124,14 @@
   }
   .psdk-stages-inner-future:hover .number {
     display: none;
+  }
+  .psdk-stages-inner-past .text {
+    display: none;
+  }
+  .psdk-stages-inner-past:hover .text {
+    display: block; 
+  }
+  .psdk-stages-inner-past:hover .psdk-stages-icon {
+    display: none; 
   }
 }

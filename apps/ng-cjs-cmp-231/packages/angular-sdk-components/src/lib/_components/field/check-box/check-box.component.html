@@ -13,7 +13,7 @@
           <label class="mat-form-field-label psdk-label-readonly">{{ label$ }}</label>
         </span>
       </div>
-      <div *ngIf="selectionMode === 'multi'; else single">
+      <div class="mat-form-checkbox"  *ngIf="selectionMode === 'multi'; else single">
         <mat-option *ngFor="let item of listOfCheckboxes" (click)="handleChangeMultiMode($event, item)">
           <mat-checkbox
             [labelPosition]="'after'"
