@@ -18,6 +18,10 @@
     border-radius: 0.6125rem;
     box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.568627451);
 }
+.psdk-todo-assignments{
+  overflow-y: auto;
+  height: 184px;
+}
 
 .psdk-todo-header {
   display: inline-flex;

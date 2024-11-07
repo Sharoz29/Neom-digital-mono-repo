@@ -1,8 +1,10 @@
 <div class="psdk-stages-bar">
   <!-- <div class="psdk-stages-chevron" *ngFor="let stage of arStageResults$"> -->
     <div class="psdk-stages-chevron" *ngFor="let stage of arStageResults$ ; let i = index">
-    <div *ngIf="stage.visited_status == 'completed'" class="psdk-stages-inner-past">
-      <img class="psdk-stages-icon" src="{{ checkSvgIcon$ }}" />{{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }}
+    <div *ngIf="stage.visited_status == 'completed'" class="psdk-stages-inner-past"  (click)="openStageModal(PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key))">
+      <img class="psdk-stages-icon" src="{{ checkSvgIcon$ }}" />
+      <span class="text"> {{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }}</span>
+     
     </div>
     <div *ngIf="stage.visited_status == 'active'" class="psdk-stages-inner-present">
       {{ PCore$.getLocaleUtils().getLocaleValue(stage.name, '', key) }} 
