@@ -2,7 +2,12 @@ import { Controller, Logger } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { IotMqttDomainService } from './iot-mqtt-domain.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { IotMqttDto, PSIOT_MQTT } from '@neom/models';
+import {
+  CreateAlarmDto,
+  UpdateAlarmDto,
+  IotMqttDto,
+  PSIOT_MQTT,
+} from '@neom/models';
 import { Observable } from 'rxjs';
 
 /**
@@ -97,5 +102,94 @@ export class IotMqttDomainController {
     topic: string;
   }): Observable<any> {
     return this._iotMqttDomainService.registerAndSubscribeDevices(topic);
+  }
+
+  @MessagePattern(PSIOT_MQTT.CREATEALARM)
+  createAlarm(createAlarmDto: CreateAlarmDto): Observable<any> {
+    return this._iotMqttDomainService.createAlarmForDevice(createAlarmDto);
+  }
+
+  @MessagePattern(PSIOT_MQTT.GETALARMS)
+  getAlarms({}: { alarm: string }): Observable<any> {
+    return this._iotMqttDomainService.getAlarms();
+  }
+
+  /**
+   * Update alarm collections based on query parameters.
+   *
+   * @param {Partial<UpdateAlarmDto>} updateAlarmDto - DTO containing update parameters.
+   * @returns {Observable<any>} The result of the update operation.
+   */
+  @MessagePattern(PSIOT_MQTT.UPDATEALARMCOLLECTION)
+  updateAlarmCollection(
+    updateAlarmDto: Partial<UpdateAlarmDto>
+  ): Observable<any> {
+    this.logger.log(
+      `Updating alarm collection with data: ${JSON.stringify(updateAlarmDto)}`
+    );
+    return this._iotMqttDomainService.updateAlarmCollection(updateAlarmDto);
+  }
+
+  /**
+   * Remove alarm collections based on query parameters.
+   *
+   * @param {any} query - Query parameters for removing alarms.
+   * @returns {Observable<any>} The result of the removal operation.
+   */
+  @MessagePattern(PSIOT_MQTT.REMOVEALARMCOLLECTION)
+  removeAlarmCollection(query: any): Observable<any> {
+    this.logger.log(
+      `Removing alarm collection with query: ${JSON.stringify(query)}`
+    );
+    return this._iotMqttDomainService.removeAlarmCollection(query);
+  }
+
+  /**
+   * Retrieve a specific alarm by ID.
+   *
+   * @param {string} alarmId - The ID of the alarm to retrieve.
+   * @returns {Observable<any>} The details of the specific alarm.
+   */
+  @MessagePattern(PSIOT_MQTT.GETSPECIFICALARM)
+  getSpecificAlarm({ alarmId }: { alarmId: string }): Observable<any> {
+    this.logger.log(`Fetching alarm with ID: ${alarmId}`);
+    return this._iotMqttDomainService.getSpecificAlarm(alarmId);
+  }
+
+  /**
+   * Update a specific alarm by ID.
+   *
+   * @param {UpdateAlarmDto} data - The alarm ID and update payload.
+   * @returns {Observable<any>} The result of the update operation.
+   */
+  @MessagePattern(PSIOT_MQTT.UPDATEALARM)
+  updateSpecificAlarm( data: {
+    alarmId: string;
+    body: UpdateAlarmDto;
+  }): Observable<any> {
+    this.logger.log(
+      `Updating specific alarm with ID: ${data.alarmId} and payload: ${data.body}`
+    );
+    this.logger.log(
+      `Received updateSpecificAlarm call: ${JSON.stringify(data)}`
+    );
+    this.logger.log(`Alarm ID: ${data.alarmId}`);
+    this.logger.log(`Body: ${JSON.stringify(data.body)}`);
+
+    return this._iotMqttDomainService.updateSpecificAlarm(
+      data.alarmId,
+      data.body
+    );
+  }
+
+  /**
+   * Retrieve the total count of alarms.
+   *
+   * @returns {Observable<any>} The total number of alarms.
+   */
+  @MessagePattern(PSIOT_MQTT.GETALARMCOUNT)
+  getTotalAlarms(): Observable<any> {
+    this.logger.log(`Fetching total number of alarms`);
+    return this._iotMqttDomainService.getTotalAlarmCount();
   }
 }

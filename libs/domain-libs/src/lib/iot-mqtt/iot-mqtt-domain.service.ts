@@ -14,7 +14,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { BaseDomainService } from '../services/domain.service';
-import { IotMqttCreateVm, IotMqttVm } from '@neom/models';
+import { CreateAlarmDto, UpdateAlarmDto, IotMqttCreateVm, IotMqttVm } from '@neom/models';
 import axios from 'axios';
 import { from, of, Observable } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
@@ -120,6 +120,21 @@ export class IotMqttDomainService extends BaseDomainService<
 
     cumulocityClient.on('connect', () => {
       this.logger.log(`Connected to Cumulocity IoT for device ${deviceName}`);
+    });
+
+    cumulocityClient.subscribe(clientId, (err: any) => {
+      const topic = `s/us/${clientId}`;
+      if (!err) {
+        this.logger.log(`Subscribed to topic ${topic}`);
+      } else {
+        this.logger.error(`Failed to subscribe to topic ${topic}`, err);
+      }
+    });
+
+    cumulocityClient.on('message', (topic: string, message: any) => {
+      this.logger.log(
+        `Received message ${message} from cumulocity topic ${topic}`
+      );
     });
 
     cumulocityClient.on('error', (error: any) => {
@@ -228,7 +243,10 @@ export class IotMqttDomainService extends BaseDomainService<
    * @returns {Observable<any>} The result of the publish operation.
    * @throws {HttpException} If the MQTT client is not connected or if an error occurs while publishing the message.
    */
-  publishTopicToMqttBroker({ pattern, message }: IotMqttCreateVm): Observable<any> {
+  publishTopicToMqttBroker({
+    pattern,
+    message,
+  }: IotMqttCreateVm): Observable<any> {
     if (!this.mqttConnected) {
       throw new HttpException(
         'MQTT client not connected',
@@ -635,5 +653,190 @@ export class IotMqttDomainService extends BaseDomainService<
     } else {
       this.logger.error(`Cumulocity client not found for device ${deviceName}`);
     }
+  }
+
+  createAlarmForDevice(body: CreateAlarmDto): Observable<any> {
+    const url = `https://${environment.cumulocity.tenantid}.eu-latest.cumulocity.com/alarm/alarms`;
+    const base64EncodedCredentials = Buffer.from(
+      `${environment.cumulocity.username}:${environment.cumulocity.password}`
+    ).toString('base64');
+
+    const config = {
+      headers: {
+        Authorization: `Basic ${base64EncodedCredentials}`,
+        Accept: 'application/json',
+      },
+    };
+
+    // Log payload for debugging
+    this.logger.log(
+      `Payload to be sent to Cumulocity: ${JSON.stringify(body)}`
+    );
+
+    return from(axios.post(url, body, config)).pipe(
+      map((response) => {
+        this.logger.log(
+          `Device alarm created: ${JSON.stringify(response.data)}`
+        );
+        return response.data;
+      }),
+      catchError((error) => {
+        this.logger.error('Failed to create device alarm', error);
+        throw new HttpException(
+          'Failed to create device alarm for cumulocity',
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
+      })
+    );
+  }
+
+  getAlarms(): Observable<any> {
+    const url = `https://${environment.cumulocity.tenantid}.eu-latest.cumulocity.com/alarm/alarms`;
+    const base64EncodedCredentials = Buffer.from(
+      `${environment.cumulocity.username}:${environment.cumulocity.password}`
+    ).toString('base64');
+
+    const config = {
+      headers: {
+        Authorization: `Basic ${base64EncodedCredentials}`,
+        Accept: 'application/json',
+      },
+    };
+
+    return from(axios.get(url, config)).pipe(
+      map((response) => {
+        this.logger.log(`Alarms Retrieved: ${JSON.stringify(response.data)}`);
+        return response.data;
+      }),
+      catchError((error) => {
+        this.logger.error('Failed to retrieve alarms', error);
+        throw new HttpException(
+          'Failed to retrieve alarms from cumulocity',
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
+      })
+    );
+  }
+
+  /**
+   * Updates multiple alarms in Cumulocity.
+   * @param {any} payload - The payload to update alarms.
+   * @returns {Observable<any>} Response from Cumulocity.
+   */
+  updateAlarmCollection(payload: any): Observable<any> {
+    const url = `https://${environment.cumulocity.tenantid}.eu-latest.cumulocity.com/alarm/alarms`;
+    const config = this.getAuthConfig();
+
+    this.logger.log(`Updating alarm collection with payload: ${JSON.stringify(payload)}`);
+
+    return from(axios.put(url, payload, config)).pipe(
+      tap((response) => this.logger.log(`Alarms updated successfully: ${JSON.stringify(response.data)}`)),
+      map((response) => response.data),
+      catchError((error) => {
+        this.logger.error('Failed to update alarm collection', error);
+        throw new HttpException('Failed to update alarm collection', HttpStatus.INTERNAL_SERVER_ERROR);
+      })
+    );
+  }
+
+  /**
+   * Removes multiple alarms based on query.
+   * @param {any} query - The query parameters to filter alarms for deletion.
+   * @returns {Observable<any>} Response from Cumulocity.
+   */
+  removeAlarmCollection(query: any): Observable<any> {
+    const url = `https://${environment.cumulocity.tenantid}.eu-latest.cumulocity.com/alarm/alarms`;
+    const config = { ...this.getAuthConfig(), params: query };
+
+    this.logger.log(`Removing alarm collection with query: ${JSON.stringify(query)}`);
+
+    return from(axios.delete(url, config)).pipe(
+      tap(() => this.logger.log('Alarm collection removed successfully')),
+      catchError((error) => {
+        this.logger.error('Failed to remove alarm collection', error);
+        throw new HttpException('Failed to remove alarm collection', HttpStatus.INTERNAL_SERVER_ERROR);
+      })
+    );
+  }
+
+  /**
+   * Retrieves details of a specific alarm.
+   * @param {string} alarmId - The ID of the alarm to retrieve.
+   * @returns {Observable<any>} The alarm details.
+   */
+  getSpecificAlarm(alarmId: string): Observable<any> {
+    const url = `https://${environment.cumulocity.tenantid}.eu-latest.cumulocity.com/alarm/alarms/${alarmId}`;
+    const config = this.getAuthConfig();
+
+    this.logger.log(`Fetching specific alarm with ID: ${alarmId}`);
+
+    return from(axios.get(url, config)).pipe(
+      map((response) => response.data),
+      tap((data) => this.logger.log(`Alarm details retrieved: ${JSON.stringify(data)}`)),
+      catchError((error) => {
+        this.logger.error(`Failed to retrieve alarm with ID ${alarmId}`, error);
+        throw new HttpException('Failed to retrieve alarm', HttpStatus.INTERNAL_SERVER_ERROR);
+      })
+    );
+  }
+
+  /**
+   * Updates a specific alarm in Cumulocity.
+   * @param {string} alarmId - The ID of the alarm to update.
+   * @param {UpdateAlarmDto} body - The update payload.
+   * @returns {Observable<any>} Response from Cumulocity.
+   */
+  updateSpecificAlarm(alarmId: string, body: UpdateAlarmDto): Observable<any> {
+    const url = `https://${environment.cumulocity.tenantid}.eu-latest.cumulocity.com/alarm/alarms/${alarmId}`;
+    const config = this.getAuthConfig();
+
+    this.logger.log(`Inside DomainService: alarmId=${alarmId}, payload=${JSON.stringify(body)}`);
+
+
+    return from(axios.put(url, body, config)).pipe(
+      map((response) => response.data),
+      tap((data) => this.logger.log(`Alarm updated successfully: ${JSON.stringify(data)}`)),
+      catchError((error) => {
+        this.logger.error(`Failed to update alarm with ID ${alarmId}`, error);
+        throw new HttpException('Failed to update alarm', HttpStatus.INTERNAL_SERVER_ERROR);
+      })
+    );
+  }
+
+  /**
+   * Retrieves the total count of alarms from Cumulocity.
+   * @returns {Observable<any>} The total alarm count.
+   */
+  getTotalAlarmCount(): Observable<any> {
+    const url = `https://${environment.cumulocity.tenantid}.eu-latest.cumulocity.com/alarm/alarms/count`;
+    const config = this.getAuthConfig();
+
+    this.logger.log('Fetching total alarm count');
+
+    return from(axios.get(url, config)).pipe(
+      map((response) => response.data),
+      tap((data) => this.logger.log(`Total alarm count retrieved: ${JSON.stringify(data)}`)),
+      catchError((error) => {
+        this.logger.error('Failed to fetch total alarm count', error);
+        throw new HttpException('Failed to fetch total alarm count', HttpStatus.INTERNAL_SERVER_ERROR);
+      })
+    );
+  }
+
+  /**
+   * Helper method to get Axios configuration with authorization headers.
+   * @returns {object} Axios request config.
+   */
+  private getAuthConfig(): any {
+    const base64EncodedCredentials = Buffer.from(
+      `${environment.cumulocity.username}:${environment.cumulocity.password}`
+    ).toString('base64');
+
+    return {
+      headers: {
+        Authorization: `Basic ${base64EncodedCredentials}`,
+        Accept: 'application/json',
+      },
+    };
   }
 }

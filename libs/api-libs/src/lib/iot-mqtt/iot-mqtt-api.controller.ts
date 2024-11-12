@@ -3,6 +3,8 @@ import {
   Get,
   Param,
   Post,
+  Put,
+  Delete,
   Body,
   HttpException,
   HttpStatus,
@@ -18,7 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 
-import { IotMqttCreateVm } from '@neom/models';
+import { CreateAlarmVm, IotMqttCreateVm, UpdateAlarmVm } from '@neom/models';
 import { IotMqttApiService } from './iot-mqtt-api.service';
 
 @Controller('iot-mqtt')
@@ -170,5 +172,120 @@ export class IotMqttApiController {
   @ApiOperation({ summary: 'Subscribe to an MQTT topic' })
   subscribeToTopic(@Param('topic') topic: string): Observable<any> {
     return this._iotMqttApiService.subscribeToMqttBroker(topic);
+  }
+
+  /**
+   * Creates an alarm for an IoT device.
+   *
+   * @param {CreateAlarmVm} body - Alarm creation request payload.
+   * @returns {Observable<any>} An observable with the alarm creation result.
+   * @throws {HttpException} If an error occurs during the alarm creation.
+   */
+  @Post('alarm')
+  @ApiOkResponse({
+    description: 'Successfully created the alarm for the IoT device.',
+    type: Object,
+  })
+  @ApiOperation({ summary: 'Create an alarm for an IoT Device' })
+  createAlarm(@Body() body: CreateAlarmVm): Observable<any> {
+    return this._iotMqttApiService.createAlarmForDevice(body);
+  }
+
+  /**
+   * Retrieves alarms for all IoT devices.
+   *
+   * @returns {Observable<any>} An observable containing the alarms data.
+   */
+  @Get('alarm')
+  @ApiOkResponse({
+    description: 'Successfully retrieved the alarms of all IoT devices.',
+    type: String,
+  })
+  @ApiOperation({ summary: 'Retrieve alarms for all IoT Devices' })
+  getAllAlarms(): Observable<any> {
+    return this._iotMqttApiService.getAlarms();
+  }
+
+  /**
+   * Updates multiple alarm collections.
+   *
+   * @param {UpdateAlarmVm} body - Alarm update payload.
+   * @returns {Observable<any>} The result of the update operation.
+   */
+  @Put('alarm-collections')
+  @ApiOkResponse({
+    description: 'Successfully updated the alarm collection.',
+    type: Object,
+  })
+  @ApiOperation({ summary: 'Update alarm collections' })
+  updateAlarmCollections(@Body() body: UpdateAlarmVm): Observable<any> {
+    return this._iotMqttApiService.updateAlarmCollection(body);
+  }
+
+  /**
+   * Deletes alarm collections based on a query.
+   *
+   * @param {any} query - The query parameters for deletion.
+   * @returns {Observable<any>} The result of the delete operation.
+   */
+  @Delete('alarm-collections')
+  @ApiOkResponse({
+    description: 'Successfully deleted the alarm collection.',
+    type: String,
+  })
+  @ApiOperation({ summary: 'Delete alarm collections' })
+  removeAlarmCollections(@Body() query: any): Observable<any> {
+    return this._iotMqttApiService.removeAlarmCollection(query);
+  }
+
+  /**
+   * Retrieves a specific alarm by ID.
+   *
+   * @param {string} alarmId - The ID of the alarm to retrieve.
+   * @returns {Observable<any>} The alarm details.
+   */
+  @Get('alarm/:alarmId')
+  @ApiOkResponse({
+    description: 'Successfully retrieved specific alarm details.',
+    type: Object,
+  })
+  @ApiOperation({ summary: 'Retrieve a specific alarm by ID' })
+  getAlarmById(@Param('alarmId') alarmId: string): Observable<any> {
+    return this._iotMqttApiService.getSpecificAlarm(alarmId);
+  }
+
+  /**
+   * Updates a specific alarm by ID.
+   *
+   * @param {string} alarmId - The ID of the alarm.
+   * @param {UpdateAlarmVm} body - The update payload.
+   * @returns {Observable<any>} The result of the update operation.
+   */
+  @Put('alarm/:alarmId')
+  @ApiOkResponse({
+    description: 'Successfully updated a specific alarm.',
+    type: Object,
+  })
+  @ApiOperation({ summary: 'Update a specific alarm by ID' })
+  updateAlarmById(
+    @Param('alarmId') alarmId: string,
+    @Body() body: UpdateAlarmVm
+  ): Observable<any> {
+    return this._iotMqttApiService.updateSpecificAlarm(alarmId, body);
+  }
+
+  /**
+   * Retrieves the total count of alarms.
+   *
+   * @returns {Observable<any>} The total number of alarms.
+   */
+  @Get('alarm/count')
+  @ApiOkResponse({
+    description: 'Successfully retrieved the total number of alarms.',
+    type: Object,
+  })
+  @ApiOperation({ summary: 'Retrieve total number of alarms' })
+  getTotalAlarms(): Observable<any> {
+    return this._iotMqttApiService.getTotalAlarmCount();
   }
 }
