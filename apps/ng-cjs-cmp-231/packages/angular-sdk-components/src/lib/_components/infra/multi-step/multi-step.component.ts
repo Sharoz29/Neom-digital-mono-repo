@@ -120,7 +120,7 @@ export class MultiStepComponent implements OnInit {
       .openLocalAction(this.arNavigationSteps$[this.arCurrentStepIndicies$[0]].actionID, {
         target: '.AppointmentInformation.FaceToFace.CertificateOfHomeboundStatus',
         caseID: this.Id$$,
-        containerName: 'primary',
+        containerName: 'modal',
         type: 'Case',
         assignKey: ''
       })
