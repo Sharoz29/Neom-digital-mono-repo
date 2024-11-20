@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { Utils } from '../../../_helpers/utils';
 import { ComponentMapperComponent } from '../../../_bridge/component-mapper/component-mapper.component';
+import { ProgressSpinnerService } from '../../../_messages/progress-spinner.service';
+import { ErrorMessagesService } from '../../../_messages/error-messages.service';
+import { ReferenceComponent } from '../../infra/reference/reference.component';
 
 @Component({
   selector: 'app-multi-step',
@@ -26,11 +29,14 @@ export class MultiStepComponent implements OnInit {
   svgCurrent$: string;
   svgNotCurrent$: string;
   bShow$ = true;
+  currentStepIndex: number = 0;
+  classId$: string;
+  Id$$: string;
+  bLogging = true;
 
-  constructor(private utils: Utils) {}
+  constructor(private utils: Utils, private psService: ProgressSpinnerService, private erService: ErrorMessagesService) {}
 
   ngOnInit(): void {
-    // svg icons
     this.svgCurrent$ = this.utils.getImageSrc('circle-solid', this.utils.getSDKStaticContentUrl());
     this.svgNotCurrent$ = this.utils.getImageSrc('circle-solid', this.utils.getSDKStaticContentUrl());
   }
@@ -56,19 +62,66 @@ export class MultiStepComponent implements OnInit {
   }
 
   _getVBodyClass(index: number): string {
-    if (index < this.arNavigationSteps$.length - 1) {
-      return 'psdk-vertical-step-body psdk-vertical-step-line';
+    const baseClass = 'psdk-vertical-step-body';
+    if (index === this.currentStepIndex) {
+      return `${baseClass} active-step`;
     }
-
-    return 'psdk-vertical-step-body';
+    return baseClass;
   }
 
-  _getHIconClass(status): string {
-    if (status == 'current') {
-      return 'psdk-horizontal-step-icon-selected';
+  _getHIconClass(status, index: number): string {
+    const baseClass = status === 'current' ? 'psdk-horizontal-step-icon-selected' : 'psdk-horizontal-step-icon';
+    if (index === this.currentStepIndex) {
+      return `${baseClass} active-step`;
     }
+    return baseClass;
+  }
 
-    return 'psdk-horizontal-step-icon';
+  updateChanges() {
+    this.pConn$ = ReferenceComponent.normalizePConn(this.pConn$);
+  }
+
+  navigateToStep(index: number): void {
+    this.arNavigationSteps$[this.arCurrentStepIndicies$[0]].visited_status = 'success';
+    this.arNavigationSteps$[this.arCurrentStepIndicies$[0]].step_status = 'completed';
+    this.arNavigationSteps$[index].visited_status = 'current';
+    this.arNavigationSteps$[index].step_status = '';
+    this.arCurrentStepIndicies$ = [index];
+
+    this.classId$ = this.pConn$.getCurrentClassID();
+    this.Id$$ = this.pConn$.getCaseSummary().ID;
+
+    const containerName = this.pConn$.getContainerName();
+    const id = `ASSIGN-WORKLIST ${this.Id$$}!PAPERWORKSUBMISSION`;
+
+    const options = {
+      containerName: containerName,
+      channelName: '',
+      isActionFromToDoList: true,
+      target: '',
+      context: null,
+      isChild: false,
+      viewType: 'form',
+      skipBrowserSemanticUrlUpdate: false
+    };
+
+    this.psService.sendMessage(true);
+    const eventEmitter = new EventEmitter();
+
+    this.pConn$
+      .getActionsApi()
+      .openLocalAction(this.arNavigationSteps$[this.arCurrentStepIndicies$[0]].actionID, {
+        target: '.AppointmentInformation.FaceToFace.CertificateOfHomeboundStatus',
+        caseID: this.Id$$,
+        containerName: 'modal',
+        type: 'Case',
+        assignKey: ''
+      })
+      .then(res => {
+        console.log(res, '');
+      });
+
+    console.log(this.pConn$.getActions(), this.arNavigationSteps$, containerName);
   }
 
   _getHLabelClass(status): string {

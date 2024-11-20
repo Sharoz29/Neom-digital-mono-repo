@@ -41,7 +41,7 @@ const endpoints = {
 
     // Optional params
     // client_secret is not advised for web clients (as can't protect this value) but is honored if present
-    client_secret: '5038AA181BD81B18D9E6113E7668A9FD',
+    client_secret: 'A6292B0D9EC5C2F6F0D0488012F718E1',
 
     loginExperience: loginBoxType.Main,
   },

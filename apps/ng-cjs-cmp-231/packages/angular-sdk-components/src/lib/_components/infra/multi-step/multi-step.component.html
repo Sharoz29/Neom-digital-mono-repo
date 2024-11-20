@@ -1,16 +1,6 @@
 <div *ngIf="bShow$">
   <div  *ngIf="bIsVertical$" class="psdk-vertical-stepper">
     <div *ngFor="let mainStep of arNavigationSteps$; let i = index" class="psdk-vertical-step">
-      <!-- <div class="psdk-vertical-step-header">
-        <div class="{{ _getVIconClass(mainStep.visited_status) }}">
-          <div class="psdk-vertical-step-icon-content">
-            <span>{{ i + 1 }}</span>
-          </div>
-        </div>
-        <div class="{{ _getVLabelClass(mainStep.visited_status) }}">
-          {{ mainStep.name }}
-        </div>
-      </div> -->
       <div  *ngIf="mainStep.visited_status == 'current'" class="{{ _getVBodyClass(i) }}">
         <ng-container *ngIf="mainStep?.steps">
           <ul style="padding-inline-start: 0rem; margin-left: -7px">
@@ -45,7 +35,7 @@
     </div>
     <div>
     <div *ngFor="let mainStep of arNavigationSteps$; let i = index">
-        <div  class="psdk-vertical-step-header" >
+        <div  class="psdk-vertical-step-header" (click)="navigateToStep(i)">
           <div  class="{{ _getVIconClass(mainStep.visited_status) }}">
             <div class="psdk-vertical-step-icon-content">
               <span>{{ i + 1 }}</span>
@@ -63,7 +53,7 @@
     <div class="psdk-horizontal-stepper-header-container">
       <ng-container *ngFor="let mainStep of arNavigationSteps$; let i = index">
         <div class="psdk-horizontal-step-header">
-          <div class="{{ _getHIconClass(mainStep.visited_status) }}">
+          <div class="{{ _getHIconClass(mainStep.visited_status,i) }}">
             <div class="psdk-horizontal-step-icon-content">
               <span>{{ i + 1 }}</span>
             </div>
