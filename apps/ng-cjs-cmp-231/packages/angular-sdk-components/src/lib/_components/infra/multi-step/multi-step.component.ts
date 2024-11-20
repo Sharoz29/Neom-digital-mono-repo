@@ -108,13 +108,6 @@ export class MultiStepComponent implements OnInit {
     this.psService.sendMessage(true);
     const eventEmitter = new EventEmitter();
 
-    console.log(
-      this.pConn$.getCaseStages(),
-      'sharoz',
-      this.arNavigationSteps$[this.arCurrentStepIndicies$[0]].actionID,
-      PCore.getContainerUtils().CONTAINER_NAMES
-    );
-
     this.pConn$
       .getActionsApi()
       .openLocalAction(this.arNavigationSteps$[this.arCurrentStepIndicies$[0]].actionID, {
@@ -125,7 +118,7 @@ export class MultiStepComponent implements OnInit {
         assignKey: ''
       })
       .then(res => {
-        console.log(res, 'sharoz');
+        console.log(res, '');
       });
 
     console.log(this.pConn$.getActions(), this.arNavigationSteps$, containerName);
