@@ -9,6 +9,14 @@ export enum PSIOT_MQTT {
   DEVICEDETAILSFROMCUMULOCITY = 'fetchDeviceDetailsFromCumulocity/:deviceID',
   REGISTERDEVICETOCUMULOCITY = 'registerDeviceToCumulocity/:topic',
   SUBSCRIBE = 'subscribe-to-mqtt-broker/:topic',
+  CREATEALARM = 'createalarm/:alarm',
+  GETALARMS = 'alarm/:alarms',
+  UPDATEALARM = 'updatealarm/:alarmId',
+  REMOVEALARM = 'removealarm/:alarmId',
+  GETSPECIFICALARM = 'getalarm/:alarmId',
+  REMOVEALARMCOLLECTION = 'removealarms',
+  UPDATEALARMCOLLECTION = 'updatealarms',
+  GETALARMCOUNT = 'getalarmcount',
 
   // CRUD
   // Do not change the pattern below this line
