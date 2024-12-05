@@ -81,6 +81,7 @@
     "ngx-currency": "^17.0.0",
     "ngx-mat-intl-tel-input": "^5.0.0",
     "rxjs": "^7.8.1",
+    "signature_pad": "^5.0.4",
     "tslib": "^2.6.2",
     "zone.js": "~0.14.8"
   },

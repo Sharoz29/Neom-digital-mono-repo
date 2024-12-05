@@ -1,0 +1,40 @@
+<div [formGroup]="formGroup$" style=" margin: 15px 0;">
+    <mat-form-field>
+        <mat-label
+         style="color: gray; font-size: 22px; margin: 10px 0;"
+         >{{ label$ }}
+        </mat-label>
+        <canvas
+          style="border: 1px solid black; border-radius: 10px;"
+          #canvas
+          width="700"
+          height="200"
+          (mouseleave)="signatureOnChange()"
+          (change)="signatureOnChange()"
+          (blur)="fieldOnBlur($event)"
+        ></canvas>
+        <input 
+        matInput 
+        type="text"
+        placeholder="image url" 
+        [value]="value$" 
+        [formControl]="fieldControl" 
+        [attr.data-test-id]="testId" 
+        (change)="fieldOnChange($event)"
+        (blur)="fieldOnBlur($event)"
+        style="display: none;"
+        />
+        <button 
+          type="reset" 
+          (click)="resetSignature()" 
+          style="width:30%;
+                 color: white;
+                 background-color: red; 
+                 height: 25px; 
+                 border: none; 
+                 border-radius: 10px;">
+          Clear
+        </button>
+    </mat-form-field>
+</div>
+  
