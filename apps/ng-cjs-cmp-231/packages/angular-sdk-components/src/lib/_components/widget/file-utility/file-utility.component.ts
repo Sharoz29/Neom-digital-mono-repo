@@ -7,6 +7,8 @@ import download from 'downloadjs';
 import { AngularPConnectData, AngularPConnectService } from '../../../_bridge/angular-pconnect';
 import { Utils } from '../../../_helpers/utils';
 import { ComponentMapperComponent } from '../../../_bridge/component-mapper/component-mapper.component';
+import { Subscription } from 'rxjs';
+import { ComponentCommunicationService } from '../../../_services/custom/componentCommunication.service';
 
 interface FileUtilityProps {
   // If any, enter additional props that only exist on this component
@@ -66,10 +68,13 @@ export class FileUtilityComponent implements OnInit, OnDestroy {
 
   addAttachmentsActions: any;
 
+  private updateSubscription: Subscription;
+
   constructor(
     private angularPConnect: AngularPConnectService,
     private utils: Utils,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private communicationService: ComponentCommunicationService
   ) {}
 
   ngOnInit(): void {
@@ -110,11 +115,17 @@ export class FileUtilityComponent implements OnInit, OnDestroy {
       this.updateSelf.bind(this),
       'caseAttachmentsUpdateFromCaseview'
     );
+    this.updateSubscription = this.communicationService.updateSelf$.subscribe(() => {
+      this.updateSelf();
+    });
   }
 
   ngOnDestroy(): void {
     if (this.angularPConnectData.unsubscribeFn) {
       this.angularPConnectData.unsubscribeFn();
+    }
+    if (this.updateSubscription) {
+      this.updateSubscription.unsubscribe();
     }
 
     PCore.getPubSubUtils().unsubscribe(

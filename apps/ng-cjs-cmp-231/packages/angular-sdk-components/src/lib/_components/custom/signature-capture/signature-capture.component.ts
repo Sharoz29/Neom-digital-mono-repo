@@ -20,7 +20,7 @@ import SignaturePad from 'signature_pad';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TextInputComponent, MatFormFieldModule, MatInputModule, forwardRef(() => ComponentMapperComponent)]
 })
-export class Pega_Extensions_SignatureCapture implements /*ControlValueAccessor,*/ OnInit, OnDestroy /*, AfterViewInit*/ {
+export class Pega_Extensions_SignatureCapture implements OnInit, OnDestroy {
   @Input() pConn$: typeof PConnect;
   @Input() formGroup$: FormGroup;
 
