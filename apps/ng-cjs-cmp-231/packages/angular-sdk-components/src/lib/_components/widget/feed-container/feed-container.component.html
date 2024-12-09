@@ -27,19 +27,19 @@
   <div class="psdk-pulse-divider"></div>
   <br />
   <div class="psdk-pulse">
-    <div class="psdk-avatar-big">{{ pulseMessage.displayPostedByInitials }}</div>
+    <div class="psdk-avatar-big">{{ utils.getInitials(pulseMessage.postedByUser.name) }}</div>
     <div class="psdk-pulse-message-group">
       <div class="psdk-pulse-message-by">{{ pulseMessage.displayPostedBy }}</div>
-      <div class="psdk-pulse-message-time">{{ pulseMessage.displayPostedTime }}</div>
+      <div class="psdk-pulse-message-time">{{ pulseMessage?.displayPostedTime }}</div>
     </div>
   </div>
-  <div class="psdk-pulse-message-text">{{ pulseMessage.message }}</div>
+  <div class="psdk-pulse-message-text">{{ pulseMessage.pyMessage }}</div>
   <div class="psdk-pulse-message-actions">
     <div class="psdk-pulse-message-action-group">
       <button mat-button (click)="commentClick(pulseMessage.ID)">
         <img class="psdk-comment-svg-icon" src="{{ svgComment$ }}" />
         <label class="psdk-pulse-message-like-label"
-        >Comment <span *ngIf="pulseMessage?.replies.length > 0"> | {{ pulseMessage.replies.length }}</span></label
+        >Comment <span *ngIf="pulseMessage?.replies?.length > 0"> | {{ pulseMessage.replies.length }}</span></label
         >
       </button>
     </div>

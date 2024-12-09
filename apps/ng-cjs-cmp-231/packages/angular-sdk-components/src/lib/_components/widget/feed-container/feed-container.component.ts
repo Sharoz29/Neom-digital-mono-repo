@@ -31,7 +31,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   currentUserInitials$: string;
   currentUserName$: string;
 
-  pulseMessages$: any[];
+  pulseMessages$: any[] = [];
   showReplyComment$: Object = {};
 
   svgComment$: string;
@@ -56,11 +56,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   likeMessage: any;
   postMessage: any;
 
-  constructor(
-    private angularPConnect: AngularPConnectService,
-    private cdRef: ChangeDetectorRef,
-    private utils: Utils
-  ) {}
+  constructor(private angularPConnect: AngularPConnectService, private cdRef: ChangeDetectorRef, public utils: Utils) {}
 
   ngOnInit(): void {
     this.userName$ = PCore.getEnvironmentInfo().getOperatorName();
@@ -69,6 +65,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
+    this.feedAPI = PCore.getFeedUtils();
 
     // Then, continue on with other initialization
     // debugger;
@@ -104,10 +101,10 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
     // const { fetchMessages, postMessage, getMentionSuggestions, getTagSuggestions } = FeedApi(this.pConn$);
 
-    const appName = PCore.getEnvironmentInfo().getApplicationName();
     let value = '';
     let feedID = '';
     let feedClass = '';
+    const appName = PCore.getEnvironmentInfo().getApplicationName();
 
     if (this.pConn$.getCaseSummary().ID) {
       value = this.pConn$.getCaseSummary().ID;
@@ -118,6 +115,15 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       feedID = 'pyDashboardFeed';
       feedClass = '@baseclass';
     }
+    this.feedAPI
+      // @ts-ignore: Argument of type '[]' is not assignable to parameter of type '[any]'
+      .getFeeds('DATA-PORTAL $CallADoc', feedID, feedClass, [], [], this.pConn$, false, '')
+      .then(feedResponse => {
+        console.log(feedResponse);
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
     const onUploadProgress = () => {};
     const errorHandler = () => {};
@@ -409,10 +415,11 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
     const oData: any = this.pConn$.getDataObject();
 
     if (messageIDs && messageIDs.length > 0) {
-      this.pulseMessages$ = JSON.parse(JSON.stringify(oData.pulse.messages));
+      // this.pulseMessages$ = JSON.parse(JSON.stringify(oData.pulse.messages));
+      this.pulseMessages$ = Object.values(oData.pulse.messages);
 
-      // convert to just an array of objects
-      this.pulseMessages$ = this.convertToArray(this.pulseMessages$);
+      // // convert to just an array of objects
+      // this.pulseMessages$ = this.convertToArray(this.pulseMessages$);
 
       // create a copy, so we can modify
       this.pulseMessages$ = this.appendPulseMessage(this.pulseMessages$);
@@ -434,27 +441,27 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
   appendPulseMessage(messages: any[]): any[] {
     for (let i = 0; i < messages.length; i++) {
-      const message = messages[i];
-      const postedTime = message.postedTime;
-      const updatedTime = message.updatedTime;
+      const message: Record<string, any> = { ...messages[i] };
+      const postedTime = message?.['pxCreateDateTime'];
+      const updatedTime = message?.['updatedTime'];
 
-      this.showReplyComment$[message.ID] = false;
+      this.showReplyComment$[message['ID']] = false;
 
-      message.displayPostedTime = this.utils.generateDateTime(postedTime, 'DateTime-Since');
+      message['displayPostedTime'] = this.utils.generateDateTime(postedTime, 'DateTime-Since');
 
       // for sorting lasted update
       if (updatedTime != null) {
-        message.updateTimeUTC = new Date(updatedTime).getTime();
+        message['updateTimeUTC'] = new Date(updatedTime).getTime();
       } else {
-        message.updateTimeUTC = new Date(postedTime).getTime();
+        message['updateTimeUTC'] = new Date(postedTime).getTime();
       }
 
-      message.displayPostedBy = message.postedByUser.name;
-      message.displayPostedByInitials = this.utils.getInitials(message.postedByUser.name);
+      message['displayPostedBy'] = message?.['postedByUser']?.name;
+      message['displayPostedByInitials'] = this.utils.getInitials(message['postedByUser'].name);
 
       // if didn't break, then look at the replies
-      for (let j = 0; j < message.replies.length; j++) {
-        const reply = message.replies[j];
+      for (let j = 0; j < message?.['replies']?.length; j++) {
+        const reply = message['replies'][j];
 
         const replyPostedTime = reply.postedTime;
         reply.displayPostedTime = this.utils.generateDateTime(replyPostedTime, 'DateTime-Since');
@@ -532,7 +539,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
       // If feedAPI is defined then only post message
       if (this.feedAPI) {
-        this./* feedAPI. */ postMessage((this.pConn$.getConfigProps() as any).value, this.pulseConversation);
+        return this.feedAPI.postMessage('DATA-PORTAL $CallADoc', this.pulseConversation, [], false, this.pConn$);
       } else {
         console.log("We don't support Pulse yet");
       }
@@ -569,7 +576,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
     }
 
     // debugger;
-    this./* feedAPI. */ likeMessage(pulseMessage);
+    this.feedAPI.likeMessage(pulseMessage);
   }
 
   commentClick(messageID) {
@@ -600,7 +607,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       //  the pulse context...
       // used to use: contextName
       // new FeedAPI wants args to be messageID, this.pulseComment[messageID], true (since this is a reply)
-      this./* feedAPI. */ postMessage(messageID, this.pulseComment[messageID], true);
+      this.feedAPI.postMessage(messageID, this.pulseComment[messageID], true);
 
       this.pulseComment[messageID] = '';
     }
