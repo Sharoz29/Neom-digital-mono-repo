@@ -47,7 +47,7 @@ mat-horizontal-stepper {
   background-color: var(--app-form-color);
   padding: 0rem 0.625rem;
   border-radius: 0.3125rem;
-  box-shadow: 0 0 10px 3px #77777791;
+  box-shadow: 0 0 2px 1px rgba(81, 112, 109, 0.568627451);
 }
 .psdk-flow-container {
   padding-left: 2.1875rem;
@@ -82,7 +82,7 @@ mat-horizontal-stepper {
 
 .psdk-vertical-step-icon {
   margin-right: 12px;
-  background-color: var(--app-neutral-color);
+  background-color: black;
   color: var(--app-form-color);
   border-radius: 50%;
   height: 24px;
@@ -101,7 +101,7 @@ mat-horizontal-stepper {
 
 .psdk-vertical-step-icon-selected {
   margin-right: 12px;
-  background-color: var(--app-primary-color);
+  background: #0D8281;
   color: var(--app-form-color);
   border-radius: 50%;
   height: 24px;
@@ -204,7 +204,7 @@ mat-horizontal-stepper {
 }
 
 .psdk-horizontal-step-icon-selected {
- background-color: rgb(7, 107, 201);
+ background-color: #0D8281;
   color: var(--app-form-color);
   border-radius: 50%;
   height: 24px;
