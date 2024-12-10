@@ -1,27 +1,27 @@
 @use '@angular/material' as mat;
 @use '@angular/material-experimental' as matx;
 $my-custom-color: (
-  50: #e6f3fe,
-  100: #bfdfff,
-  200: #95cbff,
-  300: #6ab7ff,
-  400: #479ff4,
-  500: #076bc9, 
-  600: #035ab1,
-  700: #034a99,
-  800: #023a81,
-  900: #01255b,
+  50: #e1f0f0, 
+  100: #b3e0e0, 
+  200: #80d0d0, 
+  300: #4dbfbf, 
+  400: #26afaf, 
+  500: #0D8281,  
+  600: #0b6f6f, 
+  700: #095c5c, 
+  800: #074a4a, 
+  900: #053737, 
   contrast: (
-    50: #000,
-    100: #000,
-    200: #000,
-    300: #000,
-    400: #fff,
-    500: #fff,
-    600: #fff,
-    700: #fff,
-    800: #fff,
-    900: #fff,
+    50: #000, 
+    100: #000, 
+    200: #000, 
+    300: #000, 
+    400: #fff, 
+    500: #fff, 
+    600: #fff, 
+    700: #fff, 
+    800: #fff, 
+    900: #fff, 
   )
 );
 
@@ -48,11 +48,11 @@ $my-theme: mat.define-light-theme(
 
 @mixin generate-theme-vars($theme) {
   $primary: mat.get-color-from-palette($my-primary);
-  --app-primary-color: rgb(7, 107, 201);
-  --app-primary-dark-color:rgb(7, 107, 201);
-  --app-primary-light-color: rgb(7, 107, 201);
+  // --app-primary-color: rgb(7, 107, 201);
+  // --app-primary-dark-color:rgb(7, 107, 201);
+  // --app-primary-light-color: rgb(7, 107, 201);
   --app-secondary-color: #ffc400;
-  --app-neutral-color: grey;
+  --app-neutral-color: #0D8281;
   --app-neutral-light-color: lightgrey;
   --app-neutral-dark-color: #262626;
   --app-error-light-color: #e57373;
@@ -81,7 +81,7 @@ $my-theme: mat.define-light-theme(
   --app-dialog-background-color: rgba(100, 100, 100, 0.4);
   --app-box-shadow-color: #777;
   --app-multi-step-border-color: rgba(0, 0, 0, 0.12);
-  --app-table-header-background-color: #f5f5f5;
+  --app-table-header-background-color: #0C8381;
   --app-pulse-message-background-color: #dddddd;
   --app-pulse-message-color: #aaaaaa;
   --app-assignment-status-color: darkslategray;

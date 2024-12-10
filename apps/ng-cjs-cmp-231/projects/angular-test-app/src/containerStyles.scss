@@ -16,7 +16,7 @@ app-flow-container {
     background-color: var(--app-form-color);
     padding: 0rem 0.625rem;
     border-radius: 0.3125rem;
-    box-shadow: 0 0 10px 3px #77777791;
+    box-shadow: 0 0 2px 1px rgba(81, 112, 109, 0.568627451);
     padding: 12px
   }
   .psdk-flow-container {
@@ -59,7 +59,7 @@ app-modal-view-container {
     border: 1px solid var(--app-inverse-form-color);
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 0 10px 3px var(--app-box-shadow-color);
+    box-shadow: 0 0 2px 1px rgba(81, 112, 109, 0.568627451);
     overflow-y: auto;
   }
 
