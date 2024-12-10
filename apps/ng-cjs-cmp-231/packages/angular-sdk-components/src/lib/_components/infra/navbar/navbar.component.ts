@@ -65,7 +65,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
 
-    this.navIcon$ = this.utils.getSDKStaticContentUrl().concat('assets/pzpega-logo-mark.svg');
+    this.navIcon$ = this.utils.getSDKStaticContentUrl().concat('assets/LowCodeSolutionsLogo.jpg');
 
     // this is a dummy "get", because right now images are in http and the main screen is https
     // so the images don't load automatically.  This call, makes an initial hit that allows the
@@ -109,7 +109,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   initComponent() {
     this.ngZone.run(() => {
-      this.navIcon$ = this.utils.getSDKStaticContentUrl().concat('assets/pzpega-logo-mark.svg');
+      this.navIcon$ = this.utils.getSDKStaticContentUrl().concat('assets/LowCodeSolutionsLogo.jpg');
       this.navExpandCollapse$ = this.utils.getImageSrc('plus', this.utils.getSDKStaticContentUrl());
 
       // Then, continue on with other initialization
@@ -129,7 +129,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
       // const oData = this.pConn$.getDataObject();
 
-      this.portalLogoImage$ = this.utils.getSDKStaticContentUrl().concat('assets/pzpega-logo-mark.svg');
+      this.portalLogoImage$ = this.utils.getSDKStaticContentUrl().concat('assets/LowCodeSolutionsLogo.jpg');
       this.portalOperator$ = PCore.getEnvironmentInfo().getOperatorName();
       this.portalOperatorInitials$ = this.utils.getInitials(this.portalOperator$);
       this.showAppName$ = this.configProps$.showAppName;
