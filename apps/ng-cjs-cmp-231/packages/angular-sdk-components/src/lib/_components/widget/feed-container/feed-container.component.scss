@@ -77,7 +77,9 @@
 }
 
 .psdk-pulse {
-  display: inline-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
   width: 100%;
   padding-bottom: 0.10rem;
   
@@ -101,6 +103,7 @@
 
 .psdk-pulse-message-text {
   white-space: pre-line;
+  margin: 20px;
 }
 
 .psdk-pulse-message-actions {
@@ -193,6 +196,51 @@
   cursor: pointer;
   border: 2px solid silver;
 }
-.psdk-pulse-main{
+.psdk-pulse-text{
+  display: inline-flex;
+  width: 100%;
+  padding-bottom: 0.10rem;
+}
+.psdk-pulse-menu {
+  position: absolute;
+  right:0;
+  margin-right: 20px;
+}
 
+.menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-menu {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.menu-item img {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.menu-item:hover {
+  background-color: #f5f5f5;
 }

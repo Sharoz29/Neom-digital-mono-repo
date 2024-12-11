@@ -38,6 +38,9 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   svgLike$: string;
   svgLikedByMe$: string;
   svgSend$: string;
+  svgDelete$: string;
+  svgMenu$: string;
+  openMenuId: string | null = null;
 
   pulseConversation: string;
   userData: Map<any, any> = new Map();
@@ -368,6 +371,8 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
     this.svgLike$ = this.utils.getImageSrc('thumbs-up', this.utils.getSDKStaticContentUrl());
     this.svgLikedByMe$ = this.utils.getImageSrc('thumbs-up-solid', this.utils.getSDKStaticContentUrl());
     this.svgSend$ = this.utils.getImageSrc('send', this.utils.getSDKStaticContentUrl());
+    this.svgDelete$ = this.utils.getImageSrc('delete', this.utils.getSDKStaticContentUrl());
+    this.svgMenu$ = this.utils.getImageSrc('more', this.utils.getSDKStaticContentUrl());
   }
 
   ngOnDestroy(): void {
@@ -446,6 +451,8 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       const updatedTime = message?.['updatedTime'];
 
       this.showReplyComment$[message['ID']] = false;
+
+      console.log(message, 'Sharo', this.pulseMessages$);
 
       message['displayPostedTime'] = this.utils.generateDateTime(postedTime, 'DateTime-Since');
 
@@ -553,6 +560,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   messageChange(event: any) {
     this.pulseConversation = event.target.value;
   }
+  deletePulseMessage(event: any) {}
 
   likeClick(messageID: string, rMessageID: string, bLikedByMe: boolean, level: string) {
     let pulseMessage = {};
@@ -615,5 +623,8 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
   newCommentChange(event, messageID) {
     this.pulseComment[messageID] = event.target.value;
+  }
+  toggleMenu(messageId: string): void {
+    this.openMenuId = this.openMenuId === messageId ? null : messageId;
   }
 }

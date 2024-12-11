@@ -7,7 +7,7 @@
       <div class="psdk-pulse-divider"></div>
       
       <br />
-      <div class="psdk-pulse">
+      <div class="psdk-pulse-text">
       <div class="psdk-avatar-big">{{ this.currentUserInitials$ }}</div>
       <mat-form-field class="psdk-full-width">
         <textarea matInput rows="5" id="pulseMessage" placeholder="Start a conversation" type="text" (change)="messageChange($event)"></textarea>
@@ -23,14 +23,25 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<div *ngFor="let pulseMessage of pulseMessages$; let odd = odd" style="text-align: left" [style.background-color]="odd ? 'white' : '#eeeeee'">
+<div *ngFor="let pulseMessage of pulseMessages$; let odd = odd" style="text-align: left; margin: 20px; border-radius: 10px;" [style.background-color]="odd ? 'white' : '#eeeeee'">
   <div class="psdk-pulse-divider"></div>
   <br />
-  <div class="psdk-pulse">
+  <div class="psdk-pulse" style="align-items: center;">
     <div class="psdk-avatar-big">{{ utils.getInitials(pulseMessage.postedByUser.name) }}</div>
     <div class="psdk-pulse-message-group">
       <div class="psdk-pulse-message-by">{{ pulseMessage.postedByUser.name || 'Unknown'}}</div>
       <div class="psdk-pulse-message-time">{{ utils.generateDateTime(pulseMessage?.pxCreateDateTime, 'DateTime-Since') }}</div>
+    </div>
+    <div class="psdk-pulse-menu">
+      <button class="menu-button" (click)="toggleMenu(pulseMessage.ID)">
+        <img class="psdk-comment-svg-icon" src="{{ svgMenu$ }}" alt="Menu" />
+      </button>
+    
+      <div *ngIf="openMenuId === pulseMessage.ID" class="popup-menu">
+        <button class="menu-item" (click)="deletePulseMessage(pulseMessage.ID)">
+          <span>Delete</span>
+        </button>
+      </div>
     </div>
   </div>
   <div class="psdk-pulse-message-text">{{ pulseMessage.pyMessage }}</div>
