@@ -145,10 +145,8 @@
 }
 
 .psdk-pulse-reply-message {
-  background-color: var(--app-pulse-message-background-color);
-  border-radius: 0.625rem;
-  padding: 0rem 1.25rem;
   white-space: pre-line;
+  margin:20px
 }
 
 .psdk-pulse-reply-actions {
@@ -170,7 +168,8 @@
 
 .psdk-pulse-reply-like-label {
   vertical-align: middle;
-  padding-right: 0.3125rem;
+  padding-right: 15px;
+  padding-top: 5px;
 }
 
 .psdk-pulse-reply-time {
