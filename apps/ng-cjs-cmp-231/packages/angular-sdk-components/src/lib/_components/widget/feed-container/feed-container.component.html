@@ -38,7 +38,7 @@
       </button>
     
       <div *ngIf="openMenuId === pulseMessage.ID" class="popup-menu">
-        <button class="menu-item" (click)="deletePulseMessage(pulseMessage.ID)">
+        <button class="menu-item" (click)="deletePulseMessage($event, pulseMessage.ID, false, '')">
           <span>Delete</span>
         </button>
       </div>
@@ -91,6 +91,17 @@
         <div style="display: flex; flex-direction: column;">
           <div class="psdk-pulse-reply-by">{{ replyMessage.postedByUser.name }}</div>
           <div class="psdk-pulse-reply-time">{{ utils.generateDateTime(replyMessage.pxCreateDateTime, 'DateTime-Since') }}</div>
+        </div>
+        <div class="psdk-pulse-menu">
+          <button class="menu-button" (click)="toggleMenu(replyMessage.pzInsKey)">
+            <img class="psdk-comment-svg-icon" src="{{ svgMenu$ }}" alt="Menu" />
+          </button>
+        
+          <div *ngIf="openMenuId === replyMessage.pzInsKey" class="popup-menu">
+            <button class="menu-item" (click)="deletePulseMessage($event, replyMessage.pyContext, true, replyMessage.pzInsKey)">
+              <span>Delete</span>
+            </button>
+          </div>
         </div>
       </div>
         <div class="psdk-pulse-reply-message">{{ replyMessage?.pyMessage}}</div>

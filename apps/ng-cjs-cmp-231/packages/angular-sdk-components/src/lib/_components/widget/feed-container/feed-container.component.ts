@@ -350,7 +350,12 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   messageChange(event: any) {
     this.pulseConversation = event.target.value;
   }
-  deletePulseMessage(event: any) {}
+
+  deletePulseMessage(event: any, messageID: string, isReply: boolean, replyId: string) {
+    console.log(this.likedCommenst, this.pulseMessages$);
+    console.log(messageID);
+    PCore.getFeedUtils().deleteMessage(messageID, isReply, replyId, this.pConn$);
+  }
 
   likeClick(messageID: string, rMessageID: string, bLikedByMe: boolean, level: string) {
     let pulseMessage = {};
