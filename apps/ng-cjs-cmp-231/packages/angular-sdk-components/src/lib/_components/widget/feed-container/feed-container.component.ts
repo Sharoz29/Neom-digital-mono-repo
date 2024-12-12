@@ -114,7 +114,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
                 const fileConfig = {
                   type: "File",
                   category: "File",
-                  fileName: file.name,
+                  fileName: file?.name,
                   ID: fileResponse.data.ID
                 };
                 attachmentIDs.push(fileConfig);
@@ -156,7 +156,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   onStateChange() {
     const bLogging = false;
     if (bLogging) {
-      console.log(`in ${this.constructor.name} onStateChange`);
+      console.log(`in ${this.constructor?.name} onStateChange`);
     }
     // Should always check the bridge to see if the component should update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate(this);
@@ -187,10 +187,12 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
     const oData: any = this.pConn$.getDataObject();
 
     if (messageIDs && messageIDs.length > 0) {
-      let filteredPulseMessages$ = oData.pulse.messages;
+      let filteredPulseMessages$ = { ...oData.pulse.messages };
       for (let key in filteredPulseMessages$) {
-        if (!messageIDs.includes(key)) {
-          delete filteredPulseMessages$[key];
+        if (key !== '') {
+          if (!messageIDs.includes(key)) {
+            delete filteredPulseMessages$[key];
+          }
         }
       }
       this.pulseMessages$ = Object.values(filteredPulseMessages$);
@@ -279,8 +281,8 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
         const oReplyUser = reply.postedByUser;
 
         if (oReplyUser) {
-          reply.displayPostedBy = oReplyUser.name;
-          reply.displayPostedByInitials = this.utils.getInitials(oReplyUser.name);
+          reply.displayPostedBy = oReplyUser?.name;
+          reply.displayPostedByInitials = this.utils.getInitials(oReplyUser?.name);
         }
       }
     } // for
@@ -321,8 +323,8 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
         const oReplyUser = reply.postedByUser;
 
         if (oReplyUser) {
-          reply.displayPostedBy = oReplyUser.name;
-          reply.displayPostedByInitials = this.utils.getInitials(oReplyUser.name);
+          reply.displayPostedBy = oReplyUser?.name;
+          reply.displayPostedByInitials = this.utils.getInitials(oReplyUser?.name);
         }
       }
     } // for
@@ -385,7 +387,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       if (commentLikedUsers.length > 0) {
         for (let user of commentLikedUsers) {
           for (let likedUser of user.likedUsers) {
-            if (likedUser.name === this.currentUserName$) {
+            if (likedUser?.name === this.currentUserName$) {
               return true;
             }
           }
@@ -397,7 +399,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       if (postLikedUsers.length > 0) {
         for (let user of postLikedUsers) {
           for (let likedUser of user.likedUsers) {
-            if (likedUser.name === this.currentUserName$) {
+            if (likedUser?.name === this.currentUserName$) {
               return true;
             }
           }
@@ -409,12 +411,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   }
 
   commentClick(messageID) {
-    // iterator through messages, find match, turn on comment entry
-    const foundMessage = this.pulseMessages$.find(message => message.ID === messageID);
-
-    if (foundMessage) {
-      this.showReplyComment$[foundMessage.ID] = true;
-    }
+    this.showReplyComment$[messageID] = true;
 
     this.cdRef.detectChanges();
   }
@@ -436,7 +433,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       //  the pulse context...
       // used to use: contextName
       // new FeedAPI wants args to be messageID, this.pulseComment[messageID], true (since this is a reply)
-      this.feedAPI.postMessage(messageID, this.pulseComment[messageID], true);
+      PCore.getFeedUtils().postMessage(messageID, this.pulseComment[messageID], [], true, this.pConn$);
 
       this.pulseComment[messageID] = '';
     }
@@ -444,6 +441,12 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
   newCommentChange(event, messageID) {
     this.pulseComment[messageID] = event.target.value;
+  }
+  checkEscapeKey(event: KeyboardEvent, messageID: string) {
+    if (event.key === 'Escape') {
+      this.pulseComment[messageID] = '';
+      this.showReplyComment$[messageID] = false;
+    }
   }
   toggleMenu(messageId: string): void {
     this.openMenuId = this.openMenuId === messageId ? null : messageId;

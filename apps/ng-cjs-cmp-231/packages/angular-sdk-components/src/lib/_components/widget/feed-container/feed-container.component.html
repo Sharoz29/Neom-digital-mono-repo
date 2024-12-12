@@ -82,7 +82,7 @@
     </div>
   </div>
   
-  <div *ngIf="pulseMessage?.pxResults?.length > 0" class="psdk-pulse-reply">
+  <div class="psdk-pulse-reply">
     <div *ngFor="let replyMessage of pulseMessage?.pxResults" class="psdk-pulse-reply-align">
       <div class="psdk-pulse-divider"></div>
       <br />
@@ -147,7 +147,7 @@
       <br />
     </div>
 
-    <div *ngIf="showReplyComment$[pulseMessage.ID] == true">
+    <div *ngIf="showReplyComment$[pulseMessage.ID] === true">
       <div class="psdk-pulse-divider"></div>
       <br />
       <div class="psdk-pulse-comment-group">
@@ -160,6 +160,7 @@
             placeholder="Add a comment"
             type="text"
             (change)="newCommentChange($event, pulseMessage.ID)"
+            (keyup)="checkEscapeKey($event, pulseMessage.ID)"
           ></textarea>
         </mat-form-field>
         <button mat-button (click)="postCommentClick(pulseMessage.ID)" class="psdk-pulse-comment-post">
