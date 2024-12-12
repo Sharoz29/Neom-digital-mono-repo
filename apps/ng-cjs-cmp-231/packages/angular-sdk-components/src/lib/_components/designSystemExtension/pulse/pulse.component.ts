@@ -22,7 +22,6 @@ export class PulseComponent implements OnInit {
 
   ngOnInit() {
     this.configProps$ = this.pConn$.resolveConfigProps(this.pConn$.getConfigProps());
-    // this.currentUser$ = this.configProps$.currentUser;
     this.currentUser$ = PCore.getEnvironmentInfo().getOperatorName();
 
     if (this.currentUser$ != '') {

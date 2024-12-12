@@ -27,9 +27,9 @@
   <div class="psdk-pulse-divider"></div>
   <br />
   <div class="psdk-pulse" style="align-items: center;">
-    <div class="psdk-avatar-big">{{ utils.getInitials(pulseMessage.postedByUser.name) }}</div>
+    <div class="psdk-avatar-big">{{ utils.getInitials(pulseMessage?.postedByUser?.name) }}</div>
     <div class="psdk-pulse-message-group">
-      <div class="psdk-pulse-message-by">{{ pulseMessage.postedByUser.name || 'Unknown'}}</div>
+      <div class="psdk-pulse-message-by">{{ pulseMessage?.postedByUser?.name || 'Unknown'}}</div>
       <div class="psdk-pulse-message-time">{{ utils.generateDateTime(pulseMessage?.pxCreateDateTime, 'DateTime-Since') }}</div>
     </div>
     <div class="psdk-pulse-menu">
@@ -44,32 +44,30 @@
       </div>
     </div>
   </div>
-  <div class="psdk-pulse-message-text">{{ pulseMessage.pyMessage }}</div>
+  <div class="psdk-pulse-message-text">{{ pulseMessage?.pyMessage }}</div>
   <div class="psdk-pulse-message-actions">
     <div class="psdk-pulse-message-action-group">
       <button mat-button (click)="commentClick(pulseMessage.ID)">
         <span style="display: flex; align-items: center;">   
           <img class="psdk-comment-svg-icon" src="{{ svgComment$ }}" />
           <label class="psdk-pulse-message-like-label"
-          >Comment <span *ngIf="pulseMessage?.pxResults?.length > 0"> | {{ pulseMessage.pxResults.length }}</span></label
+          >Comment <span *ngIf="pulseMessage?.pxResults?.length > 0"> | {{ pulseMessage?.pxResults?.length }}</span></label
           >
         </span>
       </button>
     </div>
     <div class="psdk-pulse-message-action-like">
-      <div *ngIf="pulseMessage?.pyLikes.pxIsLiked; else notLiked">
-        <button *ngIf="pulseMessage?.likedByMe == 'true'" mat-button (click)="likeClick(pulseMessage.ID, pulseMessage.ID, true, 'top')">
+      <div *ngIf="pulseMessage?.pyLikes?.pxIsLiked; else notLiked">
+        <button *ngIf="isLikedByMe(pulseMessage.ID)" mat-button (click)="likeClick(pulseMessage.ID, pulseMessage.ID, true, 'top')">
           <span style="display: flex; align-items: center;">
             <img class="psdk-liked-by-me-svg-icon" src="{{ svgLikedByMe$ }}" />
-            <label class="psdk-pulse-message-like-label">Like | {{ pulseMessage.pyLikes.
-              pxLikeCount }}</label>
+            <label class="psdk-pulse-message-like-label">Like | {{ pulseMessage.pyLikes.pxLikeCount }}</label>
           </span>
         </button>
-        <button *ngIf="pulseMessage?.likedByMe != 'true'" mat-button (click)="likeClick(pulseMessage.ID, pulseMessage.ID, false, 'top')">
+        <button *ngIf="!isLikedByMe(pulseMessage.ID)" mat-button (click)="likeClick(pulseMessage.ID, pulseMessage.ID, false, 'top')">
           <span style="display: flex; align-items: center;">
             <img class="psdk-like-svg-icon" src="{{ svgLike$ }}" />
-            <label class="psdk-pulse-message-like-label">Like | {{ pulseMessage.pyLikes.
-              pxLikeCount }}</label>
+            <label class="psdk-pulse-message-like-label">Like | {{ pulseMessage.pyLikes.pxLikeCount }}</label>
           </span>
         </button>
       </div>
@@ -85,7 +83,7 @@
   </div>
   
   <div *ngIf="pulseMessage?.pxResults?.length > 0" class="psdk-pulse-reply">
-    <div *ngFor="let replyMessage of pulseMessage.pxResults" class="psdk-pulse-reply-align">
+    <div *ngFor="let replyMessage of pulseMessage?.pxResults" class="psdk-pulse-reply-align">
       <div class="psdk-pulse-divider"></div>
       <br />
       <div class="psdk-pulse-reply-group">
@@ -95,13 +93,13 @@
           <div class="psdk-pulse-reply-time">{{ utils.generateDateTime(replyMessage.pxCreateDateTime, 'DateTime-Since') }}</div>
         </div>
       </div>
-        <div class="psdk-pulse-reply-message">{{ replyMessage.pyMessage}}</div>
+        <div class="psdk-pulse-reply-message">{{ replyMessage?.pyMessage}}</div>
       <div class="psdk-pulse-reply-actions">
-        <div *ngIf="replyMessage?.pyLikes.pxIsLiked; else replyNotLiked">
+        <div *ngIf="replyMessage?.pyLikes?.pxIsLiked; else replyNotLiked">
           <button
-            *ngIf="replyMessage?.likedByMe === 'true'"
+            *ngIf="isLikedByMe(replyMessage?.pzInsKey, true)"
             mat-button
-            (click)="likeClick(pulseMessage.ID, replyMessage.ID, true, 'reply')"
+            (click)="likeClick(replyMessage.pzInsKey, replyMessage.pzInsKey, true, 'reply')"
             class="psdk-pulse-reply-like"
           >
           <span style="display: flex; align-items: center;">
@@ -110,9 +108,9 @@
           </span>
         </button>
           <button
-            *ngIf="replyMessage?.likedByMe != 'true'"
+            *ngIf="!isLikedByMe(replyMessage?.pzInsKey, true)"
             mat-button
-            (click)="likeClick(pulseMessage.ID, replyMessage.ID, false, 'reply')"
+            (click)="likeClick(replyMessage.pzInsKey, replyMessage.pzInsKey, false, 'reply')"
             class="psdk-pulse-reply-like"
           >
           <span style="display: flex; align-items: center;">
@@ -120,18 +118,16 @@
             <label class="psdk-pulse-reply-like-label">Like | {{ replyMessage.pyLikes.pxLikeCount}}</label>
           </span>
           </button>
-          <label class="psdk-pulse-reply-like-label">Like | {{ replyMessage.pyLikes.pxLikeCount}}</label>
         </div>
         <ng-template #replyNotLiked>
           <button
-          *ngIf="replyMessage?.likedByMe != 'true'"
             mat-button
-            (click)="likeClick(pulseMessage.ID, replyMessage.ID, false, 'reply')"
+            (click)="likeClick(replyMessage.pzInsKey, replyMessage.pzInsKey, false, 'reply')"
             class="psdk-pulse-reply-like"
           >
             <span style="display: flex; align-items: center;">
               <img class="psdk-like-svg-icon" src="{{ svgLike$ }}" />
-              <label class="psdk-pulse-reply-like-label">Like | {{ replyMessage.pyLikes.pxLikeCount}}</label>
+              <label class="psdk-pulse-reply-like-label">Like</label>
             </span>
           </button>
         </ng-template>
