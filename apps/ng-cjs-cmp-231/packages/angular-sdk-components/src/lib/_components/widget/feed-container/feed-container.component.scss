@@ -12,6 +12,20 @@
   min-width: unset;
   display: inline-block;
 }
+.psdk-pulse-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.psdk-pulse-main{
+  border-radius: 0.6125rem;
+  background: white;
+  padding: 0.3rem;
+  box-shadow: 0 0 0px 0px;
+  border: none;
+  box-shadow:0 0 10px 3px rgba(119, 119, 119, 0.568627451)
+}
+
 
 .psdk-icon-liked-by-me {
   padding: 0rem 0.125rem;
@@ -78,7 +92,7 @@
 
 .psdk-pulse {
   display: flex;
-  align-items: center;
+ justify-content: space-between;
   flex-direction: row;
   width: 100%;
   padding-bottom: 0.10rem;
@@ -100,7 +114,64 @@
 .psdk-pulse-message-time {
   color: var(--app-pulse-message-color);
 }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 6px; 
+  margin-top: 6px;
+  border: none;
+}
 
+
+.pulse-message-main::-webkit-scrollbar {
+  width: 9px;
+  background-color: #0c7183;
+  border-radius: 10px; 
+  border: none;
+  box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.57); 
+}
+
+.pulse-message-main::-webkit-scrollbar-thumb {
+  border-radius: 10px; 
+  border: 1px solid white; 
+}
+
+
+.pulse-message-main::-webkit-scrollbar-thumb:hover {
+  background-color:#0C8381;
+
+}
+.pulse-message-main {
+  display: flex
+  ;
+      flex-direction: column;
+height: 561px;
+overflow-y: scroll;
+      border-radius: 0.6125rem;
+    background: white;
+    padding: 0.3rem;
+    box-shadow: 0 0 0px 0px;
+    border: none;
+    box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.568627451);
+
+}
+
+.pulse-message{
+  width:279px ;
+  margin-top: 50px;
+  border-radius: 0.6125rem;
+  margin-left: 4.625rem;
+    background: white;
+    padding: 0.3rem;
+    box-shadow: 0 0 0px 0px;
+    border: none;
+    box-shadow: 0 0 0px 3px rgba(119, 119, 119, 0.568627451);
+}
+@media (max-width: 1246px) {
+  .pulse-message{
+    width:90%;
+    margin-top: 50px;
+  }
+}
 .psdk-pulse-message-text {
   white-space: pre-line;
   margin: 20px;
@@ -150,10 +221,10 @@
 }
 
 .psdk-pulse-reply-actions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-left: 3.125rem;
+  // display: flex;
+  // flex-direction: row;
+  // align-items: center;
+  // padding-left: 3.125rem;
 }
 
 .psdk-pulse-reply-comment {
@@ -167,9 +238,9 @@
 }
 
 .psdk-pulse-reply-like-label {
-  vertical-align: middle;
-  padding-right: 15px;
-  padding-top: 5px;
+  // vertical-align: middle;
+  // padding-right: 15px;
+  // padding-top: 5px;
 }
 
 .psdk-pulse-reply-time {
@@ -198,12 +269,12 @@
 .psdk-pulse-text{
   display: inline-flex;
   width: 100%;
-  padding-bottom: 0.10rem;
+  padding-bottom: 0.10rem;  
 }
 .psdk-pulse-menu {
-  position: absolute;
-  right:0;
-  margin-right: 20px;
+  // position: absolute;
+  // right:0;
+  // margin-right: 20px;
 }
 
 .menu-button {
@@ -213,14 +284,14 @@
 }
 
 .popup-menu {
-  position: absolute;
-  top: 30px;
-  right: 0;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 10;
+  // position: absolute;
+  // top: 30px;
+  // right: 0;
+  // background: white;
+  // border: 1px solid #ddd;
+  // border-radius: 5px;
+  // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  // z-index: 10;
 }
 
 .menu-item {

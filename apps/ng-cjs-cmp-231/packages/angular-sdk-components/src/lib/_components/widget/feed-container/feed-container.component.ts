@@ -268,7 +268,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       }
 
       message['displayPostedBy'] = message?.['postedByUser']?.name;
-      message['displayPostedByInitials'] = this.utils.getInitials(message['postedByUser'].name);
+      message['displayPostedByInitials'] = this.utils.getInitials(message['postedByUser']?.name);
 
       // if didn't break, then look at the replies
       for (let j = 0; j < message?.['replies']?.length; j++) {

@@ -1,36 +1,45 @@
-<div class="psdk-pulse-main">
+<div class="psdk-pulse-container">
 
-  <div>
-    <div style="text-align: left">
-      <h3>Pulse</h3>
-      
-      <div class="psdk-pulse-divider"></div>
-      
-      <br />
-      <div class="psdk-pulse-text">
-      <div class="psdk-avatar-big">{{ this.currentUserInitials$ }}</div>
-      <mat-form-field class="psdk-full-width">
-        <textarea matInput rows="5" id="pulseMessage" placeholder="Start a conversation" type="text" (change)="messageChange($event)"></textarea>
-      </mat-form-field>
+
+  <div class="psdk-pulse-main">
+
+    <div>
+      <div style="text-align: left">
+        <h3>Pulse</h3>
+        
+        <div class="psdk-pulse-divider"></div>
+        
+        <br />
+        <div class="psdk-pulse-text">
+          <div class="psdk-avatar-big">{{ this.currentUserInitials$ }}</div>
+          <mat-form-field class="psdk-full-width">
+            <textarea matInput rows="5" id="pulseMessage" placeholder="Start a conversation" type="text" (change)="messageChange($event)"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
+    
+    <mat-grid-list cols="2" rowHeight="2rem">
+      <mat-grid-tile> </mat-grid-tile>
+      <mat-grid-tile>
+        <button class="psdk-pulseMessage-button"  (click)="postClick()">Post</button>
+      </mat-grid-tile>
+    </mat-grid-list>
   </div>
-</div>
+<div class="pulse-message-main">
 
-<mat-grid-list cols="2" rowHeight="2rem">
-  <mat-grid-tile> </mat-grid-tile>
-  <mat-grid-tile>
-    <button class="psdk-pulseMessage-button"  (click)="postClick()">Post</button>
-  </mat-grid-tile>
-</mat-grid-list>
-
-<div *ngFor="let pulseMessage of pulseMessages$; let odd = odd" style="text-align: left; margin: 20px; border-radius: 10px;">
+<h3> Messages</h3>
+<div class="pulse-message" *ngFor="let pulseMessage of pulseMessages$; let odd = odd" >
   <div class="psdk-pulse-divider"></div>
   <br />
-  <div class="psdk-pulse" style="align-items: center;">
-    <div class="psdk-avatar-big">{{ utils.getInitials(pulseMessage?.postedByUser?.name) }}</div>
-    <div class="psdk-pulse-message-group">
-      <div class="psdk-pulse-message-by">{{ pulseMessage?.postedByUser?.name || 'Unknown'}}</div>
-      <div class="psdk-pulse-message-time">{{ utils.generateDateTime(pulseMessage?.pxCreateDateTime, 'DateTime-Since') }}</div>
+  <div class="psdk-pulse" >
+    <div style="display: flex;">
+
+      <div class="psdk-avatar-big">{{ utils.getInitials(pulseMessage?.postedByUser?.name) }}</div>
+      <div class="psdk-pulse-message-group">
+        <div class="psdk-pulse-message-by">{{ pulseMessage?.postedByUser?.name || 'Unknown'}}</div>
+        <div class="psdk-pulse-message-time">{{ utils.generateDateTime(pulseMessage?.pxCreateDateTime, 'DateTime-Since') }}</div>
+      </div>
     </div>
     <div class="psdk-pulse-menu">
       <button class="menu-button" (click)="toggleMenu(pulseMessage.ID)">
@@ -112,9 +121,9 @@
             mat-button
             (click)="likeClick(replyMessage.pzInsKey, replyMessage.pzInsKey, true, 'reply')"
             class="psdk-pulse-reply-like"
-          >
-          <span style="display: flex; align-items: center;">
-            <img class="psdk-liked-by-me-svg-icon" src="{{ svgLikedByMe$ }}" />
+            >
+            <span style="display: flex; align-items: center;">
+              <img class="psdk-liked-by-me-svg-icon" src="{{ svgLikedByMe$ }}" />
             <label class="psdk-pulse-reply-like-label">Like | {{ replyMessage.pyLikes.pxLikeCount}}</label>
           </span>
         </button>
@@ -123,7 +132,7 @@
             mat-button
             (click)="likeClick(replyMessage.pzInsKey, replyMessage.pzInsKey, false, 'reply')"
             class="psdk-pulse-reply-like"
-          >
+            >
           <span style="display: flex; align-items: center;">
             <img class="psdk-like-svg-icon" src="{{ svgLike$ }}" />
             <label class="psdk-pulse-reply-like-label">Like | {{ replyMessage.pyLikes.pxLikeCount}}</label>
@@ -154,7 +163,7 @@
         <div class="psdk-avatar-big">{{ this.currentUserInitials$ }}</div>
         <mat-form-field class="psdk-full-width">
           <textarea
-            matInput
+          matInput
             rows="5"
             id="pulseMessage"
             placeholder="Add a comment"
@@ -169,7 +178,8 @@
       </div>
     </div>
   </div>
-  <br />
-</div>
 
 </div>
+</div>
+</div>
+
