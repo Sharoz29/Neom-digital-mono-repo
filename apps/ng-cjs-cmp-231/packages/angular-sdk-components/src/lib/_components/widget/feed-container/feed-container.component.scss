@@ -127,14 +127,15 @@ padding-top: 0.625rem;
 
 .pulse-message-main::-webkit-scrollbar {
   width: 9px;
-  background-color: #0c7183;
   border-radius: 10px; 
+  background-color: #f5f5f5;
   border: none;
   box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.57); 
 }
 
 .pulse-message-main::-webkit-scrollbar-thumb {
   border-radius: 10px; 
+  background-color: #0c7183;
   border: 1px solid white; 
 }
 
