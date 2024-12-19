@@ -12,6 +12,20 @@
   min-width: unset;
   display: inline-block;
 }
+.psdk-pulse-container{
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.psdk-pulse-main{
+  border-radius: 0.6125rem;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 0 0px 0px;
+  border: none;
+  box-shadow: 0 0 2px 1px rgba(81, 112, 109, 0.568627451);
+}
+
 
 .psdk-icon-liked-by-me {
   padding: 0rem 0.125rem;
@@ -80,7 +94,9 @@
 }
 
 .psdk-pulse {
-  display: inline-flex;
+  display: flex;
+ justify-content: space-between;
+  flex-direction: row;
   width: 100%;
   padding-bottom: 0.10rem;
   
@@ -89,7 +105,7 @@
 .psdk-pulse-message-group {
   display: flex;
   flex-direction: column;
-  padding-left: 0.625rem;
+padding-top: 0.625rem;
 }
 
 .psdk-pulse-message-by {
@@ -101,9 +117,67 @@
 .psdk-pulse-message-time {
   color: var(--app-pulse-message-color);
 }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 6px; 
+  margin-top: 6px;
+  border: none;
+}
 
+
+.pulse-message-main::-webkit-scrollbar {
+  width: 9px;
+  border-radius: 10px; 
+  background-color: #f5f5f5;
+  border: none;
+  box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.57); 
+}
+
+.pulse-message-main::-webkit-scrollbar-thumb {
+  border-radius: 10px; 
+  background-color: #0c7183;
+  border: 1px solid white; 
+}
+
+
+.pulse-message-main::-webkit-scrollbar-thumb:hover {
+  background-color:#0C8381;
+
+}
+.pulse-message-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 515px;
+  overflow-y: scroll;
+  border-radius: 0.6125rem;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 0 0px 0px;
+  border: none;
+  box-shadow: 0 0 2px 1px rgba(81, 112, 109, 0.568627451);
+}
+
+.pulse-message{
+  width:287px ;
+  margin-top: 50px;
+  border-radius: 0.6125rem;
+
+    background: white;
+    padding: 0.3rem;
+    box-shadow: 0 0 0px 0px;
+    border: none;
+    box-shadow: 0 0 0px 3px rgba(119, 119, 119, 0.568627451);
+}
+@media (max-width: 1246px) {
+  .pulse-message{
+    width:90%;
+    margin-top: 50px;
+  }
+}
 .psdk-pulse-message-text {
   white-space: pre-line;
+  margin: 20px;
 }
 
 .psdk-pulse-message-actions {
@@ -145,17 +219,15 @@
 }
 
 .psdk-pulse-reply-message {
-  background-color: var(--app-pulse-message-background-color);
-  border-radius: 0.625rem;
-  padding: 0rem 1.25rem;
   white-space: pre-line;
+  margin:20px
 }
 
 .psdk-pulse-reply-actions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-left: 3.125rem;
+  // display: flex;
+  // flex-direction: row;
+  // align-items: center;
+  // padding-left: 3.125rem;
 }
 
 .psdk-pulse-reply-comment {
@@ -169,8 +241,9 @@
 }
 
 .psdk-pulse-reply-like-label {
-  vertical-align: middle;
-  padding-right: 0.3125rem;
+  // vertical-align: middle;
+  // padding-right: 15px;
+  // padding-top: 5px;
 }
 
 .psdk-pulse-reply-time {
@@ -196,6 +269,45 @@
   cursor: pointer;
   border: 2px solid silver;
 }
-.psdk-pulse-main{
+.psdk-pulse-text{
+  display: inline-flex;
+  width: 100%;
+  padding-bottom: 0.10rem;  
+}
+.psdk-pulse-menu {
+  // position: absolute;
+  // right:0;
+  // margin-right: 20px;
+}
 
+.menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+.menu-item {
+  display: flex
+  ;
+      align-items: center;
+      padding: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      background: red;
+      color: white;
+      border-radius: 11px;
+}
+
+.menu-item img {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.menu-item:hover {
+  background-color: #f5f5f5;
 }

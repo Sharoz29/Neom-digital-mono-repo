@@ -31,18 +31,24 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   currentUserInitials$: string;
   currentUserName$: string;
 
-  pulseMessages$: any[];
+  pulseMessages$: any[] = [];
   showReplyComment$: Object = {};
 
   svgComment$: string;
   svgLike$: string;
   svgLikedByMe$: string;
   svgSend$: string;
+  svgDelete$: string;
+  svgMenu$: string;
+  openMenuId: string | null = null;
 
   pulseConversation: string;
   userData: Map<any, any> = new Map();
 
   pulseComment: Object = {};
+
+  likedUsers: any[] = [];
+  likedCommenst: any[] = [];
 
   // functions
   actionsAPI: any;
@@ -56,11 +62,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   likeMessage: any;
   postMessage: any;
 
-  constructor(
-    private angularPConnect: AngularPConnectService,
-    private cdRef: ChangeDetectorRef,
-    private utils: Utils
-  ) {}
+  constructor(private angularPConnect: AngularPConnectService, private cdRef: ChangeDetectorRef, public utils: Utils) {}
 
   ngOnInit(): void {
     this.userName$ = PCore.getEnvironmentInfo().getOperatorName();
@@ -69,45 +71,12 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
     // First thing in initialization is registering and subscribing to the AngularPConnect service
     this.angularPConnectData = this.angularPConnect.registerAndSubscribeComponent(this, this.onStateChange);
+    this.feedAPI = PCore.getFeedUtils();
 
-    // Then, continue on with other initialization
-    // debugger;
-
-    // const {
-    //   fetchMessages,
-    //   likeMessage,
-    //   postMessage
-    // } = FeedApi(this.pConn$);
-    // this.fetchMessages = fetchMessages;
-    // this.likeMessage = likeMessage;
-    // this.postMessage = postMessage;
-
-    // // this.userName$ = this.pConn$.getValue("pxRequestor.pxUserName");
-    // // this.imageKey$ = this.pConn$.getValue("OperatorID.pyImageInsKey");
-
-    // //this.userName$ = this.pConn$.getDataObject()["D_pxEnvironmentInfo"].pxOperator.pyUserName;
-    // //this.imageKey$ = this.pConn$.getDataObject()["D_pxEnvironmentInfo"].pxOperator.pyImageInsKey;
-    // this.userName$ = this.pConn$.getEnvironmentInfo().getOperatorName();
-    // this.imageKey$ = this.pConn$.getEnvironmentInfo().getOperatorImageInsKey();
-
-    // this.actionsAPI = this.pConn$.getActionsApi();
-
-    // let owner = this.pConn$.getConfigProps().value;
-
-    // // with new FeedAPI: owner is the proper value to pass in
-    // //  and no longer takes 2nd argument
-    // this./*feedAPI.*/fetchMessages(owner /*, this.pConn$.getContextName()*/);
-
-    // const configProps: any = this.pConn$.getConfigProps();
-
-    // const { messageIDs } = configProps;
-
-    // const { fetchMessages, postMessage, getMentionSuggestions, getTagSuggestions } = FeedApi(this.pConn$);
-
-    const appName = PCore.getEnvironmentInfo().getApplicationName();
     let value = '';
     let feedID = '';
     let feedClass = '';
+    const appName = PCore.getEnvironmentInfo().getApplicationName();
 
     if (this.pConn$.getCaseSummary().ID) {
       value = this.pConn$.getCaseSummary().ID;
@@ -118,6 +87,15 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       feedID = 'pyDashboardFeed';
       feedClass = '@baseclass';
     }
+    this.feedAPI
+      // @ts-ignore: Argument of type '[]' is not assignable to parameter of type '[any]'
+      .getFeeds('DATA-PORTAL $CallADoc', feedID, feedClass, [], [], this.pConn$, false, '')
+      .then(feedResponse => {
+        console.log(feedResponse);
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
     const onUploadProgress = () => {};
     const errorHandler = () => {};
@@ -136,7 +114,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
                 const fileConfig = {
                   type: "File",
                   category: "File",
-                  fileName: file.name,
+                  fileName: file?.name,
                   ID: fileResponse.data.ID
                 };
                 attachmentIDs.push(fileConfig);
@@ -159,209 +137,13 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       }
     };
 
-    /*
-
-    const { getPConnect, messageIDs } = props;
-    const [mentionResults, setMentionResults] = useState([]);
-    const [tagResults, setTagResults] = useState([]);
-    const [attachments, setAttachments] = useState([]);
-    const [feedFilters, setFeedFilters] = useState();
-    const {
-      fetchMessages,
-      postMessage,
-      getMentionSuggestions,
-      getTagSuggestions
-    } = FeedApi(getPConnect());
-    const appName = PCore.getEnvironmentInfo().getApplicationName();
-    let value = "";
-    let feedID = "";
-    let feedClass = "";
-    if (getPConnect().getCaseSummary().ID) {
-      value = getPConnect().getCaseSummary().ID;
-      feedID = "pyCaseFeed";
-      feedClass = getPConnect().getCaseSummary().content.classID;
-    } else {
-      value = `DATA-PORTAL $${appName}`;
-      feedID = "pyDashboardFeed";
-      feedClass = "@baseclass";
-    }
-    // For cancelling fetchrequest for filetrs
-    const fetchMessagesCancelTokenSource = useRef([]);
-
-    useEffect(() => {
-      fetchMessages(
-        value,
-        feedID,
-        feedClass,
-        null,
-        fetchMessagesCancelTokenSource.current
-      ).then((res) => {
-        setFeedFilters(res);
-      });
-      PCore.getAssetLoader().getLoader("component-loader")(["Activity"]);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const onUploadProgress = useCallback((file) => {
-      return ({ loaded, total }) => {
-        file.progress = Math.floor((loaded / total) * 100);
-        setAttachments((current) => {
-          return current.map((currFile) => {
-            return currFile.name === file.name ? file : currFile;
-          });
-        });
-      };
-    }, []);
-
-    const errorHandler = useCallback((isFetchCanceled, file) => {
-      return (error) => {
-        if (!isFetchCanceled(error)) {
-          let localizedValue = "Upload failed";
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.errorDetails
-          ) {
-            localizedValue = error.response.data.errorDetails[0].localizedValue;
-          }
-          delete file.progress;
-          setAttachments((current) => {
-            return current.map((currFile) => {
-              if (currFile.name === file.name) {
-                currFile.meta = localizedValue;
-                currFile.error = true;
-              }
-              return currFile;
-            });
-          });
-          error.isHandled = true;
-        }
-        throw error;
-      };
-    }, []);
-
-    const postComment = ({ value: message, clear }) => {
-      const attachmentIDs = [];
-      const attachmentUtils = PCore.getAttachmentUtils();
-      if (attachments && !!attachments.length) {
-        attachments
-          .filter((file) => !file.error)
-          .map((file) => {
-            return attachmentUtils
-              .uploadAttachment(file, onUploadProgress, errorHandler)
-              .then((fileResponse) => {
-                const fileConfig = {
-                  type: "File",
-                  category: "File",
-                  fileName: file.name,
-                  ID: fileResponse.data.ID
-                };
-                attachmentIDs.push(fileConfig);
-                if (attachments.length === attachmentIDs.length) {
-                  postMessage(
-                    value,
-                    transformMarkdownToMsg(message),
-                    attachmentIDs
-                  );
-                  clear();
-                  setAttachments([]);
-                }
-              })
-
-              .catch(console.error);
-          });
-      } else {
-        postMessage(value, transformMarkdownToMsg(message));
-        clear();
-      }
-    };
-
-    */
-
-    /* On search is called when @ character is entered and will display the mention */
-
-    /*
-    const onSearch = debounce((event) => {
-      if (event.type === "mention") {
-        getMentionSuggestions({
-          pulseContext: value,
-          searchFor: event.search
-        }).then((res) => {
-          setMentionResults(res);
-        });
-      } else {
-        getTagSuggestions({
-          searchFor: event.search
-        }).then((res) => {
-          setTagResults(res);
-        });
-      }
-    }, 150);
-
-    const userName = getPConnect().getEnvironmentInfo().getOperatorName();
-    const imageKey = getPConnect().getEnvironmentInfo().getOperatorImageInsKey();
-
-    const onFilesAdded = useCallback((newlyAddedFiles) => {
-      setAttachments((current) => [
-        ...newlyAddedFiles.map((file) => {
-          if (!validateMaxSize(file, 5)) {
-            file.error = true;
-            file.meta = "File is too big. Max allowed size is 5MB.";
-          }
-          file.icon = getIconFromFileType(file.type);
-          file.onDelete = () => {
-            setAttachments((c) => c.filter((f) => f.name !== file.name));
-          };
-          return file;
-        }),
-        ...current
-      ]);
-    }, []);
-
-    const onFilterChange = useCallback(
-      (filterID) => {
-        const updatedFilters = [...feedFilters];
-        const filterToUpdate = updatedFilters.find(
-          (feedItem) => feedItem.id === filterID
-        );
-        filterToUpdate.on = !filterToUpdate.on;
-        if (filterID === "All")
-          updatedFilters.forEach((feedFilter) => {
-            feedFilter.on = filterToUpdate.on;
-          });
-        else if (
-          updatedFilters.find(
-            (feedItem) => feedItem.on === false && feedItem.id !== "All"
-          )
-        )
-          updatedFilters.find((feedItem) => feedItem.id === "All").on = false;
-        else updatedFilters.find((feedItem) => feedItem.id === "All").on = true;
-        setFeedFilters(updatedFilters);
-        fetchMessages(
-          value,
-          feedID,
-          feedClass,
-          feedFilters,
-          fetchMessagesCancelTokenSource.current
-        );
-      },
-      [
-        value,
-        feedID,
-        feedClass,
-        feedFilters,
-        fetchMessagesCancelTokenSource,
-        fetchMessages
-      ]
-    );
-
-    */
-
     // set up svg images
     this.svgComment$ = this.utils.getImageSrc('chat', this.utils.getSDKStaticContentUrl());
     this.svgLike$ = this.utils.getImageSrc('thumbs-up', this.utils.getSDKStaticContentUrl());
     this.svgLikedByMe$ = this.utils.getImageSrc('thumbs-up-solid', this.utils.getSDKStaticContentUrl());
     this.svgSend$ = this.utils.getImageSrc('send', this.utils.getSDKStaticContentUrl());
+    this.svgDelete$ = this.utils.getImageSrc('delete', this.utils.getSDKStaticContentUrl());
+    this.svgMenu$ = this.utils.getImageSrc('more', this.utils.getSDKStaticContentUrl());
   }
 
   ngOnDestroy(): void {
@@ -374,16 +156,11 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   onStateChange() {
     const bLogging = false;
     if (bLogging) {
-      // console.log( `in ${this.constructor.name} onStateChange` );
-      // debugger;
+      console.log(`in ${this.constructor?.name} onStateChange`);
     }
     // Should always check the bridge to see if the component should update itself (re-render)
     const bUpdateSelf = this.angularPConnect.shouldComponentUpdate(this);
-    // console.log( `${this.constructor.name} shouldComponentUpdate: ${bUpdateSelf}`);
 
-    // ONLY call updateSelf when the component should update
-    //    AND removing the "gate" that was put there since shouldComponentUpdate
-    //      should be the real "gate"
     if (bUpdateSelf) {
       this.updateSelf();
     } else {
@@ -409,16 +186,55 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
     const oData: any = this.pConn$.getDataObject();
 
     if (messageIDs && messageIDs.length > 0) {
-      this.pulseMessages$ = JSON.parse(JSON.stringify(oData.pulse.messages));
-
-      // convert to just an array of objects
-      this.pulseMessages$ = this.convertToArray(this.pulseMessages$);
+      let filteredPulseMessages$ = { ...oData.pulse.messages };
+      for (let key in filteredPulseMessages$) {
+        if (key !== '') {
+          if (!messageIDs.includes(key)) {
+            delete filteredPulseMessages$[key];
+          }
+        }
+      }
+      this.pulseMessages$ = Object.values(filteredPulseMessages$);
 
       // create a copy, so we can modify
       this.pulseMessages$ = this.appendPulseMessage(this.pulseMessages$);
 
       // most recent on top
       this.pulseMessages$ = this.pulseMessages$.sort((a, b) => (a.updateTimeUTC < b.updateTimeUTC ? 1 : -1));
+
+      for (let i = 0; i < this.pulseMessages$.length; i++) {
+        const msg = this.pulseMessages$[i];
+
+        if (msg?.['pxResults'] && msg?.['pxResults'].length > 0) {
+          const comments = msg?.['pxResults'];
+
+          for (let j = 0; j < comments.length; j++) {
+            const comment = comments[j];
+
+            PCore.getFeedUtils()
+              .getLikedUsers(comment.pzInsKey, this.pConn$)
+              .then(res => {
+                if (res.length > 0) {
+                  const existsInLikedComments = this.likedCommenst.some(item => item.msgID === comment.pzInsKey);
+                  if (!existsInLikedComments) {
+                    this.likedCommenst.push({ likedUsers: res, msgID: comment.pzInsKey });
+                  }
+                }
+              });
+          }
+        }
+
+        PCore.getFeedUtils()
+          .getLikedUsers(msg.ID, this.pConn$)
+          .then(res => {
+            const existsInLikedUsers = this.likedUsers.some(item => item.msgID === msg.ID);
+            if (!existsInLikedUsers) {
+              if (res.length > 0) {
+                this.likedUsers.push({ likedUsers: res, msgID: msg.ID });
+              }
+            }
+          });
+      }
     }
   }
 
@@ -434,27 +250,27 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
   appendPulseMessage(messages: any[]): any[] {
     for (let i = 0; i < messages.length; i++) {
-      const message = messages[i];
-      const postedTime = message.postedTime;
-      const updatedTime = message.updatedTime;
+      const message: Record<string, any> = { ...messages[i] };
+      const postedTime = message?.['pxCreateDateTime'];
+      const updatedTime = message?.['updatedTime'];
 
-      this.showReplyComment$[message.ID] = false;
+      this.showReplyComment$[message['ID']] = false;
 
-      message.displayPostedTime = this.utils.generateDateTime(postedTime, 'DateTime-Since');
+      message['displayPostedTime'] = this.utils.generateDateTime(postedTime, 'DateTime-Since');
 
       // for sorting lasted update
       if (updatedTime != null) {
-        message.updateTimeUTC = new Date(updatedTime).getTime();
+        message['updateTimeUTC'] = new Date(updatedTime).getTime();
       } else {
-        message.updateTimeUTC = new Date(postedTime).getTime();
+        message['updateTimeUTC'] = new Date(postedTime).getTime();
       }
 
-      message.displayPostedBy = message.postedByUser.name;
-      message.displayPostedByInitials = this.utils.getInitials(message.postedByUser.name);
+      message['displayPostedBy'] = message?.['postedByUser']?.name;
+      message['displayPostedByInitials'] = this.utils.getInitials(message['postedByUser']?.name);
 
       // if didn't break, then look at the replies
-      for (let j = 0; j < message.replies.length; j++) {
-        const reply = message.replies[j];
+      for (let j = 0; j < message?.['replies']?.length; j++) {
+        const reply = message['replies'][j];
 
         const replyPostedTime = reply.postedTime;
         reply.displayPostedTime = this.utils.generateDateTime(replyPostedTime, 'DateTime-Since');
@@ -463,8 +279,8 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
         const oReplyUser = reply.postedByUser;
 
         if (oReplyUser) {
-          reply.displayPostedBy = oReplyUser.name;
-          reply.displayPostedByInitials = this.utils.getInitials(oReplyUser.name);
+          reply.displayPostedBy = oReplyUser?.name;
+          reply.displayPostedByInitials = this.utils.getInitials(oReplyUser?.name);
         }
       }
     } // for
@@ -505,8 +321,8 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
         const oReplyUser = reply.postedByUser;
 
         if (oReplyUser) {
-          reply.displayPostedBy = oReplyUser.name;
-          reply.displayPostedByInitials = this.utils.getInitials(oReplyUser.name);
+          reply.displayPostedBy = oReplyUser?.name;
+          reply.displayPostedByInitials = this.utils.getInitials(oReplyUser?.name);
         }
       }
     } // for
@@ -520,25 +336,14 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   postClick() {
     // don't send a blank message
     if (this.pulseConversation && this.pulseConversation != '') {
-      // let pulseMessage = {
-      //   contextName : this.pConn$.getContextName(),
-      //   message: this.pulseConversation,
-      //   pulseContext: this.pConn$.getValue(".pzInsKey")
-      // };
-
-      // debugger;
-      // used to be: this./*feedAPI.*/postMessage(pulseMessage);
-      // With latest FeedAPI, the 1st arg should be getConfigProps().value
-
-      // If feedAPI is defined then only post message
       if (this.feedAPI) {
-        this./* feedAPI. */ postMessage((this.pConn$.getConfigProps() as any).value, this.pulseConversation);
+        this.feedAPI.postMessage('DATA-PORTAL $CallADoc', this.pulseConversation, [], false, this.pConn$);
+        (document.getElementById('pulseMessage') as HTMLElement | any).value = '';
       } else {
         console.log("We don't support Pulse yet");
       }
     }
 
-    // clear out local copy
     (document.getElementById('pulseMessage') as HTMLElement | any).value = '';
     this.pulseConversation = '';
   }
@@ -547,38 +352,63 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
     this.pulseConversation = event.target.value;
   }
 
+  deletePulseMessage(event: any, messageID: string, isReply: boolean, replyId: string) {
+    return PCore.getFeedUtils().deleteMessage(messageID, isReply, replyId, this.pConn$);
+  }
+
   likeClick(messageID: string, rMessageID: string, bLikedByMe: boolean, level: string) {
     let pulseMessage = {};
-
     if (level === 'top') {
       pulseMessage = {
-        pulseContext: rMessageID,
-        isReply: null,
-        contextName: this.pConn$.getContextName(),
+        pulseContext: messageID,
         likedBy: bLikedByMe,
-        messageID
+        messageID,
+        isReply: false,
+        c11nEnv: this.pConn$
       };
     } else {
       pulseMessage = {
-        pulseContext: rMessageID,
-        isReply: true,
-        contextName: this.pConn$.getContextName(),
+        pulseContext: messageID,
         likedBy: bLikedByMe,
-        messageID
+        messageID,
+        isReply: true,
+        c11nEnv: this.pConn$
       };
     }
+    PCore.getFeedUtils()?.likeMessage(pulseMessage);
+  }
 
-    // debugger;
-    this./* feedAPI. */ likeMessage(pulseMessage);
+  isLikedByMe(messageID: string, isComment?: boolean) {
+    if (isComment) {
+      const commentLikedUsers = this.likedCommenst.filter(user => user.msgID === messageID);
+      if (commentLikedUsers.length > 0) {
+        for (let user of commentLikedUsers) {
+          for (let likedUser of user.likedUsers) {
+            if (likedUser?.name === this.currentUserName$) {
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    } else {
+      const postLikedUsers = this.likedUsers.filter(user => user.msgID === messageID);
+      if (postLikedUsers.length > 0) {
+        for (let user of postLikedUsers) {
+          for (let likedUser of user.likedUsers) {
+            if (likedUser?.name === this.currentUserName$) {
+              return true;
+            }
+          }
+        }
+        return false;
+      }
+      return false;
+    }
   }
 
   commentClick(messageID) {
-    // iterator through messages, find match, turn on comment entry
-    const foundMessage = this.pulseMessages$.find(message => message.ID === messageID);
-
-    if (foundMessage) {
-      this.showReplyComment$[foundMessage.ID] = true;
-    }
+    this.showReplyComment$[messageID] = true;
 
     this.cdRef.detectChanges();
   }
@@ -600,7 +430,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       //  the pulse context...
       // used to use: contextName
       // new FeedAPI wants args to be messageID, this.pulseComment[messageID], true (since this is a reply)
-      this./* feedAPI. */ postMessage(messageID, this.pulseComment[messageID], true);
+      PCore.getFeedUtils().postMessage(messageID, this.pulseComment[messageID], [], true, this.pConn$);
 
       this.pulseComment[messageID] = '';
     }
@@ -608,5 +438,14 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
   newCommentChange(event, messageID) {
     this.pulseComment[messageID] = event.target.value;
+  }
+  checkEscapeKey(event: KeyboardEvent, messageID: string) {
+    if (event.key === 'Escape') {
+      this.pulseComment[messageID] = '';
+      this.showReplyComment$[messageID] = false;
+    }
+  }
+  toggleMenu(messageId: string): void {
+    this.openMenuId = this.openMenuId === messageId ? null : messageId;
   }
 }
