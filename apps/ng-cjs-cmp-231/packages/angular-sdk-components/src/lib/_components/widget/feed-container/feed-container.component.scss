@@ -15,15 +15,15 @@
 .psdk-pulse-container{
   display: flex;
   flex-direction: column;
-  gap: 31px;
+  gap: 25px;
 }
 .psdk-pulse-main{
   border-radius: 0.6125rem;
   background: white;
-  padding: 0.3rem;
+  padding: 1rem;
   box-shadow: 0 0 0px 0px;
   border: none;
-  box-shadow:0 0 10px 3px rgba(119, 119, 119, 0.568627451)
+  box-shadow: 0 0 2px 1px rgba(81, 112, 109, 0.568627451);
 }
 
 
@@ -146,17 +146,16 @@ padding-top: 0.625rem;
 }
 .pulse-message-main {
   display: flex;
-      flex-direction: column;
-      align-items: center;
-height: 541px;
-overflow-y: scroll;
-      border-radius: 0.6125rem;
-    background: white;
-    padding: 0.3rem;
-    box-shadow: 0 0 0px 0px;
-    border: none;
-    box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.568627451);
-
+  flex-direction: column;
+  align-items: center;
+  height: 515px;
+  overflow-y: scroll;
+  border-radius: 0.6125rem;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 0 0px 0px;
+  border: none;
+  box-shadow: 0 0 2px 1px rgba(81, 112, 109, 0.568627451);
 }
 
 .pulse-message{
