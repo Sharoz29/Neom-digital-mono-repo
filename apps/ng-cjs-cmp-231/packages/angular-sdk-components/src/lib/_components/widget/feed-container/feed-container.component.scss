@@ -15,7 +15,7 @@
 .psdk-pulse-container{
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 31px;
 }
 .psdk-pulse-main{
   border-radius: 0.6125rem;
@@ -102,7 +102,7 @@
 .psdk-pulse-message-group {
   display: flex;
   flex-direction: column;
-  padding-left: 0.625rem;
+padding-top: 0.625rem;
 }
 
 .psdk-pulse-message-by {
@@ -124,7 +124,7 @@
 
 .pulse-message-main::-webkit-scrollbar {
   width: 9px;
-  background-color: #f5f5f5;
+  background-color: #0c7183;
   border-radius: 10px; 
   border: none;
   box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.57); 
@@ -133,8 +133,6 @@
 .pulse-message-main::-webkit-scrollbar-thumb {
   border-radius: 10px; 
   border: 1px solid white; 
-  background-color: #0c7183;
-
 }
 
 
@@ -143,10 +141,10 @@
 
 }
 .pulse-message-main {
-  display: flex
-  ;
+  display: flex;
       flex-direction: column;
-height: 561px;
+      align-items: center;
+height: 541px;
 overflow-y: scroll;
       border-radius: 0.6125rem;
     background: white;
@@ -158,10 +156,10 @@ overflow-y: scroll;
 }
 
 .pulse-message{
-  width:279px ;
+  width:287px ;
   margin-top: 50px;
   border-radius: 0.6125rem;
-  margin-left: 4.625rem;
+
     background: white;
     padding: 0.3rem;
     box-shadow: 0 0 0px 0px;
@@ -285,26 +283,20 @@ overflow-y: scroll;
   cursor: pointer;
 }
 
-.popup-menu {
-  // position: absolute;
-  // top: 30px;
-  // right: 0;
-  // background: white;
-  // border: 1px solid #ddd;
-  // border-radius: 5px;
-  // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  // z-index: 10;
-}
+
 
 .menu-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
+  display: flex
+  ;
+      align-items: center;
+      padding: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      background: red;
+      color: white;
+      border-radius: 11px;
 }
 
 .menu-item img {
