@@ -107,7 +107,7 @@
           </button>
         
           <div *ngIf="openMenuId === replyMessage.pzInsKey" class="popup-menu">
-            <button class="menu-item" (click)="deletePulseMessage($event, replyMessage.pyContext, true, replyMessage.pzInsKey)">
+            <button class="menu-item" (click)="deletePulseMessage($event, replyMessage.parentMessageID, true, replyMessage.pzInsKey)">
               <span>Delete</span>
             </button>
           </div>

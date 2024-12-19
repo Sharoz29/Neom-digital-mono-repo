@@ -15,7 +15,7 @@
 .psdk-pulse-container{
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 35px;
 }
 .psdk-pulse-main{
   border-radius: 0.6125rem;
@@ -124,7 +124,7 @@
 
 .pulse-message-main::-webkit-scrollbar {
   width: 9px;
-  background-color: #0c7183;
+  background-color: #f5f5f5;
   border-radius: 10px; 
   border: none;
   box-shadow: 0 0 10px 3px rgba(119, 119, 119, 0.57); 
@@ -133,6 +133,8 @@
 .pulse-message-main::-webkit-scrollbar-thumb {
   border-radius: 10px; 
   border: 1px solid white; 
+  background-color: #0c7183;
+
 }
 
 

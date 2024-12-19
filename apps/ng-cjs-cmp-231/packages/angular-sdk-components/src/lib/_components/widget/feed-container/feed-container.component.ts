@@ -175,7 +175,6 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   }
 
   updateSelf() {
-    console.log('I have been called');
     this.getMessageData();
   }
 
@@ -215,7 +214,6 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
             PCore.getFeedUtils()
               .getLikedUsers(comment.pzInsKey, this.pConn$)
               .then(res => {
-                console.log(res, 'Sharoz');
                 if (res.length > 0) {
                   const existsInLikedComments = this.likedCommenst.some(item => item.msgID === comment.pzInsKey);
                   if (!existsInLikedComments) {
@@ -339,7 +337,8 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
     // don't send a blank message
     if (this.pulseConversation && this.pulseConversation != '') {
       if (this.feedAPI) {
-        return this.feedAPI.postMessage('DATA-PORTAL $CallADoc', this.pulseConversation, [], false, this.pConn$);
+        this.feedAPI.postMessage('DATA-PORTAL $CallADoc', this.pulseConversation, [], false, this.pConn$);
+        (document.getElementById('pulseMessage') as HTMLElement | any).value = '';
       } else {
         console.log("We don't support Pulse yet");
       }
@@ -354,9 +353,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
   }
 
   deletePulseMessage(event: any, messageID: string, isReply: boolean, replyId: string) {
-    console.log(this.likedCommenst, this.pulseMessages$);
-    console.log(messageID);
-    PCore.getFeedUtils().deleteMessage(messageID, isReply, replyId, this.pConn$);
+    return PCore.getFeedUtils().deleteMessage(messageID, isReply, replyId, this.pConn$);
   }
 
   likeClick(messageID: string, rMessageID: string, bLikedByMe: boolean, level: string) {
