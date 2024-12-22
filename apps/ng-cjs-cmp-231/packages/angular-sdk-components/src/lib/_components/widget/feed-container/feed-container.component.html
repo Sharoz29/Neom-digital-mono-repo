@@ -41,7 +41,7 @@
         <div class="psdk-pulse-message-time">{{ utils.generateDateTime(pulseMessage?.pxCreateDateTime, 'DateTime-Since') }}</div>
       </div>
     </div>
-    <div class="psdk-pulse-menu">
+    <div  *ngIf="pulseMessage?.postedByUser?.name === currentUserId$" class="psdk-pulse-menu" >
       <button class="menu-button" (click)="toggleMenu(pulseMessage.ID)">
         <img class="psdk-comment-svg-icon" src="{{ svgMenu$ }}" alt="Menu" />
       </button>
@@ -101,7 +101,7 @@
           <div class="psdk-pulse-reply-by">{{ replyMessage.postedByUser.name }}</div>
           <div class="psdk-pulse-reply-time">{{ utils.generateDateTime(replyMessage.pxCreateDateTime, 'DateTime-Since') }}</div>
         </div>
-        <div class="psdk-pulse-menu">
+        <div *ngIf="replyMessage?.postedByUser?.name === currentUserId$" class="psdk-pulse-menu">
           <button class="menu-button" (click)="toggleMenu(replyMessage.pzInsKey)">
             <img class="psdk-comment-svg-icon" src="{{ svgMenu$ }}" alt="Menu" />
           </button>

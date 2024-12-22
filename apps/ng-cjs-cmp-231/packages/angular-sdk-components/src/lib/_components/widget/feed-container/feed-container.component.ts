@@ -30,6 +30,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
 
   currentUserInitials$: string;
   currentUserName$: string;
+  currentUserId$:string;
 
   pulseMessages$: any[] = [];
   showReplyComment$: Object = {};
@@ -74,28 +75,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
     this.feedAPI = PCore.getFeedUtils();
 
     let value = '';
-    let feedID = '';
-    let feedClass = '';
-    const appName = PCore.getEnvironmentInfo().getApplicationName();
-
-    if (this.pConn$.getCaseSummary().ID) {
-      value = this.pConn$.getCaseSummary().ID;
-      feedID = 'pyCaseFeed';
-      feedClass = this.pConn$.getCaseSummary().content.classID;
-    } else {
-      value = `DATA-PORTAL $${appName}`;
-      feedID = 'pyDashboardFeed';
-      feedClass = '@baseclass';
-    }
-    this.feedAPI
-      // @ts-ignore: Argument of type '[]' is not assignable to parameter of type '[any]'
-      .getFeeds('DATA-PORTAL $CallADoc', feedID, feedClass, [], [], this.pConn$, false, '')
-      .then(feedResponse => {
-        console.log(feedResponse);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.getFeeds();
 
     const onUploadProgress = () => {};
     const errorHandler = () => {};
@@ -151,7 +131,30 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       this.angularPConnectData.unsubscribeFn();
     }
   }
-
+getFeeds(){
+  let value = '';
+  let feedID = '';
+  let feedClass = '';
+  const appName = PCore.getEnvironmentInfo().getApplicationName();
+  if (this.pConn$.getCaseSummary().ID) {
+    value = this.pConn$.getCaseSummary().ID;
+    feedID = 'pyCaseFeed';
+    feedClass = this.pConn$.getCaseSummary().content.classID;
+  } else {
+    value = `DATA-PORTAL $${appName}`;
+    feedID = 'pyDashboardFeed';
+    feedClass = '@baseclass';
+  }
+  this.feedAPI
+  // @ts-ignore: Argument of type '[]' is not assignable to parameter of type '[any]'
+  .getFeeds('DATA-PORTAL $CallADoc', feedID, feedClass, [], [], this.pConn$, false, '')
+  .then(feedResponse => {
+    console.log(feedResponse);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+}
   // Callback passed when subscribing to store change
   onStateChange() {
     const bLogging = false;
@@ -327,9 +330,9 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       }
     } // for
   }
-
   updateCurrentUserName(sUser: string) {
     this.currentUserInitials$ = this.utils.getInitials(sUser);
+    this.currentUserId$=this.utils.getUserId(sUser);
     this.currentUserName$ = sUser;
   }
 
@@ -376,6 +379,7 @@ export class FeedContainerComponent implements OnInit, OnDestroy {
       };
     }
     PCore.getFeedUtils()?.likeMessage(pulseMessage);
+    this.getFeeds();
   }
 
   isLikedByMe(messageID: string, isComment?: boolean) {
